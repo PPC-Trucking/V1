@@ -28,7 +28,9 @@ This is a modified version of the popular Trucking Gamemode by [PowerPC603](http
 			* If you could __not find__ a solution for your problem, post the output in the [forum post](http://forum.sa-mp.com/showthread.php?t=196493)
 *	If everything worked for you, the last thing you have to do is this:
 	*	As a Windows user, you have only to open the server.cfg file and to set your desired rcon_password
-	*	If you are running your server more professional on a Linux machine, change ``plugins sscanf streamer`` to ``plugins sscanf.so streamer.so`` and make sure that you have placed these plugins into the folder.
+	*	If you are running your server more professional on a Linux machine, change ``plugins sscanf streamer`` to ``plugins sscanf.so streamer.so`` and make sure that you have placed these plugins into the folder. You also have to set your desired rcon_password.
+
+__Hint:__ You can use the [Server.cfg Generator](http://www.gta-freak.cloudns.org/server_cfg) by [malaka](http://forum.sa-mp.com/member.php?u=112277) to manage your Server.cfg file online!
    
 ## Changelog
 *	Fixed few bugs which have been reported so far
@@ -44,11 +46,11 @@ This is a modified version of the popular Trucking Gamemode by [PowerPC603](http
 	*	[NPC bots are now excluded from antihack function](http://forum.sa-mp.com/showpost.php?p=2923743)
 
 ## Credits
-*	[PowerPC603](http://forum.sa-mp.com/member.php?u=109984) for his awesome work doing this Gamemode
-*	[Y_Less](http://forum.sa-mp.com/member.php?u=29176) for a very handy way to handle parameters (sscanf)
-*	[Incognito](http://forum.sa-mp.com/member.php?u=925) for the abbility to use more objects than usually possible (streamer)
-*	Zeex (no link, because he is no longer registred to samp-forums) for a quick and nice solution to create commands (zcmd)
-*	[DracoBlue](http://forum.sa-mp.com/member.php?u=389) for the easy way saving and loading information (dutils)
+*	[PowerPC603](http://forum.sa-mp.com/member.php?u=109984) - awesome Gamemode
+*	[Y_Less](http://forum.sa-mp.com/member.php?u=29176) - very handy way to handle parameters (sscanf)
+*	[Incognito](http://forum.sa-mp.com/member.php?u=925) - abbility to use more objects than usually possible (streamer)
+*	Zeex - quick and nice solution to create commands (zcmd)
+*	[DracoBlue](http://forum.sa-mp.com/member.php?u=389) - easy way saving and loading information (dutils)
 	
 ### Thanks for reading!
 *	By the way, if you already have experience with [Notepad++](http://notepad-plus-plus.org), have an eye at Slice's tutorial [how to use Notepad++ with PAWN](http://forum.sa-mp.com/showthread.php?t=174046).
