@@ -155,6 +155,7 @@
 
 // Command related
 #define TXT_PlayerRescued "{0000FF}You've been rescued. $200 has been deducted."
+#define TXT_PlayerSpectating "{FF0000}%s is currently spectating a player. You can't teleport to him."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

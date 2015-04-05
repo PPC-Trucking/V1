@@ -3294,6 +3294,11 @@ COMMAND:spec(playerid, params[])
 					// Get the player's name
 					GetPlayerName(OtherPlayer, Name, sizeof(Name));
 
+					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_SPECTATING) {
+						format(Msg, 128, TXT_PlayerSpectating, Name);
+						return SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					}
+
 				    // Turn spectating on
 				    TogglePlayerSpectating(playerid, 1);
 
