@@ -674,6 +674,19 @@ public OnPlayerSpawn(playerid)
 	if (APlayerData[playerid][PlayerJailed] != 0)
 	    Police_JailPlayer(playerid, APlayerData[playerid][PlayerJailed]);
 
+	// Teleport the player to the latest position if he was spectating
+	if (APlayerData[playerid][Spectating] == true) {
+		SetPlayerPos(playerid, APlayerData[playerid][SpectateX], APlayerData[playerid][SpectateY], APlayerData[playerid][SpectateZ]);
+		SetPlayerFacingAngle(playerid, APlayerData[playerid][SpectateA]);
+
+		// Reset the coordinates
+		APlayerData[playerid][Spectating] = false;
+		APlayerData[playerid][SpectateX] = -1;
+		APlayerData[playerid][SpectateY] = -1;
+		APlayerData[playerid][SpectateZ] = -1;
+		APlayerData[playerid][SpectateA] = -1;
+	}
+
 	return 1;
 }
 

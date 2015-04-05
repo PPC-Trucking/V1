@@ -3274,7 +3274,7 @@ COMMAND:nos(playerid, params[])
 COMMAND:spec(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Name[24], Msg[128];
+	new OtherPlayer, Name[24], Msg[128], Float:x, Float:y, Float:z, Float:angle;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/spec", params);
@@ -3294,9 +3294,28 @@ COMMAND:spec(playerid, params[])
 					// Get the player's name
 					GetPlayerName(OtherPlayer, Name, sizeof(Name));
 
+					// Get current coordinates
+					GetPlayerPos(playerid, x, y, z);
+					GetPlayerFacingAngle(playerid, angle);
+
 					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_SPECTATING) {
 						format(Msg, 128, TXT_PlayerSpectating, Name);
 						return SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					}
+
+					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_WASTED || GetPlayerState(OtherPlayer) == PLAYER_STATE_NONE)
+					{
+						format(Msg, 128, TXT_PlayerNotSpawned);
+						return SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					}
+
+					// Only save the current positon at the first time
+					if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING) {
+						APlayerData[playerid][SpectateX] = x;
+						APlayerData[playerid][SpectateY] = y;
+						APlayerData[playerid][SpectateZ] = z;
+						APlayerData[playerid][SpectateA] = angle;
+						APlayerData[playerid][Spectating] = true;
 					}
 
 				    // Turn spectating on
