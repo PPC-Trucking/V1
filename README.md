@@ -31,19 +31,6 @@ This is a modified version of the popular Trucking Gamemode by [PowerPC603](http
 	*	If you are running your server more professional on a Linux machine, change ``plugins sscanf streamer`` to ``plugins sscanf.so streamer.so`` and make sure that you have placed these plugins into the folder. You also have to set your desired rcon_password.
 
 __Hint:__ You can use the [Server.cfg Generator](http://www.gta-freak.cloudns.org/server_cfg) by [malaka](http://forum.sa-mp.com/member.php?u=112277) to manage your Server.cfg file online!
-   
-## Changelog
-*	Fixed few bugs which have been reported so far
-    *	``Bugfix`` [/freeze command does not bug a player anymore](http://forum.sa-mp.com/showpost.php?p=1909452)
-    *	``Improvement`` [Mute all players who are not logged-in](http://forum.sa-mp.com/showpost.php?p=2396554)
-    	*	So players have to login before they can use the chat. This protects you from people abusing others player accounts.
-    *	``Improvement`` [Disable /rescue and /reclass command while choosing a class](http://forum.sa-mp.com/showpost.php?p=2409719)
-	*	``Bugfix`` [Police do not get wanted level anymore](http://forum.sa-mp.com/showpost.php?p=2455510)
-	*	``Improvement`` [Parachute is now allowed for all players](http://forum.sa-mp.com/showpost.php?p=2457253)
-		* In the original version the weapon anti-cheat is very serious and does not even allow parachutes. Not even for pilots. Now every player who enters a plane keeps the parachute!
-*	Tiny fixes:
-	*	Every dialog that requires a password (login,register etc.) hides the input now. `DIALOG_STYLE_INPUT` has been replaced with `DIALOG_STYLE_PASSWORD`
-	*	[NPC bots are now excluded from antihack function](http://forum.sa-mp.com/showpost.php?p=2923743)
 
 ## Credits
 *	[PowerPC603](http://forum.sa-mp.com/member.php?u=109984) - awesome Gamemode
