@@ -42,7 +42,7 @@
 #define TXT_DialogLoginMsg "Please login by entering your password:" // Define the actual message in the login-dialog
 #define TXT_DialogLoginButton1 "Login" // Define the text on the "login" button for the login-dialog
 #define TXT_LoggedIn "{00FF00}You logged in, welcome back"
-#define TXT_WrongPassword "{FF0000}You've entered the wrong password, you've been kicked"
+#define TXT_WrongPassword "{FF0000}You've entered the wrong password. %i attempts left before you get kicked."
 #define TXT_LoginEnterValidPassword "Please login by entering your password:"
 #define TXT_PlayerMustLogin "{FF0000}You must login in order to play, you've been kicked out!"
 #define TXT_FailedLoginProperly "{FF0000}You failed to login properly, you're kicked"

@@ -152,7 +152,7 @@ public OnPlayerConnect(playerid)
 		else // Player is still banned
 		{
 			ShowRemainingBanTime(playerid); // Show the remaining ban-time to the player is days, hours, minutes, seconds
-			Kick(playerid); // Kick the player
+			SetTimerEx("TimedKick", 500, false, "i", playerid); // Kick the player
 		}
 	}
 	else
@@ -586,7 +586,7 @@ public OnPlayerSpawn(playerid)
 	if (APlayerData[playerid][LoggedIn] == false)
 	{
 		SendClientMessage(playerid, 0xFFFFFFFF, TXT_FailedLoginProperly);
-	    Kick(playerid); // Kick the player if he didn't log in properly
+	    SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player if he didn't log in properly
 	}
 
 	// Setup local variables
@@ -1480,3 +1480,9 @@ stock DebugKeys(playerid, newkeys, oldkeys)
 	return 1;
 }
 
+forward TimedKick(playerid);
+public TimedKick(playerid)
+{
+    Kick(playerid);
+    return 1;
+}

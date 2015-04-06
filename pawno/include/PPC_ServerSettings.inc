@@ -6,6 +6,9 @@
 #undef MAX_PLAYERS
 #define MAX_PLAYERS 50
 
+// Define how many login attempts are possible before player gets kicked
+#define MAX_LOGIN_ATTEMPTS 3
+
 // Bank system
 new bool:IntrestEnabled = true; // The intrest has been enabled (or disabled when false)
 new Float:BankIntrest = 0.001; // The intrest a player receives every hour is by default 0.1% (0.001 means 0.1%)
