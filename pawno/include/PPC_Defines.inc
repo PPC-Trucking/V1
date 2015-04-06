@@ -618,6 +618,7 @@ enum TPlayerData
 	StatsRoadworkerJobs, // Holds the number of completed roadworker jobs
 	Float:StatsMetersDriven, // Holds the total kilometers that the player has driven already
 
+	Text:VehicleName, // The TextDraw that contains the vehicle name
 	Text:SpeedometerText, // The TextDraw of the speedometer for this player
 	Text:FuelGauge, // The textdraw of the fuel-gauge for this player
 	SpeedometerTimer, // Holds the reference to the speedometer timer for this player
