@@ -10,31 +10,26 @@ Dialog_Register(playerid, response, inputtext[])
 		case 1: // Player clicked "Register"
 		{
 			// Check if the player entered a password
-			if(strlen(inputtext)>0)
-			{
-				// Store the password
-				format(APlayerData[playerid][PlayerPassword], 50, "%s", inputtext);
+			if(strlen(inputtext) <= 0)
+				return ShowPlayerDialog(playerid, DialogRegister, DIALOG_STYLE_PASSWORD, TXT_DialogRegisterTitle, TXT_DialogRegisterMsg, TXT_DialogRegisterButton1, TXT_DialogButtonCancel);
 
-				// Create the file and save default data to it, then reload it (so all data is put into the correct place)
-				PlayerFile_Create(playerid);
-				PlayerFile_Load(playerid);
+			// Store the password
+			format(APlayerData[playerid][PlayerPassword], 50, "%s", inputtext);
 
-				// Send a message to the client to inform him that his account has been registered
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_AccountRegistered);
-				APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
-			}
-			else
-			{
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_WrongPassword);
-				Kick(playerid);
-			}
+			// Create the file and save default data to it, then reload it (so all data is put into the correct place)
+			PlayerFile_Create(playerid);
+			PlayerFile_Load(playerid);
+
+			// Send a message to the client to inform him that his account has been registered
+			SendClientMessage(playerid, 0xFFFFFFFF, TXT_AccountRegistered);
+			APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
 		}
 	    case 0: // Player clicked "Cancel"
 		{
 			// Show a message that the player must be registered to play on this server
 			SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerMustRegister);
 		    // Kick the player
-			Kick(playerid);
+			SetTimerEx("TimedKick", 500, false, "i", playerid);
 		}
 	}
 
@@ -46,30 +41,36 @@ Dialog_Register(playerid, response, inputtext[])
 // Process the login-dialog
 Dialog_Login(playerid, response, inputtext[])
 {
+	new Msg[128];
+
 	switch (response) // Check which button was clicked
 	{
 	    case 1: // Player clicked "Login"
 		{
-			// Check if the player entered a password
-			if (strlen(inputtext) > 0)
+			// Player must provide a password
+			if (strlen(inputtext) <= 0)
+				return ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
+
+			// Check if the entered password is the same as the password saved in the player's account
+		    if (strcmp(APlayerData[playerid][PlayerPassword], inputtext, false) == 0)
 			{
-				// Check if the entered password is the same as the password saved in the player's account
-			    if (strcmp(APlayerData[playerid][PlayerPassword], inputtext, false) == 0)
-				{
-					APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
-                    BankFile_Load(playerid); // Load your bank account (if it exists, the player will be notified about this)
-					SendClientMessage(playerid, 0xFFFFFFFF, TXT_LoggedIn); // Send a message to the client to inform him that he logged in properly
-				}
-				else
-				{
-					SendClientMessage(playerid, 0xFFFFFFFF, TXT_WrongPassword);
-					Kick(playerid);
-				}
+				APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
+                BankFile_Load(playerid); // Load your bank account (if it exists, the player will be notified about this)
+				SendClientMessage(playerid, 0xFFFFFFFF, TXT_LoggedIn); // Send a message to the client to inform him that he logged in properly
 			}
 			else
 			{
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_WrongPassword);
-				Kick(playerid);
+				SetPVarInt(playerid, "LoginAttempt", GetPVarInt(playerid, "LoginAttempt") + 1);
+
+				if (GetPVarInt(playerid, "LoginAttempt") == MAX_LOGIN_ATTEMPTS) {
+					SendClientMessage(playerid, 0xFFFFFFFF, TXT_FailedLoginProperly);
+					SetTimerEx("TimedKick", 500, false, "i", playerid);
+				} else {
+					format(Msg, sizeof(Msg), TXT_WrongPassword, (MAX_LOGIN_ATTEMPTS-GetPVarInt(playerid, "LoginAttempt")));
+					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+
+					ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
+				}
 			}
 		}
 	    case 0: // Player clicked "Cancel"
@@ -77,7 +78,7 @@ Dialog_Login(playerid, response, inputtext[])
 			// Show a message that the player must be logged in to play on this server
 			SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerMustLogin);
 		    // Kick the player
-			Kick(playerid);
+			SetTimerEx("TimedKick", 500, false, "i", playerid);
 		}
 	}
 

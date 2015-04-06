@@ -590,6 +590,12 @@ enum TPlayerData
 
 	PlayerClass, //Holds the Class that the player chose (1 = truckdriver, 2 = taxidriver, ... -> see DEFINES)
 
+	bool:Spectating, // Holds "true" if the player is spectating
+	Float:SpectateX, // Holds the previous X location of the player (used to restore position after /endspec)
+	Float:SpectateY, // Holds the previous Y location of the player (used to restore position after /endspec)
+	Float:SpectateZ, // Holds the previous Z location of the player (used to restore position after /endspec)
+	Float:SpectateA, // Holds the previous angle of the player (used to restore position after /endspec)
+
 	SpectateID, // Holds the ID of the other player which this player is spectating
 	SpectateVehicle, // If the target player is inside a vehicle, store it here
 	SpectateType, // Holds the type of spectating (none, player or vehicle)
@@ -612,6 +618,7 @@ enum TPlayerData
 	StatsRoadworkerJobs, // Holds the number of completed roadworker jobs
 	Float:StatsMetersDriven, // Holds the total kilometers that the player has driven already
 
+	Text:VehicleName, // The TextDraw that contains the vehicle name
 	Text:SpeedometerText, // The TextDraw of the speedometer for this player
 	Text:FuelGauge, // The textdraw of the fuel-gauge for this player
 	SpeedometerTimer, // Holds the reference to the speedometer timer for this player

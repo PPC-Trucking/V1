@@ -42,7 +42,7 @@
 #define TXT_DialogLoginMsg "Please login by entering your password:" // Define the actual message in the login-dialog
 #define TXT_DialogLoginButton1 "Login" // Define the text on the "login" button for the login-dialog
 #define TXT_LoggedIn "{00FF00}You logged in, welcome back"
-#define TXT_WrongPassword "{FF0000}You've entered the wrong password, you've been kicked"
+#define TXT_WrongPassword "{FF0000}You've entered the wrong password. %i attempts left before you get kicked."
 #define TXT_LoginEnterValidPassword "Please login by entering your password:"
 #define TXT_PlayerMustLogin "{FF0000}You must login in order to play, you've been kicked out!"
 #define TXT_FailedLoginProperly "{FF0000}You failed to login properly, you're kicked"
@@ -59,8 +59,6 @@
 #define TXT_BusLicenseNotEnoughMoney "{FF0000}You need $25.000 and 50 score-points to buy a busdriver's license"
 #define TXT_BusLicenseOwned "{FF0000}You already bought the license"
 #define TXT_BusLicenseWrongClass "{FF0000}You must be a busdriver to buy a busdriver's license"
-
-
 
 // Dialog related for /car, /plane, ...
 #define TXT_DialogCarTitle "Choose a car (page %i):"
@@ -155,6 +153,9 @@
 
 // Command related
 #define TXT_PlayerRescued "{0000FF}You've been rescued. $200 has been deducted."
+#define TXT_PlayerSelfSpectate "{FF0000}You can't spectate yourself."
+#define TXT_PlayerSpectating "{FF0000}%s is currently spectating a player. You can't teleport to him."
+#define TXT_PlayerNotSpawned "{FF0000}You can't spectate that player because he didn't spawn yet."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
@@ -210,8 +211,6 @@
 #define TXT_BuyStationWagon "Buy a station wagon:"
 #define TXT_BuyTrailer "Buy a trailer:"
 #define TXT_BuyUnique "Buy a unique vehicle:"
-
-
 
 // Jail related
 #define TXT_JailTimer "~w~Jailed: ~r~%i~w~"
@@ -315,4 +314,3 @@
 #define TXT_BusinessReachedMaxLevel "{FF0000}Your business has reached the maximum level, you cannot upgrade it further"
 #define TXT_SureSellBusiness "Are you sure you want to sell your business for $%i?"
 #define TXT_PlayerSoldBusiness "{00FF00}You've sold your business"
-

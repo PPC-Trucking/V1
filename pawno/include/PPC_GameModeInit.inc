@@ -363,41 +363,41 @@ GameModeInit_Busstops()
 GameModeInit_Police()
 {
 	// Add vehicles to the Los Santos Police Impound
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLSPD, 1555.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police Car LSPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 1560.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 1565.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police Ranger
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLSPD, 1570.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police Car LSPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 1575.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 1580.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police Ranger
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLSPD, 1585.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police Car LSPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 1590.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 1595.0, -1710.75, 6.0, 0, random(126), random(126), 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLSPD, 1555.0, -1710.75, 6.0, 0, 0, 1, 600); // Police Car LSPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 1560.0, -1710.75, 6.0, 0, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 1565.0, -1710.75, 6.0, 0, 0, 1, 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLSPD, 1570.0, -1710.75, 6.0, 0, 0, 1, 600); // Police Car LSPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 1575.0, -1710.75, 6.0, 0, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 1580.0, -1710.75, 6.0, 0, 0, 1, 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLSPD, 1585.0, -1710.75, 6.0, 0, 0, 1, 600); // Police Car LSPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 1590.0, -1710.75, 6.0, 0, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 1595.0, -1710.75, 6.0, 0, 0, 1, 600); // Police Ranger
 
 	// Add vehicles to the San Fierro Police Impound
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceSFPD, -1573.0, 701.0, -5.0, 90, random(126), random(126), 600); // Police Car SFPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, -1573.0, 706.0, -5.0, 90, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, -1573.0, 711.0, -5.0, 90, random(126), random(126), 600); // Police Ranger
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceSFPD, -1573.0, 716.0, -5.0, 90, random(126), random(126), 600); // Police Car SFPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, -1573.0, 721.0, -5.0, 90, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, -1573.0, 726.0, -5.0, 90, random(126), random(126), 600); // Police Ranger
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceSFPD, -1573.0, 731.0, -5.0, 90, random(126), random(126), 600); // Police Car SFPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, -1573.0, 736.0, -5.0, 90, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, -1573.0, 741.0, -5.0, 90, random(126), random(126), 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceSFPD, -1573.0, 701.0, -5.0, 90, 0, 1, 600); // Police Car SFPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, -1573.0, 706.0, -5.0, 90, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, -1573.0, 711.0, -5.0, 90, 0, 1, 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceSFPD, -1573.0, 716.0, -5.0, 90, 0, 1, 600); // Police Car SFPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, -1573.0, 721.0, -5.0, 90, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, -1573.0, 726.0, -5.0, 90, 0, 1, 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceSFPD, -1573.0, 731.0, -5.0, 90, 0, 1, 600); // Police Car SFPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, -1573.0, 736.0, -5.0, 90, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, -1573.0, 741.0, -5.0, 90, 0, 1, 600); // Police Ranger
 
 	// Add vehicles to the Las Venturas Police Impound
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2282.0, 2477.0, 11.0, 180, random(126), random(126), 600); // Police Car LVPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2277.0, 2477.0, 11.0, 180, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2272.0, 2477.0, 11.0, 180, random(126), random(126), 600); // Police Ranger
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2262.0, 2477.0, 11.0, 180, random(126), random(126), 600); // Police Car LVPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2257.0, 2477.0, 11.0, 180, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2252.0, 2477.0, 11.0, 180, random(126), random(126), 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2282.0, 2477.0, 11.0, 180, 0, 1, 600); // Police Car LVPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2277.0, 2477.0, 11.0, 180, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2272.0, 2477.0, 11.0, 180, 0, 1, 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2262.0, 2477.0, 11.0, 180, 0, 1, 600); // Police Car LVPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2257.0, 2477.0, 11.0, 180, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2252.0, 2477.0, 11.0, 180, 0, 1, 600); // Police Ranger
 
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2282.0, 2443.0, 11.0, 0, random(126), random(126), 600); // Police Car LVPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2277.0, 2443.0, 11.0, 0, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2272.0, 2443.0, 11.0, 0, random(126), random(126), 600); // Police Ranger
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2262.0, 2443.0, 11.0, 0, random(126), random(126), 600); // Police Car LVPD
-	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2257.0, 2443.0, 11.0, 0, random(126), random(126), 600); // Police MotorCycle
-	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2252.0, 2443.0, 11.0, 0, random(126), random(126), 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2282.0, 2443.0, 11.0, 0, 0, 1, 600); // Police Car LVPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2277.0, 2443.0, 11.0, 0, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2272.0, 2443.0, 11.0, 0, 0, 1, 600); // Police Ranger
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceLVPD, 2262.0, 2443.0, 11.0, 0, 0, 1, 600); // Police Car LVPD
+	LastVehicleID = Vehicle_AddStatic(VehicleHPV1000, 2257.0, 2443.0, 11.0, 0, 0, 1, 600); // Police MotorCycle
+	LastVehicleID = Vehicle_AddStatic(VehiclePoliceRanger, 2252.0, 2443.0, 11.0, 0, 0, 1, 600); // Police Ranger
 }
 
 // Add mafia-vehicles to the mafia-hideout

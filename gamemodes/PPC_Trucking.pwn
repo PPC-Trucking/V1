@@ -152,7 +152,7 @@ public OnPlayerConnect(playerid)
 		else // Player is still banned
 		{
 			ShowRemainingBanTime(playerid); // Show the remaining ban-time to the player is days, hours, minutes, seconds
-			Kick(playerid); // Kick the player
+			SetTimerEx("TimedKick", 500, false, "i", playerid); // Kick the player
 		}
 	}
 	else
@@ -586,7 +586,7 @@ public OnPlayerSpawn(playerid)
 	if (APlayerData[playerid][LoggedIn] == false)
 	{
 		SendClientMessage(playerid, 0xFFFFFFFF, TXT_FailedLoginProperly);
-	    Kick(playerid); // Kick the player if he didn't log in properly
+	    SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player if he didn't log in properly
 	}
 
 	// Setup local variables
@@ -673,6 +673,19 @@ public OnPlayerSpawn(playerid)
 	// If the player spawns and his jailtime hasn't passed yet, put him back in jail
 	if (APlayerData[playerid][PlayerJailed] != 0)
 	    Police_JailPlayer(playerid, APlayerData[playerid][PlayerJailed]);
+
+	// Teleport the player to the latest position if he was spectating
+	if (APlayerData[playerid][Spectating] == true) {
+		SetPlayerPos(playerid, APlayerData[playerid][SpectateX], APlayerData[playerid][SpectateY], APlayerData[playerid][SpectateZ]);
+		SetPlayerFacingAngle(playerid, APlayerData[playerid][SpectateA]);
+
+		// Reset the coordinates
+		APlayerData[playerid][Spectating] = false;
+		APlayerData[playerid][SpectateX] = -1;
+		APlayerData[playerid][SpectateY] = -1;
+		APlayerData[playerid][SpectateZ] = -1;
+		APlayerData[playerid][SpectateA] = -1;
+	}
 
 	return 1;
 }
@@ -1467,3 +1480,9 @@ stock DebugKeys(playerid, newkeys, oldkeys)
 	return 1;
 }
 
+forward TimedKick(playerid);
+public TimedKick(playerid)
+{
+    Kick(playerid);
+    return 1;
+}

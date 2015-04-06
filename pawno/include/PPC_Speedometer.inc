@@ -6,9 +6,11 @@ forward RefuelVehicle(playerid);
 Speedometer_Setup(playerid)
 {
 	// Setup the speedometer for the player
+	APlayerData[playerid][VehicleName] = TextDrawCreate(500.0, 380.0, " ");
 	APlayerData[playerid][SpeedometerText] = TextDrawCreate(500.0, 395.0, " ");
 	APlayerData[playerid][FuelGauge] = TextDrawCreate(500.0, 410.0, " ");
 	// Enable the TextDraw for this player
+	TextDrawShowForPlayer(playerid, APlayerData[playerid][VehicleName]);
 	TextDrawShowForPlayer(playerid, APlayerData[playerid][SpeedometerText]);
 	TextDrawShowForPlayer(playerid, APlayerData[playerid][FuelGauge]);
 
@@ -22,6 +24,7 @@ Speedometer_Setup(playerid)
 Speedometer_Cleanup(playerid)
 {
 	// Destroy the speedometer textdraw
+	TextDrawDestroy(APlayerData[playerid][VehicleName]);
 	TextDrawDestroy(APlayerData[playerid][SpeedometerText]);
 	TextDrawDestroy(APlayerData[playerid][FuelGauge]);
 	// Kill the speedometer timer
@@ -36,12 +39,16 @@ Speedometer_Cleanup(playerid)
 public Speedometer_Update(playerid)
 {
 	// Setup local variables
-	new vehicleid, Float:speed_x, Float:speed_y, Float:speed_z, Float:final_speed, speed_string[50], final_speed_int, Float:vehiclehealth;
-	new FuelString[50], FuelStatus[20];
+	new vehicleid, vehiclemodel, Float:speed_x, Float:speed_y, Float:speed_z, Float:final_speed, speed_string[50], final_speed_int, Float:vehiclehealth;
+	new FuelString[50], VehName[30], FuelStatus[20];
 	new Msg[128], Name[24];
 
 	// Get the ID of the player's vehicle
 	vehicleid = GetPlayerVehicleID(playerid);
+	// Get the model id of the vehicle
+	vehiclemodel = GetVehicleModel(vehicleid);
+
+	GetPVarString(playerid, "VehicleName", VehName, sizeof(VehName));
 
 	//******************************************************************************************************************************
 	// Anti-hack stuff
@@ -133,6 +140,18 @@ public Speedometer_Update(playerid)
 		GetVehicleHealth(vehicleid, vehiclehealth);
 		SetPlayerHealth(playerid, vehiclehealth / 10.0);
 
+		if (isnull(VehName)) {
+			for (new i = 0; i < sizeof(ABuyableVehicles); i++)
+			{
+				// Assign the name of the vehicle based on it's model id
+				if (ABuyableVehicles[i][CarModel] == vehiclemodel) {
+					SetPVarString(playerid,"VehicleName",ABuyableVehicles[i][CarName]);
+				}
+			}
+		}
+
+		TextDrawSetString(APlayerData[playerid][VehicleName], VehName);
+
 		// Check if the speed is above 10kph and the fuel of the vehicle isn't empty yet
 		if ((final_speed_int > 10) && (AVehicleData[vehicleid][Fuel] > 0))
 			AVehicleData[vehicleid][Fuel] = AVehicleData[vehicleid][Fuel] - 1; // Decrease the fuel for this vehicle every time the timer is run
@@ -193,10 +212,12 @@ public Speedometer_Update(playerid)
 	else
 	{
 		// If the player is not inside a vehicle, display an empty string (looks like the speedometer is gone)
+		TextDrawSetString(APlayerData[playerid][VehicleName], " ");
 		TextDrawSetString(APlayerData[playerid][SpeedometerText], " ");
 		TextDrawSetString(APlayerData[playerid][FuelGauge], " ");
 		// Set the speed of the player to 0
 		APlayerData[playerid][PlayerSpeed] = 0;
+		DeletePVar(playerid, "VehicleName");
 	}
 }
 

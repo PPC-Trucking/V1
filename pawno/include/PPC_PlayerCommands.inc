@@ -1555,7 +1555,7 @@ COMMAND:warn(playerid, params[])
 
 					// Automatically kick the player if he got 3 warnings (if autokick is enabled)
 					if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
-						Kick(PlayerToWarn);
+						SetTimerEx("TimedKick", 500, false, "i", PlayerToWarn);
 				}
 				else
 				    SendClientMessage(playerid, 0xFF0000FF, "That player isn't online");
@@ -1596,7 +1596,7 @@ COMMAND:kick(playerid, params[])
 					format(ReasonMsg, 128, "Reason: %s", Reason);
 					SendClientMessage(PlayerToKick, 0xFF0000FF, ReasonMsg);
 					// Kick the player
-					Kick(PlayerToKick);
+					SetTimerEx("TimedKick", 500, false, "i", PlayerToKick);
 				}
 				else
 				    SendClientMessage(playerid, 0xFF0000FF, "That player isn't online");
@@ -1664,7 +1664,7 @@ COMMAND:ban(playerid, params[])
 					}
 
 					// Kick the player (his data will be saved)
-					Kick(PlayerToBan);
+					SetTimerEx("TimedKick", 500, false, "i", PlayerToBan);
 
 					// Inform everybody else which player was banned and for how long
 					format(Msg, 128, "%s %s has banned %s for %i days and %i hours", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days, Hours);
@@ -3274,7 +3274,7 @@ COMMAND:nos(playerid, params[])
 COMMAND:spec(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Name[24], Msg[128];
+	new OtherPlayer, Name[24], Msg[128], Float:x, Float:y, Float:z, Float:angle;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/spec", params);
@@ -3288,11 +3288,40 @@ COMMAND:spec(playerid, params[])
 			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/spec <OtherPlayer>\"");
 			else
 			{
+				if (OtherPlayer == playerid) {
+					format(Msg, 128, TXT_PlayerSelfSpectate, Name);
+					return SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				}
+				
 				// Check if that other player is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
 					// Get the player's name
 					GetPlayerName(OtherPlayer, Name, sizeof(Name));
+
+					// Get current coordinates
+					GetPlayerPos(playerid, x, y, z);
+					GetPlayerFacingAngle(playerid, angle);
+
+					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_SPECTATING) {
+						format(Msg, 128, TXT_PlayerSpectating, Name);
+						return SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					}
+
+					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_WASTED || GetPlayerState(OtherPlayer) == PLAYER_STATE_NONE)
+					{
+						format(Msg, 128, TXT_PlayerNotSpawned);
+						return SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					}
+
+					// Only save the current positon at the first time
+					if (GetPlayerState(playerid) != PLAYER_STATE_SPECTATING) {
+						APlayerData[playerid][SpectateX] = x;
+						APlayerData[playerid][SpectateY] = y;
+						APlayerData[playerid][SpectateZ] = z;
+						APlayerData[playerid][SpectateA] = angle;
+						APlayerData[playerid][Spectating] = true;
+					}
 
 				    // Turn spectating on
 				    TogglePlayerSpectating(playerid, 1);
@@ -4755,7 +4784,7 @@ COMMAND:rangeban(playerid, params[])
                         SendRconCommand(BanCmd); // Execute the command
 					}
 					// Finally kick the player (the RCon command doesn't kick you out automatically)
-					Kick(PlayerToBan);
+					SetTimerEx("TimedKick", 1000, false, "i", PlayerToBan);
 
 					// Inform everybody else which player was ip-range-banned
 					format(Msg, 128, "{808080}%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
