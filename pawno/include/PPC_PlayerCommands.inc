@@ -3288,6 +3288,11 @@ COMMAND:spec(playerid, params[])
 			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/spec <OtherPlayer>\"");
 			else
 			{
+				if (OtherPlayer == playerid) {
+					format(Msg, 128, TXT_PlayerSelfSpectate, Name);
+					return SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				}
+				
 				// Check if that other player is online
 				if (IsPlayerConnected(OtherPlayer))
 				{

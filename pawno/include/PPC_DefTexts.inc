@@ -153,6 +153,7 @@
 
 // Command related
 #define TXT_PlayerRescued "{0000FF}You've been rescued. $200 has been deducted."
+#define TXT_PlayerSelfSpectate "{FF0000}You can't spectate yourself."
 #define TXT_PlayerSpectating "{FF0000}%s is currently spectating a player. You can't teleport to him."
 #define TXT_PlayerNotSpawned "{FF0000}You can't spectate that player because he didn't spawn yet."
 
