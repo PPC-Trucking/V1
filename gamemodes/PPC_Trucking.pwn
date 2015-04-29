@@ -316,6 +316,7 @@ public OnPlayerDisconnect(playerid, reason)
 	for (new BusSlot; BusSlot < MAX_BUSINESSPERPLAYER; BusSlot++)
 		APlayerData[playerid][Business][BusSlot] = 0;
 	APlayerData[playerid][CurrentHouse] = 0;
+	APlayerData[playerid][CurrentBusiness] = 0;
 
 	// Clear bank account info
 	APlayerData[playerid][BankPassword] = 0;
@@ -597,7 +598,8 @@ public OnPlayerSpawn(playerid)
 	SetPlayerInterior(playerid, 0);
 	// Also set a variable that tracks in which house the player currently is
 	APlayerData[playerid][CurrentHouse] = 0;
-
+	APlayerData[playerid][CurrentBusiness] = 0;
+	
 	// Disable the clock
 	TogglePlayerClock(playerid, 0);
 
