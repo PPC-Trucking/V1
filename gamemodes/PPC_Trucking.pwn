@@ -372,6 +372,13 @@ public OnPlayerDisconnect(playerid, reason)
 		{
 			AVehicleData[APlayerData[playerid][RentedVehicleID]][Components][j] = 0;
 		}
+		for (new i=0;i<MAX_PLAYERS;i++)
+		{
+			if ((IsPlayerConnected(i)) && (IsPlayerInVehicle(i,APlayerData[playerid][RentedVehicleID])))
+			{
+				RemovePlayerFromVehicle(i);
+			}
+		}
 		// Destroy the vehicle
 		DestroyVehicle(APlayerData[playerid][RentedVehicleID]);
 		// Clear the RentedVehicleID
