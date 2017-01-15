@@ -318,6 +318,13 @@ public OnPlayerDisconnect(playerid, reason)
 	APlayerData[playerid][CurrentHouse] = 0;
 	APlayerData[playerid][CurrentBusiness] = 0;
 
+	// Clear the spectacting information
+	APlayerData[playerid][Spectating] = false;
+	APlayerData[playerid][SpectateX] = -1;
+	APlayerData[playerid][SpectateY] = -1;
+	APlayerData[playerid][SpectateZ] = -1;
+	APlayerData[playerid][SpectateA] = -1;
+
 	// Clear bank account info
 	APlayerData[playerid][BankPassword] = 0;
 	APlayerData[playerid][BankLoggedIn] = false;
