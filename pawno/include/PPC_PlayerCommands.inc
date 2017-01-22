@@ -4003,7 +4003,7 @@ COMMAND:spike(playerid, params[])
 COMMAND:eject(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], AdminName[24], Msg[128], OtherPlayer;
+	new DriverName[24], AdminName[24], PlayerName[24], Msg[128], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/eject", params);
@@ -4025,14 +4025,14 @@ COMMAND:eject(playerid, params[])
 					{
 						// Get the names of the players
 						GetPlayerName(playerid, AdminName, sizeof(AdminName));
-						GetPlayerName(OtherPlayer, Name, sizeof(Name));
+						GetPlayerName(OtherPlayer, PlayerName, sizeof(PlayerName));
 						// Eject the player from the vehicle
 						RemovePlayerFromVehicle(OtherPlayer);
 						// Let the player know he's been ejected from his vehicle
 						format(Msg, 128, "{FF0000}You've been ejected from your vehicle by {FFFF00}%s", AdminName);
 						SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
 						// Inform the admin that he ejected the player
-						format(Msg, 128, "{00FF00}You've ejected {FFFF00}%s{00FF00} from his vehicle", Name);
+						format(Msg, 128, "{00FF00}You've ejected {FFFF00}%s{00FF00} from his vehicle", PlayerName);
 						SendClientMessage(playerid, 0xFFFFFFFF, Msg);
 					}
 					else
@@ -4043,7 +4043,40 @@ COMMAND:eject(playerid, params[])
 			}
 		}
 		else
-			return 0;
+		{
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/eject <OtherPlayer>\"");
+			else
+			{
+			    // Check if the player is logged in
+				if (APlayerData[OtherPlayer][LoggedIn] == true)
+				{
+					// Check if the player is driving a vehicle
+					if (GetPlayerVehicleSeat(playerid) != 0)
+					{
+						// Check if the other player is in the same vehicle
+						if (GetPlayerVehicleID(OtherPlayer) != GetPlayerVehicleID(playerid)) {
+							// Get the names of the players
+							GetPlayerName(playerid, DriverName, sizeof(DriverName));
+							GetPlayerName(OtherPlayer, PlayerName, sizeof(PlayerName));
+							// Eject the player from the vehicle
+							RemovePlayerFromVehicle(OtherPlayer);
+							// Let the player know he's been ejected from his vehicle
+							format(Msg, 128, "{FF0000}You've been ejected from the vehicle by {FFFF00}%s", DriverName);
+							SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+							// Inform the driver that he ejected the player
+							format(Msg, 128, "{00FF00}You've ejected {FFFF00}%s{00FF00} from your vehicle", PlayerName);
+							SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+						}
+						else
+							SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is not in your vehicle");
+					}
+					else
+					    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You're not the driver of a vehicle");
+				}
+				else
+				    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player isn't connected");
+			}
+		}
 	}
 	else
 	    return 0;

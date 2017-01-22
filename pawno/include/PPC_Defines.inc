@@ -992,6 +992,7 @@ new ACommands[][TCommands] =
 	{0, "/stopwork",                                   					"Ends the current job"},
 	{0, "/unclamp",                                   					"Allows a player to un-clamp his vehicles for a price"},
 	{0, "/work",														"Starts a job"},
+	{0, "/eject <OtherPlayer>",                                   		"Ejects a player from your vehicle"},
 	{1, "/asay <message>",                                   			"Admin-chat (this allows admins to chat privately)"},
 	{1, "/bike",                                   						"Spawns a bike of your choice"},
 	{1, "/boat",                                   						"Spawns a boat of your choice"},
