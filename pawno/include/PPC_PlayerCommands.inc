@@ -3142,6 +3142,8 @@ COMMAND:cleanupcars(playerid, params[])
 						{
 							// Count the cars that have been deleted
 							CarsDeleted++;
+							// Eject everyone from the vehicle
+							RemoveAllPlayersFromVehicle(vid);
 							// Delete the vehicle and clear the data
 							DestroyVehicle(vid);
 							AVehicleData[vid][Owned] = false;

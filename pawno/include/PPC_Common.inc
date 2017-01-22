@@ -565,3 +565,15 @@ HelpList_Create(playerid)
 	return 1;
 }
 
+// This function ejects all player from a specific vehicle
+RemoveAllPlayersFromVehicle(vid)
+{
+	for (new i=0;i<MAX_PLAYERS;i++)
+	{
+		if ((IsPlayerConnected(i)) && (IsPlayerInVehicle(i,vid)))
+		{
+			RemovePlayerFromVehicle(i);
+		}
+	}
+}
+

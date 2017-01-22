@@ -311,6 +311,8 @@ House_RemoveVehicles(HouseID)
 		// Check if there was a vehicle in this carslot
 		if (vid != 0)
 		{
+			// Eject everyone from the vehicle
+			RemoveAllPlayersFromVehicle(vid);
 			// Delete the vehicle and clear the data
 			DestroyVehicle(vid);
 			AHouseData[HouseID][VehicleIDs][CarSlot] = 0;
