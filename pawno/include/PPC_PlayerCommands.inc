@@ -2316,7 +2316,7 @@ COMMAND:color1(playerid, params[])
 		if (GetPlayerVehicleSeat(playerid) == 0)
 		{
 			// Check if the player is the owner of the vehicle
-			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true)
+			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
 			{
 				// Construct the colorlist
 				format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, "Black (removes paintjob)"); // Color 0
@@ -2357,7 +2357,7 @@ COMMAND:color2(playerid, params[])
 		if (GetPlayerVehicleSeat(playerid) == 0)
 		{
 			// Check if the player is the owner of the vehicle
-			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true)
+			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
 			{
 				// Construct the colorlist
 				format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, "Black"); // Color 0
