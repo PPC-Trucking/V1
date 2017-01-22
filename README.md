@@ -13,10 +13,10 @@ This is a modified version of the popular Trucking Gamemode by [PowerPC603](http
 *	Then [get the latest release](https://github.com/PPC-Trucking/V1/releases/latest) of this repository
 *	Unpack the archive into the directory where you have set up your server. Follow the structure of the folders. For example: Place files from the "gamemodes" folder **only** into the "gamemodes" folder. __Do not mix it up and pay attention to this part, since it is *very important!*__
 *	([__*__](#licensing)) Download the following plugins and place them into the "plugins" folder. If the folder does not exists in the root directory (where your "gamemodes" folder is in), create it. **And only there!**
-	*	[sscanf](http://forum.sa-mp.com/showthread.php?t=120356)
+	*	[sscanf](http://forum.sa-mp.com/showthread.php?t=570927)
 	*   [streamer](http://forum.sa-mp.com/showthread.php?t=102865)
 *   ([__*__](#licensing)) Get these files as well and put them into the ~/pawno/include folder.
-	*   [sscanf2.inc](http://forum.sa-mp.com/showthread.php?t=120356)
+	*   [sscanf2.inc](http://forum.sa-mp.com/showthread.php?t=570927)
 	*   [streamer.inc](http://forum.sa-mp.com/showthread.php?t=102865)
 	*   [zcmd.inc](http://forum.sa-mp.com/showthread.php?t=91354)
 	*   [dutils.inc](http://dracoblue.net/downloads/dutils/)
@@ -35,6 +35,7 @@ __Hint:__ You can use the [Server.cfg Generator](http://www.gta-freak.cloudns.or
 ## Credits
 *	[PowerPC603](http://forum.sa-mp.com/member.php?u=109984) - awesome Gamemode
 *	[Y_Less](http://forum.sa-mp.com/member.php?u=29176) - very handy way to handle parameters (sscanf)
+	*	Emmet_ - Thank you for re-posting the great work of Y_Less
 *	[Incognito](http://forum.sa-mp.com/member.php?u=925) - abbility to use more objects than usually possible (streamer)
 *	Zeex - quick and nice solution to create commands (zcmd)
 *	[DracoBlue](http://forum.sa-mp.com/member.php?u=389) - easy way saving and loading information (dutils)
