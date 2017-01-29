@@ -1,6 +1,8 @@
 // Define the time in days where the auto-evict system should auto-evict player's properties
 #define AutoEvictTime   2
 
+new FileContent[100][100];
+
 // Setup a custom type that holds all data about the auto-evict system
 enum TAutoEvict
 {
