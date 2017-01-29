@@ -806,6 +806,9 @@ BusinessFile_Load(BusID)
 			}
 			if (strcmp(ParameterName, "Owner", false) == 0) // If the parametername is correct ("Owner")
 			    format(ABusinessData[BusID][Owner], 24, ParameterValue);
+			
+			if (strcmp(ParameterName, "AutoEvictDays", false) == 0) // If the parametername is correct ("AutoEvictDays")
+				ABusinessData[BusID][AutoEvictDays] = strval(ParameterValue); // Store the AutoEvictDays
 
             // Read the next line of the file
 			fread(BFile, LineFromFile);
@@ -844,6 +847,10 @@ BusinessFile_Save(BusID)
 	format(LineForFile, 100, "BusinessLevel %i\r\n", ABusinessData[BusID][BusinessLevel]); // Construct the line: "BusinessLevel <BusinessLevel>"
 	fwrite(BFile, LineForFile); // And save it to the file
 	format(LineForFile, 100, "LastTransaction %i\r\n", ABusinessData[BusID][LastTransaction]); // Construct the line: "LastTransaction <LastTransaction>"
+	fwrite(BFile, LineForFile); // And save it to the file
+
+	ABusinessData[BusID][AutoEvictDays] = AutoEvict[AEDays]; // Update the AutoEvictDays for this business when the player logs out
+	format(LineForFile, 100, "AutoEvictDays %i\r\n", AutoEvict[AEDays]); // Construct the line: "AutoEvictDays <AutoEvictDays>"
 	fwrite(BFile, LineForFile); // And save it to the file
 
 	if (ABusinessData[BusID][Owned] == true) // Check if the house is owned
