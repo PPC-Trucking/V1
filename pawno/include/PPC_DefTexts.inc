@@ -65,7 +65,7 @@
 #define TXT_DialogPlaneTitle "Choose a plane (page %i):"
 #define TXT_DialogTrailerTitle "Choose a trailer (page %i):"
 #define TXT_PlayerSpawnedVehicle "{00FF00}%s spawned vehicle-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f"
-#define TXT_ChangedWeather "{00FF00}You've changed the weather")
+#define TXT_ChangedWeather "{00FF00}You've changed the weather"
 #define TXT_DialogCommandTitle "List of commands (page %i):"
 
 // Trucker related

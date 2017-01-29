@@ -20,7 +20,7 @@ new ExitHouseTimer = 1000;
 new ExitBusinessTimer = 1000;
 
 // This allows you to toggle the red houses on the map (bought houses appear on the map as red house icons when this is set to "true")
-new bool:ShowBoughtHouses = false;
+new bool:ShowBoughtHouses = true;
 
 // Define maximum fuel amount (default: 5000) and maximum price for a complete refuel (default: 1000)
 // Changing MaxFuel changes how fast a vehicle will run without fuel
@@ -32,13 +32,13 @@ new RefuelMaxPrice = 1000;
 
 // Define housing parameters
 #define MAX_HOUSES					2000 // Defines the maximum number of houses that can be created
-#define MAX_HOUSESPERPLAYER			2 // Defines the maximum number of houses that any player can own
+#define MAX_HOUSESPERPLAYER			200 // Defines the maximum number of houses that any player can own
 #define HouseUpgradePercent         100 // Defines the percentage for upgrading a house (house of 10m can be upgraded for 5m when set to 50)
 #define ParkRange                   150.0 // Defines the range for parking the vehicle around the house (default = 150m)
 
 // Define business parameters
 #define MAX_BUSINESS                1000 // Defines the maximum number of businesses that can be created
-#define MAX_BUSINESSPERPLAYER		2 // Defines the maximum number of businesses that any player can own
+#define MAX_BUSINESSPERPLAYER		20 // Defines the maximum number of businesses that any player can own
 
 // Defines for the toll-system
 #define MAX_TOLLGATES				20
@@ -47,24 +47,21 @@ new RefuelMaxPrice = 1000;
 #define MAX_SPIKESTRIPS             10 // Defines a maximum of 10 spikestrips
 
 // Defines for the speedcameras
-#define MAX_CAMERAS					100
+#define MAX_CAMERAS					120
 
 // Defines for police
-new bool:PoliceGetsWeapons = false;
+new bool:PoliceGetsWeapons = true;
 // These are the weapons that a police player will get when "PoliceGetsWeapons = true"
-// 5 = Baseball Bat
-// 24 = Desert Eagle
-// 25 = Shotgun
-// 28 = Micro SMG
-// 30 = AK-47
-// 34 = Sniper Rifle
-// 38 = Minigun
-// 39 = Satchel Charge
-// 41 = Spraycan
-// 10 = Purple Dildo
-// 46 = Parachute
+// 3 = Nightstick (WEAPON_NITESTICK)
+// 17 = Tear Gas (WEAPON_TEARGAS)
+// 22 = 9mm (WEAPON_COLT45)
+// 25 = Shotgun (WEAPON_SHOTGUN)
+// 29 = MP5 (WEAPON_MP5)
+// 33 = Country Rifle (WEAPON_RIFLE)
+// 41 = Spraycan (WEAPON_SPRAYCAN)
+
 // 40 = Detonator
-new APoliceWeapons[12] = {5, 24, 25, 28, 30, 34, 38, 39, 41, 10, 46, 40};
+new APoliceWeapons[7] = {WEAPON_NITESTICK, WEAPON_TEARGAS, WEAPON_COLT45, WEAPON_SHOTGUN, WEAPON_MP5, WEAPON_RIFLE, WEAPON_SPRAYCAN};
 new PoliceWeaponsAmmo = 5000;
 
 

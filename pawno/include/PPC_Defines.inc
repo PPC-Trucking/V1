@@ -253,7 +253,8 @@ new TotalCameras;
 // A variable that holds the total amount of businesses loaded
 new TotalBusiness;
 
-
+// Will hold the remaining time (in minutes) for a server-restart
+new RestartTime;
 
 // This variable holds the number of the last TimedMessage that was sent to all players
 new LastTimedMessage;
@@ -405,10 +406,12 @@ enum TVehicleData
 	Color2, // Holds the secundairy color for this vehicle
 	NeonLeft, // Holds the neon-object on the left side
 	NeonRight, // Holds the neon-object on the right side
+	NeonObjectModel, // Holds the object-model of the neons applied to the vehicle
 	Float:SpawnX, // Holds the X-coordinate of the parking spot for this vehicle
 	Float:SpawnY, // Holds the Y-coordinate of the parking spot for this vehicle
 	Float:SpawnZ, // Holds the Z-coordinate of the parking spot for this vehicle
 	Float:SpawnRot, // Holds the rotation of the parking spot for this vehicle
+	Text3D:VehicleText, // holds a reference to the 3D text label on an owned vehicle
 	bool:Clamped // Holds "true" if the vehicle is clamped by an admin
 }
 // Setup an array which holds all data for every vehicleid, max 2000 vehicles (server limit)
@@ -430,6 +433,7 @@ enum TBusinessData
 	BusinessType, // Holds the type of business (well stacked pizza, burger shot, ...), this defines which icon and interior to use
 	BusinessLevel, // Holds the level of upgrades the business has
 	LastTransaction, // Holds the amount of minutes when the last transaction took place (buying the business or retrieving the money by the owner)
+	AutoEvictDays, // Holds the amount of days where the player last logged in
 	bool:Owned, // Holds true if the Business is owned by somebody
 	Owner[24] // Holds the name of the owner of the Business
 }
@@ -456,6 +460,7 @@ enum THouseData
 	HouseLevel, // Holds the level of upgrades the house has (also defines how many vehicles can currently be added to the house)
 	HouseMaxLevel, // Holds the maximum level this house can be upgraded to
 	HousePrice, // Holds the price for buying the house, the same price applies when upgrading a house per level
+	AutoEvictDays, // Holds the amount of days where the player last logged in
 	bool:Owned, // Holds true if the house is owned by somebody
 	Owner[24], // Holds the name of the owner of the house
 	bool:HouseOpened, // Holds true if the house is open to the public (anyone can enter), false means: only the owner can enter it
