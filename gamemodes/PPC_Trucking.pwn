@@ -66,7 +66,7 @@ new PlayersBeforePolice	= 0;
 #include <PPC_Dialogs>
 #include <PPC_PlayerCommands>
 #include <PPC_Toll>
-// #include <servers/PPC-V1/PPC_Extras> /* !! uncomment this line if you want to use additional features !! */
+// #include <PPC_Extras> /* !! uncomment this line if you want to use additional features !! */
 
 
 
