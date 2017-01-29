@@ -309,7 +309,7 @@ HouseFile_Load(HouseID, bool:OnlyLoadVehicles = false)
 {
 	new file[100], File:HFile, LineFromFile[100], ParameterName[50], ParameterValue[50];
 	// Setup local variables
-	new cModel, cPaint, components[14], Float:cx, Float:cy, Float:cz, Float:crot, Col1, Col2, vid, bool:VehicleClamped, cFuel = -1;
+	new cModel, cPaint, components[14], Float:cx, Float:cy, Float:cz, Float:crot, Col1, Col2, vid, bool:VehicleClamped, cFuel = -1, Neons;
 
 	format(file, sizeof(file), HouseFile, HouseID); // Construct the complete filename for this house-file
 
@@ -360,6 +360,8 @@ HouseFile_Load(HouseID, bool:OnlyLoadVehicles = false)
 				    format(AHouseData[HouseID][Owner], 24, ParameterValue);
 				if (strcmp(ParameterName, "Insurance", false) == 0) // If the parametername is correct ("Insurance")
 					AHouseData[HouseID][Insurance] = strval(ParameterValue); // Store the Insurance
+				if (strcmp(ParameterName, "AutoEvictDays", false) == 0) // If the parametername is correct ("AutoEvictDays")
+					AHouseData[HouseID][AutoEvictDays] = strval(ParameterValue); // Store the AutoEvictDays
 			}
 			else // OnlyLoadVehicles is "true", so only read the vehicle-data
 			{
@@ -369,6 +371,7 @@ HouseFile_Load(HouseID, bool:OnlyLoadVehicles = false)
 				    cModel = 0;
 				    cPaint = 0;
 				    cFuel = -1;
+				    Neons = 0;
 				    for (new i; i < 14; i++)
 				        components[i] = 0;
 				}
@@ -420,6 +423,8 @@ HouseFile_Load(HouseID, bool:OnlyLoadVehicles = false)
 					cz = floatstr(ParameterValue); // Store the VehicleZ
 				if (strcmp(ParameterName, "VehicleAngle", false) == 0) // If the parametername is correct ("VehicleAngle")
 					crot = floatstr(ParameterValue); // Store the VehicleAngle
+				if (strcmp(ParameterName, "NeonsApplied", false) == 0) // If the parametername is correct ("NeonsApplied")
+					Neons = strval(ParameterValue); // Store the NeonsApplied
 
 				if (strcmp(ParameterName, "Clamped", false) == 0) // If the parametername is correct ("Clamped")
 				{
@@ -441,6 +446,15 @@ HouseFile_Load(HouseID, bool:OnlyLoadVehicles = false)
 					// Now add the vehicle to the house and set it's data
 					vid = House_AddVehicle(HouseID, cModel, cPaint, components, cx, cy, cz, crot, Col1, Col2);
 					AVehicleData[vid][Clamped] = VehicleClamped;
+					// Apply the neons if they have been loaded
+					if (Neons != 0)
+					{
+						AVehicleData[vid][NeonObjectModel] = Neons;
+					    AVehicleData[vid][NeonLeft] = CreateObject(AVehicleData[vid][NeonObjectModel],0,0,0,0,0,0);
+					    AVehicleData[vid][NeonRight] = CreateObject(AVehicleData[vid][NeonObjectModel],0,0,0,0,0,0);
+						AttachObjectToVehicle(AVehicleData[vid][NeonLeft], vid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
+						AttachObjectToVehicle(AVehicleData[vid][NeonRight], vid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
+					}
 					// Also set the fuel (set it to maximum when the fuel parameter wasn't inside the file)
 					if (cFuel == -1)
 						AVehicleData[vid][Fuel] = MaxFuel;
@@ -515,6 +529,10 @@ HouseFile_Save(HouseID)
 	format(LineForFile, 100, "Insurance %i\r\n", AHouseData[HouseID][Insurance]); // Construct the line: "Insurance <Insurance>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
+	AHouseData[HouseID][AutoEvictDays] = AutoEvict[AEDays]; // Update the AutoEvictDays for this house when the player logs out
+	format(LineForFile, 100, "AutoEvictDays %i\r\n", AutoEvict[AEDays]); // Construct the line: "AutoEvictDays <AutoEvictDays>"
+	fwrite(HFile, LineForFile); // And save it to the file
+
 
 
 	// Save the vehicle-data for every vehicle added to the house
@@ -578,7 +596,9 @@ HouseFile_Save(HouseID)
 			fwrite(HFile, LineForFile); // And save it to the file
 		    format(LineForFile, 100, "VehicleAngle %f\r\n", AVehicleData[vid][SpawnRot]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
 			fwrite(HFile, LineForFile); // And save it to the file
-
+			format(LineForFile, 100, "NeonsApplied %i\r\n", AVehicleData[vid][NeonObjectModel]); // Construct the line: "NeonsApplied <NeonsApplied>"
+			fwrite(HFile, LineForFile); // And save it to the file
+			
 			if (AVehicleData[vid][Clamped] == true)
 			    format(LineForFile, 100, "Clamped Yes\r\n"); // Construct the line: "Clamped <Yes>"
 			else

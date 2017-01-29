@@ -204,7 +204,7 @@ House_UpdateEntrance(HouseID)
 House_AddVehicle(HouseID, cModel, cPaint, cComponents[], Float:cx, Float:cy, Float:cz, Float:crot, Col1, Col2)
 {
 	// Setup local variables
-	new vid, CarSlot;
+	new vid, CarSlot, vText[128];
 
 	// Get a free carslot from the house
 	CarSlot = House_GetFreeCarSlot(HouseID);
@@ -251,6 +251,9 @@ House_AddVehicle(HouseID, cModel, cPaint, cComponents[], Float:cx, Float:cy, Flo
 		format(AVehicleData[vid][Owner], 24, AHouseData[HouseID][Owner]);
 		// Save the HouseID for the vehicle
 		AVehicleData[vid][BelongsToHouse] = HouseID;
+		// Add a 3DText label to the vehicle, displaying the name of the owner
+        format(vText, sizeof(vText), "Vehicle owned by: \n%s", AVehicleData[vid][Owner]);
+        AVehicleData[vid][VehicleText] = CreateDynamic3DTextLabel(vText, 0xFFFFFF, 0.0, 0.0, 0.0, 80.0, INVALID_PLAYER_ID, vid);
 	}
 	else // No free carslot was found, return 0
 		return 0;
@@ -263,7 +266,7 @@ House_AddVehicle(HouseID, cModel, cPaint, cComponents[], Float:cx, Float:cy, Flo
 House_ReplaceVehicle(HouseID, CarSlot)
 {
 	// Setup local variables
-	new vid, cModel, cPaint, cComponents[14], Float:cx, Float:cy, Float:cz, Float:crot, Col1, Col2, Float:Health, cFuel;
+	new vid, cModel, cPaint, cComponents[14], Float:cx, Float:cy, Float:cz, Float:crot, Col1, Col2, Float:Health, cFuel, Neons;
 	new panels, doors, lights, tires;
 
 	// Get the data from the already existing vehicle that was parked before
@@ -279,8 +282,19 @@ House_ReplaceVehicle(HouseID, CarSlot)
 	cy = AVehicleData[vid][SpawnY];
 	cz = AVehicleData[vid][SpawnZ];
 	crot = AVehicleData[vid][SpawnRot];
+	Neons = AVehicleData[vid][NeonObjectModel];
 	GetVehicleHealth(vid, Health);
 	GetVehicleDamageStatus(vid, panels, doors, lights, tires);
+
+	// Remove neons
+	if (AVehicleData[vid][NeonObjectModel] != 0)
+	{
+        DestroyObject(AVehicleData[vid][NeonLeft]);
+        DestroyObject(AVehicleData[vid][NeonRight]);
+        AVehicleData[vid][NeonLeft] = 0;
+        AVehicleData[vid][NeonRight] = 0;
+		AVehicleData[vid][NeonObjectModel] = 0;
+	}
 
 	// Delete the vehicle and clear the data
 	Vehicle_Delete(vid);
@@ -292,6 +306,15 @@ House_ReplaceVehicle(HouseID, CarSlot)
 	// Update the health to what it was before and update the bodywork
 	SetVehicleHealth(vid, Health);
 	UpdateVehicleDamageStatus(vid, panels, doors, lights, tires);
+	// Re-apply the neons if they were there
+	if (Neons != 0)
+	{
+		AVehicleData[vid][NeonObjectModel] = Neons;
+	    AVehicleData[vid][NeonLeft] = CreateObject(AVehicleData[vid][NeonObjectModel],0,0,0,0,0,0);
+	    AVehicleData[vid][NeonRight] = CreateObject(AVehicleData[vid][NeonObjectModel],0,0,0,0,0,0);
+		AttachObjectToVehicle(AVehicleData[vid][NeonLeft], vid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
+		AttachObjectToVehicle(AVehicleData[vid][NeonRight], vid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
+	}
 
 	return vid;
 }
@@ -327,6 +350,17 @@ House_RemoveVehicles(HouseID)
 			AVehicleData[vid][SpawnZ] = 0.0;
 			AVehicleData[vid][SpawnRot] = 0.0;
 			AVehicleData[vid][BelongsToHouse] = 0;
+			DestroyDynamic3DTextLabel(AVehicleData[vid][VehicleText]);
+
+			// Remove neons
+			if (AVehicleData[vid][NeonObjectModel] != 0)
+			{
+		        DestroyObject(AVehicleData[vid][NeonLeft]);
+		        DestroyObject(AVehicleData[vid][NeonRight]);
+		        AVehicleData[vid][NeonLeft] = 0;
+		        AVehicleData[vid][NeonRight] = 0;
+				AVehicleData[vid][NeonObjectModel] = 0;
+			}
 		}
 	}
 }

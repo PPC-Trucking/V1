@@ -361,7 +361,7 @@ stock AntiHack(playerid)
 	}
 	else // Extended check to allow parachute
 	{
-		if (GetPlayerWeapon(playerid) != 46) // Check if the current weapons isn't a parachute (ID: 46)
+		if (GetPlayerWeapon(playerid) != WEAPON_PARACHUTE) // Check if the current weapons isn't a parachute (ID: 46 (WEAPON_PARACHUTE))
 			ResetPlayerWeapons(playerid); // If it's not, remove weapon
 	}
 

@@ -87,6 +87,7 @@ Vehicle_Delete(vid)
 	AVehicleData[vid][SpawnZ] = 0.0;
 	AVehicleData[vid][SpawnRot] = 0.0;
 	AVehicleData[vid][BelongsToHouse] = 0;
+	DestroyDynamic3DTextLabel(AVehicleData[vid][VehicleText]);
 }
 
 // This function returns "1" if both locations are not closeby and returns "0" if both locations are close to eachother

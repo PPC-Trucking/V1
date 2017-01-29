@@ -2849,6 +2849,9 @@ COMMAND:stats(playerid, params[])
 // Restarts the server
 COMMAND:restart(playerid, params[])
 {
+	// Setup local variables
+	new Msg[128];
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/restart", params);
 
@@ -2858,11 +2861,16 @@ COMMAND:restart(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			// Let everyone know that the server will be restarted in 2 minutes
-			GameTextForAll("Server restart in 2 minutes!", 5000, 3);
-			SendClientMessageToAll(0xA0A0A0, "Server restart in 2 minutes!");
-			// Start the next timer which warns the players again that server will be restarted in 1 minute
-			SetTimer("Timer_Restart_WarnPlayers", 1000 * 60, false);
+			if (sscanf(params, "i", RestartTime)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/restart <RestartTime (minutes)>\"");
+			else
+			{
+				// Let everyone know that the server will be restarted in "RestartTime" minutes (provided by the admin)
+			    format(Msg, 128, "Server restart in %i minutes!", RestartTime);
+				GameTextForAll(Msg, 5000, 3);
+				SendClientMessageToAll(0xA0A0A0, Msg);
+				// Start the next timer which warns the players again every minute
+				SetTimer("Timer_Restart", 1000 * 60, true);
+			}
 		}
 		else
 		    return 0;
@@ -2874,34 +2882,41 @@ COMMAND:restart(playerid, params[])
 	return 1;
 }
 
-forward Timer_Restart_WarnPlayers();
-public Timer_Restart_WarnPlayers()
+forward Timer_Restart();
+public Timer_Restart()
 {
-	// Let everyone know that the server will be restarted in 1 minutes
-	GameTextForAll("Server restart in 1 minute!", 5000, 3);
-	SendClientMessageToAll(0xA0A0A0, "Server restart in 1 minutes!");
-	// Start the next timer
-	SetTimer("Timer_Restart_Kick", 1000 * 60, false);
-	// Change the hostname of the server and it's password
-	SendRconCommand("hostname Pending Restart");
-	SendRconCommand("password loafkagakggoagka");
+	// Setup local variables
+	new Msg[128];
 
-	return 1;
-}
+	// Decrease the RestartTime by one minute
+	RestartTime--;
 
-forward Timer_Restart_Kick();
-public Timer_Restart_Kick()
-{
-	// Let everyone know that the server is kicking all players before restarting
-	GameTextForAll("Server restarting:Kicking all players!", 5000, 3);
-	// Kick all players
-	for(new i; i < MAX_PLAYERS; i++)
-		Kick(i);
+	// Let everyone know that the server will be restarted in 2 minutes
+    format(Msg, 128, "Server restart in %i minutes!", RestartTime);
+	GameTextForAll(Msg, 5000, 3);
+	SendClientMessageToAll(0xA0A0A0, Msg);
 
-	// Start the next timer that will restart the server
-	SetTimer("Timer_Restart_Reboot", 1000 * 5, false);
+	// Do different things based on the remaining time
+	switch (RestartTime)
+	{
+		case 1: // One minute left
+		{
+			// Change the hostname of the server and change the server password to something weird
+			SendRconCommand("hostname Pending Restart");
+			SendRconCommand("password loafkagakggoagka");
+		}
+		case 0:
+		{
+			// Let everyone know that the server is kicking all players before restarting
+			GameTextForAll("Server restarting:Kicking all players!", 5000, 3);
+			// Kick all players
+			for(new i; i < MAX_PLAYERS; i++)
+				Kick(i);
 
-	return 1;
+			// Start the next timer that will restart the server
+			SetTimer("Timer_Restart_Reboot", 1000 * 5, false);
+		}
+	}
 }
 
 forward Timer_Restart_Reboot();
@@ -4999,6 +5014,28 @@ COMMAND:neon(playerid, params[])
 		}
 		else
 		    SendClientMessage(playerid, 0xFF0000FF, "You're not the driver of a vehicle");
+	}
+	else
+	    return 0;
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
+// This command shows the current bonus mission
+COMMAND:bonus(playerid, params[])
+{
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/bonus", params);
+
+	// Check if the player has logged in
+	if (APlayerData[playerid][LoggedIn] == true)
+	{
+		// Check if the player is a trucker
+		if (APlayerData[playerid][PlayerClass] == ClassTruckDriver)
+			ShowRandomBonusMission(); // Show the bonus mission again for all truckers (and perhaps generate a new one)
+		else
+		    return 0;
 	}
 	else
 	    return 0;

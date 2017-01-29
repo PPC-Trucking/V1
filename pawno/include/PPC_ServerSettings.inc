@@ -32,7 +32,7 @@ new RefuelMaxPrice = 1000;
 
 // Define housing parameters
 #define MAX_HOUSES					2000 // Defines the maximum number of houses that can be created
-#define MAX_HOUSESPERPLAYER			200 // Defines the maximum number of houses that any player can own
+#define MAX_HOUSESPERPLAYER			20 // Defines the maximum number of houses that any player can own
 #define HouseUpgradePercent         100 // Defines the percentage for upgrading a house (house of 10m can be upgraded for 5m when set to 50)
 #define ParkRange                   150.0 // Defines the range for parking the vehicle around the house (default = 150m)
 

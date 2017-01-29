@@ -801,13 +801,14 @@ Dialog_Neon(playerid, response, listitem)
 	if (listitem != 7)
 	{
 		// Check if the vehicle already has neon lights attached
-	    if (AVehicleData[vehicleid][NeonLeft] != 0)
+	    if (AVehicleData[vehicleid][NeonObjectModel] != 0)
 	    {
 	        // Delete the current neon-lights and clear the variables
             DestroyObject(AVehicleData[vehicleid][NeonLeft]);
             DestroyObject(AVehicleData[vehicleid][NeonRight]);
             AVehicleData[vehicleid][NeonLeft] = 0;
             AVehicleData[vehicleid][NeonRight] = 0;
+            AVehicleData[vehicleid][NeonObjectModel] = 0;
 	    }
 	}
 
@@ -816,6 +817,7 @@ Dialog_Neon(playerid, response, listitem)
 	{
 	    AVehicleData[vehicleid][NeonLeft] = CreateObject(18646,0,0,0,0,0,0);
 	    AVehicleData[vehicleid][NeonRight] = CreateObject(18646,0,0,0,0,0,0);
+	    AVehicleData[vehicleid][NeonObjectModel] = 18646;
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonLeft], vehicleid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonRight], vehicleid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		GameTextForPlayer(playerid, "~p~Police lights~w~ have been added to your vehicle", 3500, 5);
@@ -825,6 +827,7 @@ Dialog_Neon(playerid, response, listitem)
 	{
 	    AVehicleData[vehicleid][NeonLeft] = CreateObject(18647,0,0,0,0,0,0);
 	    AVehicleData[vehicleid][NeonRight] = CreateObject(18647,0,0,0,0,0,0);
+	    AVehicleData[vehicleid][NeonObjectModel] = 18647;
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonLeft], vehicleid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonRight], vehicleid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		GameTextForPlayer(playerid, "~p~Red lights~w~ have been added to your vehicle", 3500, 5);
@@ -834,6 +837,7 @@ Dialog_Neon(playerid, response, listitem)
 	{
 	    AVehicleData[vehicleid][NeonLeft] = CreateObject(18648,0,0,0,0,0,0);
 	    AVehicleData[vehicleid][NeonRight] = CreateObject(18648,0,0,0,0,0,0);
+	    AVehicleData[vehicleid][NeonObjectModel] = 18648;
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonLeft], vehicleid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonRight], vehicleid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		GameTextForPlayer(playerid, "~p~Blue lights~w~ have been added to your vehicle", 3500, 5);
@@ -843,6 +847,7 @@ Dialog_Neon(playerid, response, listitem)
 	{
 	    AVehicleData[vehicleid][NeonLeft] = CreateObject(18649,0,0,0,0,0,0);
 	    AVehicleData[vehicleid][NeonRight] = CreateObject(18649,0,0,0,0,0,0);
+	    AVehicleData[vehicleid][NeonObjectModel] = 18649;
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonLeft], vehicleid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonRight], vehicleid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		GameTextForPlayer(playerid, "~p~Green lights~w~ have been added to your vehicle", 3500, 5);
@@ -852,6 +857,7 @@ Dialog_Neon(playerid, response, listitem)
 	{
 	    AVehicleData[vehicleid][NeonLeft] = CreateObject(18650,0,0,0,0,0,0);
 	    AVehicleData[vehicleid][NeonRight] = CreateObject(18650,0,0,0,0,0,0);
+	    AVehicleData[vehicleid][NeonObjectModel] = 18650;
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonLeft], vehicleid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonRight], vehicleid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		GameTextForPlayer(playerid, "~p~Yellow lights~w~ have been added to your vehicle", 3500, 5);
@@ -861,6 +867,7 @@ Dialog_Neon(playerid, response, listitem)
 	{
 	    AVehicleData[vehicleid][NeonLeft] = CreateObject(18651,0,0,0,0,0,0);
 	    AVehicleData[vehicleid][NeonRight] = CreateObject(18651,0,0,0,0,0,0);
+	    AVehicleData[vehicleid][NeonObjectModel] = 18651;
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonLeft], vehicleid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonRight], vehicleid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		GameTextForPlayer(playerid, "~p~Pink lights~w~ have been added to your vehicle", 3500, 5);
@@ -870,6 +877,7 @@ Dialog_Neon(playerid, response, listitem)
 	{
 	    AVehicleData[vehicleid][NeonLeft] = CreateObject(18652,0,0,0,0,0,0);
 	    AVehicleData[vehicleid][NeonRight] = CreateObject(18652,0,0,0,0,0,0);
+	    AVehicleData[vehicleid][NeonObjectModel] = 18652;
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonLeft], vehicleid, -0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		AttachObjectToVehicle(AVehicleData[vehicleid][NeonRight], vehicleid, 0.8, 0.0, -0.70, 0.0, 0.0, 0.0);
 		GameTextForPlayer(playerid, "~p~White lights~w~ have been added to your vehicle", 3500, 5);
@@ -882,6 +890,7 @@ Dialog_Neon(playerid, response, listitem)
         DestroyObject(AVehicleData[vehicleid][NeonRight]);
         AVehicleData[vehicleid][NeonLeft] = 0;
         AVehicleData[vehicleid][NeonRight] = 0;
+        AVehicleData[vehicleid][NeonObjectModel] = 0;
 		GameTextForPlayer(playerid, "Neons have been removed from your vehicle", 3500, 5);
 	}
 
@@ -1058,7 +1067,7 @@ Dialog_Weather(playerid, response, listitem)
 	// Set the weather
     SetWeather(WeatherID);
     // Inform the player about it
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_ChangedWeather;
+	SendClientMessage(playerid, 0xFFFFFFFF, TXT_ChangedWeather);
 
 	return 1;
 }
@@ -1285,7 +1294,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 			    new BuyableCarIndex, bool:HouseHasCars = false;
 
 				// Check if the house has any cars assigned to it
-				for (CarSlot = 0; CarSlot < 5; CarSlot++)
+				for (CarSlot = 0; CarSlot < 10; CarSlot++)
 				    if (AHouseData[HouseID][VehicleIDs][CarSlot] != 0)
 				        HouseHasCars = true;
 
@@ -1687,6 +1696,7 @@ Dialog_SellCar(playerid, response, listitem)
 		AVehicleData[vid][SpawnY] = 0.0;
 		AVehicleData[vid][SpawnZ] = 0.0;
 		AVehicleData[vid][SpawnRot] = 0.0;
+		DestroyDynamic3DTextLabel(AVehicleData[vid][VehicleText]);
 
 		// Refund the player with 50% of the vehicle's buying price
 		APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] + (ABuyableVehicles[BuyableCarIndex][Price] / 2);

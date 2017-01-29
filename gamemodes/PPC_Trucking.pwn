@@ -116,6 +116,7 @@ public OnGameModeInit()
 	// While the gamemode starts, start the global timer, and run it every second
 	SetTimer("GlobalTimer", 1000, true);
 
+	// Load the auto-evict-time and start the auto-evict timer (it runs every minute)
 	AutoEvict_Load();
 	SetTimer("AutoEvictTimer", 60 * 1000, true);
 
@@ -185,7 +186,7 @@ public OnPlayerConnect(playerid)
 	if (APlayerData[playerid][RulesRead] == false)
 	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You haven't accepted the {FFFF00}/rules{FF0000} yet");
 	
-	Setup local variables
+	// Setup local variables
 	new BusID;
 	// Update the AutoEvict-time for this player's houses and businesses
 	for (new HouseSlot; HouseSlot < MAX_HOUSESPERPLAYER; HouseSlot++)

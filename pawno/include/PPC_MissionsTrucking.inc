@@ -163,7 +163,7 @@ public Trucker_LoadUnload(playerid)
 					if (RandomBonusMission[RandomStartLoc] == APlayerData[playerid][JobLoc1])
 						if (RandomBonusMission[RandomEndLoc] == APlayerData[playerid][JobLoc2])
 						{
-						    Payment = Payment * 2; // Double the payment is the player was the first to do the bonus mission
+						    Payment = Payment * 2; // Double the payment if the player was the first to do the bonus mission
                             RandomBonusMission[MissionFinished] = true; // Only one player can do the bonus mission, a new one is chosen next
 							format(BonusMsg, 128, "{00BBFF}Player {FFBB00}%s{00BBFF} has finished the bonus mission", Name);
 							SendClientMessageToAll(0xFFFFFFFF, BonusMsg);
