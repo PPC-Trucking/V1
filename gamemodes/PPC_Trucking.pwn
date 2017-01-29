@@ -47,6 +47,7 @@ new PlayersBeforePolice	= 0;
 #include <PPC_DefTrailers>
 #include <PPC_DefBuyableVehicles>
 // Include functions for this gamemode
+#include <PPC_AutoEvict>
 #include <PPC_GlobalTimer>
 #include <PPC_Common>
 #include <PPC_Housing>
@@ -115,11 +116,8 @@ public OnGameModeInit()
 	// While the gamemode starts, start the global timer, and run it every second
 	SetTimer("GlobalTimer", 1000, true);
 
-	// Load the auto-evict-time and start the auto-evict timer (it runs every minute)
-	// !! uncomment the following two lines if you want to use additional features !!
-
-	// AutoEvict_Load();
-	// SetTimer("AutoEvictTimer", 60 * 1000, true);
+	AutoEvict_Load();
+	SetTimer("AutoEvictTimer", 60 * 1000, true);
 
 	return 1;
 }
@@ -186,28 +184,26 @@ public OnPlayerConnect(playerid)
 	// Display a message if the player hasn't accepted the rules yet
 	if (APlayerData[playerid][RulesRead] == false)
 	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You haven't accepted the {FFFF00}/rules{FF0000} yet");
-
-	// !! uncomment the following lines (NOT THE COMMENTS!!) if you want to use additional features !!
 	
-	// Setup local variables - don't uncomment!
-	// new BusID;
-	// Update the AutoEvict-time for this player's houses and businesses - don't uncomment!
-	// for (new HouseSlot; HouseSlot < MAX_HOUSESPERPLAYER; HouseSlot++)
-	// {
-	// Get the HouseID from this slot - don't uncomment!
-	// 	HouseID = APlayerData[playerid][Houses][HouseSlot];
-	// Check if there is a house in this slot - don't uncomment!
-	// 	if (HouseID != 0)
-	// 		AHouseData[HouseID][AutoEvictDays] = AutoEvict[AEDays];
-	// }
-	// for (new BusSlot; BusSlot < MAX_BUSINESSPERPLAYER; BusSlot++)
-	// {
-	// Get the BusID from this slot - don't uncomment!
-	// 	BusID = APlayerData[playerid][Business][BusSlot];
-	// Check if there is a business in this slot - don't uncomment!
-	// 	if (BusID != 0)
-	// 		ABusinessData[BusID][AutoEvictDays] = AutoEvict[AEDays];
-	// }
+	Setup local variables
+	new BusID;
+	// Update the AutoEvict-time for this player's houses and businesses
+	for (new HouseSlot; HouseSlot < MAX_HOUSESPERPLAYER; HouseSlot++)
+	{
+	// Get the HouseID from this slot
+		HouseID = APlayerData[playerid][Houses][HouseSlot];
+	// Check if there is a house in this slot
+		if (HouseID != 0)
+			AHouseData[HouseID][AutoEvictDays] = AutoEvict[AEDays];
+	}
+	for (new BusSlot; BusSlot < MAX_BUSINESSPERPLAYER; BusSlot++)
+	{
+	// Get the BusID from this slot
+		BusID = APlayerData[playerid][Business][BusSlot];
+	// Check if there is a business in this slot
+		if (BusID != 0)
+			ABusinessData[BusID][AutoEvictDays] = AutoEvict[AEDays];
+	}
 
 	return 1;
 }
