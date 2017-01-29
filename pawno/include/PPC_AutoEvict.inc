@@ -213,7 +213,7 @@ AutoEvict_Save()
 }
 
 // This function will delete the given house from the server and from the owner's account (if it has an owner)
-House_Delete(HouseID)
+stock House_Delete(HouseID)
 {
 	// Setup local variables
 	new file[100], Msg[128], Name[24], bool:PlayerOnline = false;
@@ -352,7 +352,7 @@ House_Evict(HouseID)
 }
 
 // This function will delete the given business from the server and from the owner's account (if it has an owner)
-Business_Delete(BusID)
+stock Business_Delete(BusID)
 {
 	// Setup local variables
 	new file[100], Msg[128], Name[24], bool:PlayerOnline = false;
