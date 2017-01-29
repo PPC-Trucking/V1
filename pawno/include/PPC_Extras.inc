@@ -1,6 +1,5 @@
 
 // Setup a global array to be used for loading player-file data
-new FileContent[100][100];
 new PropertyList[5000];
 
 
