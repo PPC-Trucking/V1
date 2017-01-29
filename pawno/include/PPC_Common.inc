@@ -565,6 +565,13 @@ HelpList_Create(playerid)
 	return 1;
 }
 
+forward TimedKick(playerid);
+public TimedKick(playerid)
+{
+    Kick(playerid);
+    return 1;
+}
+
 // This function ejects all player from a specific vehicle
 RemoveAllPlayersFromVehicle(vid)
 {

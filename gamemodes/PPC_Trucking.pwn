@@ -1517,10 +1517,3 @@ stock DebugKeys(playerid, newkeys, oldkeys)
 
 	return 1;
 }
-
-forward TimedKick(playerid);
-public TimedKick(playerid)
-{
-    Kick(playerid);
-    return 1;
-}
