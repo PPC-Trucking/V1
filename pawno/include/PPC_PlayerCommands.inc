@@ -47,7 +47,7 @@ COMMAND:pm(playerid, params[])
 		else
 		{
 			if (OtherPlayer == playerid)
-				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't send a private message to yourself");
+				return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't send a private message to yourself");
 
 			// Check if that other player is online
 			if (IsPlayerConnected(OtherPlayer))
@@ -3923,7 +3923,7 @@ COMMAND:givecash(playerid, params[])
 		else
 		{
 			if (OtherPlayer == playerid)
-				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't give money to yourself");
+				return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't give money to yourself");
 
 			// Check if the otherplayer is online
 			if (IsPlayerConnected(OtherPlayer))
@@ -4413,7 +4413,7 @@ COMMAND:report(playerid, params[])
 		else
 		{
 			if (OtherPlayer == playerid)
-				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't report yourself");
+				return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't report yourself");
 
 		    // Check if that other player is logged in
 		    if (APlayerData[OtherPlayer][LoggedIn] == true)
