@@ -46,6 +46,9 @@ COMMAND:pm(playerid, params[])
 		if (sscanf(params, "us[128]", OtherPlayer, Message)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/pm <OtherPlayer> <Message>\"");
 		else
 		{
+			if (OtherPlayer == playerid)
+				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't send a private message to yourself");
+
 			// Check if that other player is online
 			if (IsPlayerConnected(OtherPlayer))
 			{
@@ -774,17 +777,21 @@ COMMAND:flip(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		// Setup some local variables
-		new Float:x = 0.0, Float:y = 0.0, Float:z = 0.0;
-		// Check if the player is inside a vehicle
-		if(IsPlayerInAnyVehicle(playerid))
-			SetCameraBehindPlayer(playerid);
-		// Get the player's position
-		GetPlayerPos(playerid, x, y, z);
-		// Set the vehicle on the player's coordinates
-		SetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
-		// Let the vehicle point north
-		SetVehicleZAngle(GetPlayerVehicleID(playerid), 0.0);
+		if (GetPlayerVehicleSeat(playerid) == 0) {
+			// Setup some local variables
+			new Float:x = 0.0, Float:y = 0.0, Float:z = 0.0;
+			// Check if the player is inside a vehicle
+			if(IsPlayerInAnyVehicle(playerid))
+				SetCameraBehindPlayer(playerid);
+			// Get the player's position
+			GetPlayerPos(playerid, x, y, z);
+			// Set the vehicle on the player's coordinates
+			SetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
+			// Let the vehicle point north
+			SetVehicleZAngle(GetPlayerVehicleID(playerid), 0.0);
+		}
+		else
+			return SendClientMessage(playerid, 0xFF0000FF, "You must be the driver of a vehicle to use this command");
 	}
 	else
 	    return 0;
@@ -1288,7 +1295,7 @@ COMMAND:rescue(playerid, params[])
 	return 1;
 }
 
-// Increases the player's wanted level by 1
+// Sets the player's wanted level
 COMMAND:wanted(playerid, params[])
 {
 	new OtherPlayer, Stars;
@@ -1857,11 +1864,31 @@ COMMAND:delvehicle(playerid, params[])
 			if (sscanf(params, "i", vID)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/delvehicle <VehicleID>\"");
 			else
 			{
-				// Destroy the given vehicle
-				DestroyVehicle(vID);
-				// Inform the player about it
-				format(Msg, 128, "You deleted vehicle-id %i", vID);
-				SendClientMessage(playerid, 0x00FF00FF, Msg);
+				// Check if this vehicle exists (check the model), otherwise all empty slots are processed as well
+				if (AVehicleData[vID][Model] != 0)
+				{
+					// Check if the vehicle is NOT a static vehicle
+					if (AVehicleData[vID][StaticVehicle] == false)
+					{
+						// Check if the vehicle is NOT owned by anybody (this leaves all vehicles spawned with /car, /trailer, /plane)
+						if (AVehicleData[vID][Owned] == false)
+						{
+							// Eject everyone from the vehicle
+							RemoveAllPlayersFromVehicle(vID);
+							// Destroy the given vehicle
+							DestroyVehicle(vID);
+							// Inform the player about it
+							format(Msg, 128, "You deleted vehicle-id %i", vID);
+							SendClientMessage(playerid, 0x00FF00FF, Msg);
+						}
+						else
+							SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle belongs to a player");
+					}
+					else
+						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle is a static vehicle");
+				}
+				else
+					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle doesn't exist");
 			}
 		}
 		else
@@ -3895,6 +3922,9 @@ COMMAND:givecash(playerid, params[])
 		if (sscanf(params, "ui", OtherPlayer, Money)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/givecash <OtherPlayer> <Money>\"");
 		else
 		{
+			if (OtherPlayer == playerid)
+				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't give money to yourself");
+
 			// Check if the otherplayer is online
 			if (IsPlayerConnected(OtherPlayer))
 			{
@@ -4382,6 +4412,9 @@ COMMAND:report(playerid, params[])
 		if (sscanf(params, "us[128]", OtherPlayer, Reason)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/report <OtherPlayer> <Your report>\"");
 		else
 		{
+			if (OtherPlayer == playerid)
+				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't report yourself");
+
 		    // Check if that other player is logged in
 		    if (APlayerData[OtherPlayer][LoggedIn] == true)
 		    {

@@ -181,10 +181,6 @@ public OnPlayerConnect(playerid)
 	TextDrawAlignment(APlayerData[playerid][MissionText], 2); // Align the missiontext to the center
 	TextDrawUseBox(APlayerData[playerid][MissionText], 1); // Set the missiontext to display inside a box
 	TextDrawBoxColor(APlayerData[playerid][MissionText], 0x00000066); // Set the box color of the missiontext
-
-	// Display a message if the player hasn't accepted the rules yet
-	if (APlayerData[playerid][RulesRead] == false)
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You haven't accepted the {FFFF00}/rules{FF0000} yet");
 	
 	// Setup local variables
 	new BusID;
@@ -699,6 +695,10 @@ public OnPlayerSpawn(playerid)
 			SetPlayerColor(playerid, ColorClassRoadWorker); // Set the playercolor (chatcolor for the player and color on the map)
 		}
 	}
+
+	// Display a message if the player hasn't accepted the rules yet
+	if (APlayerData[playerid][RulesRead] == false)
+	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You haven't accepted the {FFFF00}/rules{FF0000} yet");
 
 	// Set the missiontext
 	TextDrawSetString(APlayerData[playerid][MissionText], missiontext);
