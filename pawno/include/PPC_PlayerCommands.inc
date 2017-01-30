@@ -1846,60 +1846,8 @@ COMMAND:vehicle(playerid, params[])
 	return 1;
 }
 
-// Deletes the given vehicle from the game
 COMMAND:delvehicle(playerid, params[])
-{
-    // Setup local variables
-	new vID, Msg[128];
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/delvehicle", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "i", vID)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/delvehicle <VehicleID>\"");
-			else
-			{
-				// Check if this vehicle exists (check the model), otherwise all empty slots are processed as well
-				if (AVehicleData[vID][Model] != 0)
-				{
-					// Check if the vehicle is NOT a static vehicle
-					if (AVehicleData[vID][StaticVehicle] == false)
-					{
-						// Check if the vehicle is NOT owned by anybody (this leaves all vehicles spawned with /car, /trailer, /plane)
-						if (AVehicleData[vID][Owned] == false)
-						{
-							// Eject everyone from the vehicle
-							RemoveAllPlayersFromVehicle(vID);
-							// Destroy the given vehicle
-							SetTimerEx("TimedDestroyVehicle", 1000, false, "i", vID);
-							// Inform the player about it
-							format(Msg, 128, "You deleted vehicle-id %i", vID);
-							SendClientMessage(playerid, 0x00FF00FF, Msg);
-						}
-						else
-							SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle belongs to a player");
-					}
-					else
-						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle is a static vehicle");
-				}
-				else
-					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle doesn't exist");
-			}
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
+	return cmd_cleanupcar(playerid, params);
 
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
@@ -3207,6 +3155,72 @@ COMMAND:cleanupcars(playerid, params[])
 			// Let the player know how many vehicles have been cleaned up
 			format(Msg, 128, "{00FF00}Total number of vehicles cleaned up: {FFFF00}%i", CarsDeleted);
 			SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		}
+		else
+		    return 0;
+	}
+	else
+	    return 0;
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
+// Deletes a specific vehicle that has been spawned by an admin
+COMMAND:cleanupcar(playerid, params[])
+{
+    // Setup local variables
+	new vID, Msg[128];
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/cleanupcar", params);
+
+	// Check if the player has logged in
+	if (APlayerData[playerid][LoggedIn] == true)
+	{
+		// Check if the player's admin-level is at least 3
+		if (APlayerData[playerid][PlayerLevel] >= 3)
+		{
+			if (sscanf(params, "i", vID)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/cleanupcar <VehicleID>\"");
+			else
+			{
+				// Check if this vehicle exists (check the model), otherwise all empty slots are processed as well
+				if (AVehicleData[vID][Model] != 0)
+				{
+					// Check if the vehicle is NOT a static vehicle
+					if (AVehicleData[vID][StaticVehicle] == false)
+					{
+						// Check if the vehicle is NOT owned by anybody (this leaves all vehicles spawned with /car, /trailer, /plane)
+						if (AVehicleData[vID][Owned] == false)
+						{
+							// Eject everyone from the vehicle
+							RemoveAllPlayersFromVehicle(vID);
+							// Destroy the given vehicle
+							SetTimerEx("TimedDestroyVehicle", 1000, false, "i", vID);
+							AVehicleData[vID][Owned] = false;
+							AVehicleData[vID][Owner] = 0;
+							AVehicleData[vID][Model] = 0;
+							AVehicleData[vID][PaintJob] = 0;
+							for (new i; i < 14; i++)
+							    AVehicleData[vID][Components][i] = 0;
+							AVehicleData[vID][SpawnX] = 0.0;
+							AVehicleData[vID][SpawnY] = 0.0;
+							AVehicleData[vID][SpawnZ] = 0.0;
+							AVehicleData[vID][SpawnRot] = 0.0;
+							AVehicleData[vID][BelongsToHouse] = 0;
+							// Inform the player about it
+							format(Msg, 128, "You deleted vehicle-id %i", vID);
+							SendClientMessage(playerid, 0x00FF00FF, Msg);
+						}
+						else
+							SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle belongs to a player, you can use /clamp");
+					}
+					else
+						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle is a static vehicle, delete it in the script");
+				}
+				else
+					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That vehicle doesn't exist");
+			}
 		}
 		else
 		    return 0;
