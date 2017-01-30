@@ -337,7 +337,7 @@ House_RemoveVehicles(HouseID)
 			// Eject everyone from the vehicle
 			RemoveAllPlayersFromVehicle(vid);
 			// Delete the vehicle and clear the data
-			DestroyVehicle(vid);
+			SetTimerEx("TimedDestroyVehicle", 1000, false, "i", vid);
 			AHouseData[HouseID][VehicleIDs][CarSlot] = 0;
 			AVehicleData[vid][Owned] = false;
 			AVehicleData[vid][Owner] = 0;

@@ -573,6 +573,19 @@ public TimedKick(playerid)
     return 1;
 }
 
+forward TimedDestroyVehicle(vid);
+public TimedDestroyVehicle(vid)
+{
+	new engine, lights, alarm, doors, bonnet, boot, objective;
+    GetVehicleParamsEx(vid, engine, lights, alarm, doors, bonnet, boot, objective);
+	if(doors == VEHICLE_PARAMS_ON)
+	{
+		SetVehicleParamsEx(vid, engine, lights, alarm, VEHICLE_PARAMS_OFF, bonnet, boot, objective);
+	}
+    DestroyVehicle(vid);
+    return 1;
+}
+
 // This function ejects all player from a specific vehicle
 RemoveAllPlayersFromVehicle(vid)
 {

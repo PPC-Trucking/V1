@@ -395,7 +395,7 @@ public OnPlayerDisconnect(playerid, reason)
 		}
 		RemoveAllPlayersFromVehicle(APlayerData[playerid][RentedVehicleID]);
 		// Destroy the vehicle
-		DestroyVehicle(APlayerData[playerid][RentedVehicleID]);
+		SetTimerEx("TimedDestroyVehicle", 1000, false, "i", APlayerData[playerid][RentedVehicleID]);
 		// Clear the RentedVehicleID
 		APlayerData[playerid][RentedVehicleID] = 0;
 	}

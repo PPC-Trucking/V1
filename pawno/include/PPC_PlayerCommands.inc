@@ -1876,7 +1876,7 @@ COMMAND:delvehicle(playerid, params[])
 							// Eject everyone from the vehicle
 							RemoveAllPlayersFromVehicle(vID);
 							// Destroy the given vehicle
-							DestroyVehicle(vID);
+							SetTimerEx("TimedDestroyVehicle", 1000, false, "i", vID);
 							// Inform the player about it
 							format(Msg, 128, "You deleted vehicle-id %i", vID);
 							SendClientMessage(playerid, 0x00FF00FF, Msg);
@@ -3187,7 +3187,7 @@ COMMAND:cleanupcars(playerid, params[])
 							// Eject everyone from the vehicle
 							RemoveAllPlayersFromVehicle(vid);
 							// Delete the vehicle and clear the data
-							DestroyVehicle(vid);
+							SetTimerEx("TimedDestroyVehicle", 1000, false, "i", vid);
 							AVehicleData[vid][Owned] = false;
 							AVehicleData[vid][Owner] = 0;
 							AVehicleData[vid][Model] = 0;
