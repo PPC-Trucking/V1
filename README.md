@@ -15,7 +15,7 @@ This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](ht
 *	([__*__](#licensing)) Download the following plugins and place them into the "plugins" folder. If the folder does not exist in the root directory (where you can find your "gamemodes" folder), create it. **Only there!**
 	*	[sscanf](http://forum.sa-mp.com/showthread.php?t=570927)
 	*   [streamer](http://forum.sa-mp.com/showthread.php?t=102865)
-*   ([__*__](#licensing)) Get these files as well and put them into the ~/pawno/include folder.
+*   ([__*__](#licensing)) Get these files as well and put them into the _~/pawno/include_ folder.
 	*   [sscanf2.inc](http://forum.sa-mp.com/showthread.php?t=570927)
 	*   [streamer.inc](http://forum.sa-mp.com/showthread.php?t=102865)
 	*   [zcmd.inc](http://forum.sa-mp.com/showthread.php?t=91354)
