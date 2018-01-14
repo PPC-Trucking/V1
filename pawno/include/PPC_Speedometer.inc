@@ -205,7 +205,7 @@ public Speedometer_Update(playerid)
 		}
 
 		// Check if the player is not in any plane or helicopter (those cannot be caught by speedcamera's)
-		if (IsVehicleAirVehicle(vehicleid) == 0)
+		if (!IsVehicleAirModel(vehicleid) && !IsVehicleBoatModel(vehicleid))
 			if (APlayerData[playerid][PlayerClass] != ClassPolice) // Check if the player isn't speeding (cops won't get caught)
 				CheckPlayerSpeeding(playerid);
 	}
