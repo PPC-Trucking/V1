@@ -27,10 +27,10 @@ Trucker_OnPlayerEnterCheckpoint(playerid)
 			APlayerData[playerid][LoadingTimer] = SetTimerEx("Trucker_LoadUnload", 5000, false, "d" , playerid);
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NeedTrailerToProceed);
+		    SendClientMessage(playerid, COLOR_WHITE, TXT_NeedTrailerToProceed);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NeedVehicleToProceed);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_NeedVehicleToProceed);
 
 	return 1;
 }
@@ -90,7 +90,7 @@ public Trucker_LoadUnload(playerid)
 			    // Add "(OL)" to the missiontext to let the player know he's been overloaded
 				format(RouteText, 255, "%s%s", RouteText, " ~r~(OL)~w~");
 				// Send a message to the player to let him know he's been overloaded
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_TruckerOverloaded);
+				SendClientMessage(playerid, COLOR_WHITE, TXT_TruckerOverloaded);
 			}
 			// Check if the player is carrying a mafia-load
 			if (ALoads[APlayerData[playerid][LoadID]][Mafia] == true)
@@ -119,7 +119,7 @@ public Trucker_LoadUnload(playerid)
 			SetPlayerCheckpoint(playerid, x, y, z, 7);
 			// Inform the player that he must unload his goods
 			format(UnloadMsg, 100, TXT_DeliverCargoTo, Load, EndLoc);
-			SendClientMessage(playerid, 0xFFFFFFFF, UnloadMsg);
+			SendClientMessage(playerid, COLOR_WHITE, UnloadMsg);
 		}
 		case 2: // Player is delivering his goods
 		{
@@ -136,8 +136,8 @@ public Trucker_LoadUnload(playerid)
 			// Construct the message sent to all players that this player completed a trucking mission
 			format(Msg1, 128, TXT_PlayerCompletedTruckJob, Name, Load);
 			format(Msg2, 128, TXT_PlayerCompletedTruckJobInfo, StartLoc, EndLoc);
-			SendClientMessageToAll(0xFFFFFFFF, Msg1);
-			SendClientMessageToAll(0xFFFFFFFF, Msg2);
+			SendClientMessageToAll(COLOR_WHITE, Msg1);
+			SendClientMessageToAll(COLOR_WHITE, Msg2);
 
 
 
@@ -166,7 +166,7 @@ public Trucker_LoadUnload(playerid)
 						    Payment = Payment * 2; // Double the payment if the player was the first to do the bonus mission
                             RandomBonusMission[MissionFinished] = true; // Only one player can do the bonus mission, a new one is chosen next
 							format(BonusMsg, 128, "{00BBFF}Player {FFBB00}%s{00BBFF} has finished the bonus mission", Name);
-							SendClientMessageToAll(0xFFFFFFFF, BonusMsg);
+							SendClientMessageToAll(COLOR_WHITE, BonusMsg);
 						}
 			}
 
@@ -174,7 +174,7 @@ public Trucker_LoadUnload(playerid)
 			RewardPlayer(playerid, Payment, 0);
 			// Send a message to let the player know he finished his mission and got paid
 			format(Message, 128, TXT_RewardJob, Payment);
-			SendClientMessage(playerid, 0xFFFFFFFF, Message);
+			SendClientMessage(playerid, COLOR_WHITE, Message);
 
 			// Add 25% bonus if the player has been overloaded
 			if (APlayerData[playerid][Overloaded] == true)
@@ -185,7 +185,7 @@ public Trucker_LoadUnload(playerid)
 				RewardPlayer(playerid, Bonus, 0);
 				// Send a message to let the player know he was overloaded and got paid
 				format(Message, 128, TXT_TruckerBonusOverloaded, Bonus);
-				SendClientMessage(playerid, 0xFFFFFFFF, Message);
+				SendClientMessage(playerid, COLOR_WHITE, Message);
 			}
 
 			// Add 50% bonus if the player has delivered a mafia load (mafia couldn't steal his load)
@@ -197,7 +197,7 @@ public Trucker_LoadUnload(playerid)
 				RewardPlayer(playerid, Bonus, 0);
 				// Send a message to let the player know he was overloaded and got paid
 				format(Message, 128, TXT_TruckerBonusMafiaLoad, Bonus);
-				SendClientMessage(playerid, 0xFFFFFFFF, Message);
+				SendClientMessage(playerid, COLOR_WHITE, Message);
 			}
 
 			// Add 10% bonus if the player has delivered the load with his own truck
@@ -209,7 +209,7 @@ public Trucker_LoadUnload(playerid)
 				RewardPlayer(playerid, Bonus, 0);
 				// Send a message to let the player know he was overloaded and got paid
 				format(Message, 128, TXT_TruckerBonusOwnVehicle, Bonus);
-				SendClientMessage(playerid, 0xFFFFFFFF, Message);
+				SendClientMessage(playerid, COLOR_WHITE, Message);
 			}
 
 			// Also add score-points to the score of the player based on the distance between the loading and unloading points
@@ -300,7 +300,7 @@ Trucker_StartRandomJob(playerid)
 		APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 		// Inform the player that he must load his goods
 		format(LoadMsg, 128, TXT_PickupCargoAt, Load, StartLoc);
-		SendClientMessage(playerid, 0xFFFFFFFF, LoadMsg);
+		SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 	}
 
 	return 1;

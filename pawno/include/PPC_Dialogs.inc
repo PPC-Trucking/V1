@@ -21,13 +21,13 @@ Dialog_Register(playerid, response, inputtext[])
 			PlayerFile_Load(playerid);
 
 			// Send a message to the client to inform him that his account has been registered
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_AccountRegistered);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_AccountRegistered);
 			APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
 		}
 	    case 0: // Player clicked "Cancel"
 		{
 			// Show a message that the player must be registered to play on this server
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerMustRegister);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustRegister);
 		    // Kick the player
 			SetTimerEx("TimedKick", 500, false, "i", playerid);
 		}
@@ -56,18 +56,18 @@ Dialog_Login(playerid, response, inputtext[])
 			{
 				APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
                 BankFile_Load(playerid); // Load your bank account (if it exists, the player will be notified about this)
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_LoggedIn); // Send a message to the client to inform him that he logged in properly
+				SendClientMessage(playerid, COLOR_WHITE, TXT_LoggedIn); // Send a message to the client to inform him that he logged in properly
 			}
 			else
 			{
 				SetPVarInt(playerid, "LoginAttempt", GetPVarInt(playerid, "LoginAttempt") + 1);
 
 				if (GetPVarInt(playerid, "LoginAttempt") == MAX_LOGIN_ATTEMPTS) {
-					SendClientMessage(playerid, 0xFFFFFFFF, TXT_FailedLoginProperly);
+					SendClientMessage(playerid, COLOR_WHITE, TXT_FailedLoginProperly);
 					SetTimerEx("TimedKick", 500, false, "i", playerid);
 				} else {
 					format(Msg, sizeof(Msg), TXT_WrongPassword, (MAX_LOGIN_ATTEMPTS-GetPVarInt(playerid, "LoginAttempt")));
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 					ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
 				}
@@ -76,7 +76,7 @@ Dialog_Login(playerid, response, inputtext[])
 	    case 0: // Player clicked "Cancel"
 		{
 			// Show a message that the player must be logged in to play on this server
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerMustLogin);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustLogin);
 		    // Kick the player
 			SetTimerEx("TimedKick", 500, false, "i", playerid);
 		}
@@ -154,7 +154,7 @@ Dialog_Rescue(playerid, response, listitem)
 	}
 
 	SpawnPlayer(playerid); // Force the player to spawn at the requested coordinates
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerRescued); // Send the player a message that using "/rescue" costs $200
+	SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerRescued); // Send the player a message that using "/rescue" costs $200
 	// Reduce the player's money by 200
 	RewardPlayer(playerid, -200, 0);
 
@@ -187,16 +187,16 @@ Dialog_BuyLicenses(playerid, response, listitem)
 						// Give the player the trucker's license
 						APlayerData[playerid][TruckerLicense] = 1;
 						// Let the player know he acquired his trucker's license
-						SendClientMessage(playerid, 0xFFFFFFFF, TXT_TruckerLicenseBought);
+						SendClientMessage(playerid, COLOR_WHITE, TXT_TruckerLicenseBought);
 					}
 					else
-					    SendClientMessage(playerid, 0xFFFFFFFF, TXT_TruckerLicenseNotEnoughMoney);
+					    SendClientMessage(playerid, COLOR_WHITE, TXT_TruckerLicenseNotEnoughMoney);
 				}
 				else
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_TruckerLicenseOwned);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_TruckerLicenseOwned);
 			}
 			else
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_TruckerLicenseWrongClass);
+				SendClientMessage(playerid, COLOR_WHITE, TXT_TruckerLicenseWrongClass);
 		}
 		case 1: // Player wants to buy a busdriver license
 		{
@@ -214,16 +214,16 @@ Dialog_BuyLicenses(playerid, response, listitem)
 						// Give the player the busdriver's license
 						APlayerData[playerid][BusLicense] = 1;
 						// Let the player know he acquired his busdriver's license
-						SendClientMessage(playerid, 0xFFFFFFFF, TXT_BusLicenseBought);
+						SendClientMessage(playerid, COLOR_WHITE, TXT_BusLicenseBought);
 					}
 					else
-					    SendClientMessage(playerid, 0xFFFFFFFF, TXT_BusLicenseNotEnoughMoney);
+					    SendClientMessage(playerid, COLOR_WHITE, TXT_BusLicenseNotEnoughMoney);
 				}
 				else
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_BusLicenseOwned);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_BusLicenseOwned);
 			}
 			else
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_BusLicenseWrongClass);
+				SendClientMessage(playerid, COLOR_WHITE, TXT_BusLicenseWrongClass);
 		}
 	}
 
@@ -411,7 +411,7 @@ Dialog_TruckerSelectEndLoc(playerid, response, listitem)
 	APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 	// Inform the player that he must load his goods
 	format(LoadMsg, 128, TXT_PickupCargoAt, loadName, startlocName);
-	SendClientMessage(playerid, 0xFFFFFFFF, LoadMsg);
+	SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 
 	return 1;
 }
@@ -453,7 +453,7 @@ Dialog_BusSelectJobMethod(playerid, response, listitem)
 		}
 	}
 	else // Send a message to let the player know he already has a job
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_BusdriverAlreadyDoingJob);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_BusdriverAlreadyDoingJob);
 
 	return 1;
 }
@@ -540,7 +540,7 @@ Dialog_Bike(playerid, response, listitem)
 	APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 	// Inform all players about it
 	format(msg, 120, TXT_PlayerSpawnedVehicle, pName, vID, CarID, x, y, z);
-	SendClientMessageToAll(0xFFFFFFFF, msg);
+	SendClientMessageToAll(COLOR_WHITE, msg);
 
 	return 1;
 }
@@ -602,7 +602,7 @@ Dialog_Car(playerid, response, listitem)
 			APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 			// Inform all players about it
 			format(msg, 120, TXT_PlayerSpawnedVehicle, pName, vID, ACars[CarIndex][CarModel], x, y, z);
-			SendClientMessageToAll(0xFFFFFFFF, msg);
+			SendClientMessageToAll(COLOR_WHITE, msg);
 			// Also, after spawning a vehicle, reset FirstCar (so next time, the list starts from the start)
 			APlayerData[playerid][DialogCarFirstCar] = 0;
 		}
@@ -668,7 +668,7 @@ Dialog_Plane(playerid, response, listitem)
 			APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 			// Inform the player about it
 			format(msg, 128, TXT_PlayerSpawnedVehicle, pName, vID, APlanes[PlaneIndex][PlaneModel], x, y, z);
-			SendClientMessageToAll(0xFFFFFFFF, msg);
+			SendClientMessageToAll(COLOR_WHITE, msg);
 			// Also, after spawning a vehicle, reset FirstPlane (so next time, the list starts from the start)
 			APlayerData[playerid][DialogPlaneFirstPlane] = 0;
 		}
@@ -724,7 +724,7 @@ Dialog_Trailer(playerid, response, listitem)
 			vID = Vehicle_Create(ATrailers[TrailerIndex][TrailerModel], x, y + 10.0, z + 5.0, 0.0, random(126), random(126), 600);
 			// Inform the player about it
 			format(msg, 128, TXT_PlayerSpawnedVehicle, pName, vID, ATrailers[TrailerIndex][TrailerModel], x, y + 10.0, z + 5.0);
-			SendClientMessageToAll(0xFFFFFFFF, msg);
+			SendClientMessageToAll(COLOR_WHITE, msg);
 			// Also, after spawning a vehicle, reset FirstTrailer (so next time, the list starts from the start)
 			APlayerData[playerid][DialogTrailerFirstTrailer] = 0;
 		}
@@ -778,7 +778,7 @@ Dialog_Boat(playerid, response, listitem)
 	APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 	// Inform all players about it
 	format(msg, 120, TXT_PlayerSpawnedVehicle, pName, vID, CarID, x, y, z);
-	SendClientMessageToAll(0xFFFFFFFF, msg);
+	SendClientMessageToAll(COLOR_WHITE, msg);
 
 	return 1;
 }
@@ -926,7 +926,7 @@ Dialog_RentProcessClass(playerid, response, listitem)
 	if (strlen(CarList) == 0)
 	{
 		// Send the player a message that all vehicles have been disabled of the chosen class (no vehicles in the array of this class)
-		SendClientMessage(playerid, 0xFFFFFFFF, TXT_BuyRentCarEmptyList);
+		SendClientMessage(playerid, COLOR_WHITE, TXT_BuyRentCarEmptyList);
 		// Exit the function (don't ask to choose a vehicle)
 		return 1;
 	}
@@ -996,7 +996,7 @@ Dialog_RentCar(playerid, response, listitem)
 						// Destroy the vehicle
 						DestroyVehicle(APlayerData[playerid][RentedVehicleID]);
 						// Send the player a message that his previously rented vehicle has been replaced by the new one
-						SendClientMessage(playerid, 0xFFFFFFFF, TXT_AlreadyRentedVehicle);
+						SendClientMessage(playerid, COLOR_WHITE, TXT_AlreadyRentedVehicle);
 					}
 
 					// Create the vehicle and link it to the player's account
@@ -1021,10 +1021,10 @@ Dialog_RentCar(playerid, response, listitem)
 					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - (ABuyableVehicles[i][Price] / 10);
 					// Let the player know he rented a vehicle
 					format(Msg, 128, TXT_PlayerRentsVehicle, ABuyableVehicles[i][CarName], (ABuyableVehicles[i][Price] / 10));
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 				else // The player has not enough money to rent this vehicle
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_RentingTooExpensive);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_RentingTooExpensive);
 
 				// Stop looking for the vehicle, as it's found and given to the player already
 				return 1;
@@ -1067,7 +1067,7 @@ Dialog_Weather(playerid, response, listitem)
 	// Set the weather
     SetWeather(WeatherID);
     // Inform the player about it
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_ChangedWeather);
+	SendClientMessage(playerid, COLOR_WHITE, TXT_ChangedWeather);
 
 	return 1;
 }
@@ -1159,11 +1159,11 @@ Dialog_SelectConvoy(playerid, response, listitem)
 		}
 	    case CONVOY_FULL: // Convoy is full (10 members)
 		{
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_ConvoyFull);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_ConvoyFull);
 		}
 	    case CONVOY_CLOSED: // Convoy has started already (the leader already chose a job, causing the convoy to close)
 		{
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_ConvoyEnRoute);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_ConvoyEnRoute);
 		}
 	}
 
@@ -1194,7 +1194,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 				ShowPlayerDialog(playerid, DialogHouseNameChange, DIALOG_STYLE_INPUT, DialogTitle, TXT_DialogEnterNewHouseName, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 	    }
 	    case 1: // Upgrade the house
 	    {
@@ -1220,10 +1220,10 @@ Dialog_HouseMenu(playerid, response, listitem)
 					ShowPlayerDialog(playerid, DialogUpgradeHouse, DIALOG_STYLE_LIST, TXT_DialogSelectHouseUpgrade, UpgradeList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 				}
 				else
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_HouseReachedMaxLevel);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_HouseReachedMaxLevel);
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 	    }
 		case 2: // Buy house-car
 		{
@@ -1255,10 +1255,10 @@ Dialog_HouseMenu(playerid, response, listitem)
 					ShowPlayerDialog(playerid, DialogBuyCarClass, DIALOG_STYLE_LIST, TXT_DialogBuyCarSelectClass, VehicleClassList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			    }
 			    else
-			        SendClientMessage(playerid, 0xFFFFFFFF, TXT_HouseHasMaxVehicles);
+			        SendClientMessage(playerid, COLOR_WHITE, TXT_HouseHasMaxVehicles);
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 		}
 		case 3: // Buy house-car insurance
 		{
@@ -1278,13 +1278,13 @@ Dialog_HouseMenu(playerid, response, listitem)
 						ShowPlayerDialog(playerid, DialogBuyInsurance, DIALOG_STYLE_MSGBOX, TXT_DialogTitleBuyInsurance, MsgInsurance, TXT_DialogButtonYes, TXT_DialogButtonNo);
 					}
 					else
-					    SendClientMessage(playerid, 0xFFFFFFFF, TXT_CannotAffordInsurance);
+					    SendClientMessage(playerid, COLOR_WHITE, TXT_CannotAffordInsurance);
 				}
 				else
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_HouseAlreadyHasInsurance);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_HouseAlreadyHasInsurance);
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 		}
 		case 4: // Sell house-car
 		{
@@ -1319,10 +1319,10 @@ Dialog_HouseMenu(playerid, response, listitem)
 					ShowPlayerDialog(playerid, DialogSellCar, DIALOG_STYLE_LIST, TXT_SelectVehicleToSell, VehicleList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 				}
 				else
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NoHouseVehicles);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_NoHouseVehicles);
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 		}
 		case 5: // Sell house
 		{
@@ -1344,10 +1344,10 @@ Dialog_HouseMenu(playerid, response, listitem)
 					ShowPlayerDialog(playerid, DialogSellHouse, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Msg, TXT_DialogButtonYes, TXT_DialogButtonNo);
 				}
 				else
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_CannotSellHouseWithCars);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_CannotSellHouseWithCars);
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 		}
 	    case 6: // Open the house to the public (everyone can enter it)
 	    {
@@ -1357,10 +1357,10 @@ Dialog_HouseMenu(playerid, response, listitem)
 			    // Open the house to the public
 				AHouseData[HouseID][HouseOpened] = true;
 				// Let the player know he opened the house to the public
-				SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've opened the house to the public, anyone can enter it");
+				SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've opened the house to the public, anyone can enter it");
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 	    }
 	    case 7: // Close the house to the public (only the owner can enter it)
 	    {
@@ -1370,10 +1370,10 @@ Dialog_HouseMenu(playerid, response, listitem)
 			    // Close the house to the public
 				AHouseData[HouseID][HouseOpened] = false;
 				// Let the player know he closed the house to the public
-				SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've closed the house to the public, only you can enter it");
+				SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've closed the house to the public, only you can enter it");
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Only the house-owner can use this option");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Only the house-owner can use this option");
 	    }
 	    case 8: // Exit the house
 	    {
@@ -1413,7 +1413,7 @@ Dialog_UpgradeHouse(playerid, response, listitem)
 		new Msg[128];
 		RewardPlayer(playerid, -Payment, 0);
 		format(Msg, 128, TXT_PlayerUpgradedHouse, AHouseData[HouseID][HouseLevel], Payment);
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 		// Also update the 3DText at the entrance of the house
 		House_UpdateEntrance(APlayerData[playerid][CurrentHouse]);
@@ -1422,7 +1422,7 @@ Dialog_UpgradeHouse(playerid, response, listitem)
 		PlayerFile_Save(playerid);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_CannotAffordUpgrade);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_CannotAffordUpgrade);
 
 	return 1;
 }
@@ -1449,7 +1449,7 @@ Dialog_GoHome(playerid, response, listitem)
 		SetPlayerPos(playerid, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NoHouseInSlot);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_NoHouseInSlot);
 
 	return 1;
 }
@@ -1465,7 +1465,7 @@ Dialog_ChangeHouseName(playerid, response, inputtext[])
 	// Also update the 3DText at the entrance of the house
 	House_UpdateEntrance(APlayerData[playerid][CurrentHouse]);
 	// Let the player know that the name of his house has been changed
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_ChangedHouseName);
+	SendClientMessage(playerid, COLOR_WHITE, TXT_ChangedHouseName);
 
 	// Save the player-file (and his houses)
 	PlayerFile_Save(playerid);
@@ -1500,7 +1500,7 @@ Dialog_BuyCarClass(playerid, response, listitem)
 	if (strlen(CarList) == 0)
 	{
 		// Send the player a message that all vehicles have been disabled of the chosen class (no vehicles in the array of this class)
-		SendClientMessage(playerid, 0xFFFFFFFF, TXT_BuyRentCarEmptyList);
+		SendClientMessage(playerid, COLOR_WHITE, TXT_BuyRentCarEmptyList);
 		// Exit the function (don't ask to choose a vehicle)
 		return 1;
 	}
@@ -1563,14 +1563,14 @@ Dialog_BuyCar(playerid, response, listitem)
 					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - ABuyableVehicles[i][Price];
 					// Let the player know he bought a vehicle
 					format(Msg, 128, TXT_PlayerBoughtVehicle, ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price]);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
-					SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerMustUseGetcarAndPark);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustUseGetcarAndPark);
 
 					// Save the player-file (and his houses)
 					PlayerFile_Save(playerid);
 				}
 				else // The player has not enough money to buy this vehicle
-				    SendClientMessage(playerid, 0xFFFFFFFF, TXT_CannotAffordVehicle);
+				    SendClientMessage(playerid, COLOR_WHITE, TXT_CannotAffordVehicle);
 
 				// Stop looking for the vehicle, as it's found and given to the player already
 				return 1;
@@ -1601,7 +1601,7 @@ Dialog_BuyInsurance(playerid, response)
 
 	// Let the player know he has bought a vehicle-insurance for this house
 	format(Msg, 128, TXT_PlayerBoughtInsurance, AHouseData[HouseID][HousePrice] / 10);
-	SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+	SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 	// Save the player-file (and his houses)
 	PlayerFile_Save(playerid);
@@ -1638,7 +1638,7 @@ Dialog_SellHouse(playerid, response)
 
 	// Refund the player 50% of the worth of the house
 	RewardPlayer(playerid, House_CalcSellPrice(HouseID), 0);
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerSoldHouse);
+	SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerSoldHouse);
 
 	// Clear the house-id from the player
 	for (new i; i < MAX_HOUSESPERPLAYER; i++)
@@ -1702,13 +1702,13 @@ Dialog_SellCar(playerid, response, listitem)
 		APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] + (ABuyableVehicles[BuyableCarIndex][Price] / 2);
 		// Let the player know about it
 		format(Msg, 128, TXT_PlayerSoldVehicle, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][Price] / 2);
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 		// Save the player-file (and his houses)
 		PlayerFile_Save(playerid);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NoVehicleInSlot);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_NoVehicleInSlot);
 
 	return 1;
 }
@@ -1761,10 +1761,10 @@ Dialog_GetCarSelectHouse(playerid, response, listitem)
 			ShowPlayerDialog(playerid, DialogGetCarSelectCar, DIALOG_STYLE_LIST, TXT_SelectVehicleToGet, VehicleList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NoHouseVehicles);
+		    SendClientMessage(playerid, COLOR_WHITE, TXT_NoHouseVehicles);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NoHouseInSlot);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_NoHouseInSlot);
 
 	return 1;
 }
@@ -1805,16 +1805,16 @@ Dialog_GetCarSelectCar(playerid, response, listitem)
 			GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
 			APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 			// Let the player know he should park the vehicle
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerMustUsePark);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustUsePark);
 		}
 		else // Inform the player that this vehicle is clamped and how he can un-clamp it
 		{
-		    SendClientMessage(playerid, 0xFFFFFFFF, TXT_SpeedometerClampedVehicle);
-		    SendClientMessage(playerid, 0xFFFFFFFF, TXT_SpeedometerClampedVehicle2);
+		    SendClientMessage(playerid, COLOR_WHITE, TXT_SpeedometerClampedVehicle);
+		    SendClientMessage(playerid, COLOR_WHITE, TXT_SpeedometerClampedVehicle2);
 		}
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NoVehicleInSlot);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_NoVehicleInSlot);
 
 	return 1;
 }
@@ -1851,7 +1851,7 @@ Dialog_CreateBusSelType(playerid, response, listitem)
 	if (EmptySlotFound == false)
 	{
 		// If no empty slot was found, let the player know about it and exit the function
-		SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Maximum number of businesses reached");
+		SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Maximum number of businesses reached");
 		return 1;
 	}
 
@@ -1871,7 +1871,7 @@ Dialog_CreateBusSelType(playerid, response, listitem)
 
 	// Inform the player that he created a new house
 	format(Msg, 128, "{00FF00}You've succesfully created business {FF00FF}%i{00FF00}", BusID);
-	SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+	SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 	return 1;
 }
@@ -1917,13 +1917,13 @@ Dialog_BusinessMenu(playerid, response, listitem)
 					Business_UpdateEntrance(BusID);
 					// Let the player know about it
 					format(Msg, 128, "{00FF00}You have upgraded your business to level {FFFF00}%i", ABusinessData[BusID][BusinessLevel]);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 				else
-					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot afford the upgrade");
+					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot afford the upgrade");
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, TXT_BusinessReachedMaxLevel);
+			    SendClientMessage(playerid, COLOR_WHITE, TXT_BusinessReachedMaxLevel);
 	    }
 		case 2: // Retrieve business earnings
 		{
@@ -1964,7 +1964,7 @@ Dialog_GoBusiness(playerid, response, listitem)
 		SetPlayerPos(playerid, ABusinessData[BusID][BusinessX], ABusinessData[BusID][BusinessY], ABusinessData[BusID][BusinessZ]);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NoBusinessInSlot);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_NoBusinessInSlot);
 
 	return 1;
 }
@@ -1980,7 +1980,7 @@ Dialog_ChangeBusinessName(playerid, response, inputtext[])
 	// Also update the 3DText at the entrance of the business
 	Business_UpdateEntrance(APlayerData[playerid][CurrentBusiness]);
 	// Let the player know that the name of his business has been changed
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_ChangedBusinessName);
+	SendClientMessage(playerid, COLOR_WHITE, TXT_ChangedBusinessName);
 
 	// Save the player-file (and his houses and businesses)
 	PlayerFile_Save(playerid);
@@ -2016,7 +2016,7 @@ Dialog_SellBusiness(playerid, response)
 
 	// Refund the player 50% of the worth of the business
 	RewardPlayer(playerid, (ABusinessInteriors[BusType][BusPrice] * ABusinessData[BusID][BusinessLevel]) / 2, 0);
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerSoldBusiness);
+	SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerSoldBusiness);
 
 	// Clear the house-id from the player
 	for (new i; i < MAX_BUSINESSPERPLAYER; i++)
@@ -2086,7 +2086,7 @@ Dialog_PrimaryCarColor(playerid, response, listitem)
 
 	// Let the player pay $150 for changing the color
 	RewardPlayer(playerid, -150, 0);
-	SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've changed the color of your vehicle for $150");
+	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've changed the color of your vehicle for $150");
 
 	return 1;
 }
@@ -2106,7 +2106,7 @@ Dialog_SedundaryCarColor(playerid, response, listitem)
 
 	// Let the player pay $150 for changing the color
 	RewardPlayer(playerid, -150, 0);
-	SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've changed the color of your vehicle for $150");
+	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've changed the color of your vehicle for $150");
 
 	return 1;
 }
@@ -2183,13 +2183,13 @@ Dialog_UnclampVehicles(playerid, response)
 
 		// Let the player know his vehicles have been unclamped
 		format(Msg, 128, "{00FF00}Your vehicles have been unclamped for {FFFF00}$%i", UnclampPrice);
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 		// Save the player's profile
 		PlayerFile_Save(playerid);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You don't have enough money to unclamp your vehicles");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You don't have enough money to unclamp your vehicles");
 
 	return 1;
 }
@@ -2209,7 +2209,7 @@ Dialog_Rules(playerid, response)
 		APlayerData[playerid][RulesRead] = true;
 
 		// Let the player know he earned some money for accepting the rules
-		SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You have earned {FFFF00}$5000{00FF00} for accepting the rules");
+		SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You have earned {FFFF00}$5000{00FF00} for accepting the rules");
 
 		// Save the player's profile
 		PlayerFile_Save(playerid);
@@ -2345,7 +2345,7 @@ Dialog_StatsHouse(playerid, response, listitem)
 		ShowPlayerDialog(playerid, DialogStatsGoHouse, DIALOG_STYLE_LIST, DialogTitle, HouseData, "Goto", "Cancel");
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}There is no house in this house-slot");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}There is no house in this house-slot");
 
 	return 1;
 }
@@ -2378,7 +2378,7 @@ Dialog_StatsGoHouse(playerid, response, listitem)
 				SetPlayerPos(playerid, x, y, z);
 			}
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}There is no vehicle in this car-slot");
+			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}There is no vehicle in this car-slot");
 	    }
 	    default: // Any other line
 		{
@@ -2410,7 +2410,7 @@ Dialog_StatsGoBusiness(playerid, response, listitem)
 		SetPlayerPos(playerid, ABusinessData[BusID][BusinessX], ABusinessData[BusID][BusinessY], ABusinessData[BusID][BusinessZ]);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}There is no business in this business-slot");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}There is no business in this business-slot");
 
 	return 1;
 }
@@ -2431,10 +2431,10 @@ Dialog_BankPasswordRegister(playerid, response, inputtext[])
 		// Save the bank account
 		BankFile_Save(playerid);
 		// Inform the player that he has succesfully registered a bank account
-		SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've succesfully registered a bank account");
+		SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've succesfully registered a bank account");
 	}
 	else
-		SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need to enter a valid password to register a bank account");
+		SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to enter a valid password to register a bank account");
 
 	return 1;
 }
@@ -2454,15 +2454,15 @@ Dialog_BankPasswordLogin(playerid, response, inputtext[])
 			// The player has logged in to his bank account
 	       	APlayerData[playerid][BankLoggedIn] = true;
 			// Inform the player that he has succesfully registered a bank account
-			SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've succesfully logged in to your bank account");
+			SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've succesfully logged in to your bank account");
 			// Show the bank dialog
 			ShowBankMenu(playerid);
 		}
 		else // The player entered the wrong password
-			SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You've entered the wrong password for logging in to your bank account");
+			SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You've entered the wrong password for logging in to your bank account");
 	}
 	else
-		SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need to enter the correct password to login to your bank account");
+		SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to enter the correct password to login to your bank account");
 
 	return 1;
 }
@@ -2497,7 +2497,7 @@ Dialog_BankOptions(playerid, response, listitem)
 				ShowPlayerDialog(playerid, DialogBankWithdraw, DIALOG_STYLE_INPUT, "Enter amount of money", DialogMsg, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
-				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't withdraw money from an empty bank account");
+				SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can't withdraw money from an empty bank account");
 		}
 	    case 2: // Transfer funds from your bank account to another player's bank account
 		{
@@ -2510,7 +2510,7 @@ Dialog_BankOptions(playerid, response, listitem)
 				ShowPlayerDialog(playerid, DialogBankTransferMoney, DIALOG_STYLE_INPUT, "Enter amount of money", DialogMsg, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
-				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You can't transfer money from an empty bank account");
+				SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can't transfer money from an empty bank account");
 		}
 		case 3: // Cancel your bank account
 		{
@@ -2557,15 +2557,15 @@ Dialog_BankDeposit(playerid, response, inputtext[])
 			BankFile_Save(playerid);
 			// Inform the player that his money has been deposited
 			format(Msg, 128, "{00FF00}You have deposited {FFFF00}$%i{00FF00} into your bank account", DepositMoney);
-			SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+			SendClientMessage(playerid, COLOR_WHITE, Msg);
 			// Show the bank dialog
 			ShowBankMenu(playerid);
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You don't have that amount of money to deposit into your bank account");
+		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You don't have that amount of money to deposit into your bank account");
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need to enter a positive amount of money to deposit into your bank account");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to enter a positive amount of money to deposit into your bank account");
 
 	return 1;
 }
@@ -2598,15 +2598,15 @@ Dialog_BankWithdraw(playerid, response, inputtext[])
 			BankFile_Save(playerid);
 			// Inform the player that his money has been withdrawn
 			format(Msg, 128, "{00FF00}You have withdrawn {FFFF00}$%i{00FF00} from your bank account", WithdrawMoney);
-			SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+			SendClientMessage(playerid, COLOR_WHITE, Msg);
 			// Show the bank dialog
 			ShowBankMenu(playerid);
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You don't have that amount of money in your bank account to withdraw");
+		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You don't have that amount of money in your bank account to withdraw");
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need to enter a positive amount of money to withdraw from your bank account");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to enter a positive amount of money to withdraw from your bank account");
 
 	return 1;
 }
@@ -2624,7 +2624,7 @@ Dialog_BankTransferMoney(playerid, response, inputtext[])
 	if (strlen(inputtext) == 0)
 	{
 		// Let the player know he must enter a valid amount of money into the input field
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need to enter a valid amount of money");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to enter a valid amount of money");
 		return 1;
 	}
 
@@ -2645,10 +2645,10 @@ Dialog_BankTransferMoney(playerid, response, inputtext[])
 			ShowPlayerDialog(playerid, DialogBankTransferName, DIALOG_STYLE_INPUT, "Enter player name", DialogMsg, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You don't have that amount of money in your bank account to transfer to another player's account");
+		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You don't have that amount of money in your bank account to transfer to another player's account");
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need to enter a positive amount of money to transfer money to another player's account");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to enter a positive amount of money to transfer money to another player's account");
 
 	return 1;
 }
@@ -2670,7 +2670,7 @@ Dialog_BankTransferName(playerid, response, inputtext[])
 	if (strlen(inputtext) == 0)
 	{
 		// Let the player know he must enter a playername or playerid into the input field
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need to enter a playername OR id");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to enter a playername OR id");
 		return 1;
 	}
 
@@ -2698,17 +2698,17 @@ Dialog_BankTransferName(playerid, response, inputtext[])
 				BankFile_Save(playerid);
 				// Inform the receiver that money was transferred to his bank account
 				format(Msg, 128, "{00FF00}Your bank account has received a transfer of {FFFF00}$%i{00FF00} from {FFFF00}%s", APlayerData[playerid][UseMoney], SenderName);
-				SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+				SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 				// Inform the sender that money was transferred from his bank account to the receiver
 				format(Msg, 128, "{00FF00}You have transferred {FFFF00}$%i{00FF00} to {FFFF00}%s{00FF00}'s bank account", APlayerData[playerid][UseMoney], ReceiverName);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 				// Exit the function (bank transfer was completed), skipping offline transfer
 				return 1;
 			}
 			else // The target player is online, but has no bank account
 			{
 				format(Msg, 128, "{FF0000}Player {FFFF00}%s{FF0000} is online, but has no bank account, transfer failed", inputtext);
-			    SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+			    SendClientMessage(playerid, COLOR_WHITE, Msg);
 				// Exit the function (bank transfer failed as the target player has no bank account), skipping offline transfer
 				return 1;
 			}
@@ -2771,12 +2771,12 @@ Dialog_BankTransferName(playerid, response, inputtext[])
 
 		// Inform the sender that the transfer was completed
 		format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} is offline and has a bank account, transfer of {FFFF00}$%i{00FF00} was succesfull", inputtext, APlayerData[playerid][UseMoney]);
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
 	{
 		format(Msg, 128, "{FF0000}Account-name {FFFF00}%s{FF0000} not found, transfer failed", inputtext);
-	    SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+	    SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 
 	return 1;
@@ -2804,7 +2804,7 @@ Dialog_BankCancel(playerid, response)
 	RewardPlayer(playerid, APlayerData[playerid][BankMoney], 0);
 	// Inform the player about the remaining funds of your bank account
 	if (APlayerData[playerid][BankMoney] > 0)
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}There was still some money in your bank account, it has been given to your character");
+	    SendClientMessage(playerid, COLOR_WHITE, "{00FF00}There was still some money in your bank account, it has been given to your character");
 
 	// Save the player's account
 	PlayerFile_Save(playerid);
@@ -2815,7 +2815,7 @@ Dialog_BankCancel(playerid, response)
 	APlayerData[playerid][BankMoney] = 0;
 
 	// Inform the player about it
-	SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}Your bank account has been deleted");
+	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Your bank account has been deleted");
 
 	return 1;
 }
@@ -2879,7 +2879,7 @@ Dialog_OldPassword(playerid, response, inputtext[])
 		ShowPlayerDialog(playerid, DialogNewPassword, DIALOG_STYLE_PASSWORD, "Enter new password:", "Enter your new password here:", "OK", "Cancel");
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You've entered the wrong password");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You've entered the wrong password");
 
 	return 1;
 }
@@ -2910,10 +2910,10 @@ Dialog_NewPassword(playerid, response, inputtext[])
 			ShowPlayerDialog(playerid, DialogConfirmPassword, DIALOG_STYLE_MSGBOX, "Are you sure?", Msg, "Yes", "No");
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Your new password cannot be the same as the old password");
+		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Your new password cannot be the same as the old password");
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Invalid password");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Invalid password");
 
 	return 1;
 }
@@ -2930,7 +2930,7 @@ Dialog_ConfirmPassword(playerid, response)
 	format(APlayerData[playerid][PlayerNewPassword], 50, "");
 
 	// Let the player know his password has been changed
-    SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}Your password has been changed");
+    SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Your password has been changed");
 
 	// Save the player's account
 	PlayerFile_Save(playerid);

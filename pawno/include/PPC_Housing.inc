@@ -75,10 +75,10 @@ House_SetOwner(playerid, HouseID)
 
 		// Let the player know he bought the house
 		format(Msg, 128, TXT_PlayerBoughtHouse, AHouseData[HouseID][HousePrice]);
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerOwnsMaxHouses);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerOwnsMaxHouses);
 
 	return 1;
 }
@@ -144,7 +144,7 @@ House_CreateEntrance(HouseID)
  		AHouseData[HouseID][PickupID] = CreateDynamicPickup(1272, 1, x, y, z, 0);
 		// Create the 3DText that appears above the house-pickup (displays the housename and the name of the owner)
 		format(Msg, 128, TXT_PickupHouseOwned, AHouseData[HouseID][HouseName], AHouseData[HouseID][Owner], AHouseData[HouseID][HouseLevel]);
-		AHouseData[HouseID][DoorText] = CreateDynamic3DTextLabel(Msg, 0x008080FF, x, y, z + 1.0, 50.0);
+		AHouseData[HouseID][DoorText] = CreateDynamic3DTextLabel(Msg, COLOR_TEAL, x, y, z + 1.0, 50.0);
 		// Add a streamed icon to the map (red house), type = 32, color = 0, world = 0, interior = 0, playerid = -1, drawdist = 150.0
 		if (ShowBoughtHouses == true)
 			AHouseData[HouseID][MapIconID] = CreateDynamicMapIcon(x, y, z, 32, 0, 0, 0, -1, 150.0);
@@ -155,7 +155,7 @@ House_CreateEntrance(HouseID)
 		AHouseData[HouseID][PickupID] = CreateDynamicPickup(1273, 1, x, y, z, 0);
 		// Create the 3DText that appears above the house-pickup (displays the price of the house)
 		format(Msg, 128, TXT_PickupHouseForSale, AHouseData[HouseID][HousePrice], AHouseData[HouseID][HouseMaxLevel]);
-		AHouseData[HouseID][DoorText] = CreateDynamic3DTextLabel(Msg, 0x008080FF, x, y, z + 1.0, 50.0);
+		AHouseData[HouseID][DoorText] = CreateDynamic3DTextLabel(Msg, COLOR_TEAL, x, y, z + 1.0, 50.0);
 		// Add a streamed icon to the map (green house), type = 31, color = 0, world = 0, interior = 0, playerid = -1, drawdist = 150.0
 		AHouseData[HouseID][MapIconID] = CreateDynamicMapIcon(x, y, z, 31, 0, 0, 0, -1, 150.0);
 	}
@@ -183,7 +183,7 @@ House_UpdateEntrance(HouseID)
  		AHouseData[HouseID][PickupID] = CreateDynamicPickup(1272, 1, x, y, z, 0);
 		// Update the 3DText that appears above the house-pickup (displays the housename and the name of the owner)
 		format(Msg, 128, TXT_PickupHouseOwned, AHouseData[HouseID][HouseName], AHouseData[HouseID][Owner], AHouseData[HouseID][HouseLevel]);
-		UpdateDynamic3DTextLabelText(AHouseData[HouseID][DoorText], 0x008080FF, Msg);
+		UpdateDynamic3DTextLabelText(AHouseData[HouseID][DoorText], COLOR_TEAL, Msg);
 		// Add a streamed icon to the map (red house), type = 32, color = 0, world = 0, interior = 0, playerid = -1, drawdist = 150.0
 		if (ShowBoughtHouses == true)
 			AHouseData[HouseID][MapIconID] = CreateDynamicMapIcon(x, y, z, 32, 0, 0, 0, -1, 150.0);
@@ -194,7 +194,7 @@ House_UpdateEntrance(HouseID)
 		AHouseData[HouseID][PickupID] = CreateDynamicPickup(1273, 1, x, y, z, 0);
 		// Update the 3DText that appears above the house-pickup (displays the price of the house)
 		format(Msg, 128, TXT_PickupHouseForSale, AHouseData[HouseID][HousePrice], AHouseData[HouseID][HouseMaxLevel]);
-		UpdateDynamic3DTextLabelText(AHouseData[HouseID][DoorText], 0x008080FF, Msg);
+		UpdateDynamic3DTextLabelText(AHouseData[HouseID][DoorText], COLOR_TEAL, Msg);
 		// Add a streamed icon to the map (green house), type = 31, color = 0, world = 0, interior = 0, playerid = -1, drawdist = 150.0
 		AHouseData[HouseID][MapIconID] = CreateDynamicMapIcon(x, y, z, 31, 0, 0, 0, -1, 150.0);
 	}
@@ -253,7 +253,7 @@ House_AddVehicle(HouseID, cModel, cPaint, cComponents[], Float:cx, Float:cy, Flo
 		AVehicleData[vid][BelongsToHouse] = HouseID;
 		// Add a 3DText label to the vehicle, displaying the name of the owner
         format(vText, sizeof(vText), "Vehicle owned by: \n%s", AVehicleData[vid][Owner]);
-        AVehicleData[vid][VehicleText] = CreateDynamic3DTextLabel(vText, 0xFFFFFF, 0.0, 0.0, 0.0, 80.0, INVALID_PLAYER_ID, vid);
+        AVehicleData[vid][VehicleText] = CreateDynamic3DTextLabel(vText, COLOR_WHITE, 0.0, 0.0, 0.0, 80.0, INVALID_PLAYER_ID, vid);
 	}
 	else // No free carslot was found, return 0
 		return 0;

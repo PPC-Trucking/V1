@@ -15,7 +15,7 @@ public Police_CheckWantedPlayers(playerid)
 		{
 			//Check if that player is wanted
 			if (GetPlayerWantedLevel(PlayerToCheck) > 0)
-			    SetPlayerMarkerForPlayer(playerid, PlayerToCheck, 0xFF0000FF); // Make that player red to the police-player
+			    SetPlayerMarkerForPlayer(playerid, PlayerToCheck, COLOR_RED); // Make that player red to the police-player
 			else
 			{
 				// Reset the playercolor based on the player's class
@@ -67,7 +67,7 @@ Police_WarnNearbyPlayers(playerid)
 					// Let the police player know that he warned the player
 					GetPlayerName(PlayerToCheck, Name, sizeof(Name));
 					format(Msg, 128, "{00FF00}You've warned {FFFF00}%s", Name);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
 		}
@@ -147,14 +147,14 @@ Police_PayFine(playerid, PlayerToFine)
 		RewardPlayer(playerid, Fine, GetPlayerWantedLevel(PlayerToFine));
 		// Let the police player know that he fined the player
 		format(PoliceMsg, 200, TXT_PoliceFinedPlayerReward, FinedPlayerName, Fine);
-		SendClientMessage(playerid, 0xFFFFFFFF, PoliceMsg);
+		SendClientMessage(playerid, COLOR_WHITE, PoliceMsg);
 		// Let the wanted player pay the fine
 		RewardPlayer(PlayerToFine, -Fine, 0);
 		format(PlayerMsg, 200, TXT_PlayerGotFinedByPolice, PoliceName, Fine);
-		SendClientMessage(PlayerToFine, 0xFFFFFFFF, PlayerMsg);
+		SendClientMessage(PlayerToFine, COLOR_WHITE, PlayerMsg);
 		// Let the other players know that the police player has fined the wanted player
 		format(PoliceMsg, 200, TXT_PoliceFinedPlayer, PoliceName, FinedPlayerName);
-		SendClientMessageToAll(0xFFFFFFFF, PoliceMsg);
+		SendClientMessageToAll(COLOR_WHITE, PoliceMsg);
 		// Increase the stats for fining a player
 		APlayerData[playerid][StatsPoliceFined]++;
 	}
@@ -168,15 +168,15 @@ Police_PayFine(playerid, PlayerToFine)
 		RewardPlayer(playerid, Fine, GetPlayerWantedLevel(PlayerToFine));
 		// Let the police player know that he jailed the wanted player
 		format(PoliceMsg, 200, TXT_PoliceJailedPlayerReward, FinedPlayerName, Fine);
-		SendClientMessage(playerid, 0xFFFFFFFF, PoliceMsg);
+		SendClientMessage(playerid, COLOR_WHITE, PoliceMsg);
 		// Let the wanted player pay a double fine
 		RewardPlayer(PlayerToFine, -Fine, 0);
 		// Let the player know he's been jailed and for how long
 		format(PlayerMsg, 200, TXT_PlayerGotJailedByPolice, PoliceName, (JailTime / 60));
-		SendClientMessage(PlayerToFine, 0xFFFFFFFF, PlayerMsg);
+		SendClientMessage(PlayerToFine, COLOR_WHITE, PlayerMsg);
 		// Let the other players know that the police player has jailed the wanted player
 		format(PoliceMsg, 200, TXT_PoliceJailedPlayer, PoliceName, FinedPlayerName, (JailTime / 60));
-		SendClientMessageToAll(0xFFFFFFFF, PoliceMsg);
+		SendClientMessageToAll(COLOR_WHITE, PoliceMsg);
 		// Teleport the player to jail
 		Police_JailPlayer(PlayerToFine, JailTime);
 		// Increase the stats for jailing a player
@@ -303,7 +303,7 @@ public Timer_PoliceCanJailPlayer(playerid)
 
 	// Let the player know how much time he has left to pull over
 	format(Msg, 128, "{FF0000}You have %i seconds to pull over and stop", APlayerData[playerid][Value_PoliceCanJailMe]);
-	SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+	SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 	// Check if the timer has ran out
 	if (APlayerData[playerid][Value_PoliceCanJailMe] == 0)
@@ -315,9 +315,9 @@ public Timer_PoliceCanJailPlayer(playerid)
 		KillTimer(APlayerData[playerid][Timer_PoliceCanJailMe]);
 		// Let the player know what consequences it will have by not stopping
 		format(Msg, 128, "{FF0000}You didn't pull-over and stop, now the police can send you to jail immediately");
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 		format(Msg, 128, "{FF0000}Your fines will be doubled as well");
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 
 	// Reduce the remaining time by 5 seconds
@@ -359,10 +359,10 @@ SpikeStrip_Create(playerid)
 		// Create a timer that checks all players in range to see if they run over the spikestrip
 		ASpikeStrips[StripIndex][SpikeTimer] = SetTimerEx("CheckSpikeStrip", 100, true, "i", StripIndex);
 		// Let the player know he created a spikestrip
-		SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've placed a spikestrip");
+		SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've placed a spikestrip");
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}The maximum number of spikestrips have been created, try again later");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}The maximum number of spikestrips have been created, try again later");
 }
 
 // This timer checks the spikestrips that have been planted (they automatically disappear after one minute)
@@ -418,6 +418,6 @@ Police_SendMessage(PoliceMessage[])
 	for (new PoliceID; PoliceID < MAX_PLAYERS; PoliceID++) // Loop through all players
 		if (APlayerData[PoliceID][LoggedIn] == true) // Check if this player has logged in
 		    if (APlayerData[PoliceID][PlayerClass] == ClassPolice) // Check if this player is a police player
-				SendClientMessage(PoliceID, 0xFFFFFFFF, PoliceMessage); // Send the message to the police player
+				SendClientMessage(PoliceID, COLOR_WHITE, PoliceMessage); // Send the message to the police player
 }
 

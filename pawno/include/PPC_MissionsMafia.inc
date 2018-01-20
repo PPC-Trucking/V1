@@ -44,7 +44,7 @@ Mafia_StartRandomJob(playerid)
 		APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 		// Inform the player that he must load his goods
 		format(LoadMsg, 128, TXT_PickupCargoAt, Load, StartLoc);
-		SendClientMessage(playerid, 0xFFFFFFFF, LoadMsg);
+		SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 	}
 
 	return 1;
@@ -63,7 +63,7 @@ public Mafia_CheckMafiaLoads(playerid)
 		{
 			//Check if that player is carrying a mafia-load
 			if (APlayerData[PlayerToCheck][MafiaLoad] == true)
-			    SetPlayerMarkerForPlayer(playerid, PlayerToCheck, 0xFF0000FF); // Make that player red to the mafia-player
+			    SetPlayerMarkerForPlayer(playerid, PlayerToCheck, COLOR_RED); // Make that player red to the mafia-player
 			else
 			    if (APlayerData[PlayerToCheck][PlayerClass] == ClassTruckDriver) // Reset the playercolor for truckers (only truckers can carry mafia-loads)
 			        SetPlayerMarkerForPlayer(playerid, PlayerToCheck, ColorClassTruckDriver);
@@ -146,7 +146,7 @@ Mafia_OnPlayerEnterCheckpoint(playerid)
 		// Reward the mafia player (give cash and points)
 		RewardPlayer(playerid, 5000, 2);
 		// Let the player know he succesfully delivered a stolen load to the mafia hideout
-		SendClientMessage(playerid, 0xFFFFFFFF, TXT_MafiaDeliveredStolenLoad);
+		SendClientMessage(playerid, COLOR_WHITE, TXT_MafiaDeliveredStolenLoad);
 
 		// Increase the stats for completing a delivery of a stolen mafiaload
 		APlayerData[playerid][StatsMafiaStolen]++;
@@ -235,7 +235,7 @@ public Mafia_LoadUnload(playerid)
 			Police_SendMessage(Msg);
 			// Inform the player that he must unload his goods
 			format(UnloadMsg, 100, TXT_DeliverCargoTo, Load, EndLoc);
-			SendClientMessage(playerid, 0xFFFFFFFF, UnloadMsg);
+			SendClientMessage(playerid, COLOR_WHITE, UnloadMsg);
 		}
 		case 2: // Player is delivering his goods
 		{
@@ -250,8 +250,8 @@ public Mafia_LoadUnload(playerid)
 			// Construct the message sent to all players that this player completed a mafia mission
 			format(Msg1, 128, TXT_PlayerCompletedMafiaJob, Name, Load);
 			format(Msg2, 128, TXT_PlayerCompletedMafiaJobInfo, StartLoc, EndLoc);
-			SendClientMessageToAll(0xFFFFFFFF, Msg1);
-			SendClientMessageToAll(0xFFFFFFFF, Msg2);
+			SendClientMessageToAll(COLOR_WHITE, Msg1);
+			SendClientMessageToAll(COLOR_WHITE, Msg2);
 
 
 
@@ -273,7 +273,7 @@ public Mafia_LoadUnload(playerid)
 
 			// Send a message to let the player know he finished his mission and got paid
 			format(Message, 128, TXT_RewardJob, Payment);
-			SendClientMessage(playerid, 0xFFFFFFFF, Message);
+			SendClientMessage(playerid, COLOR_WHITE, Message);
 
 			// Increase the stats for completing a mafia job
 			APlayerData[playerid][StatsMafiaJobs]++;

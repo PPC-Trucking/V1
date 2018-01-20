@@ -176,15 +176,15 @@ PlayerLeftVehicle(playerid)
 		switch (APlayerData[playerid][PlayerClass])
 		{
 			case ClassTruckDriver:
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_TruckerMustEnterVehicle);
+				SendClientMessage(playerid, COLOR_WHITE, TXT_TruckerMustEnterVehicle);
 			case ClassBusDriver:
-				SendClientMessage(playerid, 0xFFFFFFFF, TXT_BusDriverMustEnterBus);
+				SendClientMessage(playerid, COLOR_WHITE, TXT_BusDriverMustEnterBus);
 			case ClassMafia:
-			    SendClientMessage(playerid, 0xFFFFFFFF, TXT_MafiaMustEnterVehicle);
+			    SendClientMessage(playerid, COLOR_WHITE, TXT_MafiaMustEnterVehicle);
 			case ClassCourier:
-			    SendClientMessage(playerid, 0xFFFFFFFF, TXT_CourierMustEnterVehicle);
+			    SendClientMessage(playerid, COLOR_WHITE, TXT_CourierMustEnterVehicle);
 			case ClassRoadWorker:
-			    SendClientMessage(playerid, 0xFFFFFFFF, TXT_RoadworkerMustEnterVehicle);
+			    SendClientMessage(playerid, COLOR_WHITE, TXT_RoadworkerMustEnterVehicle);
 		}
 	}
 }

@@ -47,7 +47,7 @@ Pilot_StartRandomJob(playerid)
 			SetPlayerCheckpoint(playerid, x, y, z, 7);
 			// Inform the player that he must load his goods
 			format(LoadMsg, 128, TXT_PickupCargoAt, Load, StartLoc);
-			SendClientMessage(playerid, 0xFFFFFFFF, LoadMsg);
+			SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 		}
 	}
 
@@ -204,7 +204,7 @@ public Pilot_Plane_LoadUnload(playerid)
 			SetPlayerCheckpoint(playerid, x, y, z, 7);
 			// Inform the player that he must unload his goods
 			format(UnloadMsg, 100, TXT_DeliverCargoTo, Load, EndLoc);
-			SendClientMessage(playerid, 0xFFFFFFFF, UnloadMsg);
+			SendClientMessage(playerid, COLOR_WHITE, UnloadMsg);
 		}
 		case 2: // Player is delivering his goods
 		{
@@ -221,8 +221,8 @@ public Pilot_Plane_LoadUnload(playerid)
 			// Construct the message sent to all players that this player completed a pilot mission
 			format(Msg1, 128, TXT_PlayerCompletedPilotJob, Name, Load);
 			format(Msg2, 128, TXT_PlayerCompletedPilotJobInfo, StartLoc, EndLoc);
-			SendClientMessageToAll(0xFFFFFFFF, Msg1);
-			SendClientMessageToAll(0xFFFFFFFF, Msg2);
+			SendClientMessageToAll(COLOR_WHITE, Msg1);
+			SendClientMessageToAll(COLOR_WHITE, Msg2);
 
 
 
@@ -244,7 +244,7 @@ public Pilot_Plane_LoadUnload(playerid)
 
 			// Send a message to let the player know he finished his mission and got paid
 			format(Message, 128, TXT_RewardJob, Payment);
-			SendClientMessage(playerid, 0xFFFFFFFF, Message);
+			SendClientMessage(playerid, COLOR_WHITE, Message);
 
 			// Increase the stats for completing a pilot job
 			APlayerData[playerid][StatsPilotJobs]++;

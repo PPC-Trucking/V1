@@ -48,7 +48,7 @@ Convoy_Create(playerid, Convoy)
 
 		// Let all players know that this player wants to start a convoy
 		format(Msg, 128, TXT_PlayerStartsConvoy, Name);
-		SendClientMessageToAll(0xFFFFFFFF, Msg);
+		SendClientMessageToAll(COLOR_WHITE, Msg);
 	}
 }
 
@@ -73,7 +73,7 @@ Convoy_Join(playerid, Convoy)
 			format(Msg, 128, TXT_PlayerJoinedConvoy, Name);
 			Convoy_SendMessage(Convoy, Msg);
 			// Inform the player that he joined the convoy
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_YouJoinedConvoy);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_YouJoinedConvoy);
 
 			// Set the player as member of the convoy (find a free spot for this player)
 			for (new i; i < CONVOY_MAX_MEMBERS; i++)
@@ -96,7 +96,7 @@ Convoy_Join(playerid, Convoy)
 			TextDrawSetString(APlayerData[playerid][MissionText], TXT_WaitingLeaderJob);
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, TXT_ConvoyFull);
+		    SendClientMessage(playerid, COLOR_WHITE, TXT_ConvoyFull);
 	}
 }
 
@@ -204,7 +204,7 @@ Convoy_Cancel(Convoy)
 		    // Reset the stored playerid in the convoy
 		    AConvoys[Convoy][Members][i] = -1;
 			// Send the member a message that the convoy was cancelled by the leader
-			SendClientMessage(MemberID, 0xFFFFFFFF, TXT_LeaderCancelledConvoy);
+			SendClientMessage(MemberID, COLOR_WHITE, TXT_LeaderCancelledConvoy);
 		}
 	}
 
@@ -260,8 +260,8 @@ Convoy_StartMemberJob(playerid, Convoy)
 	APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 	// Inform the player that he must load his goods
 	format(LoadMsg, 128, TXT_PickupCargoAt, Load, StartLoc);
-	SendClientMessage(playerid, 0xFFFFFFFF, LoadMsg);
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_MeetOtherConvoyMembers);
+	SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
+	SendClientMessage(playerid, COLOR_WHITE, TXT_MeetOtherConvoyMembers);
 }
 
 
@@ -290,7 +290,7 @@ Convoy_UpdateMemberJob(playerid)
 	SetPlayerCheckpoint(playerid, x, y, z, 7);
 	// Inform the player that he must unload his goods
 	format(UnloadMsg, 128, TXT_DeliverCargoTo, Load, EndLoc);
-	SendClientMessage(playerid, 0xFFFFFFFF, UnloadMsg);
+	SendClientMessage(playerid, COLOR_WHITE, UnloadMsg);
 }
 
 
@@ -376,7 +376,7 @@ public Convoy_Timer(Convoy)
 				if (AllSameTrailer == true)
 				{
 					// Inform the leader that everyone has the same trailer
-					SendClientMessage(LeaderID, 0xFFFFFFFF, TXT_AllMembersSameTrailer);
+					SendClientMessage(LeaderID, COLOR_WHITE, TXT_AllMembersSameTrailer);
 
 					// Start the same job for every member if they all have the same trailer
 					for (new i = 1; i < CONVOY_MAX_MEMBERS; i++)
@@ -397,7 +397,7 @@ public Convoy_Timer(Convoy)
 					if (AConvoys[Convoy][LeaderInformedTrailers] == false)
 					{
 						// Inform the leader that not every member has the same trailer, convoy cannot start yet
-						SendClientMessage(LeaderID, 0xFFFFFFFF, TXT_AllMembersNotSameTrailer);
+						SendClientMessage(LeaderID, COLOR_WHITE, TXT_AllMembersNotSameTrailer);
 						AConvoys[Convoy][LeaderInformedTrailers] = true; // Leader is informed now
 					}
 				}
@@ -420,7 +420,7 @@ public Convoy_Timer(Convoy)
 			if (AllMembersLoaded == true)
 			{
 				// Inform the leader that everyone has the same trailer
-				SendClientMessage(LeaderID, 0xFFFFFFFF, TXT_AllMembersLoadedCargo);
+				SendClientMessage(LeaderID, COLOR_WHITE, TXT_AllMembersLoadedCargo);
 
 				// Update the job for every member if they all have loaded their cargo
 				for (new i; i < CONVOY_MAX_MEMBERS; i++)
@@ -485,7 +485,7 @@ public Convoy_Timer(Convoy)
 						    Payment = Payment * 2; // Double the payment is the player was the first to do the bonus mission
                             RandomBonusMission[MissionFinished] = true; // Only one player/convoy can do the bonus mission, a new one is chosen next
 							format(BonusMsg, 128, "{00BBFF}Convoy with leader {FFBB00}%s{00BBFF} has finished the bonus mission", Name);
-							SendClientMessageToAll(0xFFFFFFFF, BonusMsg);
+							SendClientMessageToAll(COLOR_WHITE, BonusMsg);
 						}
 			}
 
@@ -512,7 +512,7 @@ public Convoy_Timer(Convoy)
 					Trucker_EndJob(MemberID);
 					// Send a message to let the player know he finished his mission and got paid
 					format(Message, 128, TXT_FinishedConvoy, Payment);
-					SendClientMessage(MemberID, 0xFFFFFFFF, Message);
+					SendClientMessage(MemberID, COLOR_WHITE, Message);
 					// Also update the player's missiontext to inform the player that he must wait for the leader to start a job
 					if (i != 0) // Skip this if the current index is the leader (the leader doesn't have to wait for a new job)
 						TextDrawSetString(APlayerData[MemberID][MissionText], TXT_WaitingLeaderJob);
@@ -618,13 +618,13 @@ Convoy_PlayerAllowed(playerid)
 			if (APlayerData[playerid][JobStarted] == false)
 				return true; // The player is allowed to create or join a convoy
 			else
-			    SendClientMessage(playerid, 0xFFFFFFFF, TXT_CannotJoinJobStarted);
+			    SendClientMessage(playerid, COLOR_WHITE, TXT_CannotJoinJobStarted);
 		}
 		else
-		    SendClientMessage(playerid, 0xFFFFFFFF, TXT_ConvoyAllreadyJoined);
+		    SendClientMessage(playerid, COLOR_WHITE, TXT_ConvoyAllreadyJoined);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_ConvoyNeedsTruckerClass);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_ConvoyNeedsTruckerClass);
 
 	// If any condition wasn't true, the player isn't allowed to create or join a convoy
 	return false;
@@ -642,7 +642,7 @@ Convoy_SendMessage(Convoy, Message[])
 	    MemberID = AConvoys[Convoy][Members][i]; // Get the member-id on this index
 	    if (MemberID != -1) // Check if this member has a valid playerid
 		{
-			SendClientMessage(MemberID, 0xFFFFFFFF, Message); // Send the given message to the member
+			SendClientMessage(MemberID, COLOR_WHITE, Message); // Send the given message to the member
 		}
 	}
 }

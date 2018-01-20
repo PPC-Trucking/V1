@@ -146,7 +146,7 @@ public OnPlayerConnect(playerid)
 
 	// Send a message to all players to let them know somebody else joined the server
 	format(NewPlayerMsg, 128, TXT_PlayerJoinedServer, Name, playerid);
-	SendClientMessageToAll(0xFFFFFFFF, NewPlayerMsg);
+	SendClientMessageToAll(COLOR_WHITE, NewPlayerMsg);
 
 	// Try to load the player's datafile ("PlayerFile_Load" returns "1" is the file has been read, "0" when the file cannot be read)
 	if (PlayerFile_Load(playerid) == 1)
@@ -238,9 +238,9 @@ ShowRemainingBanTime(playerid)
 	Seconds = TotalBanTime;
 
 	// Display the remaining ban-time for this player
-	SendClientMessage(playerid, 0xFFFFFFFF, TXT_StillBanned);
+	SendClientMessage(playerid, COLOR_WHITE, TXT_StillBanned);
 	format(Msg, 128, TXT_BannedDuration, Days, Hours, Minutes, Seconds);
-	SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+	SendClientMessage(playerid, COLOR_WHITE, Msg);
 }
 
 
@@ -267,12 +267,12 @@ public OnPlayerDisconnect(playerid, reason)
 					TogglePlayerSpectating(i, 0); // Turn off spectate-mode
 					APlayerData[i][SpectateID] = INVALID_PLAYER_ID;
 					APlayerData[i][SpectateType] = ADMIN_SPEC_TYPE_NONE;
-					SendClientMessage(i, 0xFFFFFFFF, "{FF0000}Target player has logged off, ending spectate mode");
+					SendClientMessage(i, COLOR_RED, "Target player has logged off, ending spectate mode");
 				}
 
 	// Send a message to all players to let them know somebody left the server
 	format(Msg, 128, TXT_PlayerLeftServer, Name, playerid);
-	SendClientMessageToAll(0xFFFFFFFF, Msg);
+	SendClientMessageToAll(COLOR_WHITE, Msg);
 
 	// If the player entered a proper password (the player has an account)
 	if (strlen(APlayerData[playerid][PlayerPassword]) != 0)
@@ -412,7 +412,7 @@ public OnPlayerText(playerid, text[])
     if (APlayerData[playerid][Muted] == true || APlayerData[playerid][LoggedIn] == false)
 	{
 		// Let the player know he's still muted
-		SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You are still muted");
+		SendClientMessage(playerid, COLOR_RED, "You are still muted");
 
 		// Don't allow his text to be sent to the chatbox
 		return 0;
@@ -615,7 +615,7 @@ public OnPlayerSpawn(playerid)
 	// Check if the player properly logged in by typing his password
 	if (APlayerData[playerid][LoggedIn] == false)
 	{
-		SendClientMessage(playerid, 0xFFFFFFFF, TXT_FailedLoginProperly);
+		SendClientMessage(playerid, COLOR_WHITE, TXT_FailedLoginProperly);
 	    SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player if he didn't log in properly
 	}
 
@@ -698,7 +698,7 @@ public OnPlayerSpawn(playerid)
 
 	// Display a message if the player hasn't accepted the rules yet
 	if (APlayerData[playerid][RulesRead] == false)
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You haven't accepted the {FFFF00}/rules{FF0000} yet");
+	    SendClientMessage(playerid, COLOR_RED, "You haven't accepted the {FFFF00}/rules{FF0000} yet");
 
 	// Set the missiontext
 	TextDrawSetString(APlayerData[playerid][MissionText], missiontext);
@@ -818,7 +818,7 @@ public OnPlayerDeath(playerid, killerid, reason)
 	    GetPlayerName(killerid, KillerName, sizeof(KillerName));
 	    // Let the killed know the police are informed about the kill
 		format(Msg, 128, "{FF0000}You've killed {FFFF00}%s{FF0000}, you're wanted by the police now", VictimName);
-		SendClientMessage(killerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(killerid, COLOR_WHITE, Msg);
 		// Inform all police players about the kill
 		format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} killed {FFFF00}%s{00FF00}, pursue and fine him", KillerName, VictimName);
 		Police_SendMessage(Msg);
@@ -985,7 +985,7 @@ public OnPlayerRequestSpawn(playerid)
 				{
 					// Let the player know the maximum amount of cops has been reached
 					GameTextForPlayer(playerid, "Maximum amount of cops already reached", 5000, 4);
-					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}The maximum amount of cops has been reached already, please select another class");
+					SendClientMessage(playerid, COLOR_RED, "The maximum amount of cops has been reached already, please select another class");
 					return 0; // Don't allow the player to spawn as police player
 				}
 			}
@@ -995,7 +995,7 @@ public OnPlayerRequestSpawn(playerid)
 		    {
 				// Let the player know he needs 100 scorepoints
 				GameTextForPlayer(playerid, "You need 100 scorepoints for police class", 5000, 4);
-				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You need 100 scorepoints for police class");
+				SendClientMessage(playerid, COLOR_RED, "You need 100 scorepoints for police class");
 				return 0; // Don't allow the player to spawn as police player
 		    }
 			// If the player has a wanted level
@@ -1003,7 +1003,7 @@ public OnPlayerRequestSpawn(playerid)
 		    {
 				// Let the player know he cannot have a wanted level to join police
 				GameTextForPlayer(playerid, "You are not allowed to choose police class when you're wanted", 5000, 4);
-				SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You are not allowed to choose police class when you're wanted");
+				SendClientMessage(playerid, COLOR_RED, "You are not allowed to choose police class when you're wanted");
 				return 0; // Don't allow the player to spawn as police player
 		    }
 
@@ -1055,7 +1055,7 @@ public OnPlayerRequestSpawn(playerid)
 	// Spawn the player with his chosen skin at a random location based on his class
 	SetSpawnInfo(playerid, 0, GetPlayerSkin(playerid), x, y, z, Angle, 0, 0, 0, 0, 0, 0);
 	// Send the message to all players (who joined which class)
-	SendClientMessageToAll(0xFFFFFFFF, Msg);
+	SendClientMessageToAll(COLOR_WHITE, Msg);
 
     return 1;
 }
@@ -1104,7 +1104,7 @@ public OnVehicleRespray(playerid, vehicleid, color1, color2)
 	if ((AVehicleData[vehicleid][Color1] != color1) || (AVehicleData[vehicleid][Color2] != color2))
 	{
 		RewardPlayer(playerid, -150, 0);
-		SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You've changed the color of your vehicle for $150");
+		SendClientMessage(playerid, COLOR_GREEN, "You've changed the color of your vehicle for $150");
 	}
 
 	// Save the colors
@@ -1263,7 +1263,7 @@ public OnPlayerStateChange(playerid,newstate,oldstate)
 					SetVehicleParamsEx(vid, 0, 0, alarm, doors, bonnet, boot, objective);
 					// Let the player know he cannot use somebody else's vehicle
 					format(Msg, 128, TXT_SpeedometerCannotUseVehicle, AVehicleData[vid][Owner]);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 
 				// Check if the vehicle is clamped
@@ -1276,9 +1276,9 @@ public OnPlayerStateChange(playerid,newstate,oldstate)
 					SetVehicleParamsEx(vid, 0, 0, alarm, doors, bonnet, boot, objective);
 					// Let the player know he cannot use a clamped vehicle
 					format(Msg, 128, TXT_SpeedometerClampedVehicle);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 					format(Msg, 128, TXT_SpeedometerClampedVehicle2);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
 
@@ -1300,7 +1300,7 @@ public OnPlayerStateChange(playerid,newstate,oldstate)
 							GetVehicleParamsEx(vid, engine, lights, alarm, doors, bonnet, boot, objective);
 							SetVehicleParamsEx(vid, 0, 0, alarm, doors, bonnet, boot, objective);
 							// Let the player know he cannot use a cop car
-							SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use a police vehicle");
+							SendClientMessage(playerid, COLOR_RED, "You cannot use a police vehicle");
 						}
 					}
 				}
@@ -1324,7 +1324,7 @@ public OnPlayerStateChange(playerid,newstate,oldstate)
 							GetVehicleParamsEx(vid, engine, lights, alarm, doors, bonnet, boot, objective);
 							SetVehicleParamsEx(vid, 0, 0, alarm, doors, bonnet, boot, objective);
 							// Let the player know he cannot use a cop car
-							SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use a pilot vehicle");
+							SendClientMessage(playerid, COLOR_RED, "You cannot use a pilot vehicle");
 						}
 					}
 				}
@@ -1472,45 +1472,45 @@ stock DebugKeys(playerid, newkeys, oldkeys)
 {
 	// Debug keys
 	if ((newkeys & KEY_FIRE) && !(oldkeys & KEY_FIRE))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_FIRE key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_FIRE key");
 	if ((newkeys & KEY_ACTION) && !(oldkeys & KEY_ACTION))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_ACTION key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_ACTION key");
 	if ((newkeys & KEY_CROUCH) && !(oldkeys & KEY_CROUCH))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_CROUCH key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_CROUCH key");
 	if ((newkeys & KEY_SPRINT) && !(oldkeys & KEY_SPRINT))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_SPRINT key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_SPRINT key");
 	if ((newkeys & KEY_SECONDARY_ATTACK) && !(oldkeys & KEY_SECONDARY_ATTACK))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_SECONDARY_ATTACK key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_SECONDARY_ATTACK key");
 	if ((newkeys & KEY_JUMP) && !(oldkeys & KEY_JUMP))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_JUMP key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_JUMP key");
 	if ((newkeys & KEY_LOOK_RIGHT) && !(oldkeys & KEY_LOOK_RIGHT))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_LOOK_RIGHT key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_LOOK_RIGHT key");
 	if ((newkeys & KEY_HANDBRAKE) && !(oldkeys & KEY_HANDBRAKE))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_HANDBRAKE key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_HANDBRAKE key");
 	if ((newkeys & KEY_LOOK_LEFT) && !(oldkeys & KEY_LOOK_LEFT))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_LOOK_LEFT key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_LOOK_LEFT key");
 	if ((newkeys & KEY_SUBMISSION) && !(oldkeys & KEY_SUBMISSION))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_SUBMISSION key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_SUBMISSION key");
 	if ((newkeys & KEY_LOOK_BEHIND) && !(oldkeys & KEY_LOOK_BEHIND))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_LOOK_BEHIND key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_LOOK_BEHIND key");
 	if ((newkeys & KEY_WALK) && !(oldkeys & KEY_WALK))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_WALK key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_WALK key");
 	if ((newkeys & KEY_ANALOG_UP) && !(oldkeys & KEY_ANALOG_UP))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_ANALOG_UP key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_ANALOG_UP key");
 	if ((newkeys & KEY_ANALOG_DOWN) && !(oldkeys & KEY_ANALOG_DOWN))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_ANALOG_DOWN key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_ANALOG_DOWN key");
 	if ((newkeys & KEY_ANALOG_LEFT) && !(oldkeys & KEY_ANALOG_LEFT))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_ANALOG_LEFT key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_ANALOG_LEFT key");
 	if ((newkeys & KEY_ANALOG_RIGHT) && !(oldkeys & KEY_ANALOG_RIGHT))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_ANALOG_RIGHT key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_ANALOG_RIGHT key");
 	if ((newkeys & KEY_UP) && !(oldkeys & KEY_UP))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_UP key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_UP key");
 	if ((newkeys & KEY_DOWN) && !(oldkeys & KEY_DOWN))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_DOWN key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_DOWN key");
 	if ((newkeys & KEY_LEFT) && !(oldkeys & KEY_LEFT))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_LEFT key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_LEFT key");
 	if ((newkeys & KEY_RIGHT) && !(oldkeys & KEY_RIGHT))
-		SendClientMessage(playerid, 0x0000FFFF, "You pressed the KEY_RIGHT key");
+		SendClientMessage(playerid, COLOR_BLUE, "You pressed the KEY_RIGHT key");
 
 	return 1;
 }

@@ -539,7 +539,7 @@ GameModeInit_PickupsIcons()
 {
 	// Add a pickup so the player can get a trucker/busdriver license and position a 3DTextLabel above it
 	Pickup_License = CreatePickup(1274, 2, -2033.0, -100.0, 35.2, 0);
-	Create3DTextLabel(TXT_PickupText, 0x008080FF, -2033.0, -100.0, 36.0, 30.0, 0);
+	Create3DTextLabel(TXT_PickupText, COLOR_TEAL, -2033.0, -100.0, 36.0, 30.0, 0);
 
 	// Add all refuel-pickups to the world (including their icon)
 	AddRefuelPickup(-1471.5, 1863.75, 32.7);
@@ -649,7 +649,7 @@ AddRefuelPickup(Float:x, Float:y, Float:z)
 			ARefuelPickups[i][puz] = z;
 
 			// Add a 3DText message above the refuel-pickup
-			Create3DTextLabel(TXT_PickupRefuel, 0x008080FF, x, y, z + 0.8, 30.0, 0);
+			Create3DTextLabel(TXT_PickupRefuel, COLOR_TEAL, x, y, z + 0.8, 30.0, 0);
 
 			// Add an icon to the map for this refuel-spot
 			CreateDynamicMapIcon(x, y, z, 56, 0, 0, 0, -1, 300.0);
@@ -676,7 +676,7 @@ AddCarDealerPickup(Float:x, Float:y, Float:z)
 			ACarDealerPickups[i][puz] = z;
 
 			// Add a 3DText message above the cardealer pickup
-			Create3DTextLabel(TXT_PickupCarDealer, 0x008080FF, x, y, z + 0.8, 30.0, 0);
+			Create3DTextLabel(TXT_PickupCarDealer, COLOR_TEAL, x, y, z + 0.8, 30.0, 0);
 
 			// Add an icon to the map for this cardealer-spot
 			CreateDynamicMapIcon(x, y, z, 55, 0, 0, 0, -1, 300.0);

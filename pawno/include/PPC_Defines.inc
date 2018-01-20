@@ -216,9 +216,14 @@
 
 
 // Define messagecolors
-#define ColorRed 0xFF0000FF
-#define ColorGreen 0x00FF00FF
-#define ColorBlue 0x0000FFFF
+#define COLOR_RED 0xFF0000FF
+#define COLOR_YELLOW 0xFFFF00FF
+#define COLOR_WHITE 0xFFFFFFFF
+#define COLOR_GREEN 0x00FF00FF
+#define COLOR_BLUE 0x0000FFFF
+#define COLOR_GRAY 0x808080FF
+#define COLOR_SILVERCHALICE 0xA0A0A0FF
+#define COLOR_TEAL 0x008080FF
 
 // Define Virtual Worlds
 #define WORLD_JAIL 10254

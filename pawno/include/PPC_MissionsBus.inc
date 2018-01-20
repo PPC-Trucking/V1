@@ -104,7 +104,7 @@ public BusDriver_LoadUnload(playerid, PassengersOnBusStop)
 		GetPlayerName(playerid, Name, sizeof(Name));
 		// Construct the message sent to all players that this player completed a mafia mission
 		format(MissionMsg, 128, TXT_PlayerCompletedBusLine, Name, ABusRoutes[Job][LineNumber]);
-		SendClientMessageToAll(0xFFFFFFFF, MissionMsg);
+		SendClientMessageToAll(COLOR_WHITE, MissionMsg);
 
 
 

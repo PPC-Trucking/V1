@@ -85,7 +85,7 @@ public Speedometer_Update(playerid)
 				APlayerData[playerid][SpectateVehicle] = GetPlayerVehicleID(OtherPlayer);
 				APlayerData[playerid][SpectateType] = ADMIN_SPEC_TYPE_VEHICLE;
 				format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} has entered a vehicle, changing spectate mode to match", Name);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 		    }
 		}
 		else // The player is spectating a vehicle
@@ -99,7 +99,7 @@ public Speedometer_Update(playerid)
 				APlayerData[playerid][SpectateID] = OtherPlayer;
 				APlayerData[playerid][SpectateType] = ADMIN_SPEC_TYPE_PLAYER;
 				format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} has exited a vehicle, changing spectate mode to match", Name);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 		    }
 		}
 	}
@@ -243,10 +243,10 @@ public RefuelVehicle(playerid)
 		RewardPlayer(playerid, -RefuelPrice, 0);
 		// Let the player know he refuelled his vehicle
 		format(RefuelMsg, 128, TXT_RefuelledVehicle, RefuelPrice);
-		SendClientMessage(playerid, 0xFFFFFFFF, RefuelMsg);
+		SendClientMessage(playerid, COLOR_WHITE, RefuelMsg);
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_CannotRefuelVehicle);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_CannotRefuelVehicle);
 
 	// Allow the player to move again
 	TogglePlayerControllable(playerid, 1);
@@ -285,7 +285,7 @@ CheckPlayerSpeeding(playerid)
 						    // Increase the wanted-level of this player by 1 star
 						    SetPlayerWantedLevel(playerid, GetPlayerWantedLevel(playerid) + 1);
 						    // Let the player know he's been caught speeding
-						    SendClientMessage(playerid, 0xFFFFFFFF, TXT_PlayerCaughtSpeeding);
+						    SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerCaughtSpeeding);
 
 							// Get the name of the player
 							GetPlayerName(playerid, Name, sizeof(Name));

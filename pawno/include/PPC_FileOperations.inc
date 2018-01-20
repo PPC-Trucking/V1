@@ -888,7 +888,7 @@ BankFile_Load(playerid)
 	if (fexist(file))
 	{
 		// Send a message to the player to inform him that he has a bank account
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{00BBFF}You have a bank-account. Use {FFBB00}/bank{00BBFF} to login");
+	    SendClientMessage(playerid, COLOR_WHITE, "{00BBFF}You have a bank-account. Use {FFBB00}/bank{00BBFF} to login");
 
 		BFile = fopen(file, io_read); // Open the bankfile for reading
 
@@ -929,9 +929,9 @@ BankFile_Load(playerid)
 				APlayerData[playerid][BankMoney] = APlayerData[playerid][BankMoney] + TransferMoney;
 				// Inform the player that a player has transferred some money to your bank account
 				format(Msg, 128, "{00BBFF}Player {FFBB00}%s{00BBFF} has transferred {FFBB00}$%i{00BBFF}", TransferName, TransferMoney);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 				format(Msg, 128, "{00BBFF}to your bank account on {FFBB00}%s", TransferTime);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 			}
 
             // Read the next line of the file
@@ -967,7 +967,7 @@ BankFile_Load(playerid)
 
 					// Inform the player that he received intrest on his bank account and how much
 					format(Msg, 128, "{00BBFF}You've received {FFBB00}$%i{00BBFF} intrest on your bank account", NewBankMoney - OldBankMoney);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
 		}
@@ -981,7 +981,7 @@ BankFile_Load(playerid)
 	else
 	{
 		// Send a message if the player doesn't have a bank account
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{00BBFF}You don't have a bank-account. Use {FFBB00}/bank{00BBFF} to set it up");
+	    SendClientMessage(playerid, COLOR_WHITE, "{00BBFF}You don't have a bank-account. Use {FFBB00}/bank{00BBFF} to set it up");
 
 	    return 0; // Return 0 if the file couldn't be read (doesn't exist)
 	}
