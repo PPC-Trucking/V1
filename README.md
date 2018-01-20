@@ -1,3 +1,5 @@
+# DO NOT USE THIS GAMEMODE! THIS IS JUST A TESTING VERSION WHICH IS  T O T A L L Y   N O T   S T A B L E  TO USE!
+
 # PPC Trucking V1
 
 This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](http://forum.sa-mp.com/member.php?u=109984) for Grand Theft Auto [San Andreas Multiplayer](http://www.sa-mp.com) (SA:MP). You can find the original post on SA:MP forums here: http://forum.sa-mp.com/showthread.php?t=196493.
