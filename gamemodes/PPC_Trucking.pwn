@@ -34,6 +34,8 @@ new PlayersBeforePolice	= 0;
 #include <sscanf2>
 #include <streamer>
 
+native IsValidVehicle(vehicleid);
+
 // Include all define-statements and custom-type declarations and the arrays which use them
 // These files need to be included before the functions get included, because the functions use the defines, custom types and the arrays
 // Also include the defined loads (for truckers, military, mafia, ...) and locations arrays
