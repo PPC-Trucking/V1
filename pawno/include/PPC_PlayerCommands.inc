@@ -432,8 +432,6 @@ COMMAND:housemenu(playerid, params[])
 	return 1;
 }
 
-
-
 // This command allows you to port a vehicle from your house to your location
 COMMAND:getcar(playerid, params[])
 {
@@ -1139,6 +1137,8 @@ COMMAND:stopwork(playerid, params[])
 			// Reduce the player's cash by 1000
 			RewardPlayer(playerid, -1000, 0);
 		}
+		else
+			SendClientMessage(playerid, COLOR_RED, "You are not doing any job");
 	}
 	else
 	    return 0;
@@ -1312,7 +1312,11 @@ COMMAND:wanted(playerid, params[])
 			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/wanted <OtherPlayer> <Stars>\"");
 			else
 				if (IsPlayerConnected(OtherPlayer)) // If the player is a valid playerid (he's connected)
+				{
 					SetPlayerWantedLevel(OtherPlayer, Stars);
+
+					SendClientMessage(OtherPlayer, COLOR_GREEN, "An admin set your wanted level");
+				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 		}
@@ -1348,6 +1352,8 @@ COMMAND:bike(playerid, params[])
 				// Let the server know that this was a valid command
 				return 1;
 			}
+			else
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1376,6 +1382,8 @@ COMMAND:car(playerid, params[])
 			// Make sure the player isn't inside a vehicle
 			if (GetPlayerVehicleID(playerid) == 0)
 				CarList_Create(playerid); // Create a list of cars (only the first 10 cars) and show the dialog so the player can choose a car
+			else
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1404,6 +1412,8 @@ COMMAND:plane(playerid, params[])
 			// Make sure the player isn't inside a vehicle
 			if (GetPlayerVehicleID(playerid) == 0)
 				PlaneList_Create(playerid); // Create a list of planes (only the first 10 planes) and show the dialog so the player can choose a plane
+			else
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1432,6 +1442,8 @@ COMMAND:trailer(playerid, params[])
 			// Make sure the player isn't inside a vehicle
 			if (GetPlayerVehicleID(playerid) == 0)
 				TrailerList_Create(playerid); // Create a list of trailers (only the first 10 trailers) and show the dialog so the player can choose a trailer
+			else
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1463,6 +1475,8 @@ COMMAND:boat(playerid, params[])
 				// Let the server know that this was a valid command
 				return 1;
 			}
+			else
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1560,9 +1574,14 @@ COMMAND:warn(playerid, params[])
 					format(ReasonMsg, 128, "Reason: %s", Reason);
 					SendClientMessage(playerid, COLOR_RED, ReasonMsg);
 
-					// Automatically kick the player if he got 3 warnings (if autokick is enabled)
+					// Automatically kick the player if he got 3 warnings (if autokick is enabled) and inform the player about that
 					if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
+					{
+						format(ReasonMsg, 128, "You have been kicked. (warnings: %i/%i)", APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
+						SendClientMessage(PlayerToWarn, COLOR_RED, ReasonMsg);
+
 						SetTimerEx("TimedKick", 500, false, "i", PlayerToWarn);
+					}
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -1677,6 +1696,8 @@ COMMAND:ban(playerid, params[])
 					format(Msg, 128, "%s %s has banned %s for %i days and %i hours", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days, Hours);
 					SendClientMessageToAll(COLOR_GRAY, Msg);
 				}
+				else
+					SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
 			}
 		}
 		else
@@ -1846,9 +1867,6 @@ COMMAND:vehicle(playerid, params[])
 	return 1;
 }
 
-COMMAND:delvehicle(playerid, params[])
-	return cmd_cleanupcar(playerid, params);
-
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
 {
@@ -1968,7 +1986,6 @@ COMMAND:port(playerid, params[])
 							SetPlayerPos(playerid, x, y, z + 3.0);
 							// Let the player know about it
 							format(PortMsg, 128, "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
-							SendClientMessage(playerid, COLOR_GREEN, PortMsg);
 						}
 						else
 						    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -2070,13 +2087,19 @@ COMMAND:portvehicle(playerid, params[])
 					if (sscanf(params, "i", Car)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/portvehicle <CarID>\"");
 					else
 					{
-						// Get the location of the car
-						GetVehiclePos(Car, x, y, z);
-						// Port the player to the given location
-						SetPlayerPos(playerid, x, y, z + 3.0);
-						// Let the player know about it
-						format(PortMsg, 128, "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
-						SendClientMessage(playerid, COLOR_GREEN, PortMsg);
+						//check if the car exists
+						if(AVehicleData[Car][Model] != 0)
+						{
+							// Get the location of the car
+							GetVehiclePos(Car, x, y, z);
+							// Port the player to the given location
+							SetPlayerPos(playerid, x, y, z + 3.0);
+							// Let the player know about it
+							format(PortMsg, 128, "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
+							SendClientMessage(playerid, COLOR_GREEN, PortMsg);
+						}
+						else
+							SendClientMessage(playerid, COLOR_RED, "The vehicle id its not valid");
 					}
 				}
 				else
@@ -2116,6 +2139,9 @@ COMMAND:setlevel(playerid, params[])
 				// Check if that other player is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
+					// Check if the level is in the range
+					if(Level < 0 || Level > 5)
+						return SendClientMessage(playerid, COLOR_RED, "The level its out of range");
 				    // Get the old level of the other player
 				    OldLevel = APlayerData[OtherPlayer][PlayerLevel];
 					// Get the playername of the admin
@@ -2369,30 +2395,32 @@ COMMAND:engine(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
+		//check if the player is the driver of the car, don't let the passenger to control the engine
+		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Get the player's vehicle
 			vehicleid = GetPlayerVehicleID(playerid);
 
-			// Get the current status of the vehicle
-			GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-
 			// Check if the player is inside a vehicle
 			if (vehicleid != 0)
 			{
-				if (sscanf(params, "i", engine)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/engine <EngineStatus (0/1)>\"");
+				// Get the current status of the vehicle
+				GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+
+				SetVehicleParamsEx(vehicleid, (1 - engine), lights, alarm, doors, bonnet, boot, objective);
+
+				//Check if the engine is running or not
+				if(engine)
+					//Inform player about that
+					SendClientMessage(playerid, COLOR_GREEN, "You have turned off the engine");
 				else
-				{
-					// Set the engine to the value that was passed by the player and leave all other parameters alone
-					SetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-				}
+					//Inform player about that
+					SendClientMessage(playerid, COLOR_GREEN, "You have turned on the engine");
+				
 			}
 			else
 				SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to toggle your engine");
 		}
-		else
-		    return 0;
 	}
 	else
 	    return 0;
@@ -2785,7 +2813,7 @@ COMMAND:convoymembers(playerid, params[])
 COMMAND:stats(playerid, params[])
 {
 	// Setup local variables
-	new StatsMsg[1000], Name[24], TitleMsg[128];
+	new StatsMsg[1000], TitleMsg[128], StatsPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/stats", params);
@@ -2793,26 +2821,44 @@ COMMAND:stats(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		// Construct the stats
-		format(StatsMsg, 1000, "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[playerid][StatsMetersDriven], (APlayerData[playerid][StatsMetersDriven] / 1000));
-		format(StatsMsg, 1000, "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsTruckerJobs]);
-		format(StatsMsg, 1000, "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsConvoyJobs]);
-		format(StatsMsg, 1000, "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsBusDriverJobs]);
-		format(StatsMsg, 1000, "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPilotJobs]);
-		format(StatsMsg, 1000, "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsCourierJobs]);
-		format(StatsMsg, 1000, "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsRoadworkerJobs]);
-		format(StatsMsg, 1000, "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsAssistance]);
-		format(StatsMsg, 1000, "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaJobs]);
-		format(StatsMsg, 1000, "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaStolen]);
-		format(StatsMsg, 1000, "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceFined]);
-		format(StatsMsg, 1000, "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceJailed]);
-		// Get the player's name
-		GetPlayerName(playerid, Name, sizeof(Name));
-		// Construct the title for the dialog
-		format(TitleMsg, 128, "Statistics for %s:", Name);
+		if(sscanf(params, "U(-1)", StatsPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/stats <StatsPlayer (optional)>\"");
+		else
+		{
+			if (INVALID_PLAYER_ID == StatsPlayer)
+				StatsPlayer = playerid;
 
-		// Show the dialog
-		ShowPlayerDialog(playerid, DialogStats, DIALOG_STYLE_LIST, TitleMsg, StatsMsg, "OK", "Cancel");
+			// Check if stats player is online
+			if (IsPlayerConnected(StatsPlayer)) {
+				if (playerid == StatsPlayer) {
+					format(TitleMsg, sizeof(TitleMsg), "Your Statistics");
+				} else {
+					new Name[MAX_PLAYER_NAME];
+					// Get the player's name
+					GetPlayerName(StatsPlayer, Name, sizeof(Name));
+					// Construct the title for the dialog
+					format(TitleMsg, sizeof(TitleMsg), "Statistics for %s:", Name);
+				}
+
+				// Construct the stats
+				format(StatsMsg, sizeof(StatsMsg), "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[StatsPlayer][StatsMetersDriven], (APlayerData[StatsPlayer][StatsMetersDriven] / 1000));
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsTruckerJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsConvoyJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsBusDriverJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsPilotJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsCourierJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsRoadworkerJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsAssistance]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsMafiaJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsMafiaStolen]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsPoliceFined]);
+				format(StatsMsg, sizeof(StatsMsg), "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsPoliceJailed]);
+
+				// Show the dialog
+				ShowPlayerDialog(playerid, DialogStats, DIALOG_STYLE_LIST, TitleMsg, StatsMsg, TXT_DialogButtonOk, TXT_DialogButtonCancel);
+			}
+			else
+				SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
+		}
 	}
 	else
 	    return 0;
@@ -3316,6 +3362,9 @@ COMMAND:nos(playerid, params[])
 				// Check if the vehicle isn't owned (owned vehicle's need to buy nitro at mod garages)
 				if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false)
 					AddVehicleComponent(GetPlayerVehicleID(playerid), 1010); // Add nitro to the player's vehicle
+				
+				//Inform player the nos has been added
+				SendClientMessage(playerid, COLOR_GREEN, "Nos has been added");
 			}
 		}
 		else
@@ -3746,19 +3795,25 @@ COMMAND:mute(playerid, params[])
 				// Check if the otherplayer is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
-					// Get the player-names
-					GetPlayerName(playerid, AdminName, sizeof(AdminName));
-					GetPlayerName(OtherPlayer, Name, sizeof(Name));
-					// Mute the other player
-					APlayerData[OtherPlayer][Muted] = true;
-					// Let the other player know that he has been muted
-					format(Msg, 128, "{FF0000}You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-					// Let the admin know who he has muted
-					format(Msg, 128, "{00FF00}You have muted {FFFF00}%s", Name);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
-					// Save the player-stats
-					PlayerFile_Save(OtherPlayer);
+					//Check if another player is not muted
+					if(APlayerData[OtherPlayer][Muted] == false)
+					{
+						// Get the player-names
+						GetPlayerName(playerid, AdminName, sizeof(AdminName));
+						GetPlayerName(OtherPlayer, Name, sizeof(Name));
+						// Mute the other player
+						APlayerData[OtherPlayer][Muted] = true;
+						// Let the other player know that he has been muted
+						format(Msg, 128, "{FF0000}You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
+						SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+						// Let the admin know who he has muted
+						format(Msg, 128, "{00FF00}You have muted {FFFF00}%s", Name);
+						SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+						// Save the player-stats
+						PlayerFile_Save(OtherPlayer);
+					}
+					else
+						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is already muted");
 				}
 				else
 				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
@@ -3795,19 +3850,25 @@ COMMAND:unmute(playerid, params[])
 				// Check if the otherplayer is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
-					// Get the player-names
-					GetPlayerName(playerid, AdminName, sizeof(AdminName));
-					GetPlayerName(OtherPlayer, Name, sizeof(Name));
-					// Un-mute the other player
-					APlayerData[OtherPlayer][Muted] = false;
-					// Let the other player know that he has been un-muted
-					format(Msg, 128, "{FF0000}You have been un-muted by {FFFF00}%s", AdminName);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-					// Let the admin know who he has un-muted
-					format(Msg, 128, "{00FF00}You have un-muted {FFFF00}%s", Name);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
-					// Save the player-stats
-					PlayerFile_Save(OtherPlayer);
+					//Check if the another player is muted
+					if(APlayerData[OtherPlayer][Muted] == true)
+					{
+						// Get the player-names
+						GetPlayerName(playerid, AdminName, sizeof(AdminName));
+						GetPlayerName(OtherPlayer, Name, sizeof(Name));
+						// Un-mute the other player
+						APlayerData[OtherPlayer][Muted] = false;
+						// Let the other player know that he has been un-muted
+						format(Msg, 128, "{FF0000}You have been un-muted by {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+						// Let the admin know who he has un-muted
+						format(Msg, 128, "{00FF00}You have un-muted {FFFF00}%s", Name);
+						SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+						// Save the player-stats
+						PlayerFile_Save(OtherPlayer);
+					}
+					else
+						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is not muted");
 				}
 				else
 				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
@@ -4427,7 +4488,6 @@ COMMAND:rules(playerid, params[])
 	return 1;
 }
 
-
 // Report a player for breaking the rules
 COMMAND:report(playerid, params[])
 {
@@ -4469,6 +4529,7 @@ COMMAND:report(playerid, params[])
 	return 1;
 }
 
+
 // Lets the admins see the list of reports
 COMMAND:rep(playerid, params[])
 {
@@ -4484,6 +4545,8 @@ COMMAND:rep(playerid, params[])
 			// Add the first report to the list (if it exists)
 			if (AReports[0][ReportUsed] == true)
 			    format(ReportList, 5000, "%s: %s\n", AReports[0][ReportName], AReports[0][ReportReason]);
+			else
+				return SendClientMessage(playerid, COLOR_RED, "There are no reports");
 
 			// Construct the report-dialog
 			for (new i = 1; i < 50; i++)
@@ -4859,6 +4922,8 @@ COMMAND:ipban(playerid, params[])
 					format(Msg, 128, "{808080}%s %s has ip-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
 					SendClientMessageToAll(COLOR_WHITE, Msg);
 				}
+				else
+					SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
 			}
 		}
 		else
@@ -4919,6 +4984,8 @@ COMMAND:rangeban(playerid, params[])
 					format(Msg, 128, "{808080}%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
 					SendClientMessageToAll(COLOR_WHITE, Msg);
 				}
+				else
+					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player isn't online");
 			}
 		}
 		else
@@ -5114,10 +5181,10 @@ COMMAND:bonus(playerid, params[])
 		if (APlayerData[playerid][PlayerClass] == ClassTruckDriver)
 			ShowRandomBonusMission(); // Show the bonus mission again for all truckers (and perhaps generate a new one)
 		else
-		    return 0;
+		    return SendClientMessage(playerid, COLOR_RED, "You are not a truck driver!");
 	}
 	else
-	    return 0;
+	    return SendClientMessage(playerid, COLOR_RED, "You must login before using this command");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -5174,6 +5241,66 @@ COMMAND:givelicense(playerid,params[])
 	else
 	    return 0;
 
+	// Let the server know that this was a valid command
+	return 1;
+}
+//This command let the admins to send an announce message
+COMMAND:announce(playerid, params[])
+{
+	// Setup local variabiles
+	new Message[128], Style;
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/announce", params);
+
+	// Check if the player has logged in
+	if (APlayerData[playerid][LoggedIn] == true)
+	{
+		// Check if the player's admin-level is at least 2
+		if(APlayerData[playerid][PlayerLevel] >= 2)
+		{
+			if(sscanf(params, "s[128]I(3)", Message, Style)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Message> <Style (optional)>\"");
+			else
+			{
+				if ((Style >= 0) && (Style <= 6))
+				{
+					GameTextForAll(Message, 5000, Style);
+				}
+				else
+    				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 0-6");
+				
+			}
+
+		}
+	}
+	return 1;
+}
+
+// Let admins to refuel all player vehicles
+COMMAND:fuelall(playerid, params[])
+{
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/fuelall", params);
+
+	// Check if the player has logged in
+	if(APlayerData[playerid][LoggedIn] == true)
+	{
+		// Check if the player's admin-level is at least 2
+		if(APlayerData[playerid][PlayerLevel] >= 2)
+		{
+			// Loop through all vehicles
+			for(new vid = 0; vid < MAX_VEHICLES; vid++)
+			{
+				// Check if the vehicle exists
+				if (AVehicleData[vid][Model] != 0) {
+  					AVehicleData[vid][Fuel] = MaxFuel;
+				}
+			}
+
+			// Let all players know about it
+			SendClientMessageToAll(COLOR_GREEN, "All vehicles have been refueled");
+		}
+	}
 	// Let the server know that this was a valid command
 	return 1;
 }
