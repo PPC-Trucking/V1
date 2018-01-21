@@ -598,30 +598,3 @@ RemoveAllPlayersFromVehicle(vid)
 	}
 }
 
-// This function show player stats to another player(or to himself)
-StatsPlayer(playerid, OtherPlayer)
-{
-	// Setup local variabiles
-	new StatsMsg[1000], TitleMsg[128], Name[24];
-
-	// Construct the stats
-	format(StatsMsg, sizeof(StatsMsg), "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[playerid][StatsMetersDriven], (APlayerData[playerid][StatsMetersDriven] / 1000));
-	format(StatsMsg, sizeof(StatsMsg), "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsTruckerJobs]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsConvoyJobs]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsBusDriverJobs]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsPilotJobs]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsCourierJobs]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsRoadworkerJobs]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsAssistance]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsMafiaJobs]);
-	format(StatsMsg, sizeof(StatsMsg), "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsMafiaStolen]);
-	format(StatsMsg, sizeof(StatsMsg), "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsPoliceFined]);
-	format(StatsMsg, sizeof(StatsMsg), "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsPoliceJailed]);
-	// Get the player's name
-	GetPlayerName(OtherPlayer, Name, sizeof(Name));
-	// Construct the title for the dialog
-	format(TitleMsg, 128, "Statistics for %s:", Name);
-
-	// Show the dialog
-	ShowPlayerDialog(playerid, DialogStats, DIALOG_STYLE_LIST, TitleMsg, StatsMsg, "OK", "Cancel");
-}

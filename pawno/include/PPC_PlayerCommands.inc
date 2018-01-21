@@ -2821,11 +2821,11 @@ COMMAND:convoymembers(playerid, params[])
 	return 1;
 }
 
-// Displays the statictics of the player
+/ Displays the statictics of the player
 COMMAND:stats(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer;
+	new StatsMsg[1000], TitleMsg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/stats", params);
@@ -2833,14 +2833,40 @@ COMMAND:stats(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if(sscanf(params, "U(playerid)", OtherPlayer)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/stats <OtherPlayer (optional)>\"");
+		if(sscanf(params, "U(playerid)", StatsPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/stats <StatsPlayer (optional)>\"");
 		else
 		{
-			if(IsPlayerConnected(OtherPlayer))
-			{
-				StatsPlayer(playerid, OtherPlayer);
+			// Check if stats player is online
+			if (IsPlayerConnected(StatsPlayer)) {
+				if (playerid == StatsPlayer) {
+					format(TitleMsg, sizeof(TitleMsg), "Statistics for %s:", Name);
+				} else {
+					new Name[MAX_PLAYER_NAME];
+					// Get the player's name
+					GetPlayerName(StatsPlayer, Name, sizeof(Name));
+					// Construct the title for the dialog
+					format(TitleMsg, sizeof(TitleMsg), "Statistics for %s:", Name);
+				}
+
+				// Construct the stats
+				format(StatsMsg, sizeof(StatsMsg), "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[playerid][StatsMetersDriven], (APlayerData[playerid][StatsMetersDriven] / 1000));
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsTruckerJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsConvoyJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsBusDriverJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPilotJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsCourierJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsRoadworkerJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsAssistance]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaStolen]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceFined]);
+				format(StatsMsg, sizeof(StatsMsg), "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceJailed]);
+
+				// Show the dialog
+				ShowPlayerDialog(playerid, DialogStats, DIALOG_STYLE_LIST, TitleMsg, StatsMsg, TXT_DialogButtonOk, TXT_DialogButtonCancel);
 			}
-			
+			else
+				SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
 		}
 	}
 	else
@@ -5236,7 +5262,7 @@ COMMAND:givelicense(playerid,params[])
 COMMAND:announce(playerid, params[])
 {
 	// Setup local variabiles
-	new Message[128], style;
+	new Message[128], Style;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/announce", params);
@@ -5247,10 +5273,16 @@ COMMAND:announce(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if(APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if(sscanf(params, "s[128]I(3)", Message, style)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Message> <style (optional)>\"");
+			if(sscanf(params, "s[128]I(3)", Message, Style)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Message> <Style (optional)>\"");
 			else
 			{
-				GameTextForAll(Message, 5000, style);
+				if ((Style >= 0) && (Style <= 6))
+				{
+					GameTextForAll(Message, 5000, Style);
+				}
+				else
+    				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 0-6");
+				
 			}
 
 		}
