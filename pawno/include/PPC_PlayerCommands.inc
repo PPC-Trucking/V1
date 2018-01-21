@@ -17,7 +17,7 @@ COMMAND:me(playerid,params[])
 		    if (APlayerData[playerid][Muted] == false)
 		    {
 				GetPlayerName(playerid, Name, sizeof(Name));
-				format(Msg, sizeof(Msg), "* %s: %s", Name, Message);
+				format(Msg, sizeof(Msg), "* %s %s", Name, Message);
 				SendClientMessageToAll(COLOR_YELLOW, Msg);
 			}
 			else
@@ -543,7 +543,7 @@ COMMAND:park(playerid, params[])
 				}
 				else
 				{
-				    format(Msg, 128, "{FF0000}You need to be within %im of your house to park this vehicle", ParkRange);
+				    format(Msg, 128, "{FF0000}You need to be within %.0fm of your house to park this vehicle", ParkRange);
 				    SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
@@ -2794,7 +2794,7 @@ COMMAND:stats(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Construct the stats
-		format(StatsMsg, 1000, "Kilometers driven: {00FF00}%f{FFFFFF}\n", (APlayerData[playerid][StatsMetersDriven] / 1000));
+		format(StatsMsg, 1000, "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[playerid][StatsMetersDriven], (APlayerData[playerid][StatsMetersDriven] / 1000));
 		format(StatsMsg, 1000, "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsTruckerJobs]);
 		format(StatsMsg, 1000, "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsConvoyJobs]);
 		format(StatsMsg, 1000, "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsBusDriverJobs]);
@@ -4148,13 +4148,30 @@ COMMAND:eject(playerid, params[])
 COMMAND:say(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], Msg[128], Message[128];
+	new Name[24], Msg[128], Message[128], ClassName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/say", params);
 
 	// Get the player's name
 	GetPlayerName(playerid, Name, sizeof(Name));
+
+	// Get the player's class name
+	switch (APlayerData[playerid][PlayerClass])
+	{
+		case ClassTruckDriver: // Truckdriver class
+			ClassName = "Trucker";
+		case ClassBusDriver: // BusDriver class
+			ClassName = "Bus Driver";
+		case ClassPilot: // Pilot class
+			ClassName = "Pilot";
+		case ClassMafia: // Mafia class
+			ClassName = "Mafia";
+		case ClassCourier: // Courier class
+			ClassName = "Courier";
+		case ClassRoadWorker: // Roadworker class
+			ClassName = "Roadworker";
+	}
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -4171,7 +4188,7 @@ COMMAND:say(playerid, params[])
 				    // Check if the other player has the same class
 				    if (APlayerData[i][PlayerClass] == APlayerData[playerid][PlayerClass])
 				    {
-						format(Msg, 128, "{B0B0B0}%s said: {FFFFFF}%s", Name, Message);
+						format(Msg, 128, "{A0A0A0}(%s Chat) {D0D0D0}%s: {FFFFFF}%s", ClassName, Name, Message);
 						SendClientMessage(i, COLOR_WHITE, Msg);
 				    }
 				}
@@ -4215,7 +4232,7 @@ COMMAND:asay(playerid, params[])
 					    // Check if the other player is also an admin
 					    if (APlayerData[i][PlayerLevel] > 0)
 					    {
-							format(Msg, 128, "{B0B0B0}%s said: {FFFFFF}%s", Name, Message);
+							format(Msg, 128, "{A0A0A0}(Admin Chat) {D0D0D0}%s: {FFFFFF}%s", Name, Message);
 							SendClientMessage(i, COLOR_WHITE, Msg);
 					    }
 					}

@@ -566,7 +566,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 		format(PlayerStatList, sizeof(PlayerStatList), "%s{FFFFFF}Completed courier jobs: {00FF00}%i\n", PlayerStatList, APlayerData[clickedplayerid][StatsCourierJobs]);
 		format(PlayerStatList, sizeof(PlayerStatList), "%s{FFFFFF}Completed roadworker jobs: {00FF00}%i\n", PlayerStatList, APlayerData[clickedplayerid][StatsRoadworkerJobs]);
 		format(PlayerStatList, sizeof(PlayerStatList), "%s{FFFFFF}Assisted players: {00FF00}%i\n", PlayerStatList, APlayerData[clickedplayerid][StatsAssistance]);
-		format(PlayerStatList, sizeof(PlayerStatList), "%s{FFFFFF}Meters driven: {00FF00}%f\n", PlayerStatList, APlayerData[clickedplayerid][StatsMetersDriven]);
+		format(PlayerStatList, sizeof(PlayerStatList), "%s{FFFFFF}Distance driven: {00FF00}%.0f meters (%.2f km)\n", PlayerStatList, APlayerData[clickedplayerid][StatsMetersDriven], (APlayerData[clickedplayerid][StatsMetersDriven] / 1000));
 
 		// Count the number of houses/businesses that the player has and add them to the list
 		for (new i; i < MAX_HOUSESPERPLAYER; i++)
