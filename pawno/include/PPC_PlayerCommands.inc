@@ -2821,11 +2821,11 @@ COMMAND:convoymembers(playerid, params[])
 	return 1;
 }
 
-/ Displays the statictics of the player
+// Displays the statictics of the player
 COMMAND:stats(playerid, params[])
 {
 	// Setup local variables
-	new StatsMsg[1000], TitleMsg[128];
+	new StatsMsg[1000], TitleMsg[128], StatsPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/stats", params);
@@ -2839,7 +2839,7 @@ COMMAND:stats(playerid, params[])
 			// Check if stats player is online
 			if (IsPlayerConnected(StatsPlayer)) {
 				if (playerid == StatsPlayer) {
-					format(TitleMsg, sizeof(TitleMsg), "Statistics for %s:", Name);
+					format(TitleMsg, sizeof(TitleMsg), "Your Statistics");
 				} else {
 					new Name[MAX_PLAYER_NAME];
 					// Get the player's name
@@ -2849,18 +2849,18 @@ COMMAND:stats(playerid, params[])
 				}
 
 				// Construct the stats
-				format(StatsMsg, sizeof(StatsMsg), "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[playerid][StatsMetersDriven], (APlayerData[playerid][StatsMetersDriven] / 1000));
-				format(StatsMsg, sizeof(StatsMsg), "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsTruckerJobs]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsConvoyJobs]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsBusDriverJobs]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPilotJobs]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsCourierJobs]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsRoadworkerJobs]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsAssistance]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaJobs]);
-				format(StatsMsg, sizeof(StatsMsg), "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaStolen]);
-				format(StatsMsg, sizeof(StatsMsg), "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceFined]);
-				format(StatsMsg, sizeof(StatsMsg), "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceJailed]);
+				format(StatsMsg, sizeof(StatsMsg), "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[StatsPlayer][StatsMetersDriven], (APlayerData[StatsPlayer][StatsMetersDriven] / 1000));
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsTruckerJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsConvoyJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsBusDriverJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsPilotJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsCourierJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsRoadworkerJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsAssistance]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsMafiaJobs]);
+				format(StatsMsg, sizeof(StatsMsg), "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsMafiaStolen]);
+				format(StatsMsg, sizeof(StatsMsg), "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsPoliceFined]);
+				format(StatsMsg, sizeof(StatsMsg), "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[StatsPlayer][StatsPoliceJailed]);
 
 				// Show the dialog
 				ShowPlayerDialog(playerid, DialogStats, DIALOG_STYLE_LIST, TitleMsg, StatsMsg, TXT_DialogButtonOk, TXT_DialogButtonCancel);
