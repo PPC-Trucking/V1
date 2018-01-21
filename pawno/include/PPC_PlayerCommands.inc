@@ -2177,7 +2177,7 @@ COMMAND:fuel(playerid, params[])
 				SendClientMessage(playerid, COLOR_GREEN, "Your vehicle is refuelled");
 			}
 			else
-				SendClientMessage(playerid, COLOR_GREEN, "You're not driving a vehicle");
+				SendClientMessage(playerid, COLOR_RED, "You're not driving a vehicle");
 		}
 		else
 		    return 0;
@@ -2259,7 +2259,7 @@ COMMAND:paint(playerid, params[])
 						PlayerFile_Save(playerid);
 					}
 					else
-					    SendClientMessage(playerid, COLOR_WHITE, "You're not the owner of the vehicle");
+					    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "You need to enter a paintjob-id from 0 to 2");
@@ -2348,7 +2348,7 @@ COMMAND:color2(playerid, params[])
 			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not the owner of the vehicle");
 		}
 		else
-			SendClientMessage(playerid, COLOR_GREEN, "You must be inside a vehicle to apply a color");
+			SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to apply a color");
 	}
 	else
 	    return 0;
@@ -2389,7 +2389,7 @@ COMMAND:engine(playerid, params[])
 				}
 			}
 			else
-				SendClientMessage(playerid, COLOR_GREEN, "You must be inside a vehicle to toggle your engine");
+				SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to toggle your engine");
 		}
 		else
 		    return 0;
@@ -4389,7 +4389,7 @@ COMMAND:unclamp(playerid, params[])
 			ShowPlayerDialog(playerid, DialogUnclampVehicles, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Msg, "Unclamp", TXT_DialogButtonCancel);
 		}
 		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You don't have any clamped vehicles");
+		    SendClientMessage(playerid, COLOR_RED, "You don't have any clamped vehicles");
 	}
 	else
 	    return 0;
@@ -4765,11 +4765,11 @@ COMMAND:fixplayer(playerid, params[])
 	return 1;
 }
 
-// This command sets a skin for the player
+// This command sets a skin for a player
 COMMAND:setskin(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Skin;
+	new Msg[128], AdminName[24], OtherName[24], OtherPlayer, Skin;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setskin", params);
@@ -4780,24 +4780,39 @@ COMMAND:setskin(playerid, params[])
 		// Check if the player's admin-level is at least 4
 		if (APlayerData[playerid][PlayerLevel] >= 4)
 		{
-			if (sscanf(params, "i", Skin)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setskin <skin-id (0-299)>\"");
+			if (sscanf(params, "ui", OtherPlayer, Skin)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setskin <OtherPlayer> <skin-id (0-299)>\"");
 			else
 			{
-				// Check if the player entered a valid skin-id
-				if ((Skin >= 0) && (Skin <= 299))
+				// Check if the otherplayer is online
+				if (IsPlayerConnected(OtherPlayer))
 				{
-				    // Set the skin for the player
-				    SetPlayerSkin(playerid, Skin);
-					// Let the other player know the reason too
-					format(Msg, 128, "{00FF00}You've chosen skin-id: {FFFF00}%i", Skin);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					// Check if the player entered a valid skin-id
+					if ((Skin >= 0) && (Skin <= 299))
+					{
+					    // Set the skin for the player
+					    SetPlayerSkin(OtherPlayer, Skin);
+
+						// Get the name of the admin and the other player
+						GetPlayerName(playerid, AdminName, sizeof(AdminName));
+						GetPlayerName(OtherPlayer, OtherName, sizeof(OtherName));
+
+						// Let the admin know who he changed the skin for
+						format(Msg, 128, "You've changed the skin for {FFFF00}%s {00FF00}to {FFFF00}%i", OtherName, Skin);
+						SendClientMessage(playerid, COLOR_GREEN, Msg);
+
+						// Let the other player know about his new outfit
+						format(Msg, 128, "Your skin has been changed by admin {FFFF00}%s {00FF00}to {FFFF00}%i", AdminName, Skin);
+						SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+					}
+					else
+						SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Invalid skin-id, you can only use skins 0-299");
 				}
 				else
-					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Invalid skin-id, you can only use skins 0-299");
+				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
 			}
 		}
 		else
-			return 0;
+		    return 0;
 	}
 	else
 	    return 0;
