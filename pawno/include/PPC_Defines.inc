@@ -216,9 +216,14 @@
 
 
 // Define messagecolors
-#define ColorRed 0xFF0000FF
-#define ColorGreen 0x00FF00FF
-#define ColorBlue 0x0000FFFF
+#define COLOR_RED 0xFF0000FF
+#define COLOR_YELLOW 0xFFFF00FF
+#define COLOR_WHITE 0xFFFFFFFF
+#define COLOR_GREEN 0x00FF00FF
+#define COLOR_BLUE 0x0000FFFF
+#define COLOR_GRAY 0x808080FF
+#define COLOR_SILVERCHALICE 0xA0A0A0FF
+#define COLOR_TEAL 0x008080FF
 
 // Define Virtual Worlds
 #define WORLD_JAIL 10254
@@ -1043,7 +1048,7 @@ new ACommands[][TCommands] =
 	{3, "/unban <PlayerToUnban>",                                   	"Unban a player"},
 	{4, "/cash <amount>",                                   			"Give cash to yourself"},
 	{4, "/score <amount>",                                   			"Give scorepoints to yourself"},
-	{4, "/setskin <skin-id (0-299)>",                                   "Lets an admin choose another skin"},
+	{4, "/setskin <OtherPlayer> <skin-id (0-299)>",                     "Changes a player's skin-id"},
 	{4, "/weather",                                   					"Changes the weather"},
 	{5, "/clamp <vehicleid> <reason>",                                  "Delete a player-owned vehicle"},
 	{5, "/createbusiness",                                   			"Create a business at your location"},
@@ -1173,6 +1178,7 @@ new AHelpText[][THelpItem] =
 	{HelpIDPoliceClass, " "},
 	{HelpIDPoliceClass, "Any player with a wanted level appears as a red dot on your radar."},
 	{HelpIDPoliceClass, "You need to pursue the player and try to stop him, so you can fine him."},
+	{HelpIDPoliceClass, "If you want to stop a player in his vehicle you can use /spike on foot to stop them."},
 	{HelpIDPoliceClass, "When you get close to the wanted player, you can use the LCTRL button on your keyboard to warn them."},
 	{HelpIDPoliceClass, "The wanted player will be informed that he's being chased by cops and that he needs to pull over."},
 	{HelpIDPoliceClass, " "},

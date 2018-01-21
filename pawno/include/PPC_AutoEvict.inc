@@ -128,7 +128,7 @@ LogAutoEvict(PropertyType, PropertyName[], PropertyOwner[])
 		if (APlayerData[i][PlayerLevel] > 0)
 		{
 			// Send the given text to the admin
-			SendClientMessage(i, 0xFFFFFFFF, Msg);
+			SendClientMessage(i, COLOR_WHITE, Msg);
 		}
 	}
 
@@ -237,7 +237,7 @@ stock House_Delete(HouseID)
 
 					// Inform the player that his house is being deleted
 					format(Msg, 128, "{FF0000}Your house {FFFF00}\"%s\"{FF0000} is being deleted", AHouseData[HouseID][HouseName]);
-					SendClientMessage(pid, 0xFFFFFFFF, Msg);
+					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the HouseID from his list of houses
 					for (new HouseSlot; HouseSlot < MAX_HOUSESPERPLAYER; HouseSlot++)
@@ -313,7 +313,7 @@ House_Evict(HouseID)
 
 					// Inform the player that his house is being deleted
 					format(Msg, 128, "{FF0000}Your house {FFFF00}\"%s\"{FF0000} is being evicted", AHouseData[HouseID][HouseName]);
-					SendClientMessage(pid, 0xFFFFFFFF, Msg);
+					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the HouseID from his list of houses
 					for (new HouseSlot; HouseSlot < MAX_HOUSESPERPLAYER; HouseSlot++)
@@ -376,7 +376,7 @@ stock Business_Delete(BusID)
 
 					// Inform the player that his business is being deleted
 					format(Msg, 128, "{FF0000}Your business {FFFF00}\"%s\"{FF0000} is being deleted", ABusinessData[BusID][BusinessName]);
-					SendClientMessage(pid, 0xFFFFFFFF, Msg);
+					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the BusID from his list of businesses
 					for (new BusSlot; BusSlot < MAX_BUSINESSPERPLAYER; BusSlot++)
@@ -448,7 +448,7 @@ Business_Evict(BusID)
 
 					// Inform the player that his business is being deleted
 					format(Msg, 128, "{FF0000}Your business {FFFF00}\"%s\"{FF0000} is being evicted", ABusinessData[BusID][BusinessName]);
-					SendClientMessage(pid, 0xFFFFFFFF, Msg);
+					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the BusID from his list of businesses
 					for (new BusSlot; BusSlot < MAX_BUSINESSPERPLAYER; BusSlot++)

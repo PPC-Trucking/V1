@@ -14,16 +14,16 @@ COMMAND:porthouse(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use /porthouse when you're inside a vehicle");
+	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /porthouse when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128], HouseID;
 
 	// Get the HouseID from the parameters
-	if (sscanf(params, "i", HouseID)) return SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/porthouse <HouseID>\"");
+	if (sscanf(params, "i", HouseID)) return SendClientMessage(playerid, COLOR_RED, "Usage: \"/porthouse <HouseID>\"");
 
 	// Check if the player entered a valid HouseID
-	if ((HouseID < 0) || (HouseID >= MAX_HOUSES)) return SendClientMessage(playerid, 0xFF0000AA, "You need to enter a valid HouseID");
+	if ((HouseID < 0) || (HouseID >= MAX_HOUSES)) return SendClientMessage(playerid, COLOR_RED, "You need to enter a valid HouseID");
 
 	// Check if the house exists (it must have a valid pickup)
 	if (IsValidDynamicPickup(AHouseData[HouseID][PickupID]))
@@ -33,10 +33,10 @@ COMMAND:porthouse(playerid, params[])
 
 		// Let the player know he ported to the given house
 		format(Msg, 128, "{00FF00}You ported to house with ID: {FFFF00}%i", HouseID);
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
-		SendClientMessage(playerid, 0xFF0000AA, "That house doesn't exist");
+		SendClientMessage(playerid, COLOR_RED, "That house doesn't exist");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -53,16 +53,16 @@ COMMAND:portbus(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use /portbus when you're inside a vehicle");
+	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portbus when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128], BusID;
 
 	// Get the BusID from the parameters
-	if (sscanf(params, "i", BusID)) return SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/portbus <BusID>\"");
+	if (sscanf(params, "i", BusID)) return SendClientMessage(playerid, COLOR_RED, "Usage: \"/portbus <BusID>\"");
 
 	// Check if the player entered a valid BusID
-	if ((BusID < 0) || (BusID >= MAX_BUSINESS)) return SendClientMessage(playerid, 0xFF0000AA, "You need to enter a valid BusID");
+	if ((BusID < 0) || (BusID >= MAX_BUSINESS)) return SendClientMessage(playerid, COLOR_RED, "You need to enter a valid BusID");
 
 	// Check if the business exists (it must have a valid pickup)
 	if (IsValidDynamicPickup(ABusinessData[BusID][PickupID]))
@@ -72,10 +72,10 @@ COMMAND:portbus(playerid, params[])
 
 		// Let the player know he ported to the given business
 		format(Msg, 128, "{00FF00}You ported to business with ID: {FFFF00}%i", BusID);
-		SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
-		SendClientMessage(playerid, 0xFF0000AA, "That business doesn't exist");
+		SendClientMessage(playerid, COLOR_RED, "That business doesn't exist");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -94,7 +94,7 @@ COMMAND:properties(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use /properties when you're inside a vehicle");
+	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /properties when you're inside a vehicle");
 
 	// Setup local variables
 	new Name[24], DialogTitle[128];
@@ -148,7 +148,7 @@ COMMAND:properties(playerid, params[])
 	}
 
 	// Check if a name has been found
-	if (Name[0] == 0) return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}No owned house or business found in range");
+	if (Name[0] == 0) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No owned house or business found in range");
 
 	// Clear the array
 	for (new i; i < sizeof(PropertyList); i++)
@@ -214,7 +214,7 @@ COMMAND:propertyid(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use /propertyid when you're inside a vehicle");
+	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /propertyid when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -230,7 +230,7 @@ COMMAND:propertyid(playerid, params[])
 			{
 				// Let the player know the HouseID of this house
 				format(Msg, 128, "{00FF00}This house has ID: {FFFF00}%i", HouseID);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
 				return 1;
@@ -251,7 +251,7 @@ COMMAND:propertyid(playerid, params[])
 			{
 				// Let the player know the BusinessID of this business
 				format(Msg, 128, "{00FF00}This business has ID: {FFFF00}%i", BusID);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
 				return 1;
@@ -260,7 +260,7 @@ COMMAND:propertyid(playerid, params[])
 	}
 
 	// There was no house or business in range, so let the player know about it
-	SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}No house or business in range to ID");
+	SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No house or business in range to ID");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -279,7 +279,7 @@ COMMAND:delproperty(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use /delproperty when you're inside a vehicle");
+	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /delproperty when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -298,7 +298,7 @@ COMMAND:delproperty(playerid, params[])
 
 				// Also let the player know he deleted the house
 				format(Msg, 128, "{00FF00}You have deleted the house with ID: {FFFF00}%i", HouseID);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
 				return 1;
@@ -322,7 +322,7 @@ COMMAND:delproperty(playerid, params[])
 
 				// Also let the player know he deleted the business
 				format(Msg, 128, "{00FF00}You have deleted the business with ID: {FFFF00}%i", BusID);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
 				return 1;
@@ -331,7 +331,7 @@ COMMAND:delproperty(playerid, params[])
 	}
 
 	// There was no house or business in range, so let the player know about it
-	SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}No house or business in range to delete");
+	SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No house or business in range to delete");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -348,7 +348,7 @@ COMMAND:evict(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You cannot use /evict when you're inside a vehicle");
+	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /evict when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -370,13 +370,13 @@ COMMAND:evict(playerid, params[])
 
 					// Also let the player know he evicted the house
 					format(Msg, 128, "{00FF00}You have evicted the house with ID: {FFFF00}%i", HouseID);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 					// Exit the function
 					return 1;
 				}
 				else
-					return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}This house has no owner and cannot be evicted");
+					return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}This house has no owner and cannot be evicted");
 			}
 		}
 	}
@@ -400,19 +400,19 @@ COMMAND:evict(playerid, params[])
 
 					// Also let the player know he evicted the business
 					format(Msg, 128, "{00FF00}You have evicted the business with ID: {FFFF00}%i", BusID);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 					// Exit the function
 					return 1;
 				}
 				else
-					return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}This business has no owner and cannot be evicted");
+					return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}This business has no owner and cannot be evicted");
 			}
 		}
 	}
 
 	// There was no house or business in range, so let the player know about it
-	SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}No house or business in range to evict");
+	SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No house or business in range to evict");
 
 	// Let the server know that this was a valid command
 	return 1;

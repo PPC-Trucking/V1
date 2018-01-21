@@ -129,7 +129,7 @@ Player_PortOutAdminZone(playerid, Float:x1, Float:y1, Float:z1, Float:x2, Float:
 		    if ((y1 < y) && (y < y2))
 		        if ((z1 < z) && (z < z2))
 				{
-					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}You're not allowed inside an admin-area");
+					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not allowed inside an admin-area");
 					SetPlayerPos(playerid, x3, y3, z3); // Port the player out of the area
 				}
 }
@@ -151,7 +151,7 @@ SendAdminText(playerid, command[], text[])
 		{
 			// Send the given text to the admin
 			format(Msg, 128, "{00FFCC}%s used: %s %s", Name, command, text);
-			SendClientMessage(i, 0xFFFFFFFF, Msg);
+			SendClientMessage(i, COLOR_WHITE, Msg);
 		}
 	}
 
@@ -302,7 +302,7 @@ SendReportToAdmins(OffenderID, Reason[], bool:AutoReport = false)
 	    if (APlayerData[playerid][PlayerLevel] > 0)
 	    {
 			// Send a message to the admin to inform him about the report
-			SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+			SendClientMessage(playerid, COLOR_WHITE, Msg);
 			// Also send the admin a GameText-message so he can see it more clearly
 			GameTextForPlayer(playerid, TxtMsg, 10000, 4);
 	    }
@@ -387,7 +387,7 @@ forward Timer_TimedMessages();
 public Timer_TimedMessages()
 {
 	// Send the message
-	SendClientMessageToAll(0xFFFFFFFF, ATimedMessages[LastTimedMessage]);
+	SendClientMessageToAll(COLOR_WHITE, ATimedMessages[LastTimedMessage]);
 
 	// Select the next message
     LastTimedMessage++;
@@ -468,9 +468,9 @@ public ShowRandomBonusMission()
 			// Check if this player is a trucker
 			if (APlayerData[playerid][PlayerClass] == ClassTruckDriver)
 			{
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg1);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg2);
-				SendClientMessage(playerid, 0xFFFFFFFF, Msg3);
+				SendClientMessage(playerid, COLOR_WHITE, Msg1);
+				SendClientMessage(playerid, COLOR_WHITE, Msg2);
+				SendClientMessage(playerid, COLOR_WHITE, Msg3);
 			}
 		}
 	}
@@ -536,7 +536,7 @@ public Bank_IntrestTimer()
 
 					// Inform the player that he received intrest on his bank account and how much
 					format(Msg, 128, "{00BBFF}You've received {FFBB00}$%i{00BBFF} intrest on your bank account", IntrestAmount);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
 		}

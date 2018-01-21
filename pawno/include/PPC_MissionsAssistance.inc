@@ -10,7 +10,7 @@ public Assistance_CheckPlayers(playerid)
 		{
 			//Check if that player needs assistance
 			if (APlayerData[PlayerToCheck][AssistanceNeeded] == true)
-			    SetPlayerMarkerForPlayer(playerid, PlayerToCheck, 0xFF0000FF); // Make that player red to the assistance-player
+			    SetPlayerMarkerForPlayer(playerid, PlayerToCheck, COLOR_RED); // Make that player red to the assistance-player
 			else
 			{
 				// Reset the playercolor based on the player's class
@@ -79,10 +79,10 @@ Assistance_FixVehicle(playerid)
 							RewardPlayer(OtherPlayer, -Payment, 0);
 							// Let the other player know that his vehicle has been repaired
 							format(Msg, 128, "{00FF00}Your vehicle has been repaired for {FFFF00}$%i{00FF00} by \"{FFFF00}%s{00FF00}\"", Payment, AssistName);
-							SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+							SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 							// Let the assistance player know who's vehicle has been repaired
 							format(Msg, 128, "{00FF00}You have repaired {FFFF00}%s{00FF00}'s vehicle and earned {FFFF00}$%i", Name, Payment);
-							SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+							SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 							// Calculate the amount of fuel that needs to be refuelled
 							vFuel = MaxFuel - AVehicleData[vid][Fuel];
@@ -98,10 +98,10 @@ Assistance_FixVehicle(playerid)
 							APlayerData[playerid][StatsAssistance]++;
 							// Let the other player know that his vehicle has been refuelled
 							format(Msg, 128, "{00FF00}Your vehicle has also been refuelled for {FFFF00}$%i{00FF00} by \"{FFFF00}%s{00FF00}\"", Payment, AssistName);
-							SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+							SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 							// Let the assistance player know who's vehicle has been refuelled
 							format(Msg, 128, "{00FF00}You have also refuelled {FFFF00}%s{00FF00}'s vehicle and earned {FFFF00}$%i", Name, Payment);
-							SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+							SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 							// Save the player's account
 							PlayerFile_Save(playerid);
@@ -125,7 +125,7 @@ Assistance_FixOwnVehicle(playerid)
 	// Refuel the other player's vehicle
 	AVehicleData[vid][Fuel] = MaxFuel;
 	// Let the player know that he has repaired and refuelled his own vehicle
-	SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}You have repaired and refuelled your own vehicle");
+	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You have repaired and refuelled your own vehicle");
 }
 
 // This function gets called when the assistance player dies (or changes class)

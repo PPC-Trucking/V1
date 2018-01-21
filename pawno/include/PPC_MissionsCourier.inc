@@ -34,7 +34,7 @@ Courier_StartJob(playerid)
 	// Abort the mission if there are less than 2 houses in range and inform the player
 	if (HouseCounter < 2)
 	{
-	    SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}Not enough owned houses in range to deliver packages, try some other spot");
+	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Not enough owned houses in range to deliver packages, try some other spot");
 		return 0;
 	}
 
@@ -101,7 +101,7 @@ Courier_BeginJob(playerid)
 	// Set the job-fail-time for the global vehicle-timer
 	APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 	// Send the player a message to inform him that the mission has started
-	SendClientMessage(playerid, 0xFFFFFFFF, "{00FF00}Deliver packages to player's houses");
+	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Deliver packages to player's houses");
 
 	return 1;
 }
@@ -124,7 +124,7 @@ Courier_OnPlayerEnterCheckpoint(playerid)
 			DisablePlayerCheckpoint(playerid);
 			// Let the player know he delivered a package
 			GameTextForPlayer(playerid, TXT_PackageDeliveredGameText, 5000, 4);
-			SendClientMessage(playerid, 0xFFFFFFFF, TXT_PackageDeliveredMessage);
+			SendClientMessage(playerid, COLOR_WHITE, TXT_PackageDeliveredMessage);
 			// Set next JobStep (next house)
 			APlayerData[playerid][JobStep]++;
 			Step = APlayerData[playerid][JobStep];
@@ -146,14 +146,14 @@ Courier_OnPlayerEnterCheckpoint(playerid)
 			GetPlayerName(playerid, Name, sizeof(Name));
 			// Send a message to all players to inform them that this player completed a courier-job
 			format(Msg, 128, TXT_PlayerCompletedCourierJob, Name, APlayerData[playerid][CourierMaxStep]);
-			SendClientMessageToAll(0xFFFFFFFF, Msg);
+			SendClientMessageToAll(COLOR_WHITE, Msg);
 			// Set a payment based on the number of packages
 			Payment = APlayerData[playerid][CourierMaxStep] * PaymentPerPackage;
 			// Pay the player money and give scorepoints, both based on the number of packages delivered
 			RewardPlayer(playerid, Payment, APlayerData[playerid][CourierMaxStep]);
 			// Send a message to let the player know he finished his mission and got paid
 			format(Msg, 128, TXT_RewardJob, Payment);
-			SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+			SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 			// Increase the stats for completing a courier job
 			APlayerData[playerid][StatsCourierJobs]++;
@@ -164,7 +164,7 @@ Courier_OnPlayerEnterCheckpoint(playerid)
 		}
 	}
 	else
-	    SendClientMessage(playerid, 0xFFFFFFFF, TXT_NeedOnFootToProceed);
+	    SendClientMessage(playerid, COLOR_WHITE, TXT_NeedOnFootToProceed);
 
 	return 1;
 }
