@@ -605,7 +605,7 @@ StatsPlayer(playerid, OtherPlayer)
 	new StatsMsg[1000], TitleMsg[128], Name[24];
 
 	// Construct the stats
-	format(StatsMsg, sizeof(StatsMsg), "Kilometers driven: {00FF00}%f{FFFFFF}\n", (APlayerData[OtherPlayer][StatsMetersDriven] / 1000));
+	format(StatsMsg, sizeof(StatsMsg), "Distance driven: {00FF00}%.0f meters (%.2f km)\n", APlayerData[playerid][StatsMetersDriven], (APlayerData[playerid][StatsMetersDriven] / 1000));
 	format(StatsMsg, sizeof(StatsMsg), "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsTruckerJobs]);
 	format(StatsMsg, sizeof(StatsMsg), "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsConvoyJobs]);
 	format(StatsMsg, sizeof(StatsMsg), "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsBusDriverJobs]);
