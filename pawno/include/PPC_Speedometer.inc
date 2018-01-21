@@ -385,37 +385,45 @@ stock AntiHack(playerid)
 	        SendReportToAdmins(playerid, "Jetpack-hack", true);
 	}
 
-	// Detect airbreak hack
-	if (GetPlayerVehicleSeat(playerid) == 0)
+	// Check if the player has an admin level 1 and higher, if so ignore him for airbreak hack
+	// this airbreack hack gets called sometimes if you really drive fast on a mountain
+	// even this can happen to players resulting in a false-positive report, we must stick to
+	// this check as it gives extra security
+	if (APlayerData[playerid][PlayerLevel] < 1)
 	{
-		// Check if the player is nearly standing still
-		if (APlayerData[playerid][PlayerSpeed] < 10)
+		// Detect airbreak hack
+		if (GetPlayerVehicleSeat(playerid) == 0)
 		{
-			// Check if the player switched interior-id's
-			if (GetPlayerInterior(playerid) != APlayerData[playerid][PreviousInt])
+			// Check if the player is nearly standing still
+			if (APlayerData[playerid][PlayerSpeed] < 10)
 			{
-				// Check if the new interior is the normal world or any mod-shop
-			    switch (GetPlayerInterior(playerid))
+				// Check if the player switched interior-id's
+				if (GetPlayerInterior(playerid) != APlayerData[playerid][PreviousInt])
 				{
-					case 0, 1, 2, 3: // Check interiors 0, 1, 2 and 3 (normal world and all mod-shops)
+					// Check if the new interior is the normal world or any mod-shop
+				    switch (GetPlayerInterior(playerid))
 					{
-						// Store the player's current location and interior-id for the next iteration
-						GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
-						APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
-						// Exit the function
-						return 1;
+						case 0, 1, 2, 3: // Check interiors 0, 1, 2 and 3 (normal world and all mod-shops)
+						{
+							// Store the player's current location and interior-id for the next iteration
+							GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
+							APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
+							// Exit the function
+							return 1;
+						}
 					}
 				}
-			}
 
-		    // Check if the player is still near the same place he was half a second ago
-			if (IsPlayerInRangeOfPoint(playerid, 7.5, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]))
-			{
+			    // Check if the player is still near the same place he was half a second ago
+				if (IsPlayerInRangeOfPoint(playerid, 7.5, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]))
+				{
+				}
+				else // Send an automated report to the admins so they're informed about it and can take action
+			        SendReportToAdmins(playerid, "Airbreak-hack", true);
 			}
-			else // Send an automated report to the admins so they're informed about it and can take action
-		        SendReportToAdmins(playerid, "Airbreak-hack", true);
 		}
 	}
+
 	// Store the player's current location and interior-id for the next iteration
 	GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
 	APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
