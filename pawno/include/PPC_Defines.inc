@@ -1048,7 +1048,7 @@ new ACommands[][TCommands] =
 	{3, "/unban <PlayerToUnban>",                                   	"Unban a player"},
 	{4, "/cash <amount>",                                   			"Give cash to yourself"},
 	{4, "/score <amount>",                                   			"Give scorepoints to yourself"},
-	{4, "/setskin <skin-id (0-299)>",                                   "Lets an admin choose another skin"},
+	{4, "/setskin <OtherPlayer> <skin-id (0-299)>",                     "Changes a player's skin-id"},
 	{4, "/weather",                                   					"Changes the weather"},
 	{5, "/clamp <vehicleid> <reason>",                                  "Delete a player-owned vehicle"},
 	{5, "/createbusiness",                                   			"Create a business at your location"},
