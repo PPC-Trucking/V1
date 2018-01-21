@@ -2177,7 +2177,7 @@ COMMAND:fuel(playerid, params[])
 				SendClientMessage(playerid, COLOR_GREEN, "Your vehicle is refuelled");
 			}
 			else
-				SendClientMessage(playerid, COLOR_GREEN, "You're not driving a vehicle");
+				SendClientMessage(playerid, COLOR_RED, "You're not driving a vehicle");
 		}
 		else
 		    return 0;
@@ -2259,7 +2259,7 @@ COMMAND:paint(playerid, params[])
 						PlayerFile_Save(playerid);
 					}
 					else
-					    SendClientMessage(playerid, COLOR_WHITE, "You're not the owner of the vehicle");
+					    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "You need to enter a paintjob-id from 0 to 2");
@@ -2348,7 +2348,7 @@ COMMAND:color2(playerid, params[])
 			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not the owner of the vehicle");
 		}
 		else
-			SendClientMessage(playerid, COLOR_GREEN, "You must be inside a vehicle to apply a color");
+			SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to apply a color");
 	}
 	else
 	    return 0;
@@ -2389,7 +2389,7 @@ COMMAND:engine(playerid, params[])
 				}
 			}
 			else
-				SendClientMessage(playerid, COLOR_GREEN, "You must be inside a vehicle to toggle your engine");
+				SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to toggle your engine");
 		}
 		else
 		    return 0;
@@ -4389,7 +4389,7 @@ COMMAND:unclamp(playerid, params[])
 			ShowPlayerDialog(playerid, DialogUnclampVehicles, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Msg, "Unclamp", TXT_DialogButtonCancel);
 		}
 		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You don't have any clamped vehicles");
+		    SendClientMessage(playerid, COLOR_RED, "You don't have any clamped vehicles");
 	}
 	else
 	    return 0;
