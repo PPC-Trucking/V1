@@ -5285,8 +5285,8 @@ COMMAND:fuelall(playerid, params[])
 	// Check if the player has logged in
 	if(APlayerData[playerid][LoggedIn] == true)
 	{
-		// Check if the player's admin-level is at least 2
-		if(APlayerData[playerid][PlayerLevel] >= 2)
+		// Check if the player's admin-level is at least 3
+		if(APlayerData[playerid][PlayerLevel] >= 3)
 		{
 			// Loop through all vehicles
 			for(new vid = 0; vid < MAX_VEHICLES; vid++)
