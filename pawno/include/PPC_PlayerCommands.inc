@@ -432,8 +432,6 @@ COMMAND:housemenu(playerid, params[])
 	return 1;
 }
 
-
-
 // This command allows you to port a vehicle from your house to your location
 COMMAND:getcar(playerid, params[])
 {
@@ -475,7 +473,6 @@ COMMAND:getcar(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
 
 // This command checks if the player is inside a vehicle that he owns and if he's in range of the house where the vehicle is assigned to
 COMMAND:park(playerid, params[])
@@ -1150,7 +1147,6 @@ COMMAND:stopwork(playerid, params[])
 	return 1;
 }
 
-
 // Displays the player's coordinates on the map
 COMMAND:loc(playerid, params[])
 {
@@ -1321,7 +1317,6 @@ COMMAND:wanted(playerid, params[])
 
 					SendClientMessage(OtherPlayer, COLOR_GREEN, "An admin set your wanted level");
 				}
-					
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 		}
@@ -1579,7 +1574,7 @@ COMMAND:warn(playerid, params[])
 					format(ReasonMsg, 128, "Reason: %s", Reason);
 					SendClientMessage(playerid, COLOR_RED, ReasonMsg);
 
-					// Automatically kick the player if he got 3 warnings (if autokick is enabled) and iform the player about that
+					// Automatically kick the player if he got 3 warnings (if autokick is enabled) and inform the player about that
 					if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
 					{
 						format(ReasonMsg, 128, "You have been kicked. (warnings: %i/%i)", APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
@@ -1872,8 +1867,6 @@ COMMAND:vehicle(playerid, params[])
 	return 1;
 }
 
-
-
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
 {
@@ -2106,7 +2099,7 @@ COMMAND:portvehicle(playerid, params[])
 							SendClientMessage(playerid, COLOR_GREEN, PortMsg);
 						}
 						else
-							SendClientMessage(playerid, COLOR_RED, "The carid its not valid");
+							SendClientMessage(playerid, COLOR_RED, "The vehicle id its not valid");
 					}
 				}
 				else
@@ -2146,10 +2139,9 @@ COMMAND:setlevel(playerid, params[])
 				// Check if that other player is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
-					//check if the level its in the range
+					// Check if the level is in the range
 					if(Level < 0 || Level > 5)
 						return SendClientMessage(playerid, COLOR_RED, "The level its out of range");
-
 				    // Get the old level of the other player
 				    OldLevel = APlayerData[OtherPlayer][PlayerLevel];
 					// Get the playername of the admin
@@ -2223,7 +2215,6 @@ COMMAND:fuel(playerid, params[])
 	return 1;
 }
 
-
 // Let the player use a jetpack
 COMMAND:fly(playerid, params[])
 {
@@ -2248,7 +2239,6 @@ COMMAND:fly(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
 
 // Paints a car with a paintjob
 COMMAND:paint(playerid, params[])
@@ -2405,7 +2395,7 @@ COMMAND:engine(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		//check if the player its the driver of the car, don't let the passanger to control the engine
+		//check if the player is the driver of the car, don't let the passenger to control the engine
 		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Get the player's vehicle
@@ -2430,7 +2420,6 @@ COMMAND:engine(playerid, params[])
 			}
 			else
 				SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to toggle your engine");
-		
 		}
 	}
 	else
@@ -2610,7 +2599,6 @@ COMMAND:cmds(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
 
 COMMAND:convoy(playerid, params[])
 {
@@ -2833,9 +2821,12 @@ COMMAND:stats(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if(sscanf(params, "U(playerid)", StatsPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/stats <StatsPlayer (optional)>\"");
+		if(sscanf(params, "U(-1)", StatsPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/stats <StatsPlayer (optional)>\"");
 		else
 		{
+			if (INVALID_PLAYER_ID == StatsPlayer)
+				StatsPlayer = playerid;
+
 			// Check if stats player is online
 			if (IsPlayerConnected(StatsPlayer)) {
 				if (playerid == StatsPlayer) {
@@ -3804,7 +3795,7 @@ COMMAND:mute(playerid, params[])
 				// Check if the otherplayer is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
-					//Check if another player its not muted
+					//Check if another player is not muted
 					if(APlayerData[OtherPlayer][Muted] == false)
 					{
 						// Get the player-names
@@ -3859,7 +3850,7 @@ COMMAND:unmute(playerid, params[])
 				// Check if the otherplayer is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
-					//Check if the another player its muted
+					//Check if the another player is muted
 					if(APlayerData[OtherPlayer][Muted] == true)
 					{
 						// Get the player-names
@@ -4051,7 +4042,6 @@ COMMAND:givecash(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
 
 // Respawns the given vehicle
 COMMAND:respawn(playerid, params[])
@@ -4498,7 +4488,6 @@ COMMAND:rules(playerid, params[])
 	return 1;
 }
 
-
 // Report a player for breaking the rules
 COMMAND:report(playerid, params[])
 {
@@ -4581,7 +4570,6 @@ COMMAND:rep(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
 
 // Enables the trucker to overload himself
 COMMAND:overload(playerid, params[])
@@ -4936,7 +4924,6 @@ COMMAND:ipban(playerid, params[])
 				}
 				else
 					SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
-					
 			}
 		}
 		else
@@ -5143,7 +5130,6 @@ COMMAND:changepassword(playerid, params[])
 	return 1;
 }
 
-
 // This command opens a menu where you can choose neons lights for your vehicle
 COMMAND:neon(playerid, params[])
 {
@@ -5289,7 +5275,6 @@ COMMAND:announce(playerid, params[])
 	}
 	return 1;
 }
-
 
 // Let admins to refuel all player vehicles
 COMMAND:fuelall(playerid, params[])
