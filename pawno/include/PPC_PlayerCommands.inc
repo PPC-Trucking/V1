@@ -1562,7 +1562,12 @@ COMMAND:warn(playerid, params[])
 
 					// Automatically kick the player if he got 3 warnings (if autokick is enabled)
 					if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
+					{
+						format(ReasonMsg, 128, "You have been kicked. (warnings: %i/%i)", APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
+						SendClientMessage(PlayerToWarn, COLOR_RED, ReasonMsg);
+
 						SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToWarn)), false, "i", PlayerToWarn);
+					}
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
