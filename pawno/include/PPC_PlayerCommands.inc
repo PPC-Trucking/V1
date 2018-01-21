@@ -1562,7 +1562,6 @@ COMMAND:warn(playerid, params[])
 
 					// Automatically kick the player if he got 3 warnings (if autokick is enabled)
 					if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
-						SetTimerEx("TimedKick", 500, false, "i", PlayerToWarn);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -1603,7 +1602,6 @@ COMMAND:kick(playerid, params[])
 					format(ReasonMsg, 128, "Reason: %s", Reason);
 					SendClientMessage(PlayerToKick, COLOR_RED, ReasonMsg);
 					// Kick the player
-					SetTimerEx("TimedKick", 500, false, "i", PlayerToKick);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -1671,7 +1669,6 @@ COMMAND:ban(playerid, params[])
 					}
 
 					// Kick the player (his data will be saved)
-					SetTimerEx("TimedKick", 500, false, "i", PlayerToBan);
 
 					// Inform everybody else which player was banned and for how long
 					format(Msg, 128, "%s %s has banned %s for %i days and %i hours", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days, Hours);
@@ -4853,7 +4850,6 @@ COMMAND:ipban(playerid, params[])
 					SendClientMessage(PlayerToBan, COLOR_WHITE, Msg);
 
 					// Ban the player with a reason
-					BanEx(PlayerToBan, Reason);
 
 					// Inform everybody else which player was ip-banned
 					format(Msg, 128, "{808080}%s %s has ip-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
@@ -4913,7 +4909,6 @@ COMMAND:rangeban(playerid, params[])
                         SendRconCommand(BanCmd); // Execute the command
 					}
 					// Finally kick the player (the RCon command doesn't kick you out automatically)
-					SetTimerEx("TimedKick", 1000, false, "i", PlayerToBan);
 
 					// Inform everybody else which player was ip-range-banned
 					format(Msg, 128, "{808080}%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);

@@ -566,10 +566,18 @@ HelpList_Create(playerid)
 	return 1;
 }
 
+// Timed Kick/Ban to make sure the player gets messages
 forward TimedKick(playerid);
 public TimedKick(playerid)
 {
     Kick(playerid);
+    return 1;
+}
+
+forward TimedBanEx(playerid, reason[]);
+public TimedBanEx(playerid, reason[])
+{
+    BanEx(playerid, reason);
     return 1;
 }
 
