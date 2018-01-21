@@ -475,7 +475,7 @@ COMMAND:getcar(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:getvehicle(playerid, params[]) return cmd_getcar(playerid, params);
+
 
 // This command checks if the player is inside a vehicle that he owns and if he's in range of the house where the vehicle is assigned to
 COMMAND:park(playerid, params[])
@@ -623,7 +623,7 @@ COMMAND:rentcar(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:rentvehicle(playerid, params[]) return cmd_rentcar(playerid, params);
+
 
 
 // This command teleports you to your selected house
@@ -1110,7 +1110,7 @@ COMMAND:work(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:duty(playerid, params[]) return cmd_work(playerid, params);
+
 // Stops the current job
 COMMAND:stopwork(playerid, params[])
 {
@@ -1149,7 +1149,7 @@ COMMAND:stopwork(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:endwork(playerid, params[]) return cmd_stopwork(playerid, params);
+
 
 // Displays the player's coordinates on the map
 COMMAND:loc(playerid, params[])
@@ -1872,8 +1872,7 @@ COMMAND:vehicle(playerid, params[])
 	return 1;
 }
 
-COMMAND:delvehicle(playerid, params[])
-	return cmd_cleanupcar(playerid, params);
+
 
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
@@ -2223,7 +2222,7 @@ COMMAND:fuel(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:refill(playerid, params[]) return cmd_fuel(playerid, params);
+
 
 // Let the player use a jetpack
 COMMAND:fly(playerid, params[])
@@ -2249,7 +2248,7 @@ COMMAND:fly(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:jetpack(playerid, params[]) return cmd_fly(playerid, params);
+
 
 // Paints a car with a paintjob
 COMMAND:paint(playerid, params[])
@@ -2611,7 +2610,7 @@ COMMAND:cmds(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:commands(playerid, params[]) return cmd_cmds(playerid, params);
+
 
 COMMAND:convoy(playerid, params[])
 {
@@ -2840,48 +2839,15 @@ COMMAND:stats(playerid, params[])
 			// No player was entered
 			if(OtherPlayer == -1)
 			{
-				// Construct the stats
-				format(StatsMsg, 1000, "Kilometers driven: {00FF00}%f{FFFFFF}\n", (APlayerData[playerid][StatsMetersDriven] / 1000));
-				format(StatsMsg, 1000, "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsTruckerJobs]);
-				format(StatsMsg, 1000, "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsConvoyJobs]);
-				format(StatsMsg, 1000, "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsBusDriverJobs]);
-				format(StatsMsg, 1000, "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPilotJobs]);
-				format(StatsMsg, 1000, "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsCourierJobs]);
-				format(StatsMsg, 1000, "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsRoadworkerJobs]);
-				format(StatsMsg, 1000, "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsAssistance]);
-				format(StatsMsg, 1000, "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaJobs]);
-				format(StatsMsg, 1000, "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsMafiaStolen]);
-				format(StatsMsg, 1000, "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceFined]);
-				format(StatsMsg, 1000, "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[playerid][StatsPoliceJailed]);
-				// Get the player's name
-				GetPlayerName(playerid, Name, sizeof(Name));
-				// Construct the title for the dialog
-				format(TitleMsg, 128, "Statistics for %s:", Name);
+				StatsPlayer(playerid, playerid);
+			}
+			else if(IsPlayerConnected(OtherPlayer))
+			{
+				StatsPlayer(playerid, OtherPlayer);
 			}
 			else
-			{
-				// Construct the stats
-				format(StatsMsg, 1000, "Kilometers driven: {00FF00}%f{FFFFFF}\n", (APlayerData[OtherPlayer][StatsMetersDriven] / 1000));
-				format(StatsMsg, 1000, "%sFinished trucker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsTruckerJobs]);
-				format(StatsMsg, 1000, "%sFinished convoy jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsConvoyJobs]);
-				format(StatsMsg, 1000, "%sFinished busdriver routes: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsBusDriverJobs]);
-				format(StatsMsg, 1000, "%sFinished pilot jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsPilotJobs]);
-				format(StatsMsg, 1000, "%sFinished courier jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsCourierJobs]);
-				format(StatsMsg, 1000, "%sFinished roadworker jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsRoadworkerJobs]);
-				format(StatsMsg, 1000, "%sFixed vehicles for assistance: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsAssistance]);
-				format(StatsMsg, 1000, "%sFinished mafia jobs: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsMafiaJobs]);
-				format(StatsMsg, 1000, "%sDelivered stolen mafia-loads: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsMafiaStolen]);
-				format(StatsMsg, 1000, "%sFined players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsPoliceFined]);
-				format(StatsMsg, 1000, "%sJailed players: {00FF00}%i{FFFFFF}\n", StatsMsg, APlayerData[OtherPlayer][StatsPoliceJailed]);
-				// Get the player's name
-				GetPlayerName(OtherPlayer, Name, sizeof(Name));
-				// Construct the title for the dialog
-				format(TitleMsg, 128, "Statistics for %s:", Name);
-			}
+				SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
 		}
-
-		// Show the dialog
-		ShowPlayerDialog(playerid, DialogStats, DIALOG_STYLE_LIST, TitleMsg, StatsMsg, "OK", "Cancel");
 	}
 	else
 	    return 0;
@@ -4065,7 +4031,7 @@ COMMAND:givecash(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:givemoney(playerid, params[]) return cmd_givecash(playerid, params);
+
 
 // Respawns the given vehicle
 COMMAND:respawn(playerid, params[])
@@ -4553,7 +4519,7 @@ COMMAND:report(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:complain(playerid, params[]) return cmd_report(playerid, params);
+
 
 // Lets the admins see the list of reports
 COMMAND:rep(playerid, params[])
@@ -4595,7 +4561,7 @@ COMMAND:rep(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:complaints(playerid, params[]) return cmd_rep(playerid, params);
+
 
 // Enables the trucker to overload himself
 COMMAND:overload(playerid, params[])
@@ -5156,9 +5122,7 @@ COMMAND:changepassword(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:changepass(playerid, params[]) return cmd_changepassword(playerid, params);
-COMMAND:changepw(playerid, params[]) return cmd_changepassword(playerid, params);
-COMMAND:password(playerid, params[]) return cmd_changepassword(playerid, params);
+
 
 // This command opens a menu where you can choose neons lights for your vehicle
 COMMAND:neon(playerid, params[])
@@ -5278,7 +5242,7 @@ COMMAND:givelicense(playerid,params[])
 COMMAND:announce(playerid, params[])
 {
 	// Setup local variabiles
-	new Message[128];
+	new Message[128], style;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/announce", params);
@@ -5289,17 +5253,17 @@ COMMAND:announce(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if(APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if(sscanf(params, "s[128]", Message)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Message>\"");
+			if(sscanf(params, "s[128]I(3)", Message, style)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Message> <style (optional)>\"");
 			else
 			{
-				GameTextForAll(Message, 4000, 3);
+				GameTextForAll(Message, 5000, style);
 			}
 
 		}
 	}
 	return 1;
 }
-COMMAND:annn(playerid, params[]) return cmd_announce(playerid, params);
+
 
 // Let admins to refuel all player vehicles
 COMMAND:fuelall(playerid, params[])
@@ -5329,4 +5293,3 @@ COMMAND:fuelall(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-COMMAND:refillall(playerid, params[]) return cmd_fuelall(playerid, params);
