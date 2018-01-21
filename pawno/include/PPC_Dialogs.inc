@@ -29,6 +29,7 @@ Dialog_Register(playerid, response, inputtext[])
 			// Show a message that the player must be registered to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustRegister);
 		    // Kick the player
+			SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid);
 		}
 	}
 
@@ -63,6 +64,7 @@ Dialog_Login(playerid, response, inputtext[])
 
 				if (GetPVarInt(playerid, "LoginAttempt") == MAX_LOGIN_ATTEMPTS) {
 					SendClientMessage(playerid, COLOR_WHITE, TXT_FailedLoginProperly);
+					SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid);
 				} else {
 					format(Msg, sizeof(Msg), TXT_WrongPassword, (MAX_LOGIN_ATTEMPTS-GetPVarInt(playerid, "LoginAttempt")));
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
@@ -76,6 +78,7 @@ Dialog_Login(playerid, response, inputtext[])
 			// Show a message that the player must be logged in to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustLogin);
 		    // Kick the player
+			SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid);
 		}
 	}
 
