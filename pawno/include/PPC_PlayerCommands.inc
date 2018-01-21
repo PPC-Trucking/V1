@@ -2825,7 +2825,7 @@ COMMAND:convoymembers(playerid, params[])
 COMMAND:stats(playerid, params[])
 {
 	// Setup local variables
-	new StatsMsg[1000], Name[24], TitleMsg[128], OtherPlayer;
+	new OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/stats", params);
