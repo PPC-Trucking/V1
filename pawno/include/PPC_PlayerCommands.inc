@@ -1141,7 +1141,7 @@ COMMAND:stopwork(playerid, params[])
 			RewardPlayer(playerid, -1000, 0);
 		}
 		else
-			SendClientMessage(playerid, 0xFF0000FF, "You are not doing any job");
+			SendClientMessage(playerid, COLOR_RED, "You are not doing any job");
 	}
 	else
 	    return 0;
@@ -1319,7 +1319,7 @@ COMMAND:wanted(playerid, params[])
 				{
 					SetPlayerWantedLevel(OtherPlayer, Stars);
 
-					SendClientMessage(OtherPlayer, 0x00FF00FF, "An admin set your wanted level");
+					SendClientMessage(OtherPlayer, COLOR_GREEN, "An admin set your wanted level");
 				}
 					
 				else
@@ -1358,7 +1358,7 @@ COMMAND:bike(playerid, params[])
 				return 1;
 			}
 			else
-				SendClientMessage(playerid, 0xFF0000FF, "You must be on foot to use this command");
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1388,7 +1388,7 @@ COMMAND:car(playerid, params[])
 			if (GetPlayerVehicleID(playerid) == 0)
 				CarList_Create(playerid); // Create a list of cars (only the first 10 cars) and show the dialog so the player can choose a car
 			else
-				SendClientMessage(playerid, 0xFF0000FF, "You must be on foot to use this command");
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1418,7 +1418,7 @@ COMMAND:plane(playerid, params[])
 			if (GetPlayerVehicleID(playerid) == 0)
 				PlaneList_Create(playerid); // Create a list of planes (only the first 10 planes) and show the dialog so the player can choose a plane
 			else
-				SendClientMessage(playerid, 0xFF0000FF, "You must be on foot to use this command");
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1448,7 +1448,7 @@ COMMAND:trailer(playerid, params[])
 			if (GetPlayerVehicleID(playerid) == 0)
 				TrailerList_Create(playerid); // Create a list of trailers (only the first 10 trailers) and show the dialog so the player can choose a trailer
 			else
-				SendClientMessage(playerid, 0xFF0000FF, "You must be on foot to use this command");
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1481,7 +1481,7 @@ COMMAND:boat(playerid, params[])
 				return 1;
 			}
 			else
-				SendClientMessage(playerid, 0xFF0000FF, "You must be on foot to use this command");
+				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
 		}
 		else
 		    return 0;
@@ -1583,7 +1583,7 @@ COMMAND:warn(playerid, params[])
 					if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
 					{
 						format(ReasonMsg, 128, "You have been kicked. (warnings: %i/%i)", APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
-						SendClientMessage(PlayerToWarn, 0xFF0000FF, ReasonMsg);
+						SendClientMessage(PlayerToWarn, COLOR_RED, ReasonMsg);
 
 						SetTimerEx("TimedKick", 500, false, "i", PlayerToWarn);
 					}
@@ -1702,7 +1702,7 @@ COMMAND:ban(playerid, params[])
 					SendClientMessageToAll(COLOR_GRAY, Msg);
 				}
 				else
-					SendClientMessage(playerid, 0xFF0000FF, "Player isn't connected");
+					SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
 			}
 		}
 		else
@@ -2103,10 +2103,10 @@ COMMAND:portvehicle(playerid, params[])
 							SetPlayerPos(playerid, x, y, z + 3.0);
 							// Let the player know about it
 							format(PortMsg, 128, "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
-							SendClientMessage(playerid, 0x00FF00FF, PortMsg);
+							SendClientMessage(playerid, COLOR_GREEN, PortMsg);
 						}
 						else
-							SendClientMessage(playerid, 0xFF0000FF, "The carid its not valid");
+							SendClientMessage(playerid, COLOR_RED, "The carid its not valid");
 					}
 				}
 				else
@@ -2148,7 +2148,7 @@ COMMAND:setlevel(playerid, params[])
 				{
 					//check if the level its in the range
 					if(Level < 0 || Level > 5)
-						return SendClientMessage(playerid, 0xFF0000FF, "The level its out of range");
+						return SendClientMessage(playerid, COLOR_RED, "The level its out of range");
 
 				    // Get the old level of the other player
 				    OldLevel = APlayerData[OtherPlayer][PlayerLevel];
@@ -2422,10 +2422,10 @@ COMMAND:engine(playerid, params[])
 				//Check if the engine is running or not
 				if(engine)
 					//Inform player about that
-					SendClientMessage(playerid, 0x00FF00FF, "You have turned off the engine");
+					SendClientMessage(playerid, COLOR_GREEN, "You have turned off the engine");
 				else
 					//Inform player about that
-					SendClientMessage(playerid, 0x00FF00FF, "You have turned on the engine");
+					SendClientMessage(playerid, COLOR_GREEN, "You have turned on the engine");
 				
 			}
 			else
@@ -2833,20 +2833,14 @@ COMMAND:stats(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if(sscanf(params, "U(-1)", OtherPlayer)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/stats <OtherPlayer (optional)>\"");
+		if(sscanf(params, "U(playerid)", OtherPlayer)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/stats <OtherPlayer (optional)>\"");
 		else
 		{
-			// No player was entered
-			if(OtherPlayer == -1)
-			{
-				StatsPlayer(playerid, playerid);
-			}
-			else if(IsPlayerConnected(OtherPlayer))
+			if(IsPlayerConnected(OtherPlayer))
 			{
 				StatsPlayer(playerid, OtherPlayer);
 			}
-			else
-				SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
+			
 		}
 	}
 	else
@@ -3353,7 +3347,7 @@ COMMAND:nos(playerid, params[])
 					AddVehicleComponent(GetPlayerVehicleID(playerid), 1010); // Add nitro to the player's vehicle
 				
 				//Inform player the nos has been added
-				SendClientMessage(playerid, 0x00FF00FF, "Nos has been added");
+				SendClientMessage(playerid, COLOR_GREEN, "Nos has been added");
 			}
 		}
 		else
@@ -4537,7 +4531,7 @@ COMMAND:rep(playerid, params[])
 			if (AReports[0][ReportUsed] == true)
 			    format(ReportList, 5000, "%s: %s\n", AReports[0][ReportName], AReports[0][ReportReason]);
 			else
-				return SendClientMessage(playerid, 0xFF0000FF, "There are no reports");
+				return SendClientMessage(playerid, COLOR_RED, "There are no reports");
 
 			// Construct the report-dialog
 			for (new i = 1; i < 50; i++)
@@ -4915,7 +4909,7 @@ COMMAND:ipban(playerid, params[])
 					SendClientMessageToAll(COLOR_WHITE, Msg);
 				}
 				else
-					SendClientMessage(playerid, 0xFF0000FF, "That player isn't connected");
+					SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
 					
 			}
 		}
@@ -5175,10 +5169,10 @@ COMMAND:bonus(playerid, params[])
 		if (APlayerData[playerid][PlayerClass] == ClassTruckDriver)
 			ShowRandomBonusMission(); // Show the bonus mission again for all truckers (and perhaps generate a new one)
 		else
-		    return SendClientMessage(playerid, 0xFF0000FF, "You are not a truck driver!");
+		    return SendClientMessage(playerid, COLOR_RED, "You are not a truck driver!");
 	}
 	else
-	    return SendClientMessage(playerid, 0xFF0000FF, "You must login before using this command");
+	    return SendClientMessage(playerid, COLOR_RED, "You must login before using this command");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -5287,7 +5281,7 @@ COMMAND:fuelall(playerid, params[])
 			}
 
 			// Let all players know about it
-			SendClientMessageToAll(0x00FF00FF, "All vehicles have been refueled");
+			SendClientMessageToAll(COLOR_GREEN, "All vehicles have been refueled");
 		}
 	}
 	// Let the server know that this was a valid command
