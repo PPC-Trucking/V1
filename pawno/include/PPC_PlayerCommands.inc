@@ -1580,7 +1580,7 @@ COMMAND:warn(playerid, params[])
 						format(ReasonMsg, 128, "You have been kicked. (warnings: %i/%i)", APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
 						SendClientMessage(PlayerToWarn, COLOR_RED, ReasonMsg);
 
-						SetTimerEx("TimedKick", 500, false, "i", PlayerToWarn);
+						SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToWarn)), false, "i", PlayerToWarn);
 					}
 				}
 				else
