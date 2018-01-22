@@ -3150,13 +3150,13 @@ COMMAND:get(playerid, params[])
 }
 
 // This command deleted all vehicles that are spawned using /car, /plane, /bike, /trailer
-COMMAND:cleanupcars(playerid, params[])
+COMMAND:cleanupvehicles(playerid, params[])
 {
 	// Setup local variables
 	new CarsDeleted, Msg[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/cleanupcars", params);
+	SendAdminText(playerid, "/cleanupvehicles", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
