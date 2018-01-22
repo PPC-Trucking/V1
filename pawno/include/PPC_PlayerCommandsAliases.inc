@@ -76,3 +76,7 @@ COMMAND:cleanupcar(playerid, params[])
 COMMAND:cleanupcars(playerid, params[])
     return cmd_cleanupvehicles(playerid, params);
 
+// Alias for muted command
+COMMAND:mutes(playerid, params[])
+    return cmd_muted(playerid, params);
+
