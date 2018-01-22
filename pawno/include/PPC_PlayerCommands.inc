@@ -1296,12 +1296,12 @@ COMMAND:gobase(playerid, params[])
 }
 
 // Sets the player's wanted level
-COMMAND:wanted(playerid, params[])
+COMMAND:setwanted(playerid, params[])
 {
 	new OtherPlayer, Stars;
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/wanted", params);
+	SendAdminText(playerid, "/setwanted", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -1309,7 +1309,7 @@ COMMAND:wanted(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if (APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/wanted <OtherPlayer> <Stars>\"");
+			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setwanted <OtherPlayer> <Stars>\"");
 			else
 				if (IsPlayerConnected(OtherPlayer)) // If the player is a valid playerid (he's connected)
 				{
