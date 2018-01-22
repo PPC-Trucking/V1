@@ -4092,7 +4092,7 @@ COMMAND:respawnvehicle(playerid, params[])
 COMMAND:createspike(playerid, params[])
 {
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/spike", params);
+	SendAdminText(playerid, "/createspike", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
