@@ -84,3 +84,8 @@ COMMAND:mutes(playerid, params[])
 COMMAND:object(playerid, params[])
     return cmd_createobject(playerid, params);
 
+// Alias for createpickup command
+COMMAND:pickup(playerid, params[])
+    return cmd_createpickup(playerid, params);
+
+
