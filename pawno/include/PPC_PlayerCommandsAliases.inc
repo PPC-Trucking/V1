@@ -80,3 +80,7 @@ COMMAND:cleanupcars(playerid, params[])
 COMMAND:mutes(playerid, params[])
     return cmd_muted(playerid, params);
 
+// Alias for createobject command
+COMMAND:object(playerid, params[])
+    return cmd_createobject(playerid, params);
+
