@@ -1763,13 +1763,13 @@ COMMAND:unban(playerid, params[])
 }
 
 // Spawns the object at the location given by the player
-COMMAND:object(playerid, params[])
+COMMAND:createobject(playerid, params[])
 {
     // Setup local variables
 	new ObjectModel, ObjID, Msg[128], Float:x, Float:y, Float:z, Float:Angle;
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/object", params);
+	SendAdminText(playerid, "/createobject", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -1777,7 +1777,7 @@ COMMAND:object(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/object <ObjectModel> <x> <y> <z> <Angle>\"");
+			if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createobject <ObjectModel> <x> <y> <z> <Angle>\"");
 			else
 			{
 				// Spawn the object 5 units north of the player
