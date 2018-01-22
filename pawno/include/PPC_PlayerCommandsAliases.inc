@@ -92,4 +92,8 @@ COMMAND:pickup(playerid, params[])
 COMMAND:respawn(playerid, params[])
     return cmd_respawnvehicle(playerid, params);
 
+// Alias for setwanted command
+COMMAND:wanted(playerid, params[])
+    return cmd_setwanted(playerid, params);
+
 
