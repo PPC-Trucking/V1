@@ -60,3 +60,7 @@ COMMAND:annn(playerid, params[])
 COMMAND:refillall(playerid, params[]) 
     return cmd_fuelall(playerid, params);
 
+// Alias for createspike command
+COMMAND:spike(playerid, params[])
+    return cmd_createspike(playerid, params);
+
