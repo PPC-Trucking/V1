@@ -3885,13 +3885,13 @@ COMMAND:unmute(playerid, params[])
 }
 
 // Let's the admins see which players are still muted
-COMMAND:mutes(playerid, params[])
+COMMAND:muted(playerid, params[])
 {
 	// Setup local variables
 	new PlayerList[1000], Name[24];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/mutes", params);
+	SendAdminText(playerid, "/muted", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
