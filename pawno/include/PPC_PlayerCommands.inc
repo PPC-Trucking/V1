@@ -1798,13 +1798,13 @@ COMMAND:createobject(playerid, params[])
 }
 
 // Spawns the pickup at the location given by the player
-COMMAND:pickup(playerid, params[])
+COMMAND:createpickup(playerid, params[])
 {
     // Setup local variables
 	new PickupModel, PickID, Msg[128], Float:x, Float:y, Float:z, PickupType;
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/pickup", params);
+	SendAdminText(playerid, "/createpickup", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -1812,7 +1812,7 @@ COMMAND:pickup(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/pickup <PickupModel> <x> <y> <z> <PickupType>\"");
+			if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createpickup <PickupModel> <x> <y> <z> <PickupType>\"");
 			else
 			{
 				// Spawn the pickup
