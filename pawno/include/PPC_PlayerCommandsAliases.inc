@@ -68,3 +68,7 @@ COMMAND:spike(playerid, params[])
 COMMAND:rescue(playerid, params[])
     return cmd_gobase(playerid, params);
 
+// Alias for cleanupvehicle command
+COMMAND:cleanupcar(playerid, params[])
+    return cmd_cleanupvehicle(playerid, params);
+
