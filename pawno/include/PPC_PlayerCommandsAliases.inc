@@ -88,4 +88,8 @@ COMMAND:object(playerid, params[])
 COMMAND:pickup(playerid, params[])
     return cmd_createpickup(playerid, params);
 
+// Alias for respawnvehicle command
+COMMAND:respawn(playerid, params[])
+    return cmd_respawnvehicle(playerid, params);
+
 
