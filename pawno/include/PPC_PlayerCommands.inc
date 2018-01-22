@@ -4044,13 +4044,13 @@ COMMAND:givecash(playerid, params[])
 }
 
 // Respawns the given vehicle
-COMMAND:respawn(playerid, params[])
+COMMAND:respawnvehicle(playerid, params[])
 {
 	// Setup local variables
 	new vid, Msg[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/respawn", params);
+	SendAdminText(playerid, "/respawnvehicle", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -4058,7 +4058,7 @@ COMMAND:respawn(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "i", vid)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/respawn <Vehicle-id>\"");
+			if (sscanf(params, "i", vid)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/respawnvehicle <Vehicle-id>\"");
 			else
 			{
 				// Check if the vehicle-id is valid
