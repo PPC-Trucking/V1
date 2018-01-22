@@ -72,3 +72,7 @@ COMMAND:rescue(playerid, params[])
 COMMAND:cleanupcar(playerid, params[])
     return cmd_cleanupvehicle(playerid, params);
 
+// Alias for cleanupvehicles command
+COMMAND:cleanupcars(playerid, params[])
+    return cmd_cleanupvehicles(playerid, params);
+
