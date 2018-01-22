@@ -3213,13 +3213,13 @@ COMMAND:cleanupcars(playerid, params[])
 }
 
 // Deletes a specific vehicle that has been spawned by an admin
-COMMAND:cleanupcar(playerid, params[])
+COMMAND:cleanupvehicle(playerid, params[])
 {
     // Setup local variables
 	new vID, Msg[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/cleanupcar", params);
+	SendAdminText(playerid, "/cleanupvehicle", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -3227,7 +3227,7 @@ COMMAND:cleanupcar(playerid, params[])
 		// Check if the player's admin-level is at least 3
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
-			if (sscanf(params, "i", vID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/cleanupcar <VehicleID>\"");
+			if (sscanf(params, "i", vID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/cleanupvehicle <VehicleID>\"");
 			else
 			{
 				// Check if this vehicle exists (check the model), otherwise all empty slots are processed as well
