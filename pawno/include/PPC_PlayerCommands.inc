@@ -1238,10 +1238,10 @@ COMMAND:saveloc(playerid, params[])
 }
 
 // Lets the player choose where he wants to respawn (costs $200)
-COMMAND:rescue(playerid, params[])
+COMMAND:gobase(playerid, params[])
 {
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/rescue", params);
+	SendAdminText(playerid, "/gobase", params);
 	
 	if (GetPlayerState(playerid) == PLAYER_STATE_WASTED || GetPlayerState(playerid) == PLAYER_STATE_NONE)
         return 0;
@@ -1257,7 +1257,7 @@ COMMAND:rescue(playerid, params[])
 			{
 				if (APlayerData[playerid][JobStarted] == false)
 				{
-					// Make sure you can't use "/rescue" when you're inside a vehicle (doesn't respawn you at the requested coords
+					// Make sure you can't use "/gobase" when you're inside a vehicle (doesn't respawn you at the requested coords
 					// and puts a random item (bottle, sigarette, ...) in the player's hands
 					if (GetPlayerVehicleID(playerid) == 0)
 					{
@@ -1277,16 +1277,16 @@ COMMAND:rescue(playerid, params[])
 						}
 					}
 					else
-						SendClientMessage(playerid, COLOR_RED, "You cannot use '/rescue' when you're inside a vehicle"); // "/rescue" doesn't work inside a vehicle
+						SendClientMessage(playerid, COLOR_RED, "You cannot use '/gobase' when you're inside a vehicle"); // "/gobase" doesn't work inside a vehicle
 				}
 				else
-				    SendClientMessage(playerid, COLOR_RED, "You cannot use rescue when doing a job"); // "/rescue" doesn't work during a job
+				    SendClientMessage(playerid, COLOR_RED, "You cannot use gobase when doing a job"); // "/gobase" doesn't work during a job
 			}
 			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /rescue when you're in jail");
+			    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobase when you're in jail");
 		}
 		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /rescue when you're wanted");
+		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /gobase when you're wanted");
 	}
 	else
 	    return 0;
