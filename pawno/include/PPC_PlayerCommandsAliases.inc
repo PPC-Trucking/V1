@@ -64,3 +64,7 @@ COMMAND:refillall(playerid, params[])
 COMMAND:spike(playerid, params[])
     return cmd_createspike(playerid, params);
 
+// Alias for gobase command
+COMMAND:rescue(playerid, params[])
+    return cmd_gobase(playerid, params);
+
