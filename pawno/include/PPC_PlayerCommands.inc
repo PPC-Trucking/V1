@@ -4089,7 +4089,7 @@ COMMAND:respawn(playerid, params[])
 }
 
 // Creates a spikestrip (can only be used by police players)
-COMMAND:spike(playerid, params[])
+COMMAND:createspike(playerid, params[])
 {
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/spike", params);
