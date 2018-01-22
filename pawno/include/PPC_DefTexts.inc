@@ -19,6 +19,7 @@
 #define TXT_KickHealthHack "{FF0000}You've been kicked for using health-hack"
 
 // Dialog buttons
+#define TXT_DialogButtonOk "OK" // Define the text on the "OK"-button for dialogs
 #define TXT_DialogButtonCancel "Cancel" // Define the text on the "Cancel"-button for dialogs
 #define TXT_DialogButtonBuy "Buy" // Define the text on the "Buy"-button for dialogs
 #define TXT_DialogButtonSpawn "Spawn"
