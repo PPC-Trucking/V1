@@ -5248,7 +5248,7 @@ COMMAND:givelicense(playerid,params[])
 COMMAND:announce(playerid, params[])
 {
 	// Setup local variabiles
-	new Message[128], Style;
+	new Message[64], Style, DisplayTime;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/announce", params);
@@ -5259,18 +5259,21 @@ COMMAND:announce(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if(APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if(sscanf(params, "s[128]I(3)", Message, Style)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Message> <Style (optional)>\"");
+			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Style (0-6)> <Time in Seconds 1-5> <Message>\"");
 			else
 			{
-				if ((Style >= 0) && (Style <= 6))
+				if ((Style >= 0) && (Style <= 6) || 2 == Style)
 				{
-					GameTextForAll(Message, 5000, Style);
+					if ((DisplayTime >= 1) && (DisplayTime <= 5))
+					{
+						GameTextForAll(Message, (DisplayTime * 1000), Style);
+					}
+					else
+						SendClientMessage(playerid, COLOR_RED, "Invalid time, you can only use 1-5 seconds");
 				}
 				else
-    				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 0-6");
-				
+    				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 0-6 except 2");
 			}
-
 		}
 	}
 	return 1;
