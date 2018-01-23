@@ -5262,7 +5262,7 @@ COMMAND:announce(playerid, params[])
 			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Style (0-6)> <Time in Seconds 1-5> <Message>\"");
 			else
 			{
-				if ((Style >= 0) && (Style <= 6) || 2 == Style)
+				if ((Style >= 0) && (Style <= 6) && 2 != Style)
 				{
 					if ((DisplayTime >= 1) && (DisplayTime <= 5))
 					{
