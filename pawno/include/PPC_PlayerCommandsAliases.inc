@@ -60,3 +60,40 @@ COMMAND:annn(playerid, params[])
 COMMAND:refillall(playerid, params[]) 
     return cmd_fuelall(playerid, params);
 
+// Alias for createspike command
+COMMAND:spike(playerid, params[])
+    return cmd_createspike(playerid, params);
+
+// Alias for gobase command
+COMMAND:rescue(playerid, params[])
+    return cmd_gobase(playerid, params);
+
+// Alias for cleanupvehicle command
+COMMAND:cleanupcar(playerid, params[])
+    return cmd_cleanupvehicle(playerid, params);
+
+// Alias for cleanupallvehicles command
+COMMAND:cleanupcars(playerid, params[])
+    return cmd_cleanupallvehicles(playerid, params);
+
+// Alias for muted command
+COMMAND:mutes(playerid, params[])
+    return cmd_muted(playerid, params);
+
+// Alias for createobject command
+COMMAND:object(playerid, params[])
+    return cmd_createobject(playerid, params);
+
+// Alias for createpickup command
+COMMAND:pickup(playerid, params[])
+    return cmd_createpickup(playerid, params);
+
+// Alias for respawnvehicle command
+COMMAND:respawn(playerid, params[])
+    return cmd_respawnvehicle(playerid, params);
+
+// Alias for setwanted command
+COMMAND:wanted(playerid, params[])
+    return cmd_setwanted(playerid, params);
+
+
