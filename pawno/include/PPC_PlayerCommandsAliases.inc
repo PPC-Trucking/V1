@@ -72,9 +72,9 @@ COMMAND:rescue(playerid, params[])
 COMMAND:cleanupcar(playerid, params[])
     return cmd_cleanupvehicle(playerid, params);
 
-// Alias for cleanupvehicles command
+// Alias for cleanupallvehicles command
 COMMAND:cleanupcars(playerid, params[])
-    return cmd_cleanupvehicles(playerid, params);
+    return cmd_cleanupallvehicles(playerid, params);
 
 // Alias for muted command
 COMMAND:mutes(playerid, params[])
