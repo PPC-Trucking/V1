@@ -66,6 +66,7 @@ new PlayersBeforePolice	= 0;
 #include <PPC_Convoys>
 #include <PPC_Dialogs>
 #include <PPC_PlayerCommands>
+// #include <PPC_PlayerCommandsAliases>
 #include <PPC_Toll>
 // #include <PPC_Extras> /* !! uncomment this line if you want to use additional features !! */
 
