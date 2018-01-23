@@ -2824,14 +2824,18 @@ COMMAND:stats(playerid, params[])
 		if(sscanf(params, "U(-1)", StatsPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/stats <StatsPlayer (optional)>\"");
 		else
 		{
-			if (INVALID_PLAYER_ID == StatsPlayer)
+			if (-1 == StatsPlayer)
 				StatsPlayer = playerid;
 
 			// Check if stats player is online
-			if (IsPlayerConnected(StatsPlayer)) {
-				if (playerid == StatsPlayer) {
+			if (IsPlayerConnected(StatsPlayer)) 
+			{
+				if (playerid == StatsPlayer) 
+				{
 					format(TitleMsg, sizeof(TitleMsg), "Your Statistics");
-				} else {
+				} 
+				else 
+				{
 					new Name[MAX_PLAYER_NAME];
 					// Get the player's name
 					GetPlayerName(StatsPlayer, Name, sizeof(Name));
