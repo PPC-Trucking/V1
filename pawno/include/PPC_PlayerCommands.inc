@@ -1238,10 +1238,10 @@ COMMAND:saveloc(playerid, params[])
 }
 
 // Lets the player choose where he wants to respawn (costs $200)
-COMMAND:rescue(playerid, params[])
+COMMAND:gobase(playerid, params[])
 {
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/rescue", params);
+	SendAdminText(playerid, "/gobase", params);
 	
 	if (GetPlayerState(playerid) == PLAYER_STATE_WASTED || GetPlayerState(playerid) == PLAYER_STATE_NONE)
         return 0;
@@ -1257,7 +1257,7 @@ COMMAND:rescue(playerid, params[])
 			{
 				if (APlayerData[playerid][JobStarted] == false)
 				{
-					// Make sure you can't use "/rescue" when you're inside a vehicle (doesn't respawn you at the requested coords
+					// Make sure you can't use "/gobase" when you're inside a vehicle (doesn't respawn you at the requested coords
 					// and puts a random item (bottle, sigarette, ...) in the player's hands
 					if (GetPlayerVehicleID(playerid) == 0)
 					{
@@ -1277,16 +1277,16 @@ COMMAND:rescue(playerid, params[])
 						}
 					}
 					else
-						SendClientMessage(playerid, COLOR_RED, "You cannot use '/rescue' when you're inside a vehicle"); // "/rescue" doesn't work inside a vehicle
+						SendClientMessage(playerid, COLOR_RED, "You cannot use '/gobase' when you're inside a vehicle"); // "/gobase" doesn't work inside a vehicle
 				}
 				else
-				    SendClientMessage(playerid, COLOR_RED, "You cannot use rescue when doing a job"); // "/rescue" doesn't work during a job
+				    SendClientMessage(playerid, COLOR_RED, "You cannot use gobase when doing a job"); // "/gobase" doesn't work during a job
 			}
 			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /rescue when you're in jail");
+			    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobase when you're in jail");
 		}
 		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /rescue when you're wanted");
+		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /gobase when you're wanted");
 	}
 	else
 	    return 0;
@@ -1296,12 +1296,12 @@ COMMAND:rescue(playerid, params[])
 }
 
 // Sets the player's wanted level
-COMMAND:wanted(playerid, params[])
+COMMAND:setwanted(playerid, params[])
 {
 	new OtherPlayer, Stars;
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/wanted", params);
+	SendAdminText(playerid, "/setwanted", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -1309,7 +1309,7 @@ COMMAND:wanted(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if (APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/wanted <OtherPlayer> <Stars>\"");
+			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setwanted <OtherPlayer> <Stars>\"");
 			else
 				if (IsPlayerConnected(OtherPlayer)) // If the player is a valid playerid (he's connected)
 				{
@@ -1763,13 +1763,13 @@ COMMAND:unban(playerid, params[])
 }
 
 // Spawns the object at the location given by the player
-COMMAND:object(playerid, params[])
+COMMAND:createobject(playerid, params[])
 {
     // Setup local variables
 	new ObjectModel, ObjID, Msg[128], Float:x, Float:y, Float:z, Float:Angle;
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/object", params);
+	SendAdminText(playerid, "/createobject", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -1777,7 +1777,7 @@ COMMAND:object(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/object <ObjectModel> <x> <y> <z> <Angle>\"");
+			if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createobject <ObjectModel> <x> <y> <z> <Angle>\"");
 			else
 			{
 				// Spawn the object 5 units north of the player
@@ -1798,13 +1798,13 @@ COMMAND:object(playerid, params[])
 }
 
 // Spawns the pickup at the location given by the player
-COMMAND:pickup(playerid, params[])
+COMMAND:createpickup(playerid, params[])
 {
     // Setup local variables
 	new PickupModel, PickID, Msg[128], Float:x, Float:y, Float:z, PickupType;
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/pickup", params);
+	SendAdminText(playerid, "/createpickup", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -1812,7 +1812,7 @@ COMMAND:pickup(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/pickup <PickupModel> <x> <y> <z> <PickupType>\"");
+			if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createpickup <PickupModel> <x> <y> <z> <PickupType>\"");
 			else
 			{
 				// Spawn the pickup
@@ -3150,13 +3150,13 @@ COMMAND:get(playerid, params[])
 }
 
 // This command deleted all vehicles that are spawned using /car, /plane, /bike, /trailer
-COMMAND:cleanupcars(playerid, params[])
+COMMAND:cleanupallvehicles(playerid, params[])
 {
 	// Setup local variables
 	new CarsDeleted, Msg[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/cleanupcars", params);
+	SendAdminText(playerid, "/cleanupallvehicles", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -3213,13 +3213,13 @@ COMMAND:cleanupcars(playerid, params[])
 }
 
 // Deletes a specific vehicle that has been spawned by an admin
-COMMAND:cleanupcar(playerid, params[])
+COMMAND:cleanupvehicle(playerid, params[])
 {
     // Setup local variables
 	new vID, Msg[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/cleanupcar", params);
+	SendAdminText(playerid, "/cleanupvehicle", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -3227,7 +3227,7 @@ COMMAND:cleanupcar(playerid, params[])
 		// Check if the player's admin-level is at least 3
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
-			if (sscanf(params, "i", vID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/cleanupcar <VehicleID>\"");
+			if (sscanf(params, "i", vID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/cleanupvehicle <VehicleID>\"");
 			else
 			{
 				// Check if this vehicle exists (check the model), otherwise all empty slots are processed as well
@@ -3885,13 +3885,13 @@ COMMAND:unmute(playerid, params[])
 }
 
 // Let's the admins see which players are still muted
-COMMAND:mutes(playerid, params[])
+COMMAND:muted(playerid, params[])
 {
 	// Setup local variables
 	new PlayerList[1000], Name[24];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/mutes", params);
+	SendAdminText(playerid, "/muted", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -4044,13 +4044,13 @@ COMMAND:givecash(playerid, params[])
 }
 
 // Respawns the given vehicle
-COMMAND:respawn(playerid, params[])
+COMMAND:respawnvehicle(playerid, params[])
 {
 	// Setup local variables
 	new vid, Msg[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/respawn", params);
+	SendAdminText(playerid, "/respawnvehicle", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -4058,7 +4058,7 @@ COMMAND:respawn(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "i", vid)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/respawn <Vehicle-id>\"");
+			if (sscanf(params, "i", vid)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/respawnvehicle <Vehicle-id>\"");
 			else
 			{
 				// Check if the vehicle-id is valid
@@ -4089,10 +4089,10 @@ COMMAND:respawn(playerid, params[])
 }
 
 // Creates a spikestrip (can only be used by police players)
-COMMAND:spike(playerid, params[])
+COMMAND:createspike(playerid, params[])
 {
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/spike", params);
+	SendAdminText(playerid, "/createspike", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
