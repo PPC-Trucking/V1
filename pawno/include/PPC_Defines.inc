@@ -1036,7 +1036,7 @@ new ACommands[][TCommands] =
 	{3, "/ban <PlayerToBan> <Days> <Hours> <Reason>",                   "Ban a player for a certain time"},
 	{3, "/caroption",                                   				"Changes some options for your vehicle"},
 	{3, "/cleanupvehicle <VehicleID>",                                   	"Deletes a vehicle spawned by an admin"},
-	{3, "/cleanupvehicles",                                   				"Removes all spawned vehicles from the map"},
+	{3, "/cleanupallvehicles",                                   				"Removes all spawned vehicles from the map"},
 	{3, "/givelicense <OtherPlayer>",                                   "Gives a free trucker license to a player"},
 	{3, "/fly",                                   						"Equips yourself with a jetpack"},
 	{3, "/fuelall",                                   					"Fuel all vehicles for free"},
