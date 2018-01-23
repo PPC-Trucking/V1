@@ -53,7 +53,7 @@ COMMAND:password(playerid, params[])
     return cmd_changepassword(playerid, params);
 
 // Alias for announce command
-COMMAND:annn(playerid, params[]) 
+COMMAND:ann(playerid, params[]) 
     return cmd_announce(playerid, params);
 
 // Alias for fuelall command

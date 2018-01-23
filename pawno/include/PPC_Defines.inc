@@ -1030,7 +1030,7 @@ new ACommands[][TCommands] =
 	{1, "/trailer",                                   					"Spawns a trailer of your choice"},
 	{1, "/unmute <OtherPlayer>",                                   		"Un-mutes a player"},
 	{1, "/warn <PlayerToWarn> <Reason>",                                "Warn a player, up to three times"},
-	{2, "/announce <Message> <Style (optional)>",                  		"Shows a message on player's screen (GameText)"},
+	{2, "/announce <Style (0-6)> <Time in Seconds 1-5> <Message>",		"Shows a message on player's screen (GameText)"},
 	{2, "/eject <OtherPlayer>",                                   		"Ejects a player from his vehicle"},
 	{2, "/setwanted <PlayerID> <Stars>",                                   "Set a player's wanted level"},
 	{3, "/ban <PlayerToBan> <Days> <Hours> <Reason>",                   "Ban a player for a certain time"},
