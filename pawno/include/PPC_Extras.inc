@@ -195,7 +195,7 @@ COMMAND:properties(playerid, params[])
 	format(DialogTitle, sizeof(DialogTitle), "Properties of \"%s\"", Name);
 
 	// List all properties in a dialog
-	ShowPlayerDialog(playerid, DialogNoResponse, DIALOG_STYLE_LIST, DialogTitle, PropertyList, "OK", "Cancel");
+	ShowPlayerDialog(playerid, DialogNoResponse, DIALOG_STYLE_LIST, DialogTitle, PropertyList, TXT_DialogButtonOk, TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
