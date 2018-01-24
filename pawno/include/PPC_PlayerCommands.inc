@@ -1676,6 +1676,41 @@ COMMAND:createpickup(playerid, params[])
 	return 1;
 }
 
+// Spawns the vehicle at the location given by the player
+COMMAND:vehicle(playerid, params[])
+{
+    // Setup local variables
+	new VehicleModel, vID, Msg[128], Float:x, Float:y, Float:z, Float:Angle, SpawnDelay;
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/vehicle", params);
+
+	// Check if the player has logged in
+	if (APlayerData[playerid][LoggedIn] == true)
+	{
+		// Check if the player's admin-level is at least 5
+		if (APlayerData[playerid][PlayerLevel] >= 5)
+		{
+			if (sscanf(params, "iffffi", VehicleModel, x, y, z, Angle, SpawnDelay)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/vehicle <VehicleModel> <x> <y> <z> <Angle> <SpawnDelay>\"");
+			else
+			{
+				// Spawn the vehicle at the location specified by the player (also set max-fuel and save the model for the vehicle)
+				vID = Vehicle_Create(VehicleModel, x, y, z, Angle, random(126), random(126), SpawnDelay);
+				// Inform the player about it
+				format(Msg, 128, "You spawned vehicle-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", vID, VehicleModel, x, y, z);
+				SendClientMessage(playerid, COLOR_GREEN, Msg);
+			}
+		}
+		else
+		    return 0;
+	}
+	else
+	    return 0;
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
 {
