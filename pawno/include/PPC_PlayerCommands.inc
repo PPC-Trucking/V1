@@ -2025,32 +2025,36 @@ COMMAND:tele(playerid, params[])
 			if (sscanf(params, "uu", Player1, Player2)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/tele <PlayerToPort> <TargetPlayer>\"");
 			else
 			{
-				// Check if player1 is online
-				if (APlayerData[Player1][LoggedIn] == true)
-				{
-					// Check if player2 is online
-					if (APlayerData[Player2][LoggedIn] == true)
+				if (Player1 != Player2) {
+					// Check if player1 is online
+					if (APlayerData[Player1][LoggedIn] == true)
 					{
-					    // Get the name of the admin and the second player
-					    GetPlayerName(playerid, AdminName, sizeof(AdminName));
-					    GetPlayerName(Player2, Name, sizeof(Name));
-						// Get the location of the second player
-						GetPlayerPos(Player2, x, y, z);
-						IntID = GetPlayerInterior(Player2);
-						WorldID = GetPlayerVirtualWorld(Player2);
-						// Port the first player to player2's location
-						SetPlayerVirtualWorld(Player1, WorldID);
-						SetPlayerInterior(Player1, IntID);
-						SetPlayerPos(Player1, x, y, z + 3.0);
-						// Let the first player know he's been ported
-						format(PortMsg, 128, "{00FF00}You have been ported to player {FFFF00}%s{00FF00} by {FFFF00}%s", Name, AdminName);
-						SendClientMessage(Player1, COLOR_WHITE, PortMsg);
+						// Check if player2 is online
+						if (APlayerData[Player2][LoggedIn] == true)
+						{
+						    // Get the name of the admin and the second player
+						    GetPlayerName(playerid, AdminName, sizeof(AdminName));
+						    GetPlayerName(Player2, Name, sizeof(Name));
+							// Get the location of the second player
+							GetPlayerPos(Player2, x, y, z);
+							IntID = GetPlayerInterior(Player2);
+							WorldID = GetPlayerVirtualWorld(Player2);
+							// Port the first player to player2's location
+							SetPlayerVirtualWorld(Player1, WorldID);
+							SetPlayerInterior(Player1, IntID);
+							SetPlayerPos(Player1, x, y, z + 3.0);
+							// Let the first player know he's been ported
+							format(PortMsg, 128, "{00FF00}You have been ported to player {FFFF00}%s{00FF00} by {FFFF00}%s", Name, AdminName);
+							SendClientMessage(Player1, COLOR_WHITE, PortMsg);
+						}
+						else
+						    SendClientMessage(playerid, COLOR_RED, "Player2 isn't online");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_RED, "Player2 isn't online");
+					    SendClientMessage(playerid, COLOR_RED, "Player1 isn't online");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_RED, "Player1 isn't online");
+					SendClientMessage(playerid, COLOR_RED, "Players must be different");
 			}
 		}
 		else
@@ -2675,23 +2679,32 @@ COMMAND:convoykick(playerid, params[])
 				if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/convoykick <OtherPlayerID>\"");
 				else
 				{
-					// Check if that other player is part of the convoy
-					if ((APlayerData[OtherPlayer][InConvoy] == true) && (APlayerData[OtherPlayer][ConvoyID] == Convoy))
-					{
-					    // Kick the other player from the convoy
-						Convoy_Leave(OtherPlayer);
-						// Get the names of the leader and member
-						GetPlayerName(playerid, LeaderName, sizeof(LeaderName));
-						GetPlayerName(OtherPlayer, MemberName, sizeof(MemberName));
-						// Inform the leader that he has kicked the other player
-						format(Msg, 128, "You've kicked {0000FF}%s{00FF00} from the convoy", MemberName);
-						SendClientMessage(playerid, COLOR_GREEN, Msg);
-						// Inform the leader that he has kicked the other player
-						format(Msg, 128, "Leader {0000FF}%s{00FF00} kicked you from the convoy", LeaderName);
-						SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+					if (playerid != OtherPlayer) {
+						// Check if that other player is online
+						if (IsPlayerConnected(OtherPlayer)) {
+							// Check if that other player is part of the convoy
+							if ((APlayerData[OtherPlayer][InConvoy] == true) && (APlayerData[OtherPlayer][ConvoyID] == Convoy))
+							{
+							    // Kick the other player from the convoy
+								Convoy_Leave(OtherPlayer);
+								// Get the names of the leader and member
+								GetPlayerName(playerid, LeaderName, sizeof(LeaderName));
+								GetPlayerName(OtherPlayer, MemberName, sizeof(MemberName));
+								// Inform the leader that he has kicked the other player
+								format(Msg, 128, "You've kicked {0000FF}%s{00FF00} from the convoy", MemberName);
+								SendClientMessage(playerid, COLOR_GREEN, Msg);
+								// Inform the leader that he has kicked the other player
+								format(Msg, 128, "Leader {0000FF}%s{00FF00} kicked you from the convoy", LeaderName);
+								SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+							}
+							else
+							    SendClientMessage(playerid, COLOR_RED, "You cannot kick a player that's not part of your convoy");
+						}
+						else
+							SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_RED, "You cannot kick a player that's not part of your convoy");
+						SendClientMessage(playerid, COLOR_RED, "You can not kick yourself from convoy. Use /convoyleave instead.");
 				}
 			}
 			else
@@ -4137,29 +4150,33 @@ COMMAND:eject(playerid, params[])
 			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/eject <OtherPlayer>\"");
 			else
 			{
-			    // Check if the player is logged in
-				if (APlayerData[OtherPlayer][LoggedIn] == true)
-				{
-					// Check if the other player is driving a vehicle
-					if (GetPlayerVehicleSeat(OtherPlayer) != -1)
+				if (playerid != OtherPlayer) {
+				    // Check if the player is logged in
+					if (APlayerData[OtherPlayer][LoggedIn] == true)
 					{
-						// Get the names of the players
-						GetPlayerName(playerid, AdminName, sizeof(AdminName));
-						GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
-						// Eject the player from the vehicle
-						RemovePlayerFromVehicle(OtherPlayer);
-						// Let the player know he's been ejected from his vehicle
-						format(Msg, 128, "{FF0000}You've been ejected from your vehicle by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-						// Inform the admin that he ejected the player
-						format(Msg, 128, "{00FF00}You've ejected {FFFF00}%s{00FF00} from his vehicle", OtherPlayerName);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
+						// Check if the other player is driving a vehicle
+						if (GetPlayerVehicleSeat(OtherPlayer) != -1)
+						{
+							// Get the names of the players
+							GetPlayerName(playerid, AdminName, sizeof(AdminName));
+							GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
+							// Eject the player from the vehicle
+							RemovePlayerFromVehicle(OtherPlayer);
+							// Let the player know he's been ejected from his vehicle
+							format(Msg, 128, "{FF0000}You've been ejected from your vehicle by {FFFF00}%s", AdminName);
+							SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+							// Inform the admin that he ejected the player
+							format(Msg, 128, "{00FF00}You've ejected {FFFF00}%s{00FF00} from his vehicle", OtherPlayerName);
+							SendClientMessage(playerid, COLOR_WHITE, Msg);
+						}
+						else
+						    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't inside a vehicle");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't inside a vehicle");
+					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
+					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can not eject yourself from the vehicle");
 			}
 		}
 		else
