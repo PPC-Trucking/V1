@@ -5275,6 +5275,8 @@ COMMAND:announce(playerid, params[])
     				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 0-6 except 2");
 			}
 		}
+		else
+			return 0;
 	}
 	return 1;
 }
