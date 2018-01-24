@@ -3533,6 +3533,8 @@ COMMAND:createbusiness(playerid, params[])
 			else
 			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to create a business");
 		}
+		else
+			return 0;
 	}
 	else
 	    return 0;
