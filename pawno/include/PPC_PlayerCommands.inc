@@ -1190,55 +1190,6 @@ COMMAND:loc(playerid, params[])
 	return 1;
 }
 
-// Saves the location into a file
-COMMAND:saveloc(playerid, params[])
-{
-	new File:LocFile, LineForFile[255], LineMsg[255];
-	new Float:x, Float:y, Float:z, LocName[255], ID;
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/saveloc", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "is[255]", ID, LocName)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/saveloc <ID> <LocationName>\"");
-			else
-			{
-				if (!fexist("ServerData/Locations.txt"))
-				{
-				    LocFile = fopen("ServerData/Locations.txt", io_write); // Create the file
-					fclose(LocFile); // Close the file
-				}
-
-				// Get the player's position
-				GetPlayerPos(playerid, x, y, z);
-				// Combine all the data in a proper structure, so it can be used directly for setting up the ALocations array
-			    format(LineForFile, sizeof(LineForFile), "\t{\"%s\", %4.2f, %4.2f, %4.2f}, // ID = %i", LocName, x, y, z, ID);
-
-				LocFile = fopen("ServerData/Locations.txt", io_append); // Open the locationfile for appending data to it
-				fwrite(LocFile, LineForFile); // Append the data to the end of the file
-				fwrite(LocFile, "\r\n"); // Start a new line, or all the data is saved in one line
-				fclose(LocFile); // Close the file
-
-				// Let the player know what data has been saved
-				format(LineMsg, 255, "Data has been saved: %s", LineForFile);
-				SendClientMessage(playerid, COLOR_GRAY, LineMsg);
-			}
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
 // Lets the player choose where he wants to respawn (costs $200)
 COMMAND:gobase(playerid, params[])
 {

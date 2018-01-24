@@ -1062,7 +1062,6 @@ new ACommands[][TCommands] =
 	{5, "/createobject <ObjectModel> <x> <y> <z> <Angle>",                    "Create an object"},
 	{5, "/createpickup <PickupModel> <x> <y> <z> <PickupType>",               "Create a pickup"},
 	{5, "/resetplayer <OtherPlayer> <Money (0/1)> <Score (0/1)> <Stats (0/1)> <Reason>",	"Reset a player's money, score, stats"},
-	{5, "/saveloc <ID> <LocationName>",                                 "Saves your location to a file"},
 	{5, "/setlevel <OtherPlayer> <AdminLevel>",                         "Changes a player's admin-level"}
 };
 
