@@ -1313,9 +1313,13 @@ COMMAND:setwanted(playerid, params[])
 			else
 				if (IsPlayerConnected(OtherPlayer)) // If the player is a valid playerid (he's connected)
 				{
-					SetPlayerWantedLevel(OtherPlayer, Stars);
-
-					SendClientMessage(OtherPlayer, COLOR_GREEN, "An admin set your wanted level");
+					if ((Stars >= 0) && (Stars <= 6))
+					{
+						SetPlayerWantedLevel(OtherPlayer, Stars);
+						SendClientMessage(OtherPlayer, COLOR_BLUE, "Your wanted level has been set by an admin");
+					}
+					else
+						SendClientMessage(playerid, COLOR_RED, "Invalid wanted level, you can only use 0-6");
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
