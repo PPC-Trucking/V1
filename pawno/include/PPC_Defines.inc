@@ -1066,8 +1066,7 @@ new ACommands[][TCommands] =
 	{5, "/resetplayer <OtherPlayer> <Money (0/1)> <Score (0/1)> <Stats (0/1)> <Reason>",	"Reset a player's money, score, stats"},
 	{5, "/restart",                                   					"Restarts the server in 2 minutes"},
 	{5, "/saveloc <ID> <LocationName>",                                 "Saves your location to a file"},
-	{5, "/setlevel <OtherPlayer> <AdminLevel>",                         "Changes a player's admin-level"},
-	{5, "/vehicle <VehicleModel> <x> <y> <z> <Angle> <SpawnDelay>",     "Create a vehicle"}
+	{5, "/setlevel <OtherPlayer> <AdminLevel>",                         "Changes a player's admin-level"}
 };
 
 
