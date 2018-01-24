@@ -2149,7 +2149,7 @@ COMMAND:setlevel(playerid, params[])
 				{
 					// Check if the level is in the range
 					if(Level < 0 || Level > 5)
-						return SendClientMessage(playerid, COLOR_RED, "The level its out of range");
+						return SendClientMessage(playerid, COLOR_RED, "The level its out of range (0-5)");
 				    // Get the old level of the other player
 				    OldLevel = APlayerData[OtherPlayer][PlayerLevel];
 					// Get the playername of the admin
