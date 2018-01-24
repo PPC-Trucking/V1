@@ -258,8 +258,6 @@ new TotalCameras;
 // A variable that holds the total amount of businesses loaded
 new TotalBusiness;
 
-// Will hold the remaining time (in minutes) for a server-restart
-new RestartTime;
 
 // This variable holds the number of the last TimedMessage that was sent to all players
 new LastTimedMessage;
@@ -986,7 +984,6 @@ new ACommands[][TCommands] =
 	{0, "/gohome",                                   					"Teleport to a house you own"},
 	{0, "/help",                                   						"Get help information about a specific topic"},
 	{0, "/housemenu",                                   				"Displays the menu for controlling your house"},
-	{0, "/kill",                                   						"Kill yourself"},
 	{0, "/me <action>",													"Just a silly command to repeat your text"},
 	{0, "/overload",                                   					"Lets a trucker to overload his vehicle"},
 	{0, "/paint <paintjobid (0-2)>",                                   	"Apply a paintjob to a vehicle you own"},
@@ -1043,13 +1040,10 @@ new ACommands[][TCommands] =
 	{3, "/healall",                                   					"Heals all the players"},
 	{3, "/ipban <PlayerToBan> <Reason>",                   				"Ban a player's IP"},
 	{3, "/loc",                                   						"Display your current location"},
-	{3, "/plate <NumberPlate>",                                   		"Changes the plate on your vehicle"},
 	{3, "/rangeban <PlayerToBan> <Reason>",                   			"Ban a player's entire IP-range"},
 	{3, "/repairall",                                   				"Repair all vehicles for free"},
 	{3, "/setscore <OtherPlayer> <Score>",                              "Sets another player's score to the given value"},
 	{3, "/unban <PlayerToUnban>",                                   	"Unban a player"},
-	{4, "/cash <amount>",                                   			"Give cash to yourself"},
-	{4, "/score <amount>",                                   			"Give scorepoints to yourself"},
 	{4, "/setskin <OtherPlayer> <skin-id (0-299)>",                     "Changes a player's skin-id"},
 	{4, "/weather",                                   					"Changes the weather"},
 	{5, "/clamp <vehicleid> <reason>",                                  "Delete a player-owned vehicle"},
@@ -1064,10 +1058,7 @@ new ACommands[][TCommands] =
 	{5, "/createobject <ObjectModel> <x> <y> <z> <Angle>",                    "Create an object"},
 	{5, "/createpickup <PickupModel> <x> <y> <z> <PickupType>",               "Create a pickup"},
 	{5, "/resetplayer <OtherPlayer> <Money (0/1)> <Score (0/1)> <Stats (0/1)> <Reason>",	"Reset a player's money, score, stats"},
-	{5, "/restart",                                   					"Restarts the server in 2 minutes"},
-	{5, "/saveloc <ID> <LocationName>",                                 "Saves your location to a file"},
-	{5, "/setlevel <OtherPlayer> <AdminLevel>",                         "Changes a player's admin-level"},
-	{5, "/vehicle <VehicleModel> <x> <y> <z> <Angle> <SpawnDelay>",     "Create a vehicle"}
+	{5, "/setlevel <OtherPlayer> <AdminLevel>",                         "Changes a player's admin-level"}
 };
 
 

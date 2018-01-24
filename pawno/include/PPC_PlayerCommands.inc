@@ -673,80 +673,6 @@ COMMAND:gohome(playerid, params[])
 	return 1;
 }
 
-
-
-// Gives the player the cash he requests
-COMMAND:cash(playerid, params[])
-{
-	new Amount, Msg[128];
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/cash", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 4
-		if (APlayerData[playerid][PlayerLevel] >= 4)
-		{
-			if (sscanf(params, "i", Amount)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/cash <amount>\"");
-			else
-			{
-				// Check if the player gave himself too much at once
-				if (Amount > 10000000)
-				{
-				    // Inform the player and quit the command
-					SendClientMessage(playerid, COLOR_RED, "You cannot give yourself more than 10M at once");
-					return 1;
-				}
-
-				// Reward the player (give cash and points)
-				RewardPlayer(playerid, Amount, 0);
-				format(Msg, 128, "You have earned $%i", Amount);
-				SendClientMessage(playerid, COLOR_GREEN, Msg);
-			}
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	return 1;
-}
-
-// Gives the player the cash he requests
-COMMAND:score(playerid, params[])
-{
-	new Amount, Msg[128];
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/score", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 4
-		if (APlayerData[playerid][PlayerLevel] >= 4)
-		{
-			if (sscanf(params, "i", Amount)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/score <amount>\"");
-			else
-			{
-				// Reward the player (give cash and points)
-				RewardPlayer(playerid, 0, Amount);
-				format(Msg, 128, "You have earned %i scorepoints", Amount);
-				SendClientMessage(playerid, COLOR_GREEN, Msg);
-			}
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	return 1;
-}
-
 // Detaches the trailer from the vehicle
 COMMAND:detach(playerid, params[])
 {
@@ -882,41 +808,6 @@ COMMAND:healall(playerid, params[])
 		}
 		else
 		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
-
-
-// Kills the player
-COMMAND:kill(playerid, params[])
-{
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/kill", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player has a wanted level of less than 3
-		if (GetPlayerWantedLevel(playerid) < 3)
-		{
-			// Check if the player isn't in jail
-			if (APlayerData[playerid][PlayerJailed] == 0)
-			{
-			    // Force the player back into class-selection
-				ForceClassSelection(playerid);
-				// Kill the player (required after ForceClassSelection)
-				SetPlayerHealth(playerid, 0.0);
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /kill when you're in jail");
-		}
-		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /kill when you're wanted");
 	}
 	else
 	    return 0;
@@ -1179,55 +1070,6 @@ COMMAND:loc(playerid, params[])
 		    format(Message, sizeof(Message), "Location: X=%4.2f, Y=%4.2f, Z=%4.2f, rotation=%4.2f, interior=%i, world=%i", x, y, z, rot, Interior, World);
 		    // Send the message with the coordinates and the angle of the player
 			SendClientMessage(playerid, COLOR_RED, Message);
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
-// Saves the location into a file
-COMMAND:saveloc(playerid, params[])
-{
-	new File:LocFile, LineForFile[255], LineMsg[255];
-	new Float:x, Float:y, Float:z, LocName[255], ID;
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/saveloc", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "is[255]", ID, LocName)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/saveloc <ID> <LocationName>\"");
-			else
-			{
-				if (!fexist("ServerData/Locations.txt"))
-				{
-				    LocFile = fopen("ServerData/Locations.txt", io_write); // Create the file
-					fclose(LocFile); // Close the file
-				}
-
-				// Get the player's position
-				GetPlayerPos(playerid, x, y, z);
-				// Combine all the data in a proper structure, so it can be used directly for setting up the ALocations array
-			    format(LineForFile, sizeof(LineForFile), "\t{\"%s\", %4.2f, %4.2f, %4.2f}, // ID = %i", LocName, x, y, z, ID);
-
-				LocFile = fopen("ServerData/Locations.txt", io_append); // Open the locationfile for appending data to it
-				fwrite(LocFile, LineForFile); // Append the data to the end of the file
-				fwrite(LocFile, "\r\n"); // Start a new line, or all the data is saved in one line
-				fclose(LocFile); // Close the file
-
-				// Let the player know what data has been saved
-				format(LineMsg, 255, "Data has been saved: %s", LineForFile);
-				SendClientMessage(playerid, COLOR_GRAY, LineMsg);
-			}
 		}
 		else
 		    return 0;
@@ -1834,41 +1676,6 @@ COMMAND:createpickup(playerid, params[])
 	return 1;
 }
 
-// Spawns the vehicle at the location given by the player
-COMMAND:vehicle(playerid, params[])
-{
-    // Setup local variables
-	new VehicleModel, vID, Msg[128], Float:x, Float:y, Float:z, Float:Angle, SpawnDelay;
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/vehicle", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "iffffi", VehicleModel, x, y, z, Angle, SpawnDelay)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/vehicle <VehicleModel> <x> <y> <z> <Angle> <SpawnDelay>\"");
-			else
-			{
-				// Spawn the vehicle at the location specified by the player (also set max-fuel and save the model for the vehicle)
-				vID = Vehicle_Create(VehicleModel, x, y, z, Angle, random(126), random(126), SpawnDelay);
-				// Inform the player about it
-				format(Msg, 128, "You spawned vehicle-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", vID, VehicleModel, x, y, z);
-				SendClientMessage(playerid, COLOR_GREEN, Msg);
-			}
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
 {
@@ -2431,55 +2238,6 @@ COMMAND:engine(playerid, params[])
 	return 1;
 }
 
-// Sets your numberplate
-COMMAND:plate(playerid, params[])
-{
-    // Setup local variables
-	new vehicleid, engine, lights, alarm, doors, bonnet, boot, objective, Plate[32];
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/plate", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			// Get the player's vehicle
-			vehicleid = GetPlayerVehicleID(playerid);
-
-			if (vehicleid != 0)
-			{
-				if (sscanf(params, "s[32]", Plate)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/plate <NumberPlate>\"");
-				else
-				{
-					// Set the numberplate
-					SetVehicleNumberPlate(vehicleid, Plate);
-					// Remove the player from the vehicle
-					RemovePlayerFromVehicle(playerid);
-					// Respawn the vehicle
-					SetVehicleToRespawn(vehicleid);
-					// Put the player back in the vehicle
-					PutPlayerInVehicle(playerid, vehicleid, 0);
-					// Turn on the engine and lights the current status of the vehicle
-					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(vehicleid, 1, 1, alarm, doors, bonnet, boot, objective);
-				}
-			}
-			else
-				SendClientMessage(playerid, COLOR_GREEN, "You must be inside a vehicle to change your numberplate");
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
 // Asks which vehicle parameter you wanna toggle
 COMMAND:caroption(playerid, params[])
 {
@@ -2868,96 +2626,6 @@ COMMAND:stats(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
-// Restarts the server
-COMMAND:restart(playerid, params[])
-{
-	// Setup local variables
-	new Msg[128];
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/restart", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "i", RestartTime)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/restart <RestartTime (minutes)>\"");
-			else
-			{
-				// Let everyone know that the server will be restarted in "RestartTime" minutes (provided by the admin)
-			    format(Msg, 128, "Server restart in %i minutes!", RestartTime);
-				GameTextForAll(Msg, 5000, 3);
-				SendClientMessageToAll(COLOR_SILVERCHALICE, Msg);
-				// Start the next timer which warns the players again every minute
-				SetTimer("Timer_Restart", 1000 * 60, true);
-			}
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
-forward Timer_Restart();
-public Timer_Restart()
-{
-	// Setup local variables
-	new Msg[128];
-
-	// Decrease the RestartTime by one minute
-	RestartTime--;
-
-	// Let everyone know that the server will be restarted in 2 minutes
-    format(Msg, 128, "Server restart in %i minutes!", RestartTime);
-	GameTextForAll(Msg, 5000, 3);
-	SendClientMessageToAll(COLOR_SILVERCHALICE, Msg);
-
-	// Do different things based on the remaining time
-	switch (RestartTime)
-	{
-		case 1: // One minute left
-		{
-			// Change the hostname of the server and change the server password to something weird
-			SendRconCommand("hostname Pending Restart");
-			SendRconCommand("password loafkagakggoagka");
-		}
-		case 0:
-		{
-			// Let everyone know that the server is kicking all players before restarting
-			GameTextForAll("Server restarting:Kicking all players!", 5000, 3);
-			// Kick all players
-			for(new i; i < MAX_PLAYERS; i++)
-				Kick(i);
-
-			// Start the next timer that will restart the server
-			SetTimer("Timer_Restart_Reboot", 1000 * 5, false);
-		}
-	}
-}
-
-forward Timer_Restart_Reboot();
-public Timer_Restart_Reboot()
-{
-	new HostCommand[128];
-
-	// Restart the server
-	SendRconCommand("gmx");
-	// Change the hostname and password again
-	format(HostCommand, 128, "hostname %s", GameModeName);
-	SendRconCommand(HostCommand);
-	SendRconCommand("password 0");
-
-	return 1;
-}
-
-
 
 // This command allows you to create a speedcamera
 COMMAND:createcamera(playerid, params[])
