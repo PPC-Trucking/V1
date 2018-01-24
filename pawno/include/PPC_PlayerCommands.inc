@@ -5303,6 +5303,8 @@ COMMAND:fuelall(playerid, params[])
 			// Let all players know about it
 			SendClientMessageToAll(COLOR_GREEN, "All vehicles have been refueled");
 		}
+		else
+			return 0;
 	}
 	// Let the server know that this was a valid command
 	return 1;
