@@ -6,12 +6,6 @@
 
 
 // ********************************************************************************************************************
-// Set default gamemode name
-// ********************************************************************************************************************
-
-#define GameModeName				"PowerPC603's Trucking Server"
-
-// ********************************************************************************************************************
 // Limit the amount of cops with a value greater than 0
 // Setting this to "3" would mean:
 // - having 3 normal players (non-cop players) before the first cop can join the server
@@ -77,7 +71,7 @@ main()
 {
 	// Print some standard lines to the server's console
 	print("\n----------------------------------");
-	print(GameModeName);
+	print("Gamemode loading...");
 	print("----------------------------------\n");
 }
 
@@ -86,12 +80,6 @@ main()
 // This callback gets called when the server initializes the gamemode
 public OnGameModeInit()
 {
-	new HostCommand[128];
-	// Change the hostname
-	format(HostCommand, sizeof(HostCommand), "hostname %s", GameModeName);
-	SendRconCommand(HostCommand);
-	SetGameModeText(GameModeName); // Set the Mode of the gamemode, which appears in the list of servers
-
 	GameModeInit_VehiclesPickups(); // Add all static vehicles and pickups when the server starts that are required (also load the houses)
 	GameModeInit_Classes(); // Add character models to the class-selection (without weapons)
 
