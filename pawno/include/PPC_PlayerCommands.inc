@@ -4136,7 +4136,7 @@ COMMAND:createspike(playerid, params[])
 COMMAND:eject(playerid, params[])
 {
 	// Setup local variables
-	new DriverName[24], AdminName[24], Msg[128], OtherPlayer, OtherPlayerName[24];
+	new DriverName[24], Msg[128], OtherPlayer, OtherPlayerName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/eject", params);
@@ -4144,46 +4144,11 @@ COMMAND:eject(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		// Check if the player's admin-level is at least 2
-		if (APlayerData[playerid][PlayerLevel] >= 2)
-		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/eject <OtherPlayer>\"");
-			else
-			{
-				if (playerid != OtherPlayer) {
-				    // Check if the player is logged in
-					if (APlayerData[OtherPlayer][LoggedIn] == true)
-					{
-						// Check if the other player is driving a vehicle
-						if (GetPlayerVehicleSeat(OtherPlayer) != -1)
-						{
-							// Get the names of the players
-							GetPlayerName(playerid, AdminName, sizeof(AdminName));
-							GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
-							// Eject the player from the vehicle
-							RemovePlayerFromVehicle(OtherPlayer);
-							// Let the player know he's been ejected from his vehicle
-							format(Msg, 128, "{FF0000}You've been ejected from your vehicle by {FFFF00}%s", AdminName);
-							SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-							// Inform the admin that he ejected the player
-							format(Msg, 128, "{00FF00}You've ejected {FFFF00}%s{00FF00} from his vehicle", OtherPlayerName);
-							SendClientMessage(playerid, COLOR_WHITE, Msg);
-						}
-						else
-						    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't inside a vehicle");
-					}
-					else
-					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
-				}
-				else
-					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can not eject yourself from the vehicle");
-			}
-		}
+		if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/eject <OtherPlayer>\"");
 		else
 		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/eject <OtherPlayer>\"");
-			else
-			{
+			// Check if the player trys to eject himself
+			if (playerid == OtherPlayer) {
 			    // Check if the player is logged in
 				if (APlayerData[OtherPlayer][LoggedIn] == true)
 				{
@@ -4213,6 +4178,8 @@ COMMAND:eject(playerid, params[])
 				else
 				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
 			}
+			else
+				SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can not eject yourself from the vehicle");
 		}
 	}
 	else
