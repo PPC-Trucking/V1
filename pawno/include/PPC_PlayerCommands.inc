@@ -715,38 +715,6 @@ COMMAND:cash(playerid, params[])
 	return 1;
 }
 
-// Gives the player the cash he requests
-COMMAND:score(playerid, params[])
-{
-	new Amount, Msg[128];
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/score", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 4
-		if (APlayerData[playerid][PlayerLevel] >= 4)
-		{
-			if (sscanf(params, "i", Amount)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/score <amount>\"");
-			else
-			{
-				// Reward the player (give cash and points)
-				RewardPlayer(playerid, 0, Amount);
-				format(Msg, 128, "You have earned %i scorepoints", Amount);
-				SendClientMessage(playerid, COLOR_GREEN, Msg);
-			}
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	return 1;
-}
-
 // Detaches the trailer from the vehicle
 COMMAND:detach(playerid, params[])
 {
