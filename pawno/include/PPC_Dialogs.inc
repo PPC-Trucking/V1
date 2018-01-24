@@ -154,7 +154,7 @@ Dialog_Rescue(playerid, response, listitem)
 	}
 
 	SpawnPlayer(playerid); // Force the player to spawn at the requested coordinates
-	SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerRescued); // Send the player a message that using "/rescue" costs $200
+	SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerRescued); // Send the player a message that using "/gobase" costs $200
 	// Reduce the player's money by 200
 	RewardPlayer(playerid, -200, 0);
 

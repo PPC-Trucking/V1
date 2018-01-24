@@ -1179,7 +1179,7 @@ new AHelpText[][THelpItem] =
 	{HelpIDPoliceClass, " "},
 	{HelpIDPoliceClass, "Any player with a wanted level appears as a red dot on your radar."},
 	{HelpIDPoliceClass, "You need to pursue the player and try to stop him, so you can fine him."},
-	{HelpIDPoliceClass, "If you want to stop a player in his vehicle you can use /spike on foot to stop them."},
+	{HelpIDPoliceClass, "If you want to stop a player in his vehicle you can use /createspike on foot to stop them."},
 	{HelpIDPoliceClass, "When you get close to the wanted player, you can use the LCTRL button on your keyboard to warn them."},
 	{HelpIDPoliceClass, "The wanted player will be informed that he's being chased by cops and that he needs to pull over."},
 	{HelpIDPoliceClass, " "},

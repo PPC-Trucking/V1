@@ -339,7 +339,7 @@ Roadworker_EndJob(playerid)
 
 
 
-// This function creates a random vehicle, spawns it and damages it and protects it from the /cleanupcars command, so admins cannot
+// This function creates a random vehicle, spawns it and damages it and protects it from the /cleanupallvehicles command, so admins cannot
 // bug missions by cleaning up the world from spawned cars
 CreateBrokenVehicle(Float:x, Float:y, Float:z)
 {
@@ -350,7 +350,7 @@ CreateBrokenVehicle(Float:x, Float:y, Float:z)
 
 	// Create the vehicle (choose a random vehicle from the array BrokenVids)
     vid = CreateVehicle(BrokenVids[random(sizeof(BrokenVids))], x, y, z, random(360), random(126), random(126), 3600);
-	// Also set the data to prevent /cleanupcars deleting this vehicle
+	// Also set the data to prevent /cleanupallvehicles deleting this vehicle
 	AVehicleData[vid][Owned] = true;
 	// Create an arrow above the vehicle to point to it (objective) and lock the doors so nobody can steal it
 	GetVehicleParamsEx(vid, paramsengine, paramslights, paramsalarm, paramsdoors, paramsbonnet, paramsboot, paramsobjective);
