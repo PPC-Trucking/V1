@@ -146,6 +146,8 @@ COMMAND:createhouse(playerid, params[])
 			else
 			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to create a house");
 		}
+		else
+			return 0;
 	}
 	else
 	    return 0;
@@ -3218,6 +3220,8 @@ COMMAND:createbusiness(playerid, params[])
 			else
 			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to create a business");
 		}
+		else
+			return 0;
 	}
 	else
 	    return 0;
@@ -5035,6 +5039,8 @@ COMMAND:announce(playerid, params[])
     				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 0-6 except 2");
 			}
 		}
+		else
+			return 0;
 	}
 	return 1;
 }
@@ -5063,6 +5069,8 @@ COMMAND:fuelall(playerid, params[])
 			// Let all players know about it
 			SendClientMessageToAll(COLOR_GREEN, "All vehicles have been refueled");
 		}
+		else
+			return 0;
 	}
 	// Let the server know that this was a valid command
 	return 1;
