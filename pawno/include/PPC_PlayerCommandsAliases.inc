@@ -25,5 +25,4 @@ COMMAND:rescue(playerid, params[]) return cmd_gobase(playerid, params); // Alias
 COMMAND:respawn(playerid, params[]) return cmd_respawnvehicle(playerid, params); // Alias for /respawnvehicle
 COMMAND:say(playerid, params[]) return cmd_radio(playerid, params); // Alias for /say
 COMMAND:spike(playerid, params[]) return cmd_createspike(playerid, params); // Alias for /createspike
-COMMAND:vehicle(playerid, params[]) return cmd_createvehicle(playerid, params); // Alias for /vehicle
 COMMAND:wanted(playerid, params[]) return cmd_setwanted(playerid, params); // Alias for /setwanted
