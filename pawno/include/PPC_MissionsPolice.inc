@@ -385,7 +385,7 @@ public CheckSpikeStrip(StripIndex)
 			if (APlayerData[playerid][LoggedIn] == true)
 			{
 				// Check if the player is the driver of a vehicle
-				if (GetPlayerVehicleSeat(playerid) == 0)
+				if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 				{
 					// Get the vehicleid
 					vid = GetPlayerVehicleID(playerid);

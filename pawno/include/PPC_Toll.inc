@@ -10,7 +10,7 @@ public Toll()
         if(APlayerData[playerid][LoggedIn] == false) continue;
 
 		// Check if the player is the driver of a vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Loop through all toll-gates
 			for (new TollGate; TollGate < MAX_TOLLGATES; TollGate++)

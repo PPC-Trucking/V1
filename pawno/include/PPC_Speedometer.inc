@@ -272,7 +272,7 @@ CheckPlayerSpeeding(playerid)
 		    if (ACameras[CamID][CamSpeed] != 0)
 		    {
 				// Check if the player is the driver of the vehicle
-				if (GetPlayerVehicleSeat(playerid) == 0)
+				if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 				{
 					// Check if the player's speed is greater than the speed allowed by this camera (no need to process a distance-check if not speeding)
 					if (APlayerData[playerid][PlayerSpeed] > ACameras[CamID][CamSpeed])
@@ -392,7 +392,7 @@ stock AntiHack(playerid)
 	if (APlayerData[playerid][PlayerLevel] < 1)
 	{
 		// Detect airbreak hack
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Check if the player is nearly standing still
 			if (APlayerData[playerid][PlayerSpeed] < 10)

@@ -52,7 +52,7 @@ Assistance_FixVehicle(playerid)
 				if (APlayerData[OtherPlayer][AssistanceNeeded] == true)
 				{
 					// Check if this player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(OtherPlayer) == 0)
+					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_DRIVER)
 					{
 					    // Get the location of the player
 					    GetPlayerPos(OtherPlayer, x, y, z);

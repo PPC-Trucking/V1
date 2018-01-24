@@ -14,7 +14,7 @@ COMMAND:porthouse(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /porthouse when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /porthouse when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128], HouseID;
@@ -53,7 +53,7 @@ COMMAND:portbus(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portbus when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portbus when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128], BusID;
@@ -94,7 +94,7 @@ COMMAND:properties(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /properties when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /properties when you're inside a vehicle");
 
 	// Setup local variables
 	new Name[24], DialogTitle[128];
@@ -214,7 +214,7 @@ COMMAND:propertyid(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /propertyid when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /propertyid when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -279,7 +279,7 @@ COMMAND:delproperty(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /delproperty when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /delproperty when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -348,7 +348,7 @@ COMMAND:evict(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerVehicleSeat(playerid) != -1) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /evict when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /evict when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];

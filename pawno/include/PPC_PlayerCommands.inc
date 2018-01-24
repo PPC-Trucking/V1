@@ -10,7 +10,7 @@ COMMAND:me(playerid,params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/me <action>\"");
+		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/me <Action>\"");
 		else
 		{
 		    // Check if the player isn't muted
@@ -43,7 +43,7 @@ COMMAND:pm(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "us[128]", OtherPlayer, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/pm <OtherPlayer> <Message>\"");
+		if (sscanf(params, "us[128]", OtherPlayer, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/pm <Player> <Message>\"");
 		else
 		{
 			if (OtherPlayer == playerid)
@@ -99,7 +99,7 @@ COMMAND:createhouse(playerid, params[])
 			// Check if the player isn't inside a vehicle
 			if (GetPlayerVehicleSeat(playerid) == -1)
 			{
-				if (sscanf(params, "ii", HPrice, MaxLevel)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createhouse <price> <maxlevel (1-10)>\"");
+				if (sscanf(params, "ii", HPrice, MaxLevel)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createhouse <Price> <Max Level (1-10)>\"");
 				else
 				{
 					// Check if the player entered a proper maxlevel
@@ -490,7 +490,7 @@ COMMAND:park(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is inside a vehicle (he must be the driver)
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Get the vehicle-id
 			vid = GetPlayerVehicleID(playerid);
@@ -703,7 +703,7 @@ COMMAND:flip(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (GetPlayerVehicleSeat(playerid) == 0) {
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
 			// Setup some local variables
 			new Float:x = 0.0, Float:y = 0.0, Float:z = 0.0;
 			// Check if the player is inside a vehicle
@@ -884,7 +884,7 @@ COMMAND:work(playerid, params[])
 					// A convoy-leader proceeds here, and also a normal player (no convoy-member)
 
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid trucking vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -913,7 +913,7 @@ COMMAND:work(playerid, params[])
 				case ClassBusDriver:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 						if (GetVehicleModel(GetPlayerVehicleID(playerid)) == VehicleCoach) // Check if the player is inside a valid busdriver vehicle
 							if (APlayerData[playerid][BusLicense] == 1) // Check if the player has acquired a busdriver license
 								ShowPlayerDialog(playerid, DialogBusJobMethod, DIALOG_STYLE_LIST, "Select method:", "Choose your own busroute\r\nAuto assigned busroute", "Select", "Cancel");
@@ -927,7 +927,7 @@ COMMAND:work(playerid, params[])
 				case ClassPilot:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid piloting vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -943,7 +943,7 @@ COMMAND:work(playerid, params[])
 				case ClassMafia:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid piloting vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -959,7 +959,7 @@ COMMAND:work(playerid, params[])
 				case ClassCourier:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid courier vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -975,7 +975,7 @@ COMMAND:work(playerid, params[])
 				case ClassRoadWorker:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid courier vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -1153,13 +1153,17 @@ COMMAND:setwanted(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if (APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setwanted <OtherPlayer> <Stars>\"");
+			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setwanted <Player> <Stars (0-6)>\"");
 			else
 				if (IsPlayerConnected(OtherPlayer)) // If the player is a valid playerid (he's connected)
 				{
-					SetPlayerWantedLevel(OtherPlayer, Stars);
-
-					SendClientMessage(OtherPlayer, COLOR_GREEN, "An admin set your wanted level");
+					if ((Stars >= 0) && (Stars <= 6))
+					{
+						SetPlayerWantedLevel(OtherPlayer, Stars);
+						SendClientMessage(OtherPlayer, COLOR_BLUE, "Your wanted level has been set by an admin");
+					}
+					else
+						SendClientMessage(playerid, COLOR_RED, "Invalid wanted level, you can only use 0-6");
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -1348,7 +1352,7 @@ COMMAND:jail(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/jail <PlayerToJail> <JailTime> <Reason>\"");
+			if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/jail <Player> <Duration (in Seconds)> <Reason>\"");
 			else
 				if (IsPlayerConnected(PlayerToJail)) // If the player is a valid playerid (he's connected)
 				{
@@ -1454,7 +1458,7 @@ COMMAND:kick(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "us[128]", PlayerToKick, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/kick <PlayerToKick> <Reason>\"");
+			if (sscanf(params, "us[128]", PlayerToKick, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/kick <Player> <Reason>\"");
 			else
 				if (IsPlayerConnected(PlayerToKick)) // If the player is a valid playerid (he's connected)
 				{
@@ -1497,7 +1501,7 @@ COMMAND:ban(playerid, params[])
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
 			if (sscanf(params, "uiis[128]", PlayerToBan, Days, Hours, Reason))
-				SendClientMessage(playerid, COLOR_RED, "Usage: \"/ban <PlayerToBan> <Days> <Hours> <Reason>\"");
+				SendClientMessage(playerid, COLOR_RED, "Usage: \"/ban <Player> <Days> <Hours> <Reason>\"");
 			else
 			{
 				if (IsPlayerConnected(PlayerToBan))
@@ -1621,7 +1625,7 @@ COMMAND:createobject(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createobject <ObjectModel> <x> <y> <z> <Angle>\"");
+			if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createobject <Object Model ID> <x> <y> <z> <Angle>\"");
 			else
 			{
 				// Spawn the object 5 units north of the player
@@ -1656,7 +1660,7 @@ COMMAND:createpickup(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createpickup <PickupModel> <x> <y> <z> <PickupType>\"");
+			if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createpickup <Pickup Model ID> <x> <y> <z> <Type>\"");
 			else
 			{
 				// Spawn the pickup
@@ -1779,7 +1783,7 @@ COMMAND:port(playerid, params[])
 				// Check if the player is not jailed
 				if (APlayerData[playerid][PlayerJailed] == 0)
 				{
-					if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/port <OtherPlayer>\"");
+					if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/port <Player>\"");
 					else
 					{
 						// Check if that other player is online
@@ -1831,35 +1835,39 @@ COMMAND:tele(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "uu", Player1, Player2)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/tele <PlayerToPort> <TargetPlayer>\"");
+			if (sscanf(params, "uu", Player1, Player2)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/tele <Player 1> <Player 2>\"");
 			else
 			{
-				// Check if player1 is online
-				if (APlayerData[Player1][LoggedIn] == true)
-				{
-					// Check if player2 is online
-					if (APlayerData[Player2][LoggedIn] == true)
+				if (Player1 != Player2) {
+					// Check if player1 is online
+					if (APlayerData[Player1][LoggedIn] == true)
 					{
-					    // Get the name of the admin and the second player
-					    GetPlayerName(playerid, AdminName, sizeof(AdminName));
-					    GetPlayerName(Player2, Name, sizeof(Name));
-						// Get the location of the second player
-						GetPlayerPos(Player2, x, y, z);
-						IntID = GetPlayerInterior(Player2);
-						WorldID = GetPlayerVirtualWorld(Player2);
-						// Port the first player to player2's location
-						SetPlayerVirtualWorld(Player1, WorldID);
-						SetPlayerInterior(Player1, IntID);
-						SetPlayerPos(Player1, x, y, z + 3.0);
-						// Let the first player know he's been ported
-						format(PortMsg, 128, "{00FF00}You have been ported to player {FFFF00}%s{00FF00} by {FFFF00}%s", Name, AdminName);
-						SendClientMessage(Player1, COLOR_WHITE, PortMsg);
+						// Check if player2 is online
+						if (APlayerData[Player2][LoggedIn] == true)
+						{
+						    // Get the name of the admin and the second player
+						    GetPlayerName(playerid, AdminName, sizeof(AdminName));
+						    GetPlayerName(Player2, Name, sizeof(Name));
+							// Get the location of the second player
+							GetPlayerPos(Player2, x, y, z);
+							IntID = GetPlayerInterior(Player2);
+							WorldID = GetPlayerVirtualWorld(Player2);
+							// Port the first player to player2's location
+							SetPlayerVirtualWorld(Player1, WorldID);
+							SetPlayerInterior(Player1, IntID);
+							SetPlayerPos(Player1, x, y, z + 3.0);
+							// Let the first player know he's been ported
+							format(PortMsg, 128, "{00FF00}You have been ported to player {FFFF00}%s{00FF00} by {FFFF00}%s", Name, AdminName);
+							SendClientMessage(Player1, COLOR_WHITE, PortMsg);
+						}
+						else
+						    SendClientMessage(playerid, COLOR_RED, "Player 2 isn't online");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_RED, "Player2 isn't online");
+					    SendClientMessage(playerid, COLOR_RED, "Player 1 isn't online");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_RED, "Player1 isn't online");
+					SendClientMessage(playerid, COLOR_RED, "Players must be different");
 			}
 		}
 		else
@@ -1893,7 +1901,7 @@ COMMAND:portvehicle(playerid, params[])
 				// Check if the player is not jailed
 				if (APlayerData[playerid][PlayerJailed] == 0)
 				{
-					if (sscanf(params, "i", Car)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/portvehicle <CarID>\"");
+					if (sscanf(params, "i", Car)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/portvehicle <Vehicle ID>\"");
 					else
 					{
 						//check if the car exists
@@ -1942,7 +1950,7 @@ COMMAND:setlevel(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "ui", OtherPlayer, Level)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setlevel <OtherPlayer> <AdminLevel>\"");
+			if (sscanf(params, "ui", OtherPlayer, Level)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setlevel <Player> <AdminLevel>\"");
 			else
 			{
 				// Check if that other player is online
@@ -1950,7 +1958,7 @@ COMMAND:setlevel(playerid, params[])
 				{
 					// Check if the level is in the range
 					if(Level < 0 || Level > 5)
-						return SendClientMessage(playerid, COLOR_RED, "The level its out of range");
+						return SendClientMessage(playerid, COLOR_RED, "The level its out of range (0-5)");
 				    // Get the old level of the other player
 				    OldLevel = APlayerData[OtherPlayer][PlayerLevel];
 					// Get the playername of the admin
@@ -2053,7 +2061,7 @@ COMMAND:fly(playerid, params[])
 COMMAND:paint(playerid, params[])
 {
     // Setup local variables
-	new paintjobid, vid;
+	new PaintjobID, vid;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/paint", params);
@@ -2062,13 +2070,13 @@ COMMAND:paint(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of the vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
-			if (sscanf(params, "i", paintjobid)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/paint <paintjobid (0-2)>\"");
+			if (sscanf(params, "i", PaintjobID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/paint <Paintjob ID (0-2)>\"");
 			else
 			{
-			    // Check if the player entered a correct paintjob-id
-			    if ((paintjobid >= 0) && (paintjobid <= 2))
+			    // Check if the player entered a correct paintjob id
+			    if ((PaintjobID >= 0) && (PaintjobID <= 2))
 				{
 					// Get the vehicle-id
 					vid = GetPlayerVehicleID(playerid);
@@ -2076,9 +2084,9 @@ COMMAND:paint(playerid, params[])
 					if (AVehicleData[vid][Owned] == true)
 					{
 						// Change the paintjob of the player's vehicle
-						ChangeVehiclePaintjob(vid, paintjobid);
+						ChangeVehiclePaintjob(vid, PaintjobID);
 						// Also save the paintjob for the vehicle
-						AVehicleData[vid][PaintJob] = paintjobid + 1;
+						AVehicleData[vid][PaintJob] = PaintjobID + 1;
 
 						// Also set the vehiclecolor to 1 (white), so the paintjob has it's full color
 						ChangeVehicleColor(vid, 1, 1);
@@ -2097,7 +2105,7 @@ COMMAND:paint(playerid, params[])
 					    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_RED, "You need to enter a paintjob-id from 0 to 2");
+				    SendClientMessage(playerid, COLOR_RED, "You need to enter a paintjob id from 0 to 2");
 			}
 		}
 		else
@@ -2123,7 +2131,7 @@ COMMAND:color1(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of the vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Check if the player is the owner of the vehicle
 			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
@@ -2164,7 +2172,7 @@ COMMAND:color2(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of the vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Check if the player is the owner of the vehicle
 			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
@@ -2432,26 +2440,35 @@ COMMAND:convoykick(playerid, params[])
 			// Check if this player is the leader of the convoy
 			if (LeaderID == playerid)
 			{
-				if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/convoykick <OtherPlayerID>\"");
+				if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/convoykick <Player>\"");
 				else
 				{
-					// Check if that other player is part of the convoy
-					if ((APlayerData[OtherPlayer][InConvoy] == true) && (APlayerData[OtherPlayer][ConvoyID] == Convoy))
-					{
-					    // Kick the other player from the convoy
-						Convoy_Leave(OtherPlayer);
-						// Get the names of the leader and member
-						GetPlayerName(playerid, LeaderName, sizeof(LeaderName));
-						GetPlayerName(OtherPlayer, MemberName, sizeof(MemberName));
-						// Inform the leader that he has kicked the other player
-						format(Msg, 128, "You've kicked {0000FF}%s{00FF00} from the convoy", MemberName);
-						SendClientMessage(playerid, COLOR_GREEN, Msg);
-						// Inform the leader that he has kicked the other player
-						format(Msg, 128, "Leader {0000FF}%s{00FF00} kicked you from the convoy", LeaderName);
-						SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+					if (playerid != OtherPlayer) {
+						// Check if that other player is online
+						if (IsPlayerConnected(OtherPlayer)) {
+							// Check if that other player is part of the convoy
+							if ((APlayerData[OtherPlayer][InConvoy] == true) && (APlayerData[OtherPlayer][ConvoyID] == Convoy))
+							{
+							    // Kick the other player from the convoy
+								Convoy_Leave(OtherPlayer);
+								// Get the names of the leader and member
+								GetPlayerName(playerid, LeaderName, sizeof(LeaderName));
+								GetPlayerName(OtherPlayer, MemberName, sizeof(MemberName));
+								// Inform the leader that he has kicked the other player
+								format(Msg, 128, "You've kicked {0000FF}%s{00FF00} from the convoy", MemberName);
+								SendClientMessage(playerid, COLOR_GREEN, Msg);
+								// Inform the leader that he has kicked the other player
+								format(Msg, 128, "Leader {0000FF}%s{00FF00} kicked you from the convoy", LeaderName);
+								SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+							}
+							else
+							    SendClientMessage(playerid, COLOR_RED, "You cannot kick a player that's not part of your convoy");
+						}
+						else
+							SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_RED, "You cannot kick a player that's not part of your convoy");
+						SendClientMessage(playerid, COLOR_RED, "You can not kick yourself from convoy. Use /convoyleave instead.");
 				}
 			}
 			else
@@ -2642,7 +2659,7 @@ COMMAND:createcamera(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "i", MaxSpeed)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createcamera <max_speed>\"");
+			if (sscanf(params, "i", MaxSpeed)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createcamera <Max Speed>\"");
 			else
 			{
 				// Get player's position and facing angle
@@ -2785,7 +2802,7 @@ COMMAND:get(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/get <OtherPlayer>\"");
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/get <Player>\"");
 			else
 			{
 				// Check if that other player is online
@@ -2897,7 +2914,7 @@ COMMAND:cleanupvehicle(playerid, params[])
 		// Check if the player's admin-level is at least 3
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
-			if (sscanf(params, "i", vID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/cleanupvehicle <VehicleID>\"");
+			if (sscanf(params, "i", vID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/cleanupvehicle <Vehicle ID>\"");
 			else
 			{
 				// Check if this vehicle exists (check the model), otherwise all empty slots are processed as well
@@ -2993,7 +3010,7 @@ COMMAND:assist(playerid, params[])
 		else // No assistance is online
 		{
 			// Check if the player is the driver of a vehicle
-			if (GetPlayerVehicleSeat(playerid) == 0)
+			if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 			{
 				// Fully repair the vehicle (damage value and bodywork)
 				RepairVehicle(GetPlayerVehicleID(playerid));
@@ -3027,7 +3044,7 @@ COMMAND:nos(playerid, params[])
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
 			// Check if the player is the driver of a vehicle
-			if (GetPlayerVehicleSeat(playerid) == 0)
+			if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 			{
 				// Check if the vehicle isn't owned (owned vehicle's need to buy nitro at mod garages)
 				if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false)
@@ -3062,7 +3079,7 @@ COMMAND:spec(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/spec <OtherPlayer>\"");
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/spec <Player>\"");
 			else
 			{
 				if (OtherPlayer == playerid) {
@@ -3461,7 +3478,7 @@ COMMAND:mute(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "us[128]", OtherPlayer, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/mute <OtherPlayer> <Reason>\"");
+			if (sscanf(params, "us[128]", OtherPlayer, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/mute <Player> <Reason>\"");
 			else
 			{
 				// Check if the otherplayer is online
@@ -3516,7 +3533,7 @@ COMMAND:unmute(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/unmute <OtherPlayer>\"");
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/unmute <Player>\"");
 			else
 			{
 				// Check if the otherplayer is online
@@ -3618,7 +3635,7 @@ COMMAND:freeze(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "uis[128]", OtherPlayer, Duration, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/freeze <OtherPlayer> <Duration> <Reason>\"");
+			if (sscanf(params, "uis[128]", OtherPlayer, Duration, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/freeze <Player> <Duration (in Seconds)> <Reason>\"");
 			else
 			{
 				// Check if the otherplayer is online
@@ -3654,6 +3671,60 @@ COMMAND:freeze(playerid, params[])
 	return 1;
 }
 
+// Unfreeze a player (he can move again)
+COMMAND:unfreeze(playerid, params[])
+{
+	// Setup local variables
+	new Msg[128], Name[24], AdminName[24], OtherPlayer;
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/unfreeze", params);
+
+	// Check if the player has logged in
+	if (APlayerData[playerid][LoggedIn] == true)
+	{
+		// Check if the player's admin-level is at least 1
+		if (APlayerData[playerid][PlayerLevel] >= 1)
+		{
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/unfreeze <Player>\"");
+			else
+			{
+				// Check if the otherplayer is online
+				if (IsPlayerConnected(OtherPlayer))
+				{
+					// Check if the player is frozen
+					if (APlayerData[playerid][PlayerFrozen] >= 1) {
+						// Just set the frozen timer to zero
+						// the freeze timer will do the rest
+						APlayerData[playerid][PlayerFrozen] = 0;
+
+						// Get the player names
+						GetPlayerName(playerid, AdminName, sizeof(AdminName));
+						GetPlayerName(OtherPlayer, Name, sizeof(Name));
+						// Let the other player know that he has been un-frozen
+						format(Msg, 128, "{FF0000}You have been un-frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+						// Let the admin know who he has un-frozen
+						format(Msg, 128, "{00FF00}You have un-frozen {FFFF00}%s", Name);
+						SendClientMessage(playerid, COLOR_WHITE, Msg);
+					}
+					else
+						SendClientMessage(playerid, COLOR_RED, "That player has not been frozen");
+				}
+				else
+				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+			}
+		}
+		else
+		    return 0;
+	}
+	else
+	    return 0;
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
 // Transfer money to another player
 COMMAND:givecash(playerid, params[])
 {
@@ -3666,7 +3737,7 @@ COMMAND:givecash(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "ui", OtherPlayer, Money)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/givecash <OtherPlayer> <Money>\"");
+		if (sscanf(params, "ui", OtherPlayer, Money)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/givecash <Player> <Money>\"");
 		else
 		{
 			if (OtherPlayer == playerid)
@@ -3795,7 +3866,7 @@ COMMAND:createspike(playerid, params[])
 COMMAND:eject(playerid, params[])
 {
 	// Setup local variables
-	new DriverName[24], AdminName[24], Msg[128], OtherPlayer, OtherPlayerName[24];
+	new DriverName[24], Msg[128], OtherPlayer, OtherPlayerName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/eject", params);
@@ -3803,42 +3874,11 @@ COMMAND:eject(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		// Check if the player's admin-level is at least 2
-		if (APlayerData[playerid][PlayerLevel] >= 2)
-		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/eject <OtherPlayer>\"");
-			else
-			{
-			    // Check if the player is logged in
-				if (APlayerData[OtherPlayer][LoggedIn] == true)
-				{
-					// Check if the other player is driving a vehicle
-					if (GetPlayerVehicleSeat(OtherPlayer) != -1)
-					{
-						// Get the names of the players
-						GetPlayerName(playerid, AdminName, sizeof(AdminName));
-						GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
-						// Eject the player from the vehicle
-						RemovePlayerFromVehicle(OtherPlayer);
-						// Let the player know he's been ejected from his vehicle
-						format(Msg, 128, "{FF0000}You've been ejected from your vehicle by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-						// Inform the admin that he ejected the player
-						format(Msg, 128, "{00FF00}You've ejected {FFFF00}%s{00FF00} from his vehicle", OtherPlayerName);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
-					}
-					else
-					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't inside a vehicle");
-				}
-				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
-			}
-		}
+		if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/eject <Player>\"");
 		else
 		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/eject <OtherPlayer>\"");
-			else
-			{
+			// Check if the player trys to eject himself
+			if (playerid == OtherPlayer) {
 			    // Check if the player is logged in
 				if (APlayerData[OtherPlayer][LoggedIn] == true)
 				{
@@ -3868,6 +3908,8 @@ COMMAND:eject(playerid, params[])
 				else
 				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
 			}
+			else
+				SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can not eject yourself from the vehicle");
 		}
 	}
 	else
@@ -3878,13 +3920,13 @@ COMMAND:eject(playerid, params[])
 }
 
 // This command lets you talk only to players of the same class
-COMMAND:say(playerid, params[])
+COMMAND:radio(playerid, params[])
 {
 	// Setup local variables
 	new Name[24], Msg[128], Message[128], ClassName[24];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/say", params);
+	SendAdminText(playerid, "/radio", params);
 
 	// Get the player's name
 	GetPlayerName(playerid, Name, sizeof(Name));
@@ -3909,7 +3951,7 @@ COMMAND:say(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/say <Your Message>\"");
+		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/radio <Message>\"");
 		else
 		{
 			// Loop through all players
@@ -3936,13 +3978,13 @@ COMMAND:say(playerid, params[])
 }
 
 // This command lets you talk only to admin players
-COMMAND:asay(playerid, params[])
+COMMAND:achat(playerid, params[])
 {
 	// Setup local variables
 	new Name[24], Msg[128], Message[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/asay", params);
+	SendAdminText(playerid, "/achat", params);
 
 	// Get the player's name
 	GetPlayerName(playerid, Name, sizeof(Name));
@@ -3953,7 +3995,7 @@ COMMAND:asay(playerid, params[])
 		// Check if the player is an admin
 		if (APlayerData[playerid][PlayerLevel] > 0)
 		{
-			if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/asay <Your Message>\"");
+			if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/achat <Message>\"");
 			else
 			{
 				// Loop through all players
@@ -3997,7 +4039,7 @@ COMMAND:clamp(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "is[128]", vid, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/clamp <vehicleid> <reason>\"");
+			if (sscanf(params, "is[128]", vid, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/clamp <Vehicle ID> <Reason>\"");
 			else
 			{
 			    // Get the HouseID to which this vehicle belongs
@@ -4172,7 +4214,7 @@ COMMAND:report(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "us[128]", OtherPlayer, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/report <OtherPlayer> <Your report>\"");
+		if (sscanf(params, "us[128]", OtherPlayer, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/report <Player> <Message>\"");
 		else
 		{
 			if (OtherPlayer == playerid)
@@ -4345,7 +4387,7 @@ COMMAND:resetplayer(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "uiiis[128]", OtherPlayer, ClearMoney, ClearScore, ClearStats, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/resetplayer <OtherPlayer> <Money (0/1)> <Score (0/1)> <Stats (0/1)> <Reason>\"");
+			if (sscanf(params, "uiiis[128]", OtherPlayer, ClearMoney, ClearScore, ClearStats, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/resetplayer <Player> <Money (0/1)> <Score (0/1)> <Stats (0/1)> <Reason>\"");
 			else
 			{
 			    // Check if the other player is logged in
@@ -4436,7 +4478,7 @@ COMMAND:fixplayer(playerid, params[])
 		// Check if the player's admin-level is at least 5
 		if (APlayerData[playerid][PlayerLevel] >= 5)
 		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/fixplayer <OtherPlayer>\"");
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/fixplayer <Player>\"");
 			else
 			{
 			    // Check if the other player is logged in
@@ -4515,7 +4557,7 @@ COMMAND:setskin(playerid, params[])
 		// Check if the player's admin-level is at least 4
 		if (APlayerData[playerid][PlayerLevel] >= 4)
 		{
-			if (sscanf(params, "ui", OtherPlayer, Skin)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setskin <OtherPlayer> <skin-id (0-299)>\"");
+			if (sscanf(params, "ui", OtherPlayer, Skin)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setskin <Player> <Skin ID (0-299)>\"");
 			else
 			{
 				// Check if the otherplayer is online
@@ -4572,7 +4614,7 @@ COMMAND:ipban(playerid, params[])
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
 			if (sscanf(params, "us[128]", PlayerToBan, Reason))
-				SendClientMessage(playerid, COLOR_RED, "Usage: \"/ipban <PlayerToBan> <Reason>\"");
+				SendClientMessage(playerid, COLOR_RED, "Usage: \"/ipban <Player> <Reason>\"");
 			else
 			{
 				if (IsPlayerConnected(PlayerToBan))
@@ -4623,7 +4665,7 @@ COMMAND:rangeban(playerid, params[])
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
 			if (sscanf(params, "us[128]", PlayerToBan, Reason))
-				SendClientMessage(playerid, COLOR_RED, "Usage: \"/rangeban <PlayerToBan> <Reason>\"");
+				SendClientMessage(playerid, COLOR_RED, "Usage: \"/rangeban <Player> <Reason>\"");
 			else
 			{
 				if (IsPlayerConnected(PlayerToBan))
@@ -4684,7 +4726,7 @@ COMMAND:setscore(playerid, params[])
 		// Check if the player's admin-level is at least 3
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
-			if (sscanf(params, "ui", OtherPlayer, pScore)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setscore <OtherPlayer> <Score>\"");
+			if (sscanf(params, "ui", OtherPlayer, pScore)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setscore <Player> <Amount>\"");
 			else
 			{
 				// Check if the otherplayer is online
@@ -4701,6 +4743,56 @@ COMMAND:setscore(playerid, params[])
 					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 					// Let the player know he has set the score of the other player
 					format(Msg, 128, "{00FF00}You've set the score of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pScore);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					// Save the other player's account
+					PlayerFile_Save(OtherPlayer);
+				}
+				else
+				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+			}
+		}
+		else
+		    return 0;
+	}
+	else
+	    return 0;
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
+// Sets the money of another player
+COMMAND:setcash(playerid, params[])
+{
+	// Setup local variables
+	new Msg[128], Name[24], OtherName[24], OtherPlayer, pMoney;
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/setcash", params);
+
+	// Check if the player has logged in
+	if (APlayerData[playerid][LoggedIn] == true)
+	{
+		// Check if the player's admin-level is at least 3
+		if (APlayerData[playerid][PlayerLevel] >= 3)
+		{
+			if (sscanf(params, "ui", OtherPlayer, pMoney)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setcash <Player> <Amount>\"");
+			else
+			{
+				// Check if the otherplayer is online
+				if (IsPlayerConnected(OtherPlayer))
+				{
+					// Get the player-names
+					GetPlayerName(playerid, Name, sizeof(Name));
+					GetPlayerName(OtherPlayer, OtherName, sizeof(OtherName));
+
+					// Set the other player's money
+					APlayerData[OtherPlayer][PlayerMoney] = pMoney;
+					// Let the other player know that his money has been changed
+					format(Msg, 128, "{00FF00}Your cash has been set to {FFFF00}%i{00FF00} by {FFFF00}%s", pMoney, Name);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					// Let the player know he has set the money of the other player
+					format(Msg, 128, "{00FF00}You've set the cash of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pMoney);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 					// Save the other player's account
 					PlayerFile_Save(OtherPlayer);
@@ -4815,7 +4907,7 @@ COMMAND:neon(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of a vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			format(DialogTitle, sizeof(DialogTitle), "Select neon lights:");
 
@@ -4877,7 +4969,7 @@ COMMAND:givelicense(playerid,params[])
 		// Check if the player's admin-level is at least 3
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
-			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/givelicense <OtherPlayer>\"");
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/givelicense <Player>\"");
 			else
 			{
 			    // Check if the other player is logged in

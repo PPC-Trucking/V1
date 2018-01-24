@@ -311,7 +311,7 @@ Trucker_StartRandomJob(playerid)
 Trucker_SetRandomJob(playerid)
 {
 	// If the player is the driver of the vehicle (GetPlayerVehicleSeat returns -1 if the player is not in a vehicle)
-	if (GetPlayerVehicleSeat(playerid) == 0)
+	if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		// Check the vehicle-model of the player to decide which job the player can get
 		switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
