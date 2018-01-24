@@ -1040,7 +1040,6 @@ new ACommands[][TCommands] =
 	{3, "/healall",                                   					"Heals all the players"},
 	{3, "/ipban <PlayerToBan> <Reason>",                   				"Ban a player's IP"},
 	{3, "/loc",                                   						"Display your current location"},
-	{3, "/plate <NumberPlate>",                                   		"Changes the plate on your vehicle"},
 	{3, "/rangeban <PlayerToBan> <Reason>",                   			"Ban a player's entire IP-range"},
 	{3, "/repairall",                                   				"Repair all vehicles for free"},
 	{3, "/setscore <OtherPlayer> <Score>",                              "Sets another player's score to the given value"},

@@ -2238,55 +2238,6 @@ COMMAND:engine(playerid, params[])
 	return 1;
 }
 
-// Sets your numberplate
-COMMAND:plate(playerid, params[])
-{
-    // Setup local variables
-	new vehicleid, engine, lights, alarm, doors, bonnet, boot, objective, Plate[32];
-
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/plate", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			// Get the player's vehicle
-			vehicleid = GetPlayerVehicleID(playerid);
-
-			if (vehicleid != 0)
-			{
-				if (sscanf(params, "s[32]", Plate)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/plate <NumberPlate>\"");
-				else
-				{
-					// Set the numberplate
-					SetVehicleNumberPlate(vehicleid, Plate);
-					// Remove the player from the vehicle
-					RemovePlayerFromVehicle(playerid);
-					// Respawn the vehicle
-					SetVehicleToRespawn(vehicleid);
-					// Put the player back in the vehicle
-					PutPlayerInVehicle(playerid, vehicleid, 0);
-					// Turn on the engine and lights the current status of the vehicle
-					GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
-					SetVehicleParamsEx(vehicleid, 1, 1, alarm, doors, bonnet, boot, objective);
-				}
-			}
-			else
-				SendClientMessage(playerid, COLOR_GREEN, "You must be inside a vehicle to change your numberplate");
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
 // Asks which vehicle parameter you wanna toggle
 COMMAND:caroption(playerid, params[])
 {
