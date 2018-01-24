@@ -984,7 +984,6 @@ new ACommands[][TCommands] =
 	{0, "/gohome",                                   					"Teleport to a house you own"},
 	{0, "/help",                                   						"Get help information about a specific topic"},
 	{0, "/housemenu",                                   				"Displays the menu for controlling your house"},
-	{0, "/kill",                                   						"Kill yourself"},
 	{0, "/me <action>",													"Just a silly command to repeat your text"},
 	{0, "/overload",                                   					"Lets a trucker to overload his vehicle"},
 	{0, "/paint <paintjobid (0-2)>",                                   	"Apply a paintjob to a vehicle you own"},

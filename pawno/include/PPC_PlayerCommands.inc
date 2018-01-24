@@ -890,41 +890,6 @@ COMMAND:healall(playerid, params[])
 	return 1;
 }
 
-
-
-// Kills the player
-COMMAND:kill(playerid, params[])
-{
-	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/kill", params);
-
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player has a wanted level of less than 3
-		if (GetPlayerWantedLevel(playerid) < 3)
-		{
-			// Check if the player isn't in jail
-			if (APlayerData[playerid][PlayerJailed] == 0)
-			{
-			    // Force the player back into class-selection
-				ForceClassSelection(playerid);
-				// Kill the player (required after ForceClassSelection)
-				SetPlayerHealth(playerid, 0.0);
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /kill when you're in jail");
-		}
-		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /kill when you're wanted");
-	}
-	else
-	    return 0;
-
-	// Let the server know that this was a valid command
-	return 1;
-}
-
 // Lets the player choose another class
 COMMAND:reclass(playerid, params[])
 {
