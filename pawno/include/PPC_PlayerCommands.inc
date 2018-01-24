@@ -2824,7 +2824,7 @@ COMMAND:stats(playerid, params[])
 		if(sscanf(params, "U(-1)", StatsPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/stats <StatsPlayer (optional)>\"");
 		else
 		{
-			if (INVALID_PLAYER_ID == StatsPlayer)
+			if (-1 == StatsPlayer)
 				StatsPlayer = playerid;
 
 			// Check if stats player is online
