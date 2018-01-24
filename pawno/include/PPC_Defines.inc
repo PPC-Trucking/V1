@@ -990,7 +990,6 @@ new ACommands[][TCommands] =
 	{0, "/gohome",                                   					"Teleport to a house you own"},
 	{0, "/help",                                   						"Get help information about a specific topic"},
 	{0, "/housemenu",                                   				"Displays the menu for controlling your house"},
-	{0, "/kill",                                   						"Kill yourself"},
 	{0, "/me <Action>",													"Just a silly command to repeat your text"},
 	{0, "/overload",                                   					"Lets a trucker to overload his vehicle"},
 	{0, "/paint <Paintjob ID (0-2)>",                                   	"Apply a paintjob to a vehicle you own"},
@@ -1043,14 +1042,11 @@ new ACommands[][TCommands] =
 	{3, "/healall",                                   					"Heals all the players"},
 	{3, "/ipban <Player> <Reason>",                   				"Ban a player's IP"},
 	{3, "/loc",                                   						"Display your current location"},
-	{3, "/plate <Text>",                                   		"Changes the plate on your vehicle"},
 	{3, "/rangeban <Player> <Reason>",                   			"Ban a player's entire IP-range"},
 	{3, "/repairall",                                   				"Repair all vehicles for free"},
 	{3, "/setscore <Player> <Amount>",                              "Sets another player's score to the given value"},
 	{3, "/setcash <Player> <Amount>",                              "Sets another player's money to the given value"},
 	{3, "/unban <PlayerToUnban>",                                   	"Unban a player"},
-	{4, "/cash <amount>",                                   			"Give cash to yourself"},
-	{4, "/score <amount>",                                   			"Give scorepoints to yourself"},
 	{4, "/setskin <Player> <Skin ID (0-299)>",                     "Changes a player's skin-id"},
 	{4, "/weather",                                   					"Changes the weather"},
 	{5, "/clamp <Vehicle ID> <Reason>",                                  "Delete a player-owned vehicle"},
@@ -1065,10 +1061,7 @@ new ACommands[][TCommands] =
 	{5, "/delobject <Object ID>",                                   		"Deletes an object"},
 	{5, "/fixplayer <Player>",										"Fix a player's property (re-add his houses and buinesses)"},
 	{5, "/resetplayer <Player> <Money (0/1)> <Score (0/1)> <Stats (0/1)> <Reason>",	"Reset a player's money, score, stats"},
-	{5, "/restart",                                   					"Restarts the server in 2 minutes"},
-	{5, "/saveloc <ID> <LocationName>",                                 "Saves your location to a file"},
-	{5, "/setlevel <Player> <Admin Level (0-5)>",                         "Changes a player's admin-level"},
-	{5, "/createvehicle <Model> <x> <y> <z> <Angle> <SpawnDelay>",     "Create a vehicle"}
+	{5, "/setlevel <Player> <Admin Level (0-5)>",                         "Changes a player's admin-level"}
 };
 
 
