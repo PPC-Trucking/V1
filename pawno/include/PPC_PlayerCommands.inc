@@ -4194,13 +4194,13 @@ COMMAND:eject(playerid, params[])
 }
 
 // This command lets you talk only to players of the same class
-COMMAND:say(playerid, params[])
+COMMAND:radio(playerid, params[])
 {
 	// Setup local variables
 	new Name[24], Msg[128], Message[128], ClassName[24];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/say", params);
+	SendAdminText(playerid, "/radio", params);
 
 	// Get the player's name
 	GetPlayerName(playerid, Name, sizeof(Name));
@@ -4225,7 +4225,7 @@ COMMAND:say(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/say <Your Message>\"");
+		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/radio <Your Message>\"");
 		else
 		{
 			// Loop through all players
@@ -4252,13 +4252,13 @@ COMMAND:say(playerid, params[])
 }
 
 // This command lets you talk only to admin players
-COMMAND:asay(playerid, params[])
+COMMAND:achat(playerid, params[])
 {
 	// Setup local variables
 	new Name[24], Msg[128], Message[128];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/asay", params);
+	SendAdminText(playerid, "/achat", params);
 
 	// Get the player's name
 	GetPlayerName(playerid, Name, sizeof(Name));
@@ -4269,7 +4269,7 @@ COMMAND:asay(playerid, params[])
 		// Check if the player is an admin
 		if (APlayerData[playerid][PlayerLevel] > 0)
 		{
-			if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/asay <Your Message>\"");
+			if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/achat <Your Message>\"");
 			else
 			{
 				// Loop through all players
