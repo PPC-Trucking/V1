@@ -258,6 +258,7 @@ new TotalCameras;
 // A variable that holds the total amount of businesses loaded
 new TotalBusiness;
 
+
 // This variable holds the number of the last TimedMessage that was sent to all players
 new LastTimedMessage;
 // This array holds all timed messages that will be sent every few minutes
