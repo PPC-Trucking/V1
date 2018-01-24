@@ -488,7 +488,7 @@ COMMAND:park(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is inside a vehicle (he must be the driver)
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Get the vehicle-id
 			vid = GetPlayerVehicleID(playerid);
@@ -775,7 +775,7 @@ COMMAND:flip(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (GetPlayerVehicleSeat(playerid) == 0) {
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
 			// Setup some local variables
 			new Float:x = 0.0, Float:y = 0.0, Float:z = 0.0;
 			// Check if the player is inside a vehicle
@@ -991,7 +991,7 @@ COMMAND:work(playerid, params[])
 					// A convoy-leader proceeds here, and also a normal player (no convoy-member)
 
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid trucking vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -1020,7 +1020,7 @@ COMMAND:work(playerid, params[])
 				case ClassBusDriver:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 						if (GetVehicleModel(GetPlayerVehicleID(playerid)) == VehicleCoach) // Check if the player is inside a valid busdriver vehicle
 							if (APlayerData[playerid][BusLicense] == 1) // Check if the player has acquired a busdriver license
 								ShowPlayerDialog(playerid, DialogBusJobMethod, DIALOG_STYLE_LIST, "Select method:", "Choose your own busroute\r\nAuto assigned busroute", "Select", "Cancel");
@@ -1034,7 +1034,7 @@ COMMAND:work(playerid, params[])
 				case ClassPilot:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid piloting vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -1050,7 +1050,7 @@ COMMAND:work(playerid, params[])
 				case ClassMafia:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid piloting vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -1066,7 +1066,7 @@ COMMAND:work(playerid, params[])
 				case ClassCourier:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid courier vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -1082,7 +1082,7 @@ COMMAND:work(playerid, params[])
 				case ClassRoadWorker:
 				{
 					// Check if the player is the driver of a vehicle
-					if (GetPlayerVehicleSeat(playerid) == 0)
+					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 					{
 						// Check if the player is inside a valid courier vehicle
 						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
@@ -2261,7 +2261,7 @@ COMMAND:paint(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of the vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			if (sscanf(params, "i", PaintjobID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/paint <Paintjob ID (0-2)>\"");
 			else
@@ -2322,7 +2322,7 @@ COMMAND:color1(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of the vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Check if the player is the owner of the vehicle
 			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
@@ -2363,7 +2363,7 @@ COMMAND:color2(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of the vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Check if the player is the owner of the vehicle
 			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
@@ -3340,7 +3340,7 @@ COMMAND:assist(playerid, params[])
 		else // No assistance is online
 		{
 			// Check if the player is the driver of a vehicle
-			if (GetPlayerVehicleSeat(playerid) == 0)
+			if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 			{
 				// Fully repair the vehicle (damage value and bodywork)
 				RepairVehicle(GetPlayerVehicleID(playerid));
@@ -3374,7 +3374,7 @@ COMMAND:nos(playerid, params[])
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
 			// Check if the player is the driver of a vehicle
-			if (GetPlayerVehicleSeat(playerid) == 0)
+			if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 			{
 				// Check if the vehicle isn't owned (owned vehicle's need to buy nitro at mod garages)
 				if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false)
@@ -5235,7 +5235,7 @@ COMMAND:neon(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Check if the player is the driver of a vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			format(DialogTitle, sizeof(DialogTitle), "Select neon lights:");
 

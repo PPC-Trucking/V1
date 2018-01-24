@@ -40,7 +40,7 @@ Roadworker_StartRandomJob(playerid)
 	new vid, trailerid;
 
 	// If the player is the driver of the vehicle (GetPlayerVehicleSeat returns -1 if the player is not in a vehicle)
-	if (GetPlayerVehicleSeat(playerid) == 0)
+	if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		// Get the vehicle-id
 		vid = GetPlayerVehicleID(playerid);

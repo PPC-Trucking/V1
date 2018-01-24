@@ -1184,7 +1184,7 @@ public OnPlayerExitVehicle(playerid, vehicleid)
 	new engine, lights, alarm, doors, bonnet, boot, objective;
 
 	// Check if the player is the driver of the vehicle
-	if (GetPlayerVehicleSeat(playerid) == 0)
+	if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 	{
 		// Turn off the lights and engine
 		GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
@@ -1393,7 +1393,7 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 	if ((newkeys & KEY_CROUCH) && !(oldkeys & KEY_CROUCH))
 	{
 		// Check if the player is driving a vehicle
-		if (GetPlayerVehicleSeat(playerid) == 0)
+		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 		{
 			// Loop through all ARefuelPickups
 			for (new i; i < sizeof(ARefuelPickups); i++)
