@@ -18,7 +18,7 @@ stock FixHouses()
 		if (AHouseData[HouseID][Owned] == true)
 		{
 			// Get the name of the owner
-			format(Name, 24, AHouseData[HouseID][Owner]);
+			format(Name, sizeof(Name), AHouseData[HouseID][Owner]);
 			// Construct the complete filename for this player's account
 			format(file, sizeof(file), PlayerFile, Name);
 
@@ -121,11 +121,11 @@ GameModeInit_VehiclesPickups()
 	SetTimer("Bank_IntrestTimer", 1000 * 60 * 60, true);
 
 	// Print the LastVehicleID to the server's console
-	format(LastVehicleMsg, 100, TXT_LastVehicleID, LastVehicleID);
-	format(LastObjectMsg, 100, TXT_LastObjectID, LastObjectID);
-	format(LastHouseMsg, 100, TXT_TotalHouses, TotalHouses);
-	format(LastBusinessMsg, 100, TXT_TotalBusiness, TotalBusiness);
-	format(LastCameraMsg, 100, TXT_TotalSpeedCameras, TotalCameras);
+	format(LastVehicleMsg, sizeof(LastVehicleMsg), TXT_LastVehicleID, LastVehicleID);
+	format(LastObjectMsg, sizeof(LastObjectMsg), TXT_LastObjectID, LastObjectID);
+	format(LastHouseMsg, sizeof(LastHouseMsg), TXT_TotalHouses, TotalHouses);
+	format(LastBusinessMsg, sizeof(LastBusinessMsg), TXT_TotalBusiness, TotalBusiness);
+	format(LastCameraMsg, sizeof(LastCameraMsg), TXT_TotalSpeedCameras, TotalCameras);
 	print(TXT_DebugInfo);
 	print("-------------------------------------");
 	print(LastVehicleMsg);

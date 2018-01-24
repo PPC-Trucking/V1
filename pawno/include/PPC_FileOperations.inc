@@ -8,43 +8,43 @@ PlayerFile_Create(playerid)
 
 	PFile = fopen(file, io_write); // Open the playerfile for writing
 
-	format(LineForFile, 100, "Password %s\r\n", APlayerData[playerid][PlayerPassword]); // Construct the line: "Password <playerpassword>"
+	format(LineForFile, sizeof(LineForFile), "Password %s\r\n", APlayerData[playerid][PlayerPassword]); // Construct the line: "Password <playerpassword>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Level %i\r\n", 0); // Construct the line: "Level <playerlevel>"
+	format(LineForFile, sizeof(LineForFile), "Level %i\r\n", 0); // Construct the line: "Level <playerlevel>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Jailed %i\r\n", 0); // Construct the line: "Jailed <playerjailed>"
+	format(LineForFile, sizeof(LineForFile), "Jailed %i\r\n", 0); // Construct the line: "Jailed <playerjailed>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Wanted %i\r\n", 0); // Construct the line: "Wanted <wantedlevel>"
+	format(LineForFile, sizeof(LineForFile), "Wanted %i\r\n", 0); // Construct the line: "Wanted <wantedlevel>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Bans %i\r\n", 0); // Construct the line: "Bans <NumberOfBans>"
+	format(LineForFile, sizeof(LineForFile), "Bans %i\r\n", 0); // Construct the line: "Bans <NumberOfBans>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BanTime %i\r\n", 0); // Construct the line: "BanTime <TimeToUnban>"
+	format(LineForFile, sizeof(LineForFile), "BanTime %i\r\n", 0); // Construct the line: "BanTime <TimeToUnban>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "TruckerLicense %i\r\n", 0); // Construct the line: "TruckerLicense <playertruckerlicense>"
+	format(LineForFile, sizeof(LineForFile), "TruckerLicense %i\r\n", 0); // Construct the line: "TruckerLicense <playertruckerlicense>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BusLicense %i\r\n", 0); // Construct the line: "BusLicense <playerbuslicense>"
+	format(LineForFile, sizeof(LineForFile), "BusLicense %i\r\n", 0); // Construct the line: "BusLicense <playerbuslicense>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsMetersDriven %f\r\n", 0.0); // Construct the line: "StatsMetersDriven <StatsMetersDriven>"
+	format(LineForFile, sizeof(LineForFile), "StatsMetersDriven %f\r\n", 0.0); // Construct the line: "StatsMetersDriven <StatsMetersDriven>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsTruckerJobs %i\r\n", 0); // Construct the line: "StatsTruckerJobs <StatsTruckerJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsTruckerJobs %i\r\n", 0); // Construct the line: "StatsTruckerJobs <StatsTruckerJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsConvoyJobs %i\r\n", 0); // Construct the line: "StatsConvoyJobs <StatsConvoyJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsConvoyJobs %i\r\n", 0); // Construct the line: "StatsConvoyJobs <StatsConvoyJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsBusDriverJobs %i\r\n", 0); // Construct the line: "StatsBusDriverJobs <StatsBusDriverJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsBusDriverJobs %i\r\n", 0); // Construct the line: "StatsBusDriverJobs <StatsBusDriverJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsPilotJobs %i\r\n", 0); // Construct the line: "StatsPilotJobs <StatsPilotJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsPilotJobs %i\r\n", 0); // Construct the line: "StatsPilotJobs <StatsPilotJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsMafiaJobs %i\r\n", 0); // Construct the line: "StatsMafiaJobs <StatsMafiaJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsMafiaJobs %i\r\n", 0); // Construct the line: "StatsMafiaJobs <StatsMafiaJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsMafiaStolen %i\r\n", 0); // Construct the line: "StatsMafiaStolen <StatsMafiaStolen>"
+	format(LineForFile, sizeof(LineForFile), "StatsMafiaStolen %i\r\n", 0); // Construct the line: "StatsMafiaStolen <StatsMafiaStolen>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsPoliceFined %i\r\n", 0); // Construct the line: "StatsPoliceFined <StatsPoliceFined>"
+	format(LineForFile, sizeof(LineForFile), "StatsPoliceFined %i\r\n", 0); // Construct the line: "StatsPoliceFined <StatsPoliceFined>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsPoliceJailed %i\r\n", 0); // Construct the line: "StatsPoliceJailed <StatsPoliceJailed>"
+	format(LineForFile, sizeof(LineForFile), "StatsPoliceJailed %i\r\n", 0); // Construct the line: "StatsPoliceJailed <StatsPoliceJailed>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Money %i\r\n", 0); // Construct the line: "Money <playermoney>"
+	format(LineForFile, sizeof(LineForFile), "Money %i\r\n", 0); // Construct the line: "Money <playermoney>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Score %i\r\n", 0); // Construct the line: "Score <playerscore>"
+	format(LineForFile, sizeof(LineForFile), "Score %i\r\n", 0); // Construct the line: "Score <playerscore>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
 	fclose(PFile); // Close the file
@@ -172,58 +172,58 @@ PlayerFile_Save(playerid)
 
 	PFile = fopen(file, io_write); // Open the playerfile for writing
 
-	format(LineForFile, 100, "Password %s\r\n", APlayerData[playerid][PlayerPassword]); // Construct the line: "Password <playerpassword>"
+	format(LineForFile, sizeof(LineForFile), "Password %s\r\n", APlayerData[playerid][PlayerPassword]); // Construct the line: "Password <playerpassword>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Level %i\r\n", APlayerData[playerid][PlayerLevel]); // Construct the line: "Level <playerlevel>"
+	format(LineForFile, sizeof(LineForFile), "Level %i\r\n", APlayerData[playerid][PlayerLevel]); // Construct the line: "Level <playerlevel>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Jailed %i\r\n", APlayerData[playerid][PlayerJailed]); // Construct the line: "Jailed <playerjailed>"
+	format(LineForFile, sizeof(LineForFile), "Jailed %i\r\n", APlayerData[playerid][PlayerJailed]); // Construct the line: "Jailed <playerjailed>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Wanted %i\r\n", GetPlayerWantedLevel(playerid)); // Construct the line: "Wanted <wantedlevel>"
+	format(LineForFile, sizeof(LineForFile), "Wanted %i\r\n", GetPlayerWantedLevel(playerid)); // Construct the line: "Wanted <wantedlevel>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Bans %i\r\n", APlayerData[playerid][Bans]); // Construct the line: "Bans <NumberOfBans>"
+	format(LineForFile, sizeof(LineForFile), "Bans %i\r\n", APlayerData[playerid][Bans]); // Construct the line: "Bans <NumberOfBans>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BanTime %i\r\n", APlayerData[playerid][BanTime]); // Construct the line: "BanTime <TimeToUnban>"
+	format(LineForFile, sizeof(LineForFile), "BanTime %i\r\n", APlayerData[playerid][BanTime]); // Construct the line: "BanTime <TimeToUnban>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "TruckerLicense %i\r\n", APlayerData[playerid][TruckerLicense]); // Construct the line: "TruckerLicense <playertruckerlicense>"
+	format(LineForFile, sizeof(LineForFile), "TruckerLicense %i\r\n", APlayerData[playerid][TruckerLicense]); // Construct the line: "TruckerLicense <playertruckerlicense>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BusLicense %i\r\n", APlayerData[playerid][BusLicense]); // Construct the line: "BusLicense <playerbuslicense>"
+	format(LineForFile, sizeof(LineForFile), "BusLicense %i\r\n", APlayerData[playerid][BusLicense]); // Construct the line: "BusLicense <playerbuslicense>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
 	if (APlayerData[playerid][Muted] == true) // Check if the player is muted
-		format(LineForFile, 100, "Muted Yes\r\n"); // Construct the line: "Muted <Yes>"
+		format(LineForFile, sizeof(LineForFile), "Muted Yes\r\n"); // Construct the line: "Muted <Yes>"
 	else
-		format(LineForFile, 100, "Muted No\r\n"); // Construct the line: "Muted <No>"
+		format(LineForFile, sizeof(LineForFile), "Muted No\r\n"); // Construct the line: "Muted <No>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
 	if (APlayerData[playerid][RulesRead] == true) // Check if the player has accepted the rules
-		format(LineForFile, 100, "RulesRead Yes\r\n"); // Construct the line: "RulesRead <Yes>"
+		format(LineForFile, sizeof(LineForFile), "RulesRead Yes\r\n"); // Construct the line: "RulesRead <Yes>"
 	else
-		format(LineForFile, 100, "RulesRead No\r\n"); // Construct the line: "RulesRead <No>"
+		format(LineForFile, sizeof(LineForFile), "RulesRead No\r\n"); // Construct the line: "RulesRead <No>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "StatsMetersDriven %f\r\n", APlayerData[playerid][StatsMetersDriven]); // Construct the line: "StatsMetersDriven <StatsMetersDriven>"
+	format(LineForFile, sizeof(LineForFile), "StatsMetersDriven %f\r\n", APlayerData[playerid][StatsMetersDriven]); // Construct the line: "StatsMetersDriven <StatsMetersDriven>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsTruckerJobs %i\r\n", APlayerData[playerid][StatsTruckerJobs]); // Construct the line: "StatsTruckerJobs <StatsTruckerJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsTruckerJobs %i\r\n", APlayerData[playerid][StatsTruckerJobs]); // Construct the line: "StatsTruckerJobs <StatsTruckerJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsConvoyJobs %i\r\n", APlayerData[playerid][StatsConvoyJobs]); // Construct the line: "StatsConvoyJobs <StatsConvoyJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsConvoyJobs %i\r\n", APlayerData[playerid][StatsConvoyJobs]); // Construct the line: "StatsConvoyJobs <StatsConvoyJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsBusDriverJobs %i\r\n", APlayerData[playerid][StatsBusDriverJobs]); // Construct the line: "StatsBusDriverJobs <StatsBusDriverJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsBusDriverJobs %i\r\n", APlayerData[playerid][StatsBusDriverJobs]); // Construct the line: "StatsBusDriverJobs <StatsBusDriverJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsPilotJobs %i\r\n", APlayerData[playerid][StatsPilotJobs]); // Construct the line: "StatsPilotJobs <StatsPilotJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsPilotJobs %i\r\n", APlayerData[playerid][StatsPilotJobs]); // Construct the line: "StatsPilotJobs <StatsPilotJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsMafiaJobs %i\r\n", APlayerData[playerid][StatsMafiaJobs]); // Construct the line: "StatsMafiaJobs <StatsMafiaJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsMafiaJobs %i\r\n", APlayerData[playerid][StatsMafiaJobs]); // Construct the line: "StatsMafiaJobs <StatsMafiaJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsMafiaStolen %i\r\n", APlayerData[playerid][StatsMafiaStolen]); // Construct the line: "StatsMafiaStolen <StatsMafiaStolen>"
+	format(LineForFile, sizeof(LineForFile), "StatsMafiaStolen %i\r\n", APlayerData[playerid][StatsMafiaStolen]); // Construct the line: "StatsMafiaStolen <StatsMafiaStolen>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsPoliceFined %i\r\n", APlayerData[playerid][StatsPoliceFined]); // Construct the line: "StatsPoliceFined <StatsPoliceFined>"
+	format(LineForFile, sizeof(LineForFile), "StatsPoliceFined %i\r\n", APlayerData[playerid][StatsPoliceFined]); // Construct the line: "StatsPoliceFined <StatsPoliceFined>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsPoliceJailed %i\r\n", APlayerData[playerid][StatsPoliceJailed]); // Construct the line: "StatsPoliceJailed <StatsPoliceJailed>"
+	format(LineForFile, sizeof(LineForFile), "StatsPoliceJailed %i\r\n", APlayerData[playerid][StatsPoliceJailed]); // Construct the line: "StatsPoliceJailed <StatsPoliceJailed>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsAssistance %i\r\n", APlayerData[playerid][StatsAssistance]); // Construct the line: "StatsAssistance <StatsAssistance>"
+	format(LineForFile, sizeof(LineForFile), "StatsAssistance %i\r\n", APlayerData[playerid][StatsAssistance]); // Construct the line: "StatsAssistance <StatsAssistance>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsCourierJobs %i\r\n", APlayerData[playerid][StatsCourierJobs]); // Construct the line: "StatsCourierJobs <StatsCourierJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsCourierJobs %i\r\n", APlayerData[playerid][StatsCourierJobs]); // Construct the line: "StatsCourierJobs <StatsCourierJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "StatsRoadworkerJobs %i\r\n", APlayerData[playerid][StatsRoadworkerJobs]); // Construct the line: "StatsRoadworkerJobs <StatsRoadworkerJobs>"
+	format(LineForFile, sizeof(LineForFile), "StatsRoadworkerJobs %i\r\n", APlayerData[playerid][StatsRoadworkerJobs]); // Construct the line: "StatsRoadworkerJobs <StatsRoadworkerJobs>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
 	// Save all the valid house-id's
@@ -232,7 +232,7 @@ PlayerFile_Save(playerid)
 		// Check if there is a valid house-id in this slot
 		if (APlayerData[playerid][Houses][i] != 0)
 		{
-			format(LineForFile, 100, "House %i\r\n", APlayerData[playerid][Houses][i]); // Construct the line: "House <HouseID>"
+			format(LineForFile, sizeof(LineForFile), "House %i\r\n", APlayerData[playerid][Houses][i]); // Construct the line: "House <HouseID>"
 			fwrite(PFile, LineForFile); // And save it to the file
 		}
 	}
@@ -242,14 +242,14 @@ PlayerFile_Save(playerid)
 		// Check if there is a valid business-id in this slot
 		if (APlayerData[playerid][Business][i] != 0)
 		{
-			format(LineForFile, 100, "Business %i\r\n", APlayerData[playerid][Business][i]); // Construct the line: "Business <BusinessID>"
+			format(LineForFile, sizeof(LineForFile), "Business %i\r\n", APlayerData[playerid][Business][i]); // Construct the line: "Business <BusinessID>"
 			fwrite(PFile, LineForFile); // And save it to the file
 		}
 	}
 
-	format(LineForFile, 100, "Money %i\r\n", APlayerData[playerid][PlayerMoney]); // Construct the line: "Money <playermoney>"
+	format(LineForFile, sizeof(LineForFile), "Money %i\r\n", APlayerData[playerid][PlayerMoney]); // Construct the line: "Money <playermoney>"
 	fwrite(PFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Score %i\r\n", APlayerData[playerid][PlayerScore]); // Construct the line: "Score <playerscore>"
+	format(LineForFile, sizeof(LineForFile), "Score %i\r\n", APlayerData[playerid][PlayerScore]); // Construct the line: "Score <playerscore>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
 	fclose(PFile); // Close the file
@@ -491,46 +491,46 @@ HouseFile_Save(HouseID)
 
 	HFile = fopen(file, io_write); // Open the playerfile for writing
 
-	format(LineForFile, 100, "HouseName %s\r\n", AHouseData[HouseID][HouseName]); // Construct the line: "HouseName <HouseName>"
+	format(LineForFile, sizeof(LineForFile), "HouseName %s\r\n", AHouseData[HouseID][HouseName]); // Construct the line: "HouseName <HouseName>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "HouseX %f\r\n", AHouseData[HouseID][HouseX]); // Construct the line: "HouseX <HouseX>"
+	format(LineForFile, sizeof(LineForFile), "HouseX %f\r\n", AHouseData[HouseID][HouseX]); // Construct the line: "HouseX <HouseX>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "HouseY %f\r\n", AHouseData[HouseID][HouseY]); // Construct the line: "HouseY <HouseY>"
+	format(LineForFile, sizeof(LineForFile), "HouseY %f\r\n", AHouseData[HouseID][HouseY]); // Construct the line: "HouseY <HouseY>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "HouseZ %f\r\n", AHouseData[HouseID][HouseZ]); // Construct the line: "HouseZ <HouseZ>"
+	format(LineForFile, sizeof(LineForFile), "HouseZ %f\r\n", AHouseData[HouseID][HouseZ]); // Construct the line: "HouseZ <HouseZ>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "HouseLevel %i\r\n", AHouseData[HouseID][HouseLevel]); // Construct the line: "HouseLevel <HouseLevel>"
+	format(LineForFile, sizeof(LineForFile), "HouseLevel %i\r\n", AHouseData[HouseID][HouseLevel]); // Construct the line: "HouseLevel <HouseLevel>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "HouseMaxLevel %i\r\n", AHouseData[HouseID][HouseMaxLevel]); // Construct the line: "HouseMaxLevel <HouseMaxLevel>"
+	format(LineForFile, sizeof(LineForFile), "HouseMaxLevel %i\r\n", AHouseData[HouseID][HouseMaxLevel]); // Construct the line: "HouseMaxLevel <HouseMaxLevel>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "HousePrice %i\r\n", AHouseData[HouseID][HousePrice]); // Construct the line: "HousePrice <HousePrice>"
+	format(LineForFile, sizeof(LineForFile), "HousePrice %i\r\n", AHouseData[HouseID][HousePrice]); // Construct the line: "HousePrice <HousePrice>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
 	if (AHouseData[HouseID][Owned] == true) // Check if the house is owned
 	{
-		format(LineForFile, 100, "Owned Yes\r\n"); // Construct the line: "Owned Yes"
+		format(LineForFile, sizeof(LineForFile), "Owned Yes\r\n"); // Construct the line: "Owned Yes"
 		fwrite(HFile, LineForFile); // And save it to the file
 	}
 	else
 	{
-		format(LineForFile, 100, "Owned No\r\n"); // Construct the line: "Owned No"
+		format(LineForFile, sizeof(LineForFile), "Owned No\r\n"); // Construct the line: "Owned No"
 		fwrite(HFile, LineForFile); // And save it to the file
 	}
 
-	format(LineForFile, 100, "Owner %s\r\n", AHouseData[HouseID][Owner]); // Construct the line: "Owner <Owner>"
+	format(LineForFile, sizeof(LineForFile), "Owner %s\r\n", AHouseData[HouseID][Owner]); // Construct the line: "Owner <Owner>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
-	format(LineForFile, 100, "Insurance %i\r\n", AHouseData[HouseID][Insurance]); // Construct the line: "Insurance <Insurance>"
+	format(LineForFile, sizeof(LineForFile), "Insurance %i\r\n", AHouseData[HouseID][Insurance]); // Construct the line: "Insurance <Insurance>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
 	AHouseData[HouseID][AutoEvictDays] = AutoEvict[AEDays]; // Update the AutoEvictDays for this house when the player logs out
-	format(LineForFile, 100, "AutoEvictDays %i\r\n", AutoEvict[AEDays]); // Construct the line: "AutoEvictDays <AutoEvictDays>"
+	format(LineForFile, sizeof(LineForFile), "AutoEvictDays %i\r\n", AutoEvict[AEDays]); // Construct the line: "AutoEvictDays <AutoEvictDays>"
 	fwrite(HFile, LineForFile); // And save it to the file
 
 
@@ -544,69 +544,69 @@ HouseFile_Save(HouseID)
 			// Get the vehicle id
 			vid = AHouseData[HouseID][VehicleIDs][CarSlot];
 
-		    format(LineForFile, 100, "[Vehicle]\r\n"); // Construct the line: "[Vehicle]"
+		    format(LineForFile, sizeof(LineForFile), "[Vehicle]\r\n"); // Construct the line: "[Vehicle]"
 			fwrite(HFile, LineForFile); // And save it to the file
 
-		    format(LineForFile, 100, "VehicleModel %i\r\n", AVehicleData[vid][Model]); // Construct the line: "VehicleModel <VehicleModel>"
+		    format(LineForFile, sizeof(LineForFile), "VehicleModel %i\r\n", AVehicleData[vid][Model]); // Construct the line: "VehicleModel <VehicleModel>"
 			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "Fuel %i\r\n", AVehicleData[vid][Fuel]); // Construct the line: "Fuel <Fuel>"
+		    format(LineForFile, sizeof(LineForFile), "Fuel %i\r\n", AVehicleData[vid][Fuel]); // Construct the line: "Fuel <Fuel>"
 			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehiclePaintJob %i\r\n", AVehicleData[vid][PaintJob]); // Construct the line: "VehiclePaintJob <VehiclePaintJob>"
-			fwrite(HFile, LineForFile); // And save it to the file
-
-		    format(LineForFile, 100, "VehicleSpoiler %i\r\n", AVehicleData[vid][Components][0]); // Construct the line: "VehicleSpoiler <VehicleSpoiler>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleHood %i\r\n", AVehicleData[vid][Components][1]); // Construct the line: "VehicleHood <VehicleHood>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleRoof %i\r\n", AVehicleData[vid][Components][2]); // Construct the line: "VehicleRoof <VehicleRoof>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleSideSkirt %i\r\n", AVehicleData[vid][Components][3]); // Construct the line: "VehicleSideSkirt <VehicleSideSkirt>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleLamps %i\r\n", AVehicleData[vid][Components][4]); // Construct the line: "VehicleLamps <VehicleLamps>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleNitro %i\r\n", AVehicleData[vid][Components][5]); // Construct the line: "VehicleNitro <VehicleNitro>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleExhaust %i\r\n", AVehicleData[vid][Components][6]); // Construct the line: "VehicleSpoiler <VehicleSpoiler>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleWheels %i\r\n", AVehicleData[vid][Components][7]); // Construct the line: "VehicleWheels <VehicleWheels>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleStereo %i\r\n", AVehicleData[vid][Components][8]); // Construct the line: "VehicleStereo <VehicleStereo>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleHydraulics %i\r\n", AVehicleData[vid][Components][9]); // Construct the line: "VehicleHydraulics <VehicleHydraulics>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleFrontBumper %i\r\n", AVehicleData[vid][Components][10]); // Construct the line: "VehicleFrontBumper <VehicleFrontBumper>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleRearBumper %i\r\n", AVehicleData[vid][Components][11]); // Construct the line: "VehicleRearBumper <VehicleRearBumper>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleVentRight %i\r\n", AVehicleData[vid][Components][12]); // Construct the line: "VehicleVentRight <VehicleVentRight>"
-			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleVentLeft %i\r\n", AVehicleData[vid][Components][13]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
+		    format(LineForFile, sizeof(LineForFile), "VehiclePaintJob %i\r\n", AVehicleData[vid][PaintJob]); // Construct the line: "VehiclePaintJob <VehiclePaintJob>"
 			fwrite(HFile, LineForFile); // And save it to the file
 
-		    format(LineForFile, 100, "Color1 %i\r\n", AVehicleData[vid][Color1]); // Construct the line: "Color1 <Color1>"
+		    format(LineForFile, sizeof(LineForFile), "VehicleSpoiler %i\r\n", AVehicleData[vid][Components][0]); // Construct the line: "VehicleSpoiler <VehicleSpoiler>"
 			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "Color2 %i\r\n", AVehicleData[vid][Color2]); // Construct the line: "Color2 <Color2>"
+		    format(LineForFile, sizeof(LineForFile), "VehicleHood %i\r\n", AVehicleData[vid][Components][1]); // Construct the line: "VehicleHood <VehicleHood>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleRoof %i\r\n", AVehicleData[vid][Components][2]); // Construct the line: "VehicleRoof <VehicleRoof>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleSideSkirt %i\r\n", AVehicleData[vid][Components][3]); // Construct the line: "VehicleSideSkirt <VehicleSideSkirt>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleLamps %i\r\n", AVehicleData[vid][Components][4]); // Construct the line: "VehicleLamps <VehicleLamps>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleNitro %i\r\n", AVehicleData[vid][Components][5]); // Construct the line: "VehicleNitro <VehicleNitro>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleExhaust %i\r\n", AVehicleData[vid][Components][6]); // Construct the line: "VehicleSpoiler <VehicleSpoiler>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleWheels %i\r\n", AVehicleData[vid][Components][7]); // Construct the line: "VehicleWheels <VehicleWheels>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleStereo %i\r\n", AVehicleData[vid][Components][8]); // Construct the line: "VehicleStereo <VehicleStereo>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleHydraulics %i\r\n", AVehicleData[vid][Components][9]); // Construct the line: "VehicleHydraulics <VehicleHydraulics>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleFrontBumper %i\r\n", AVehicleData[vid][Components][10]); // Construct the line: "VehicleFrontBumper <VehicleFrontBumper>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleRearBumper %i\r\n", AVehicleData[vid][Components][11]); // Construct the line: "VehicleRearBumper <VehicleRearBumper>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleVentRight %i\r\n", AVehicleData[vid][Components][12]); // Construct the line: "VehicleVentRight <VehicleVentRight>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleVentLeft %i\r\n", AVehicleData[vid][Components][13]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
 			fwrite(HFile, LineForFile); // And save it to the file
 
-		    format(LineForFile, 100, "VehicleX %f\r\n", AVehicleData[vid][SpawnX]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
+		    format(LineForFile, sizeof(LineForFile), "Color1 %i\r\n", AVehicleData[vid][Color1]); // Construct the line: "Color1 <Color1>"
 			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleY %f\r\n", AVehicleData[vid][SpawnY]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
+		    format(LineForFile, sizeof(LineForFile), "Color2 %i\r\n", AVehicleData[vid][Color2]); // Construct the line: "Color2 <Color2>"
 			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleZ %f\r\n", AVehicleData[vid][SpawnZ]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
+
+		    format(LineForFile, sizeof(LineForFile), "VehicleX %f\r\n", AVehicleData[vid][SpawnX]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
 			fwrite(HFile, LineForFile); // And save it to the file
-		    format(LineForFile, 100, "VehicleAngle %f\r\n", AVehicleData[vid][SpawnRot]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
+		    format(LineForFile, sizeof(LineForFile), "VehicleY %f\r\n", AVehicleData[vid][SpawnY]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
 			fwrite(HFile, LineForFile); // And save it to the file
-			format(LineForFile, 100, "NeonsApplied %i\r\n", AVehicleData[vid][NeonObjectModel]); // Construct the line: "NeonsApplied <NeonsApplied>"
+		    format(LineForFile, sizeof(LineForFile), "VehicleZ %f\r\n", AVehicleData[vid][SpawnZ]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
+			fwrite(HFile, LineForFile); // And save it to the file
+		    format(LineForFile, sizeof(LineForFile), "VehicleAngle %f\r\n", AVehicleData[vid][SpawnRot]); // Construct the line: "VehicleVentLeft <VehicleVentLeft>"
+			fwrite(HFile, LineForFile); // And save it to the file
+			format(LineForFile, sizeof(LineForFile), "NeonsApplied %i\r\n", AVehicleData[vid][NeonObjectModel]); // Construct the line: "NeonsApplied <NeonsApplied>"
 			fwrite(HFile, LineForFile); // And save it to the file
 			
 			if (AVehicleData[vid][Clamped] == true)
-			    format(LineForFile, 100, "Clamped Yes\r\n"); // Construct the line: "Clamped <Yes>"
+			    format(LineForFile, sizeof(LineForFile), "Clamped Yes\r\n"); // Construct the line: "Clamped <Yes>"
 			else
-			    format(LineForFile, 100, "Clamped No\r\n"); // Construct the line: "Clamped <No>"
+			    format(LineForFile, sizeof(LineForFile), "Clamped No\r\n"); // Construct the line: "Clamped <No>"
 
 			fwrite(HFile, LineForFile); // And save it to the file
 
-		    format(LineForFile, 100, "[/Vehicle]\r\n"); // Construct the line: "[/Vehicle]"
+		    format(LineForFile, sizeof(LineForFile), "[/Vehicle]\r\n"); // Construct the line: "[/Vehicle]"
 			fwrite(HFile, LineForFile); // And save it to the file
 		}
 	}
@@ -752,7 +752,7 @@ BusinessTime_Save()
 
 	BFile = fopen("ServerData/Business/BusinessTime.ini", io_write); // Open the businesstime-file for writing
 
-	format(LineForFile, 100, "BusinessTime %i\r\n", BusinessTransactionTime); // Construct the line: "BusinessTime <BusinessTransactionTime>"
+	format(LineForFile, sizeof(LineForFile), "BusinessTime %i\r\n", BusinessTransactionTime); // Construct the line: "BusinessTime <BusinessTransactionTime>"
 	fwrite(BFile, LineForFile); // And save it to the file
 
 	fclose(BFile); // Close the file
@@ -834,37 +834,37 @@ BusinessFile_Save(BusID)
 
 	BFile = fopen(file, io_write); // Open the business-file for writing
 
-	format(LineForFile, 100, "BusinessName %s\r\n", ABusinessData[BusID][BusinessName]); // Construct the line: "BusinessName <BusinessName>"
+	format(LineForFile, sizeof(LineForFile), "BusinessName %s\r\n", ABusinessData[BusID][BusinessName]); // Construct the line: "BusinessName <BusinessName>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BusinessX %f\r\n", ABusinessData[BusID][BusinessX]); // Construct the line: "BusinessX <BusinessX>"
+	format(LineForFile, sizeof(LineForFile), "BusinessX %f\r\n", ABusinessData[BusID][BusinessX]); // Construct the line: "BusinessX <BusinessX>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BusinessY %f\r\n", ABusinessData[BusID][BusinessY]); // Construct the line: "BusinessY <BusinessY>"
+	format(LineForFile, sizeof(LineForFile), "BusinessY %f\r\n", ABusinessData[BusID][BusinessY]); // Construct the line: "BusinessY <BusinessY>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BusinessZ %f\r\n", ABusinessData[BusID][BusinessZ]); // Construct the line: "BusinessZ <BusinessZ>"
+	format(LineForFile, sizeof(LineForFile), "BusinessZ %f\r\n", ABusinessData[BusID][BusinessZ]); // Construct the line: "BusinessZ <BusinessZ>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BusinessType %i\r\n", ABusinessData[BusID][BusinessType]); // Construct the line: "BusinessType <BusinessType>"
+	format(LineForFile, sizeof(LineForFile), "BusinessType %i\r\n", ABusinessData[BusID][BusinessType]); // Construct the line: "BusinessType <BusinessType>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "BusinessLevel %i\r\n", ABusinessData[BusID][BusinessLevel]); // Construct the line: "BusinessLevel <BusinessLevel>"
+	format(LineForFile, sizeof(LineForFile), "BusinessLevel %i\r\n", ABusinessData[BusID][BusinessLevel]); // Construct the line: "BusinessLevel <BusinessLevel>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "LastTransaction %i\r\n", ABusinessData[BusID][LastTransaction]); // Construct the line: "LastTransaction <LastTransaction>"
+	format(LineForFile, sizeof(LineForFile), "LastTransaction %i\r\n", ABusinessData[BusID][LastTransaction]); // Construct the line: "LastTransaction <LastTransaction>"
 	fwrite(BFile, LineForFile); // And save it to the file
 
 	ABusinessData[BusID][AutoEvictDays] = AutoEvict[AEDays]; // Update the AutoEvictDays for this business when the player logs out
-	format(LineForFile, 100, "AutoEvictDays %i\r\n", AutoEvict[AEDays]); // Construct the line: "AutoEvictDays <AutoEvictDays>"
+	format(LineForFile, sizeof(LineForFile), "AutoEvictDays %i\r\n", AutoEvict[AEDays]); // Construct the line: "AutoEvictDays <AutoEvictDays>"
 	fwrite(BFile, LineForFile); // And save it to the file
 
 	if (ABusinessData[BusID][Owned] == true) // Check if the house is owned
 	{
-		format(LineForFile, 100, "Owned Yes\r\n"); // Construct the line: "Owned Yes"
+		format(LineForFile, sizeof(LineForFile), "Owned Yes\r\n"); // Construct the line: "Owned Yes"
 		fwrite(BFile, LineForFile); // And save it to the file
 	}
 	else
 	{
-		format(LineForFile, 100, "Owned No\r\n"); // Construct the line: "Owned No"
+		format(LineForFile, sizeof(LineForFile), "Owned No\r\n"); // Construct the line: "Owned No"
 		fwrite(BFile, LineForFile); // And save it to the file
 	}
 
-	format(LineForFile, 100, "Owner %s\r\n", ABusinessData[BusID][Owner]); // Construct the line: "Owner <Owner>"
+	format(LineForFile, sizeof(LineForFile), "Owner %s\r\n", ABusinessData[BusID][Owner]); // Construct the line: "Owner <Owner>"
 	fwrite(BFile, LineForFile); // And save it to the file
 
 	fclose(BFile); // Close the file
@@ -928,9 +928,9 @@ BankFile_Load(playerid)
 				// Add the money to your bank-account that was transferred by another player
 				APlayerData[playerid][BankMoney] = APlayerData[playerid][BankMoney] + TransferMoney;
 				// Inform the player that a player has transferred some money to your bank account
-				format(Msg, 128, "{00BBFF}Player {FFBB00}%s{00BBFF} has transferred {FFBB00}$%i{00BBFF}", TransferName, TransferMoney);
+				format(Msg, sizeof(Msg), "{00BBFF}Player {FFBB00}%s{00BBFF} has transferred {FFBB00}$%i{00BBFF}", TransferName, TransferMoney);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
-				format(Msg, 128, "{00BBFF}to your bank account on {FFBB00}%s", TransferTime);
+				format(Msg, sizeof(Msg), "{00BBFF}to your bank account on {FFBB00}%s", TransferTime);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 			}
 
@@ -966,7 +966,7 @@ BankFile_Load(playerid)
 					APlayerData[playerid][LastIntrestTime] = CurrentIntrestTime;
 
 					// Inform the player that he received intrest on his bank account and how much
-					format(Msg, 128, "{00BBFF}You've received {FFBB00}$%i{00BBFF} intrest on your bank account", NewBankMoney - OldBankMoney);
+					format(Msg, sizeof(Msg), "{00BBFF}You've received {FFBB00}$%i{00BBFF} intrest on your bank account", NewBankMoney - OldBankMoney);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
@@ -998,11 +998,11 @@ BankFile_Save(playerid)
 
 	BFile = fopen(file, io_write); // Open the business-file for writing
 
-	format(LineForFile, 100, "Password %s\r\n", APlayerData[playerid][BankPassword]); // Construct the line: "Password <BankPassword>"
+	format(LineForFile, sizeof(LineForFile), "Password %s\r\n", APlayerData[playerid][BankPassword]); // Construct the line: "Password <BankPassword>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Money %i\r\n", APlayerData[playerid][BankMoney]); // Construct the line: "Money <BankMoney>"
+	format(LineForFile, sizeof(LineForFile), "Money %i\r\n", APlayerData[playerid][BankMoney]); // Construct the line: "Money <BankMoney>"
 	fwrite(BFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "LastIntrestTime %i\r\n", APlayerData[playerid][LastIntrestTime]); // Construct the line: "LastIntrestTime <LastIntrestTime>"
+	format(LineForFile, sizeof(LineForFile), "LastIntrestTime %i\r\n", APlayerData[playerid][LastIntrestTime]); // Construct the line: "LastIntrestTime <LastIntrestTime>"
 	fwrite(BFile, LineForFile); // And save it to the file
 
 	fclose(BFile); // Close the file
@@ -1056,7 +1056,7 @@ IntrestTime_Save()
 
 	BFile = fopen("ServerData/Bank/IntrestTime.ini", io_write); // Open the intresttime-file for writing
 
-	format(LineForFile, 100, "CurrentIntrestTime %i\r\n", CurrentIntrestTime); // Construct the line: "CurrentIntrestTime <CurrentIntrestTime>"
+	format(LineForFile, sizeof(LineForFile), "CurrentIntrestTime %i\r\n", CurrentIntrestTime); // Construct the line: "CurrentIntrestTime <CurrentIntrestTime>"
 	fwrite(BFile, LineForFile); // And save it to the file
 
 	fclose(BFile); // Close the file

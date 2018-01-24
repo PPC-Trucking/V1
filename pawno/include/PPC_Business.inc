@@ -67,7 +67,7 @@ Business_SetOwner(playerid, BusID)
 		PlayerFile_Save(playerid);
 
 		// Let the player know he bought the business
-		format(Msg, 128, TXT_PlayerBoughtBusiness, ABusinessInteriors[BusType][BusPrice]);
+		format(Msg, sizeof(Msg), TXT_PlayerBoughtBusiness, ABusinessInteriors[BusType][BusPrice]);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
@@ -137,13 +137,13 @@ Business_CreateEntrance(BusID)
 	if (ABusinessData[BusID][Owned] == true)
 	{
 		// Create the 3DText that appears above the business-pickup (displays the businessname, the name of the owner and the current level)
-		format(Msg, 128, TXT_PickupBusinessOwned, ABusinessData[BusID][BusinessName], ABusinessData[BusID][Owner], ABusinessData[BusID][BusinessLevel]);
+		format(Msg, sizeof(Msg), TXT_PickupBusinessOwned, ABusinessData[BusID][BusinessName], ABusinessData[BusID][Owner], ABusinessData[BusID][BusinessLevel]);
 		ABusinessData[BusID][DoorText] = CreateDynamic3DTextLabel(Msg, COLOR_TEAL, x, y, z + 1.0, 50.0);
 	}
 	else
 	{
 		// Create the 3DText that appears above the business-pickup (displays the price of the business and the earnings)
-		format(Msg, 128, TXT_PickupBusinessForSale, ABusinessInteriors[BusType][InteriorName], ABusinessInteriors[BusType][BusPrice], ABusinessInteriors[BusType][BusEarnings]);
+		format(Msg, sizeof(Msg), TXT_PickupBusinessForSale, ABusinessInteriors[BusType][InteriorName], ABusinessInteriors[BusType][BusPrice], ABusinessInteriors[BusType][BusEarnings]);
 		ABusinessData[BusID][DoorText] = CreateDynamic3DTextLabel(Msg, COLOR_TEAL, x, y, z + 1.0, 50.0);
 	}
 }
@@ -161,13 +161,13 @@ Business_UpdateEntrance(BusID)
 	if (ABusinessData[BusID][Owned] == true)
 	{
 		// Create the 3DText that appears above the business-pickup (displays the businessname, the name of the owner and the current level)
-		format(Msg, 128, TXT_PickupBusinessOwned, ABusinessData[BusID][BusinessName], ABusinessData[BusID][Owner], ABusinessData[BusID][BusinessLevel]);
+		format(Msg, sizeof(Msg), TXT_PickupBusinessOwned, ABusinessData[BusID][BusinessName], ABusinessData[BusID][Owner], ABusinessData[BusID][BusinessLevel]);
 		UpdateDynamic3DTextLabelText(ABusinessData[BusID][DoorText], COLOR_TEAL, Msg);
 	}
 	else
 	{
 		// Create the 3DText that appears above the business-pickup (displays the price of the business and the earnings)
-		format(Msg, 128, TXT_PickupBusinessForSale, ABusinessInteriors[BusType][InteriorName], ABusinessInteriors[BusType][BusPrice], ABusinessInteriors[BusType][BusEarnings]);
+		format(Msg, sizeof(Msg), TXT_PickupBusinessForSale, ABusinessInteriors[BusType][InteriorName], ABusinessInteriors[BusType][BusPrice], ABusinessInteriors[BusType][BusEarnings]);
 		UpdateDynamic3DTextLabelText(ABusinessData[BusID][DoorText], COLOR_TEAL, Msg);
 	}
 }
@@ -189,7 +189,7 @@ Business_PayEarnings(playerid, BusID)
 	// Reward the player with his earnings
 	RewardPlayer(playerid, Earnings, 0);
 	// Inform the player that he has earned money from his business
-	format(Msg, 128, "{00FF00}Your business has earned {FFFF00}$%i{00FF00} since your last withdrawl", Earnings);
+	format(Msg, sizeof(Msg), "{00FF00}Your business has earned {FFFF00}$%i{00FF00} since your last withdrawl", Earnings);
 	SendClientMessage(playerid, COLOR_WHITE, Msg);
 }
 

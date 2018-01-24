@@ -36,21 +36,21 @@ PlaneList_Create(playerid)
 		{
 		    // Add the Planename to the list
 		    if (strlen(PlaneList) == 0) // If this is the start of the list (no Planes have been added yet)
-				format(PlaneList, 500, "%s", APlanes[i][PlaneName]); // Add the name of the Plane at the start of the Planelist
+				format(PlaneList, sizeof(PlaneList), "%s", APlanes[i][PlaneName]); // Add the name of the Plane at the start of the Planelist
 		    else
-				format(PlaneList, 500, "%s%s%s", PlaneList, "\n", APlanes[i][PlaneName]); // Add the name of the next Plane to the list on the next line
+				format(PlaneList, sizeof(PlaneList), "%s%s%s", PlaneList, "\n", APlanes[i][PlaneName]); // Add the name of the next Plane to the list on the next line
 		}
 		else // 10 Planes have been added to the list (now Counter = 11)
 		{
 		    // Add an empty line and "Next..." to the list to let the player know there are more Planes to choose from
-			format(PlaneList, 500, "%s%s%s", PlaneList, "\n \n", TXT_DialogEntryNext);
+			format(PlaneList, sizeof(PlaneList), "%s%s%s", PlaneList, "\n \n", TXT_DialogEntryNext);
 			// Also stop the For-loop
 			break;
 		}
 	}
 
 	// Construct the title for the dialog (to include a page number)
-	format(DialogTitle, 128, TXT_DialogPlaneTitle, (APlayerData[playerid][DialogPlaneFirstPlane] / 10) + 1);
+	format(DialogTitle, sizeof(DialogTitle), TXT_DialogPlaneTitle, (APlayerData[playerid][DialogPlaneFirstPlane] / 10) + 1);
 	// Ask which Plane the player wants to have by showing the dialog
 	ShowPlayerDialog(playerid, DialogPlane, DIALOG_STYLE_LIST, DialogTitle, PlaneList, TXT_DialogButtonSpawn, TXT_DialogButtonCancel);
 

@@ -52,7 +52,7 @@ AutoEvictProperties()
 	// Open the auto-evict-logfile for adding data
 	LogFile = fopen("ServerData/AutoEvictLog.ini", io_append);
 	// Log the eviction to the logfile
-	format(Msg, 128, "Auto-eviction started for day: %i\r\n", AutoEvict[AEDays]);
+	format(Msg, sizeof(Msg), "Auto-eviction started for day: %i\r\n", AutoEvict[AEDays]);
 	fwrite(LogFile, Msg); // And save it to the file
     // Close the logfile
 	fclose(LogFile);
@@ -101,7 +101,7 @@ AutoEvictProperties()
 	// Open the auto-evict-logfile for adding data
 	LogFile = fopen("ServerData/AutoEvictLog.ini", io_append);
 	// Log the eviction to the logfile
-	format(Msg, 128, "Auto-eviction ended for day: %i\r\n\r\n", AutoEvict[AEDays]);
+	format(Msg, sizeof(Msg), "Auto-eviction ended for day: %i\r\n\r\n", AutoEvict[AEDays]);
 	fwrite(LogFile, Msg); // And save it to the file
     // Close the logfile
 	fclose(LogFile);
@@ -116,10 +116,10 @@ LogAutoEvict(PropertyType, PropertyName[], PropertyOwner[])
 	// Determine the type of the property
 	if (PropertyType == 1)
 		// Setup the text to send to all admins
-		format(Msg, 128, "{AAAAAA}House auto-evicted: %s, owner: %s", PropertyName, PropertyOwner);
+		format(Msg, sizeof(Msg), "{AAAAAA}House auto-evicted: %s, owner: %s", PropertyName, PropertyOwner);
 	else
 		// Setup the text to send to all admins
-		format(Msg, 128, "{AAAAAA}Business auto-evicted: %s, owner: %s", PropertyName, PropertyOwner);
+		format(Msg, sizeof(Msg), "{AAAAAA}Business auto-evicted: %s, owner: %s", PropertyName, PropertyOwner);
 
 	// Loop through all players
 	for (new i; i < MAX_PLAYERS; i++)
@@ -138,10 +138,10 @@ LogAutoEvict(PropertyType, PropertyName[], PropertyOwner[])
 	// Determine the type of the property
 	if (PropertyType == 1)
 		// Setup the text to log to the logfile
-		format(Msg, 128, "House auto-evicted: %s, owner: %s\r\n", PropertyName, PropertyOwner);
+		format(Msg, sizeof(Msg), "House auto-evicted: %s, owner: %s\r\n", PropertyName, PropertyOwner);
 	else
 		// Setup the text to log to the logfile
-		format(Msg, 128, "Business auto-evicted: %s, owner: %s\r\n", PropertyName, PropertyOwner);
+		format(Msg, sizeof(Msg), "Business auto-evicted: %s, owner: %s\r\n", PropertyName, PropertyOwner);
 
 	// Log the eviction to the logfile
 	fwrite(LogFile, Msg); // And save it to the file
@@ -200,11 +200,11 @@ AutoEvict_Save()
 
 	AEFile = fopen("ServerData/AutoEvict.ini", io_write); // Open the auto-evict-file for writing
 
-	format(LineForFile, 100, "Minutes %i\r\n", AutoEvict[AEMinutes]); // Construct the line: "Minutes <Minutes>"
+	format(LineForFile, sizeof(LineForFile), "Minutes %i\r\n", AutoEvict[AEMinutes]); // Construct the line: "Minutes <Minutes>"
 	fwrite(AEFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Hours %i\r\n", AutoEvict[AEHours]); // Construct the line: "Hours <Hours>"
+	format(LineForFile, sizeof(LineForFile), "Hours %i\r\n", AutoEvict[AEHours]); // Construct the line: "Hours <Hours>"
 	fwrite(AEFile, LineForFile); // And save it to the file
-	format(LineForFile, 100, "Days %i\r\n", AutoEvict[AEDays]); // Construct the line: "Days <Days>"
+	format(LineForFile, sizeof(LineForFile), "Days %i\r\n", AutoEvict[AEDays]); // Construct the line: "Days <Days>"
 	fwrite(AEFile, LineForFile); // And save it to the file
 
 	fclose(AEFile); // Close the file
@@ -236,7 +236,7 @@ stock House_Delete(HouseID)
 				    PlayerOnline = true;
 
 					// Inform the player that his house is being deleted
-					format(Msg, 128, "{FF0000}Your house {FFFF00}\"%s\"{FF0000} is being deleted", AHouseData[HouseID][HouseName]);
+					format(Msg, sizeof(Msg), "{FF0000}Your house {FFFF00}\"%s\"{FF0000} is being deleted", AHouseData[HouseID][HouseName]);
 					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the HouseID from his list of houses
@@ -312,7 +312,7 @@ House_Evict(HouseID)
 				    PlayerOnline = true;
 
 					// Inform the player that his house is being deleted
-					format(Msg, 128, "{FF0000}Your house {FFFF00}\"%s\"{FF0000} is being evicted", AHouseData[HouseID][HouseName]);
+					format(Msg, sizeof(Msg), "{FF0000}Your house {FFFF00}\"%s\"{FF0000} is being evicted", AHouseData[HouseID][HouseName]);
 					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the HouseID from his list of houses
@@ -375,7 +375,7 @@ stock Business_Delete(BusID)
 				    PlayerOnline = true;
 
 					// Inform the player that his business is being deleted
-					format(Msg, 128, "{FF0000}Your business {FFFF00}\"%s\"{FF0000} is being deleted", ABusinessData[BusID][BusinessName]);
+					format(Msg, sizeof(Msg), "{FF0000}Your business {FFFF00}\"%s\"{FF0000} is being deleted", ABusinessData[BusID][BusinessName]);
 					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the BusID from his list of businesses
@@ -447,7 +447,7 @@ Business_Evict(BusID)
 				    PlayerOnline = true;
 
 					// Inform the player that his business is being deleted
-					format(Msg, 128, "{FF0000}Your business {FFFF00}\"%s\"{FF0000} is being evicted", ABusinessData[BusID][BusinessName]);
+					format(Msg, sizeof(Msg), "{FF0000}Your business {FFFF00}\"%s\"{FF0000} is being evicted", ABusinessData[BusID][BusinessName]);
 					SendClientMessage(pid, COLOR_WHITE, Msg);
 
 					// Also remove the BusID from his list of businesses
@@ -515,7 +515,7 @@ PlayerFile_RemoveProperty(Name[], HouseID, BusID)
 			// Check if this line holds data
 			if (strlen(LineFromFile) > 0)
 				// Store this line into the array
-				format(FileContent[Index], 100, LineFromFile);
+				format(FileContent[Index], sizeof(LineFromFile), LineFromFile);
 			else // If the read line doesn't contain any more data (empty string), the end of the file has been reached
 			    break;
 		}
@@ -531,14 +531,14 @@ PlayerFile_RemoveProperty(Name[], HouseID, BusID)
 		for (Index = 0; Index < 100; Index++)
 		{
 			// Build the string to search for the HouseID
-			format(SearchString, 100, "House %i", HouseID);
+			format(SearchString, sizeof(SearchString), "House %i", HouseID);
 			// Check if this line holds the string we're looking for
 			if (strcmp(FileContent[Index], SearchString, false) == 0)
 			    // Clear the array-index
 			    FileContent[Index][0] = 0;
 
 			// Build the string to search for the BusinessID
-			format(SearchString, 100, "Business %i", BusID);
+			format(SearchString, sizeof(SearchString), "Business %i", BusID);
 			// Check if this line holds the string we're looking for
 			if (strcmp(FileContent[Index], SearchString, false) == 0)
 			    // Clear the array-index
@@ -558,7 +558,7 @@ PlayerFile_RemoveProperty(Name[], HouseID, BusID)
 			if (FileContent[Index][0] != 0)
 			{
 			    // Construct the line for saving
-				format(LineFromFile, 100, "%s\r\n", FileContent[Index]);
+				format(LineFromFile, sizeof(LineFromFile), "%s\r\n", FileContent[Index]);
 		        // And save it to the file
 				fwrite(PFile, LineFromFile);
 			}

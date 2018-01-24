@@ -32,7 +32,7 @@ COMMAND:porthouse(playerid, params[])
 		SetPlayerPos(playerid, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]);
 
 		// Let the player know he ported to the given house
-		format(Msg, 128, "{00FF00}You ported to house with ID: {FFFF00}%i", HouseID);
+		format(Msg, sizeof(Msg), "{00FF00}You ported to house with ID: {FFFF00}%i", HouseID);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
@@ -71,7 +71,7 @@ COMMAND:portbus(playerid, params[])
 		SetPlayerPos(playerid, ABusinessData[BusID][BusinessX], ABusinessData[BusID][BusinessY], ABusinessData[BusID][BusinessZ]);
 
 		// Let the player know he ported to the given business
-		format(Msg, 128, "{00FF00}You ported to business with ID: {FFFF00}%i", BusID);
+		format(Msg, sizeof(Msg), "{00FF00}You ported to business with ID: {FFFF00}%i", BusID);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
@@ -112,7 +112,7 @@ COMMAND:properties(playerid, params[])
 			    if (AHouseData[HouseID][Owned] == true)
 			    {
 					// Store the ownername
-					format(Name, 24, AHouseData[HouseID][Owner]);
+					format(Name, sizeof(Name), AHouseData[HouseID][Owner]);
 
 					// End the search
 					break;
@@ -137,7 +137,7 @@ COMMAND:properties(playerid, params[])
 				    if (ABusinessData[BusID][Owned] == true)
 					{
 						// Store the ownername
-						format(Name, 24, ABusinessData[BusID][Owner]);
+						format(Name, sizeof(Name), ABusinessData[BusID][Owner]);
 
 						// End the search
 						break;
@@ -192,7 +192,7 @@ COMMAND:properties(playerid, params[])
 	}
 
 	// Setup the dialog title
-	format(DialogTitle, 128, "Properties of \"%s\"", Name);
+	format(DialogTitle, sizeof(DialogTitle), "Properties of \"%s\"", Name);
 
 	// List all properties in a dialog
 	ShowPlayerDialog(playerid, DialogNoResponse, DIALOG_STYLE_LIST, DialogTitle, PropertyList, "OK", "Cancel");
@@ -229,7 +229,7 @@ COMMAND:propertyid(playerid, params[])
 			if (IsPlayerInRangeOfPoint(playerid, 2.5, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
 			{
 				// Let the player know the HouseID of this house
-				format(Msg, 128, "{00FF00}This house has ID: {FFFF00}%i", HouseID);
+				format(Msg, sizeof(Msg), "{00FF00}This house has ID: {FFFF00}%i", HouseID);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
@@ -250,7 +250,7 @@ COMMAND:propertyid(playerid, params[])
 			if (IsPlayerInRangeOfPoint(playerid, 2.5, ABusinessData[BusID][BusinessX], ABusinessData[BusID][BusinessY], ABusinessData[BusID][BusinessZ]))
 			{
 				// Let the player know the BusinessID of this business
-				format(Msg, 128, "{00FF00}This business has ID: {FFFF00}%i", BusID);
+				format(Msg, sizeof(Msg), "{00FF00}This business has ID: {FFFF00}%i", BusID);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
@@ -297,7 +297,7 @@ COMMAND:delproperty(playerid, params[])
 				House_Delete(HouseID);
 
 				// Also let the player know he deleted the house
-				format(Msg, 128, "{00FF00}You have deleted the house with ID: {FFFF00}%i", HouseID);
+				format(Msg, sizeof(Msg), "{00FF00}You have deleted the house with ID: {FFFF00}%i", HouseID);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
@@ -321,7 +321,7 @@ COMMAND:delproperty(playerid, params[])
 				Business_Delete(BusID);
 
 				// Also let the player know he deleted the business
-				format(Msg, 128, "{00FF00}You have deleted the business with ID: {FFFF00}%i", BusID);
+				format(Msg, sizeof(Msg), "{00FF00}You have deleted the business with ID: {FFFF00}%i", BusID);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 				// Exit the function
@@ -369,7 +369,7 @@ COMMAND:evict(playerid, params[])
 					House_Evict(HouseID);
 
 					// Also let the player know he evicted the house
-					format(Msg, 128, "{00FF00}You have evicted the house with ID: {FFFF00}%i", HouseID);
+					format(Msg, sizeof(Msg), "{00FF00}You have evicted the house with ID: {FFFF00}%i", HouseID);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 					// Exit the function
@@ -399,7 +399,7 @@ COMMAND:evict(playerid, params[])
 					Business_Evict(BusID);
 
 					// Also let the player know he evicted the business
-					format(Msg, 128, "{00FF00}You have evicted the business with ID: {FFFF00}%i", BusID);
+					format(Msg, sizeof(Msg), "{00FF00}You have evicted the business with ID: {FFFF00}%i", BusID);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 					// Exit the function

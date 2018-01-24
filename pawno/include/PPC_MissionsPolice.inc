@@ -66,7 +66,7 @@ Police_WarnNearbyPlayers(playerid)
 
 					// Let the police player know that he warned the player
 					GetPlayerName(PlayerToCheck, Name, sizeof(Name));
-					format(Msg, 128, "{00FF00}You've warned {FFFF00}%s", Name);
+					format(Msg, sizeof(Msg), "{00FF00}You've warned {FFFF00}%s", Name);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
@@ -146,14 +146,14 @@ Police_PayFine(playerid, PlayerToFine)
 		// Reward the police player (give cash and points)
 		RewardPlayer(playerid, Fine, GetPlayerWantedLevel(PlayerToFine));
 		// Let the police player know that he fined the player
-		format(PoliceMsg, 200, TXT_PoliceFinedPlayerReward, FinedPlayerName, Fine);
+		format(PoliceMsg, sizeof(PoliceMsg), TXT_PoliceFinedPlayerReward, FinedPlayerName, Fine);
 		SendClientMessage(playerid, COLOR_WHITE, PoliceMsg);
 		// Let the wanted player pay the fine
 		RewardPlayer(PlayerToFine, -Fine, 0);
-		format(PlayerMsg, 200, TXT_PlayerGotFinedByPolice, PoliceName, Fine);
+		format(PlayerMsg, sizeof(PlayerMsg), TXT_PlayerGotFinedByPolice, PoliceName, Fine);
 		SendClientMessage(PlayerToFine, COLOR_WHITE, PlayerMsg);
 		// Let the other players know that the police player has fined the wanted player
-		format(PoliceMsg, 200, TXT_PoliceFinedPlayer, PoliceName, FinedPlayerName);
+		format(PoliceMsg, sizeof(PoliceMsg), TXT_PoliceFinedPlayer, PoliceName, FinedPlayerName);
 		SendClientMessageToAll(COLOR_WHITE, PoliceMsg);
 		// Increase the stats for fining a player
 		APlayerData[playerid][StatsPoliceFined]++;
@@ -167,15 +167,15 @@ Police_PayFine(playerid, PlayerToFine)
 		// Reward the police player (give cash and points)
 		RewardPlayer(playerid, Fine, GetPlayerWantedLevel(PlayerToFine));
 		// Let the police player know that he jailed the wanted player
-		format(PoliceMsg, 200, TXT_PoliceJailedPlayerReward, FinedPlayerName, Fine);
+		format(PoliceMsg, sizeof(PoliceMsg), TXT_PoliceJailedPlayerReward, FinedPlayerName, Fine);
 		SendClientMessage(playerid, COLOR_WHITE, PoliceMsg);
 		// Let the wanted player pay a double fine
 		RewardPlayer(PlayerToFine, -Fine, 0);
 		// Let the player know he's been jailed and for how long
-		format(PlayerMsg, 200, TXT_PlayerGotJailedByPolice, PoliceName, (JailTime / 60));
+		format(PlayerMsg, sizeof(PlayerMsg), TXT_PlayerGotJailedByPolice, PoliceName, (JailTime / 60));
 		SendClientMessage(PlayerToFine, COLOR_WHITE, PlayerMsg);
 		// Let the other players know that the police player has jailed the wanted player
-		format(PoliceMsg, 200, TXT_PoliceJailedPlayer, PoliceName, FinedPlayerName, (JailTime / 60));
+		format(PoliceMsg, sizeof(PoliceMsg), TXT_PoliceJailedPlayer, PoliceName, FinedPlayerName, (JailTime / 60));
 		SendClientMessageToAll(COLOR_WHITE, PoliceMsg);
 		// Teleport the player to jail
 		Police_JailPlayer(PlayerToFine, JailTime);
@@ -257,7 +257,7 @@ public UnjailPlayer(playerid)
 		// Show the remaining jailtime (only if the remaining time is below 60 seconds)
 		if (APlayerData[playerid][PlayerJailed] < 60)
 		{
-			format(JailMsg, 20, TXT_JailTimer, APlayerData[playerid][PlayerJailed]);
+			format(JailMsg, sizeof(JailMsg), TXT_JailTimer, APlayerData[playerid][PlayerJailed]);
 			GameTextForPlayer(playerid, JailMsg, 750, 4);
 		}
 		// Decrease the jailtime by 1 second
@@ -302,7 +302,7 @@ public Timer_PoliceCanJailPlayer(playerid)
 	new Msg[128];
 
 	// Let the player know how much time he has left to pull over
-	format(Msg, 128, "{FF0000}You have %i seconds to pull over and stop", APlayerData[playerid][Value_PoliceCanJailMe]);
+	format(Msg, sizeof(Msg), "{FF0000}You have %i seconds to pull over and stop", APlayerData[playerid][Value_PoliceCanJailMe]);
 	SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 	// Check if the timer has ran out
@@ -314,9 +314,9 @@ public Timer_PoliceCanJailPlayer(playerid)
 		// Also kill the timer, as it's not needed anymore
 		KillTimer(APlayerData[playerid][Timer_PoliceCanJailMe]);
 		// Let the player know what consequences it will have by not stopping
-		format(Msg, 128, "{FF0000}You didn't pull-over and stop, now the police can send you to jail immediately");
+		format(Msg, sizeof(Msg), "{FF0000}You didn't pull-over and stop, now the police can send you to jail immediately");
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
-		format(Msg, 128, "{FF0000}Your fines will be doubled as well");
+		format(Msg, sizeof(Msg), "{FF0000}Your fines will be doubled as well");
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 

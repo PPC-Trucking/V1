@@ -32,11 +32,11 @@ Pilot_StartRandomJob(playerid)
 			// Set jobstep to 1 (going to load the goods)
 			APlayerData[playerid][JobStep] = 1;
 			// Get the startlocation, endlocation and the load texts
-			format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-			format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-			format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+			format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+			format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+			format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 			// Combine it all into a string for the TextDraw (the player can see this all the time) to describe the mission
-			format(RouteText, 255, TXT_TransportingFromToPickup, Load, StartLoc, EndLoc);
+			format(RouteText, sizeof(RouteText), TXT_TransportingFromToPickup, Load, StartLoc, EndLoc);
 			// Set the TextDraw so the player can see it
 			TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 			// Grab the x, y, z positions for the first location
@@ -46,7 +46,7 @@ Pilot_StartRandomJob(playerid)
 			// Create a checkpoint where the player should load the goods
 			SetPlayerCheckpoint(playerid, x, y, z, 7);
 			// Inform the player that he must load his goods
-			format(LoadMsg, 128, TXT_PickupCargoAt, Load, StartLoc);
+			format(LoadMsg, sizeof(LoadMsg), TXT_PickupCargoAt, Load, StartLoc);
 			SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 		}
 	}
@@ -135,9 +135,9 @@ Pilot_OnPlayerEnterCheckpoint(playerid)
     switch (APlayerData[playerid][JobStep])
     {
 		// JobStep is 1 (pilot is loading his goods at the checkpoint)
- 		case 1: format(LoadMsg, 128, TXT_LoadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+ 		case 1: format(LoadMsg, sizeof(LoadMsg), TXT_LoadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
 		// JobStep is 2 (pilot is unloading his goods at the checkpoint)
-		case 2: format(LoadMsg, 128, TXT_UnloadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+		case 2: format(LoadMsg, sizeof(LoadMsg), TXT_UnloadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
     }
 
 	// Disable the player's actions (he cannot move anymore)
@@ -187,12 +187,12 @@ public Pilot_Plane_LoadUnload(playerid)
 			// Delete the loading-checkpoint
 			DisablePlayerCheckpoint(playerid);
 			// Get the startlocation, endlocation and the load texts
-			format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-			format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-			format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+			format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+			format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+			format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 
 			// Update the missiontext
-			format(RouteText, 255, TXT_TransportingFromToDeliver, Load, StartLoc, EndLoc);
+			format(RouteText, sizeof(RouteText), TXT_TransportingFromToDeliver, Load, StartLoc, EndLoc);
 			// Set the TextDraw so the player can see it
 			TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 
@@ -203,7 +203,7 @@ public Pilot_Plane_LoadUnload(playerid)
 			// Create a checkpoint where the player should unload the goods
 			SetPlayerCheckpoint(playerid, x, y, z, 7);
 			// Inform the player that he must unload his goods
-			format(UnloadMsg, 100, TXT_DeliverCargoTo, Load, EndLoc);
+			format(UnloadMsg, sizeof(UnloadMsg), TXT_DeliverCargoTo, Load, EndLoc);
 			SendClientMessage(playerid, COLOR_WHITE, UnloadMsg);
 		}
 		case 2: // Player is delivering his goods
@@ -214,13 +214,13 @@ public Pilot_Plane_LoadUnload(playerid)
 			// Get the player name
 			GetPlayerName(playerid, Name, sizeof(Name));
 			// Get the startlocation, endlocation and the load texts
-			format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-			format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-			format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+			format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+			format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+			format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 
 			// Construct the message sent to all players that this player completed a pilot mission
-			format(Msg1, 128, TXT_PlayerCompletedPilotJob, Name, Load);
-			format(Msg2, 128, TXT_PlayerCompletedPilotJobInfo, StartLoc, EndLoc);
+			format(Msg1, sizeof(Msg1), TXT_PlayerCompletedPilotJob, Name, Load);
+			format(Msg2, sizeof(Msg2), TXT_PlayerCompletedPilotJobInfo, StartLoc, EndLoc);
 			SendClientMessageToAll(COLOR_WHITE, Msg1);
 			SendClientMessageToAll(COLOR_WHITE, Msg2);
 
@@ -243,7 +243,7 @@ public Pilot_Plane_LoadUnload(playerid)
 			RewardPlayer(playerid, Payment, 1);
 
 			// Send a message to let the player know he finished his mission and got paid
-			format(Message, 128, TXT_RewardJob, Payment);
+			format(Message, sizeof(Message), TXT_RewardJob, Payment);
 			SendClientMessage(playerid, COLOR_WHITE, Message);
 
 			// Increase the stats for completing a pilot job

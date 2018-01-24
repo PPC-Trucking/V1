@@ -34,21 +34,21 @@ TrailerList_Create(playerid)
 		{
 		    // Add the Trailername to the list
 		    if (strlen(TrailerList) == 0) // If this is the start of the list (no Trailers have been added yet)
-				format(TrailerList, 500, "%s", ATrailers[i][TrailerName]); // Add the name of the Trailer at the start of the Trailerlist
+				format(TrailerList, sizeof(TrailerList), "%s", ATrailers[i][TrailerName]); // Add the name of the Trailer at the start of the Trailerlist
 		    else
-				format(TrailerList, 500, "%s%s%s", TrailerList, "\n", ATrailers[i][TrailerName]); // Add the name of the next Trailer to the list on the next line
+				format(TrailerList, sizeof(TrailerList), "%s%s%s", TrailerList, "\n", ATrailers[i][TrailerName]); // Add the name of the next Trailer to the list on the next line
 		}
 		else // 10 Trailers have been added to the list (now Counter = 11)
 		{
 		    // Add an empty line and "Next..." to the list to let the player know there are more Trailers to choose from
-			format(TrailerList, 500, "%s%s%s", TrailerList, "\n \n", TXT_DialogEntryNext);
+			format(TrailerList, sizeof(TrailerList), "%s%s%s", TrailerList, "\n \n", TXT_DialogEntryNext);
 			// Also stop the For-loop
 			break;
 		}
 	}
 
 	// Construct the title for the dialog (to include a page number)
-	format(DialogTitle, 128, TXT_DialogTrailerTitle, (APlayerData[playerid][DialogTrailerFirstTrailer] / 10) + 1);
+	format(DialogTitle, sizeof(DialogTitle), TXT_DialogTrailerTitle, (APlayerData[playerid][DialogTrailerFirstTrailer] / 10) + 1);
 	// Ask which Trailer the player wants to have by showing the dialog
 	ShowPlayerDialog(playerid, DialogTrailer, DIALOG_STYLE_LIST, DialogTitle, TrailerList, TXT_DialogButtonSpawn, TXT_DialogButtonCancel);
 

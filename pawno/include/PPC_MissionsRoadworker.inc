@@ -115,7 +115,7 @@ Roadworker_StartRandomJob(playerid)
 				APlayerData[playerid][JobStep] = 1;
 
 				// Set the TextDraw so the player can see it
-				format(RouteText, 128, TXT_TowBrokenVehicle, ABrokenVehicles[APlayerData[playerid][JobLoc1]][BrokenName]);
+				format(RouteText, sizeof(RouteText), TXT_TowBrokenVehicle, ABrokenVehicles[APlayerData[playerid][JobLoc1]][BrokenName]);
 				TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 
 				// Grab the x, y, z positions for the checkpoint where the vehicle will spawn, once the player comes into range (100m)
@@ -162,7 +162,7 @@ Roadworker_EnterCheckpoint(playerid)
 					// Attach the broken vehicle to your towtruck
 					AttachTrailerToVehicle(APlayerData[playerid][LoadID], GetPlayerVehicleID(playerid));
 					// Update the TextDraw so the player can see it
-					format(RouteText, 128, TXT_DeliverBrokenVehicle, ABrokenVehicles[APlayerData[playerid][JobLoc1]][BrokenName]);
+					format(RouteText, sizeof(RouteText), TXT_DeliverBrokenVehicle, ABrokenVehicles[APlayerData[playerid][JobLoc1]][BrokenName]);
 					TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 					// Create a checkpoint to indicate the location of the shredder
 					SetPlayerCheckpoint(playerid, -1868.5, -1684.0, 21.8, 10.0);

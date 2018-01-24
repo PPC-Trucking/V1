@@ -47,7 +47,7 @@ Bus_EnterRaceCheckpoint(playerid)
 		Job = APlayerData[playerid][JobID];
 		// Get the data to construct the textdraw
 		LineNr = ABusRoutes[Job][LineNumber];
-		format(Description, 100, "%s", ABusRoutes[Job][RouteDescription]);
+		format(Description, sizeof(Description), "%s", ABusRoutes[Job][RouteDescription]);
 		PassengersOnBus = APlayerData[playerid][Passengers];
 		// Determine a random number of passengers on the busstop (between 10 and 30 passengers can be waiting at the busstop)
 		PassengersOnBusStop = random(20) + 10;
@@ -56,7 +56,7 @@ Bus_EnterRaceCheckpoint(playerid)
 	//	    PassengersOnBusStop = 100 - APlayerData[playerid][Passengers];
 
 		// Combine it all into a string for the TextDraw (the player can see this all the time) to describe the mission
-		format(RouteText, 255, TXT_BusDriverBusStopInfo, LineNr, Description, PassengersOnBus, PassengersOnBusStop);
+		format(RouteText, sizeof(RouteText), TXT_BusDriverBusStopInfo, LineNr, Description, PassengersOnBus, PassengersOnBusStop);
 		// Set the TextDraw so the player can see it
 		TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 
@@ -103,7 +103,7 @@ public BusDriver_LoadUnload(playerid, PassengersOnBusStop)
 		// Get the player name
 		GetPlayerName(playerid, Name, sizeof(Name));
 		// Construct the message sent to all players that this player completed a mafia mission
-		format(MissionMsg, 128, TXT_PlayerCompletedBusLine, Name, ABusRoutes[Job][LineNumber]);
+		format(MissionMsg, sizeof(MissionMsg), TXT_PlayerCompletedBusLine, Name, ABusRoutes[Job][LineNumber]);
 		SendClientMessageToAll(COLOR_WHITE, MissionMsg);
 
 
@@ -133,10 +133,10 @@ public BusDriver_LoadUnload(playerid, PassengersOnBusStop)
 
 	// Get the data to construct the textdraw
 	LineNr = ABusRoutes[Job][LineNumber];
-	format(Description, 100, "%s", ABusRoutes[Job][RouteDescription]);
+	format(Description, sizeof(Description), "%s", ABusRoutes[Job][RouteDescription]);
 	PassengersOnBus = APlayerData[playerid][Passengers];
 	// Combine it all into a string for the TextDraw (the player can see this all the time) to describe the mission
-	format(RouteText, 255, TXT_BusDriverJobInfo, LineNr, Description, PassengersOnBus);
+	format(RouteText, sizeof(RouteText), TXT_BusDriverJobInfo, LineNr, Description, PassengersOnBus);
 	// Set the TextDraw so the player can see it
 	TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 
@@ -156,7 +156,7 @@ public BusDriver_LoadUnload(playerid, PassengersOnBusStop)
 		// Reward the player (give cash and points)
 		Payment = PassengersGettingOff * 9;
 		RewardPlayer(playerid, Payment, 0);
-		format(Msg, 128, TXT_BusDriverReward, Payment);
+		format(Msg, sizeof(Msg), TXT_BusDriverReward, Payment);
 		GameTextForPlayer(playerid, Msg, 3000, 4);
 	}
 
@@ -185,11 +185,11 @@ BusDriver_StartJob(playerid, Job)
 
 	// Get the data to construct the textdraw
 	LineNr = ABusRoutes[Job][LineNumber];
-	format(Description, 100, "%s", ABusRoutes[Job][RouteDescription]);
+	format(Description, sizeof(Description), "%s", ABusRoutes[Job][RouteDescription]);
 	PassengersOnBus = 0;
 	APlayerData[playerid][Passengers] = PassengersOnBus;
 	// Combine it all into a string for the TextDraw (the player can see this all the time) to describe the mission
-	format(RouteText, 255, TXT_BusDriverJobInfo, LineNr, Description, PassengersOnBus);
+	format(RouteText, sizeof(RouteText), TXT_BusDriverJobInfo, LineNr, Description, PassengersOnBus);
 	// Set the TextDraw so the player can see it
 	TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 	// Grab the x, y, z positions for the first location

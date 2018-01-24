@@ -90,7 +90,7 @@ Courier_BeginJob(playerid)
 	// Get the HouseID of the house where the mission starts (the first house in the list of in-range owned house)
 	HouseID = APlayerData[playerid][CourierHouses][Step];
 	// Set the TextDraw so the player can see it
-	format(RouteText, 255, "~w~Deliver package ~b~%i/%i~w~ to: ~r~%s", Step, APlayerData[playerid][CourierMaxStep], AHouseData[HouseID][HouseName]);
+	format(RouteText, sizeof(RouteText), "~w~Deliver package ~b~%i/%i~w~ to: ~r~%s", Step, APlayerData[playerid][CourierMaxStep], AHouseData[HouseID][HouseName]);
 	TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 	// Grab the x, y, z positions for the first location
 	x = AHouseData[HouseID][HouseX];
@@ -131,7 +131,7 @@ Courier_OnPlayerEnterCheckpoint(playerid)
 			// Get the HouseID of the house where the mission starts (the first house in the list of in-range owned house)
 			HouseID = APlayerData[playerid][CourierHouses][Step];
 			// Set the TextDraw so the player can see it
-			format(RouteText, 255, "~w~Deliver package ~b~%i/%i~w~ to: ~r~%s", Step, APlayerData[playerid][CourierMaxStep], AHouseData[HouseID][HouseName]);
+			format(RouteText, sizeof(RouteText), "~w~Deliver package ~b~%i/%i~w~ to: ~r~%s", Step, APlayerData[playerid][CourierMaxStep], AHouseData[HouseID][HouseName]);
 			TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 			// Grab the x, y, z positions for the first location
 			x = AHouseData[HouseID][HouseX];
@@ -145,14 +145,14 @@ Courier_OnPlayerEnterCheckpoint(playerid)
 			// Get the player name
 			GetPlayerName(playerid, Name, sizeof(Name));
 			// Send a message to all players to inform them that this player completed a courier-job
-			format(Msg, 128, TXT_PlayerCompletedCourierJob, Name, APlayerData[playerid][CourierMaxStep]);
+			format(Msg, sizeof(Msg), TXT_PlayerCompletedCourierJob, Name, APlayerData[playerid][CourierMaxStep]);
 			SendClientMessageToAll(COLOR_WHITE, Msg);
 			// Set a payment based on the number of packages
 			Payment = APlayerData[playerid][CourierMaxStep] * PaymentPerPackage;
 			// Pay the player money and give scorepoints, both based on the number of packages delivered
 			RewardPlayer(playerid, Payment, APlayerData[playerid][CourierMaxStep]);
 			// Send a message to let the player know he finished his mission and got paid
-			format(Msg, 128, TXT_RewardJob, Payment);
+			format(Msg, sizeof(Msg), TXT_RewardJob, Payment);
 			SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 			// Increase the stats for completing a courier job

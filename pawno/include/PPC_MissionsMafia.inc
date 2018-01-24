@@ -25,11 +25,11 @@ Mafia_StartRandomJob(playerid)
 		// Set jobstep to 1 (going to load the goods)
 		APlayerData[playerid][JobStep] = 1;
 		// Get the startlocation, endlocation and the load texts
-		format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-		format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-		format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+		format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+		format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+		format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 		// Combine it all into a string for the TextDraw (the player can see this all the time) to describe the mission
-		format(RouteText, 255, TXT_HaulingCargoFromToPickup, Load, StartLoc, EndLoc);
+		format(RouteText, sizeof(RouteText), TXT_HaulingCargoFromToPickup, Load, StartLoc, EndLoc);
 		// Set the TextDraw so the player can see it
 		TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 		// Grab the x, y, z positions for the first location
@@ -43,7 +43,7 @@ Mafia_StartRandomJob(playerid)
 		// Set the job-fail-time for the global vehicle-timer
 		APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 		// Inform the player that he must load his goods
-		format(LoadMsg, 128, TXT_PickupCargoAt, Load, StartLoc);
+		format(LoadMsg, sizeof(LoadMsg), TXT_PickupCargoAt, Load, StartLoc);
 		SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 	}
 
@@ -172,9 +172,9 @@ Mafia_OnPlayerEnterCheckpoint(playerid)
 		    switch (APlayerData[playerid][JobStep])
 		    {
 				// JobStep is 1 (mafia is loading his goods at the checkpoint)
-		 		case 1: format(LoadMsg, 128, TXT_LoadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+		 		case 1: format(LoadMsg, sizeof(LoadMsg), TXT_LoadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
 				// JobStep is 2 (mafia is unloading his goods at the checkpoint)
-				case 2: format(LoadMsg, 128, TXT_UnloadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+				case 2: format(LoadMsg, sizeof(LoadMsg), TXT_UnloadingGoods, ALoads[APlayerData[playerid][LoadID]][LoadName]);
 		    }
 
 			// Disable the player's actions (he cannot move anymore)
@@ -213,12 +213,12 @@ public Mafia_LoadUnload(playerid)
 			// Delete the loading-checkpoint
 			DisablePlayerCheckpoint(playerid);
 			// Get the startlocation, endlocation and the load texts
-			format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-			format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-			format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+			format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+			format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+			format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 
 			// Update the missiontext
-			format(RouteText, 255, TXT_HaulingCargoFromToDeliver, Load, StartLoc, EndLoc);
+			format(RouteText, sizeof(RouteText), TXT_HaulingCargoFromToDeliver, Load, StartLoc, EndLoc);
 			// Set the TextDraw so the player can see it
 			TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 
@@ -231,10 +231,10 @@ public Mafia_LoadUnload(playerid)
 		    // Add 4 to the player's wanted level
 		    SetPlayerWantedLevel(playerid, GetPlayerWantedLevel(playerid) + 4);
 			// Inform the police this mafia player is wanted
-			format(Msg, 128, "{00FF00}Mafia {FFFF00}%s{00FF00} is transporting illegal goods, pursue and fine him", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Mafia {FFFF00}%s{00FF00} is transporting illegal goods, pursue and fine him", Name);
 			Police_SendMessage(Msg);
 			// Inform the player that he must unload his goods
-			format(UnloadMsg, 100, TXT_DeliverCargoTo, Load, EndLoc);
+			format(UnloadMsg, sizeof(UnloadMsg), TXT_DeliverCargoTo, Load, EndLoc);
 			SendClientMessage(playerid, COLOR_WHITE, UnloadMsg);
 		}
 		case 2: // Player is delivering his goods
@@ -243,13 +243,13 @@ public Mafia_LoadUnload(playerid)
 			new StartLoc[50], EndLoc[50], Load[50], Msg1[128], Msg2[128];
 
 			// Get the startlocation, endlocation and the load texts
-			format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-			format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-			format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+			format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+			format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+			format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 
 			// Construct the message sent to all players that this player completed a mafia mission
-			format(Msg1, 128, TXT_PlayerCompletedMafiaJob, Name, Load);
-			format(Msg2, 128, TXT_PlayerCompletedMafiaJobInfo, StartLoc, EndLoc);
+			format(Msg1, sizeof(Msg1), TXT_PlayerCompletedMafiaJob, Name, Load);
+			format(Msg2, sizeof(Msg2), TXT_PlayerCompletedMafiaJobInfo, StartLoc, EndLoc);
 			SendClientMessageToAll(COLOR_WHITE, Msg1);
 			SendClientMessageToAll(COLOR_WHITE, Msg2);
 
@@ -272,7 +272,7 @@ public Mafia_LoadUnload(playerid)
 			RewardPlayer(playerid, Payment, 2);
 
 			// Send a message to let the player know he finished his mission and got paid
-			format(Message, 128, TXT_RewardJob, Payment);
+			format(Message, sizeof(Message), TXT_RewardJob, Payment);
 			SendClientMessage(playerid, COLOR_WHITE, Message);
 
 			// Increase the stats for completing a mafia job

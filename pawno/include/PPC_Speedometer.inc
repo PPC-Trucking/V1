@@ -84,7 +84,7 @@ public Speedometer_Update(playerid)
 				APlayerData[playerid][SpectateID] = OtherPlayer;
 				APlayerData[playerid][SpectateVehicle] = GetPlayerVehicleID(OtherPlayer);
 				APlayerData[playerid][SpectateType] = ADMIN_SPEC_TYPE_VEHICLE;
-				format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} has entered a vehicle, changing spectate mode to match", Name);
+				format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} has entered a vehicle, changing spectate mode to match", Name);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 		    }
 		}
@@ -98,7 +98,7 @@ public Speedometer_Update(playerid)
 				SetPlayerInterior(playerid, GetPlayerInterior(OtherPlayer));
 				APlayerData[playerid][SpectateID] = OtherPlayer;
 				APlayerData[playerid][SpectateType] = ADMIN_SPEC_TYPE_PLAYER;
-				format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} has exited a vehicle, changing spectate mode to match", Name);
+				format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} has exited a vehicle, changing spectate mode to match", Name);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 		    }
 		}
@@ -130,7 +130,7 @@ public Speedometer_Update(playerid)
 		// Also save the speed for the player
 		APlayerData[playerid][PlayerSpeed] = final_speed_int;
 		// Setup the string to display for the player and display it
-		format(speed_string, 50, TXT_SpeedometerSpeed, final_speed_int);
+		format(speed_string, sizeof(speed_string), TXT_SpeedometerSpeed, final_speed_int);
 		TextDrawSetString(APlayerData[playerid][SpeedometerText], speed_string);
 
 		// Add the speed to the stats (this will be the meters driven in total)
@@ -158,40 +158,40 @@ public Speedometer_Update(playerid)
 
 		// Construct the fuelgauge
 		if ((AVehicleData[vehicleid][Fuel] > 0) && (AVehicleData[vehicleid][Fuel] < 100000))
-			format(FuelStatus, 20, "~g~%s~r~%s", "I", "IIIIIIIII"); // Fuel is between 0% and 10% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "I", "IIIIIIIII"); // Fuel is between 0% and 10% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 1)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 2)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "II", "IIIIIIII"); // Fuel is between 10% and 20% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "II", "IIIIIIII"); // Fuel is between 10% and 20% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 2)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 3)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "III", "IIIIIII"); // Fuel is between 20% and 30% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "III", "IIIIIII"); // Fuel is between 20% and 30% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 3)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 4)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "IIII", "IIIIII"); // Fuel is between 30% and 40% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "IIII", "IIIIII"); // Fuel is between 30% and 40% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 4)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 5)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "IIIII", "IIIII"); // Fuel is between 40% and 50% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "IIIII", "IIIII"); // Fuel is between 40% and 50% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 5)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 6)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "IIIIII", "IIII"); // Fuel is between 50% and 60% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "IIIIII", "IIII"); // Fuel is between 50% and 60% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 6)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 7)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "IIIIIII", "III"); // Fuel is between 60% and 70% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "IIIIIII", "III"); // Fuel is between 60% and 70% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 7)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 8)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "IIIIIIII", "II"); // Fuel is between 70% and 80% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "IIIIIIII", "II"); // Fuel is between 70% and 80% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 8)) && (AVehicleData[vehicleid][Fuel] < ((MaxFuel / 10) * 9)))
-			format(FuelStatus, 20, "~g~%s~r~%s", "IIIIIIIII", "I"); // Fuel is between 80% and 90% full
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s~r~%s", "IIIIIIIII", "I"); // Fuel is between 80% and 90% full
 
 		if ((AVehicleData[vehicleid][Fuel] >= ((MaxFuel / 10) * 9)) && (AVehicleData[vehicleid][Fuel] <= MaxFuel))
-			format(FuelStatus, 20, "~g~%s", "IIIIIIIIII"); // Fuel is between 90% and 100% full (all bars are green)
+			format(FuelStatus, sizeof(FuelStatus), "~g~%s", "IIIIIIIIII"); // Fuel is between 90% and 100% full (all bars are green)
 
 		if (AVehicleData[vehicleid][Fuel] == 0)
-			format(FuelStatus, 20, "~r~%s", "IIIIIIIIII"); // Fuel is empty (all bars are red)
+			format(FuelStatus, sizeof(FuelStatus), "~r~%s", "IIIIIIIIII"); // Fuel is empty (all bars are red)
 
 		// Format the final fuel-gauge readout
-		format(FuelString, 50, TXT_SpeedometerFuel, FuelStatus);
+		format(FuelString, sizeof(FuelString), TXT_SpeedometerFuel, FuelStatus);
 		// Display the fuel-gauge
 		TextDrawSetString(APlayerData[playerid][FuelGauge], FuelString);
 
@@ -242,7 +242,7 @@ public RefuelVehicle(playerid)
 		// Withdraw the money from the player
 		RewardPlayer(playerid, -RefuelPrice, 0);
 		// Let the player know he refuelled his vehicle
-		format(RefuelMsg, 128, TXT_RefuelledVehicle, RefuelPrice);
+		format(RefuelMsg, sizeof(RefuelMsg), TXT_RefuelledVehicle, RefuelPrice);
 		SendClientMessage(playerid, COLOR_WHITE, RefuelMsg);
 	}
 	else
@@ -290,7 +290,7 @@ CheckPlayerSpeeding(playerid)
 							// Get the name of the player
 							GetPlayerName(playerid, Name, sizeof(Name));
 							// Also inform all police players that this player is caught speeding
-							format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} is caught speeding, pursue and fine him", Name);
+							format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} is caught speeding, pursue and fine him", Name);
 							Police_SendMessage(Msg);
 						}
 					}

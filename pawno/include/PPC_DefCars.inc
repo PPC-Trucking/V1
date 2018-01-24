@@ -67,21 +67,21 @@ CarList_Create(playerid)
 		{
 		    // Add the carname to the list
 		    if (strlen(CarList) == 0) // If this is the start of the list (no cars have been added yet)
-				format(CarList, 500, "%s", ACars[i][CarName]); // Add the name of the car at the start of the carlist
+				format(CarList, sizeof(CarList), "%s", ACars[i][CarName]); // Add the name of the car at the start of the carlist
 		    else
-				format(CarList, 500, "%s%s%s", CarList, "\n", ACars[i][CarName]); // Add the name of the next car to the list on the next line
+				format(CarList, sizeof(CarList), "%s%s%s", CarList, "\n", ACars[i][CarName]); // Add the name of the next car to the list on the next line
 		}
 		else // 10 cars have been added to the list (now Counter = 11)
 		{
 		    // Add an empty line and "Next..." to the list to let the player know there are more cars to choose from
-			format(CarList, 500, "%s%s%s", CarList, "\n \n", TXT_DialogEntryNext);
+			format(CarList, sizeof(CarList), "%s%s%s", CarList, "\n \n", TXT_DialogEntryNext);
 			// Also stop the For-loop
 			break;
 		}
 	}
 
 	// Construct the title for the dialog (to include a page number)
-	format(DialogTitle, 128, TXT_DialogCarTitle, (APlayerData[playerid][DialogCarFirstCar] / 10) + 1);
+	format(DialogTitle, sizeof(DialogTitle), TXT_DialogCarTitle, (APlayerData[playerid][DialogCarFirstCar] / 10) + 1);
 	// Ask which car the player wants to have by showing the dialog
 	ShowPlayerDialog(playerid, DialogCar, DIALOG_STYLE_LIST, DialogTitle, CarList, TXT_DialogButtonSpawn, TXT_DialogButtonCancel);
 

@@ -150,13 +150,13 @@ SendAdminText(playerid, command[], text[])
 		if (APlayerData[i][PlayerLevel] > 0)
 		{
 			// Send the given text to the admin
-			format(Msg, 128, "{00FFCC}%s used: %s %s", Name, command, text);
+			format(Msg, sizeof(Msg), "{00FFCC}%s used: %s %s", Name, command, text);
 			SendClientMessage(i, COLOR_WHITE, Msg);
 		}
 	}
 
 	// Also log all used commands in the server.log file
-	format(Msg, 128, "%s used: %s %s", Name, command, text);
+	format(Msg, sizeof(Msg), "%s used: %s %s", Name, command, text);
 	print(Msg);
 }
 
@@ -175,9 +175,9 @@ public Player_FreezeTimer(playerid)
 	{
 		// Construct the message to inform the player how long he stays frozen
 		if (APlayerData[playerid][PlayerFrozen] >= 60)
-			format(Msg, 128, "Frozen for %i minutes", APlayerData[playerid][PlayerFrozen] / 60);
+			format(Msg, sizeof(Msg), "Frozen for %i minutes", APlayerData[playerid][PlayerFrozen] / 60);
 		else
-			format(Msg, 128, "Frozen for %i seconds", APlayerData[playerid][PlayerFrozen]);
+			format(Msg, sizeof(Msg), "Frozen for %i seconds", APlayerData[playerid][PlayerFrozen]);
 
 		// Display the message to inform the player how long he stays frozen
 		GameTextForPlayer(playerid, Msg, 1000, 4);
@@ -210,14 +210,14 @@ CommandList_Create(playerid)
 				if (ACommands[i][CommandLevel] == 0)
 				{
 				    // Add the commandname and description to the list
-					format(CommandList, 500, "%s%s{00FF00}%s", CommandList, "\n", ACommands[i][CommandStructure]); // Add the name of the next command to the list on the next line
-					format(CommandList, 500, "%s%s\t\t{FFFF00}%s", CommandList, "\n", ACommands[i][CommandDescription]); // Add the description of the next command to the list on the next line
+					format(CommandList, sizeof(CommandList), "%s%s{00FF00}%s", CommandList, "\n", ACommands[i][CommandStructure]); // Add the name of the next command to the list on the next line
+					format(CommandList, sizeof(CommandList), "%s%s\t\t{FFFF00}%s", CommandList, "\n", ACommands[i][CommandDescription]); // Add the description of the next command to the list on the next line
 				}
 				else
 				{
 				    // Add the commandname and description to the list
-					format(CommandList, 500, "%s%sLvl %i: {00FF00}%s", CommandList, "\n", ACommands[i][CommandLevel], ACommands[i][CommandStructure]); // Add the name of the next command to the list on the next line
-					format(CommandList, 500, "%s%s\t\t{FFFF00}%s", CommandList, "\n", ACommands[i][CommandDescription]); // Add the description of the next command to the list on the next line
+					format(CommandList, sizeof(CommandList), "%s%sLvl %i: {00FF00}%s", CommandList, "\n", ACommands[i][CommandLevel], ACommands[i][CommandStructure]); // Add the name of the next command to the list on the next line
+					format(CommandList, sizeof(CommandList), "%s%s\t\t{FFFF00}%s", CommandList, "\n", ACommands[i][CommandDescription]); // Add the description of the next command to the list on the next line
 				}
 			}
 			else
@@ -226,14 +226,14 @@ CommandList_Create(playerid)
 		else // 5 commands have been added to the list (now Counter = 6)
 		{
 		    // Add an empty line and "Next..." to the list to let the player know there are more commands
-			format(CommandList, 500, "%s%s%s", CommandList, "\n \n", TXT_DialogEntryNext);
+			format(CommandList, sizeof(CommandList), "%s%s%s", CommandList, "\n \n", TXT_DialogEntryNext);
 			// Also stop the For-loop
 			break;
 		}
 	}
 
 	// Construct the title for the dialog (to include a page number)
-	format(DialogTitle, 128, TXT_DialogCommandTitle, (APlayerData[playerid][DialogFirstItem] / 5) + 1);
+	format(DialogTitle, sizeof(DialogTitle), TXT_DialogCommandTitle, (APlayerData[playerid][DialogFirstItem] / 5) + 1);
 	// Show the commands in a dialog
 	ShowPlayerDialog(playerid, DialogPlayerCommands, DIALOG_STYLE_LIST, DialogTitle, CommandList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
@@ -281,16 +281,16 @@ SendReportToAdmins(OffenderID, Reason[], bool:AutoReport = false)
 	if (AutoReport == false)
 	{
 	    // Construct the report messages for a normal report
-		format(Msg, 128, "{00FFFF}*** Report: %s (%i): %s", Name, OffenderID, Reason);
-		format(TxtMsg, 128, "Report:~n~~g~%s (%i)~n~~r~%s", Name, OffenderID, Reason);
-		format(TotalReason, 128, Reason);
+		format(Msg, sizeof(Msg), "{00FFFF}*** Report: %s (%i): %s", Name, OffenderID, Reason);
+		format(TxtMsg, sizeof(TxtMsg), "Report:~n~~g~%s (%i)~n~~r~%s", Name, OffenderID, Reason);
+		format(TotalReason, sizeof(TotalReason), Reason);
 	}
 	else
 	{
 	    // Construct the report messages for an automated report (sent by the AntiHack function)
-		format(Msg, 128, "{00FFFF}*** Auto-Report: %s (%i): %s", Name, OffenderID, Reason);
-		format(TxtMsg, 128, "Auto-Report:~n~~g~%s (%i)~n~~r~%s", Name, OffenderID, Reason);
-		format(TotalReason, 128, "%s (by AntiHack)", Reason);
+		format(Msg, sizeof(Msg), "{00FFFF}*** Auto-Report: %s (%i): %s", Name, OffenderID, Reason);
+		format(TxtMsg, sizeof(TxtMsg), "Auto-Report:~n~~g~%s (%i)~n~~r~%s", Name, OffenderID, Reason);
+		format(TotalReason, sizeof(TotalReason), "%s (by AntiHack)", Reason);
 		// For automated reports, preset the time to 60 seconds to stop the Anti-Hack system reporting the player every half a second
 		APlayerData[OffenderID][AutoReportTime] = 120; // The time must be doubled, as the speedometer runs twice every second
 	}
@@ -375,7 +375,7 @@ GetFirstThreeDigitsFromIP(PlayerIP[])
 	Part3 = strval(PlayerIP[DotLoc+1]);
 
 	// Combine them all into an IP that only holds the first three digits, followed by a dot
-	format(RetIP, 16, "%i.%i.%i.", Part1, Part2, Part3);
+	format(RetIP, sizeof(RetIP), "%i.%i.%i.", Part1, Part2, Part3);
 	// Return it to the calling function
 	return RetIP;
 }
@@ -441,23 +441,23 @@ public ShowRandomBonusMission()
 	}
 
 	// Get the names of the load, start-location and end-location
-	format(lName, 50, ALoads[RandomBonusMission[RandomLoad]][LoadName]);
-	format(sName, 50, ALocations[RandomBonusMission[RandomStartLoc]][LocationName]);
-	format(eName, 50, ALocations[RandomBonusMission[RandomEndLoc]][LocationName]);
+	format(lName, sizeof(lName), ALoads[RandomBonusMission[RandomLoad]][LoadName]);
+	format(sName, sizeof(sName), ALocations[RandomBonusMission[RandomStartLoc]][LocationName]);
+	format(eName, sizeof(eName), ALocations[RandomBonusMission[RandomEndLoc]][LocationName]);
 	// Setup the name of the vehicle you'll need for this mission
 	switch(ALoads[RandomBonusMission[RandomLoad]][PCV_Required])
 	{
-		case PCV_TruckerOreTrailer: format(tName, 128, "truck with ore trailer");
-		case PCV_TruckerFluidsTrailer: format(tName, 128, "truck with fluids trailer");
-		case PCV_TruckerCargoTrailer: format(tName, 128, "truck with cargo trailer");
-		case PCV_TruckerCementTruck: format(tName, 128, "cement truck");
-		case PCV_TruckerNoTrailer: format(tName, 128, "Flatbed or DFT-30");
+		case PCV_TruckerOreTrailer: format(tName, sizeof(tName), "truck with ore trailer");
+		case PCV_TruckerFluidsTrailer: format(tName, sizeof(tName), "truck with fluids trailer");
+		case PCV_TruckerCargoTrailer: format(tName, sizeof(tName), "truck with cargo trailer");
+		case PCV_TruckerCementTruck: format(tName, sizeof(tName), "cement truck");
+		case PCV_TruckerNoTrailer: format(tName, sizeof(tName), "Flatbed or DFT-30");
 	}
 
 	// Construct the messages that describe the mission
-	format(Msg1, 128, "{00BBFF}Bonus mission: transport {FFBB00}%s", lName);
-	format(Msg2, 128, "{00BBFF}from {FFBB00}%s{00BBFF} to {FFBB00}%s", sName, eName);
-	format(Msg3, 128, "{00BBFF}You'll need a {FFBB00}%s{00BBFF} to complete this mission", tName);
+	format(Msg1, sizeof(Msg1), "{00BBFF}Bonus mission: transport {FFBB00}%s", lName);
+	format(Msg2, sizeof(Msg2), "{00BBFF}from {FFBB00}%s{00BBFF} to {FFBB00}%s", sName, eName);
+	format(Msg3, sizeof(Msg3), "{00BBFF}You'll need a {FFBB00}%s{00BBFF} to complete this mission", tName);
 
 	// Now send the data about the random mission to all truckers
 	for (new playerid; playerid < MAX_PLAYERS; playerid++)
@@ -535,7 +535,7 @@ public Bank_IntrestTimer()
 					BankFile_Save(playerid);
 
 					// Inform the player that he received intrest on his bank account and how much
-					format(Msg, 128, "{00BBFF}You've received {FFBB00}$%i{00BBFF} intrest on your bank account", IntrestAmount);
+					format(Msg, sizeof(Msg), "{00BBFF}You've received {FFBB00}$%i{00BBFF} intrest on your bank account", IntrestAmount);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}
@@ -552,12 +552,12 @@ HelpList_Create(playerid)
 	new HelpList[1000], DialogTitle[128];
 
 	// Construct the title for the dialog (to include a page number)
-	format(DialogTitle, 128, "Here you can get help about any of these items:");
+	format(DialogTitle, sizeof(DialogTitle), "Here you can get help about any of these items:");
 
     // Add all help-topics to the list
 	for (new i; i < sizeof(AHelpTopics); i++)
 	{
-		format(HelpList, 1000, "%s%s\n", HelpList, AHelpTopics[i]);
+		format(HelpList, sizeof(HelpList), "%s%s\n", HelpList, AHelpTopics[i]);
 	}
 
 	// Show the commands in a dialog

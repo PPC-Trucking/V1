@@ -88,7 +88,7 @@ public OnGameModeInit()
 {
 	new HostCommand[128];
 	// Change the hostname
-	format(HostCommand, 128, "hostname %s", GameModeName);
+	format(HostCommand, sizeof(HostCommand), "hostname %s", GameModeName);
 	SendRconCommand(HostCommand);
 	SetGameModeText(GameModeName); // Set the Mode of the gamemode, which appears in the list of servers
 
@@ -146,7 +146,7 @@ public OnPlayerConnect(playerid)
 	GetPlayerName(playerid, APlayerData[playerid][PlayerName], 24);
 
 	// Send a message to all players to let them know somebody else joined the server
-	format(NewPlayerMsg, 128, TXT_PlayerJoinedServer, Name, playerid);
+	format(NewPlayerMsg, sizeof(NewPlayerMsg), TXT_PlayerJoinedServer, Name, playerid);
 	SendClientMessageToAll(COLOR_WHITE, NewPlayerMsg);
 
 	// Try to load the player's datafile ("PlayerFile_Load" returns "1" is the file has been read, "0" when the file cannot be read)
@@ -240,7 +240,7 @@ ShowRemainingBanTime(playerid)
 
 	// Display the remaining ban-time for this player
 	SendClientMessage(playerid, COLOR_WHITE, TXT_StillBanned);
-	format(Msg, 128, TXT_BannedDuration, Days, Hours, Minutes, Seconds);
+	format(Msg, sizeof(Msg), TXT_BannedDuration, Days, Hours, Minutes, Seconds);
 	SendClientMessage(playerid, COLOR_WHITE, Msg);
 }
 
@@ -272,7 +272,7 @@ public OnPlayerDisconnect(playerid, reason)
 				}
 
 	// Send a message to all players to let them know somebody left the server
-	format(Msg, 128, TXT_PlayerLeftServer, Name, playerid);
+	format(Msg, sizeof(Msg), TXT_PlayerLeftServer, Name, playerid);
 	SendClientMessageToAll(COLOR_WHITE, Msg);
 
 	// If the player entered a proper password (the player has an account)
@@ -522,7 +522,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 
 		// Construct the dialog-title
 		GetPlayerName(clickedplayerid, Name, sizeof(Name));
-		format(DialogTitle, 128, "Statistics of player: %s", Name);
+		format(DialogTitle, sizeof(DialogTitle), "Statistics of player: %s", Name);
 
 		// Add the IP of the player to the list
 	    GetPlayerIp(clickedplayerid, PlayerIP, sizeof(PlayerIP));
@@ -818,10 +818,10 @@ public OnPlayerDeath(playerid, killerid, reason)
 	    GetPlayerName(playerid, VictimName, sizeof(VictimName));
 	    GetPlayerName(killerid, KillerName, sizeof(KillerName));
 	    // Let the killed know the police are informed about the kill
-		format(Msg, 128, "{FF0000}You've killed {FFFF00}%s{FF0000}, you're wanted by the police now", VictimName);
+		format(Msg, sizeof(Msg), "{FF0000}You've killed {FFFF00}%s{FF0000}, you're wanted by the police now", VictimName);
 		SendClientMessage(killerid, COLOR_WHITE, Msg);
 		// Inform all police players about the kill
-		format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} killed {FFFF00}%s{00FF00}, pursue and fine him", KillerName, VictimName);
+		format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} killed {FFFF00}%s{00FF00}, pursue and fine him", KillerName, VictimName);
 		Police_SendMessage(Msg);
 	}
 
@@ -923,7 +923,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsTrucker[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsTrucker[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsTrucker[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Trucker class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Trucker class", Name);
 		}
 		case ClassBusDriver:
 		{
@@ -932,7 +932,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsBusDriver[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsBusDriver[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsBusDriver[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Busdriver class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Busdriver class", Name);
 		}
 		case ClassPilot:
 		{
@@ -941,7 +941,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsPilot[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsPilot[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsPilot[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Pilot class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Pilot class", Name);
 		}
 		case ClassPolice:
 		{
@@ -1013,7 +1013,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsPolice[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsPolice[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsPolice[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Police class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Police class", Name);
 		}
 		case ClassMafia:
 		{
@@ -1022,7 +1022,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsMafia[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsMafia[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsMafia[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Mafia class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Mafia class", Name);
 		}
 		case ClassCourier:
 		{
@@ -1031,7 +1031,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsCourier[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsCourier[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsCourier[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Courier class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Courier class", Name);
 		}
 		case ClassAssistance:
 		{
@@ -1040,7 +1040,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsAssistance[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsAssistance[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsAssistance[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Assistance class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Assistance class", Name);
 		}
 		case ClassRoadWorker:
 		{
@@ -1049,7 +1049,7 @@ public OnPlayerRequestSpawn(playerid)
 			y = ASpawnLocationsRoadWorker[Index][SpawnY]; // Get the Y-position for the spawnlocation
 			z = ASpawnLocationsRoadWorker[Index][SpawnZ]; // Get the Z-position for the spawnlocation
 			Angle = ASpawnLocationsRoadWorker[Index][SpawnAngle]; // Get the rotation-angle for the spawnlocation
-			format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Roadworker class", Name);
+			format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} joined {FFFF00}Roadworker class", Name);
 		}
 	}
 
@@ -1263,7 +1263,7 @@ public OnPlayerStateChange(playerid,newstate,oldstate)
 					GetVehicleParamsEx(vid, engine, lights, alarm, doors, bonnet, boot, objective);
 					SetVehicleParamsEx(vid, 0, 0, alarm, doors, bonnet, boot, objective);
 					// Let the player know he cannot use somebody else's vehicle
-					format(Msg, 128, TXT_SpeedometerCannotUseVehicle, AVehicleData[vid][Owner]);
+					format(Msg, sizeof(Msg), TXT_SpeedometerCannotUseVehicle, AVehicleData[vid][Owner]);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 
@@ -1276,9 +1276,9 @@ public OnPlayerStateChange(playerid,newstate,oldstate)
 					GetVehicleParamsEx(vid, engine, lights, alarm, doors, bonnet, boot, objective);
 					SetVehicleParamsEx(vid, 0, 0, alarm, doors, bonnet, boot, objective);
 					// Let the player know he cannot use a clamped vehicle
-					format(Msg, 128, TXT_SpeedometerClampedVehicle);
+					format(Msg, sizeof(Msg), TXT_SpeedometerClampedVehicle);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
-					format(Msg, 128, TXT_SpeedometerClampedVehicle2);
+					format(Msg, sizeof(Msg), TXT_SpeedometerClampedVehicle2);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 			}

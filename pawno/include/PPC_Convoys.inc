@@ -47,7 +47,7 @@ Convoy_Create(playerid, Convoy)
 		AConvoys[Convoy][ConvoyTimer] = SetTimerEx("Convoy_Timer", 1000, true, "i", Convoy);
 
 		// Let all players know that this player wants to start a convoy
-		format(Msg, 128, TXT_PlayerStartsConvoy, Name);
+		format(Msg, sizeof(Msg), TXT_PlayerStartsConvoy, Name);
 		SendClientMessageToAll(COLOR_WHITE, Msg);
 	}
 }
@@ -70,7 +70,7 @@ Convoy_Join(playerid, Convoy)
 		if (Convoy_CountMembers(Convoy) < CONVOY_MAX_MEMBERS)
 		{
 			// Inform all the members of the convoy that this player joined the convoy
-			format(Msg, 128, TXT_PlayerJoinedConvoy, Name);
+			format(Msg, sizeof(Msg), TXT_PlayerJoinedConvoy, Name);
 			Convoy_SendMessage(Convoy, Msg);
 			// Inform the player that he joined the convoy
 			SendClientMessage(playerid, COLOR_WHITE, TXT_YouJoinedConvoy);
@@ -243,11 +243,11 @@ Convoy_StartMemberJob(playerid, Convoy)
 	// Set jobstep to 1 (going to load the goods)
 	APlayerData[playerid][JobStep] = 1;
 	// Get the startlocation, endlocation and the load texts
-	format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-	format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-	format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+	format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+	format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+	format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 	// Combine it all into a string for the TextDraw (the player can see this all the time) to describe the mission
-	format(RouteText, 255, TXT_HaulingCargoFromToPickup, Load, StartLoc, EndLoc);
+	format(RouteText, sizeof(RouteText), TXT_HaulingCargoFromToPickup, Load, StartLoc, EndLoc);
 	// Set the TextDraw so the player can see it
 	TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 	// Grab the x, y, z positions for the first location
@@ -259,7 +259,7 @@ Convoy_StartMemberJob(playerid, Convoy)
 	// Set the job-fail-time for the global vehicle-timer
 	APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 	// Inform the player that he must load his goods
-	format(LoadMsg, 128, TXT_PickupCargoAt, Load, StartLoc);
+	format(LoadMsg, sizeof(LoadMsg), TXT_PickupCargoAt, Load, StartLoc);
 	SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 	SendClientMessage(playerid, COLOR_WHITE, TXT_MeetOtherConvoyMembers);
 }
@@ -275,11 +275,11 @@ Convoy_UpdateMemberJob(playerid)
 	// Set the jobstep to 3 (going to unload the cargo at the destination)
 	APlayerData[playerid][JobStep] = 3;
 	// Get the startlocation, endlocation and the load texts
-	format(StartLoc, 50, ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-	format(EndLoc, 50, ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
-	format(Load, 50, ALoads[APlayerData[playerid][LoadID]][LoadName]);
+	format(StartLoc, sizeof(StartLoc), ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+	format(EndLoc, sizeof(EndLoc), ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+	format(Load, sizeof(Load), ALoads[APlayerData[playerid][LoadID]][LoadName]);
 	// Update the missiontext
-	format(RouteText, 255, TXT_HaulingCargoFromToDeliver, Load, StartLoc, EndLoc);
+	format(RouteText, sizeof(RouteText), TXT_HaulingCargoFromToDeliver, Load, StartLoc, EndLoc);
 	// Set the TextDraw so the player can see it
 	TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 	// Grab the x, y, z positions for the second location (to unload the goods)
@@ -289,7 +289,7 @@ Convoy_UpdateMemberJob(playerid)
 	// Create a checkpoint where the player should unload the goods
 	SetPlayerCheckpoint(playerid, x, y, z, 7);
 	// Inform the player that he must unload his goods
-	format(UnloadMsg, 128, TXT_DeliverCargoTo, Load, EndLoc);
+	format(UnloadMsg, sizeof(UnloadMsg), TXT_DeliverCargoTo, Load, EndLoc);
 	SendClientMessage(playerid, COLOR_WHITE, UnloadMsg);
 }
 
@@ -484,7 +484,7 @@ public Convoy_Timer(Convoy)
 						{
 						    Payment = Payment * 2; // Double the payment is the player was the first to do the bonus mission
                             RandomBonusMission[MissionFinished] = true; // Only one player/convoy can do the bonus mission, a new one is chosen next
-							format(BonusMsg, 128, "{00BBFF}Convoy with leader {FFBB00}%s{00BBFF} has finished the bonus mission", Name);
+							format(BonusMsg, sizeof(BonusMsg), "{00BBFF}Convoy with leader {FFBB00}%s{00BBFF} has finished the bonus mission", Name);
 							SendClientMessageToAll(COLOR_WHITE, BonusMsg);
 						}
 			}
@@ -511,7 +511,7 @@ public Convoy_Timer(Convoy)
 					// End the member's job
 					Trucker_EndJob(MemberID);
 					// Send a message to let the player know he finished his mission and got paid
-					format(Message, 128, TXT_FinishedConvoy, Payment);
+					format(Message, sizeof(Message), TXT_FinishedConvoy, Payment);
 					SendClientMessage(MemberID, COLOR_WHITE, Message);
 					// Also update the player's missiontext to inform the player that he must wait for the leader to start a job
 					if (i != 0) // Skip this if the current index is the leader (the leader doesn't have to wait for a new job)
@@ -557,12 +557,12 @@ Convoy_UpdateTextDraws(Convoy)
 	}
 	else // No other members are in the convoy yet
 	{
-		format(LastMember, 24, " - ");
+		format(LastMember, sizeof(LastMember), " - ");
 		Distance = 0.0;
 	}
 
 	// Update the convoy-textdraw for the leader
-	format(TextLeader, 128, TXT_LeaderInfoBar, NumMembers, LastMember, Distance);
+	format(TextLeader, sizeof(TextLeader), TXT_LeaderInfoBar, NumMembers, LastMember, Distance);
 	TextDrawSetString(AConvoys[Convoy][ConvoyTextLeader], TextLeader);
 	// Enable the convoy-textDraw for the leader
 	TextDrawShowForPlayer(LeaderID, AConvoys[Convoy][ConvoyTextLeader]);
@@ -576,7 +576,7 @@ Convoy_UpdateTextDraws(Convoy)
 			// Calculate the distance to the leader
 			Distance = PlayerToPlayer(LeaderID, MemberID);
 			// Update the textdraw for the members
-			format(TextMember, 128, TXT_MemberInfoBar, LeaderName, Distance, NumMembers);
+			format(TextMember, sizeof(TextMember), TXT_MemberInfoBar, LeaderName, Distance, NumMembers);
 			TextDrawSetString(AConvoys[Convoy][ConvoyTextMember], TextMember);
 			TextDrawShowForPlayer(MemberID, AConvoys[Convoy][ConvoyTextMember]);
 		}

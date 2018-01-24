@@ -268,7 +268,7 @@ Dialog_TruckerSelectJobMethod(playerid, response, listitem)
 
 			// Build the List with product-names
 			for (new i; i < NumProducts; i++)
-				format(TotalLoadList, 1000, "%s%s\n", TotalLoadList, ALoads[ProductList[i]][LoadName]);
+				format(TotalLoadList, sizeof(TotalLoadList), "%s%s\n", TotalLoadList, ALoads[ProductList[i]][LoadName]);
 
 			// Let the player choose a load
  			ShowPlayerDialog(playerid, DialogTruckerSelectLoad, DIALOG_STYLE_LIST, TXT_TruckerDialogSelectLoad, TotalLoadList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
@@ -323,7 +323,7 @@ Dialog_TruckerSelectLoad(playerid, response, listitem)
 	    LocID = ALoads[ProductID][FromLocations][i];
 	    // Check if it a valid location-id (not 0)
 	    if (LocID != 0)
-			format(TotalStartLocList, 1000, "%s%s\n", TotalStartLocList, ALocations[LocID][LocationName]); // Add the location-name to the list
+			format(TotalStartLocList, sizeof(TotalStartLocList), "%s%s\n", TotalStartLocList, ALocations[LocID][LocationName]); // Add the location-name to the list
 		else
 		    break; // As soon as an invalid location-id has been found, stop adding entries to the location-list
 	}
@@ -357,7 +357,7 @@ Dialog_TruckerSelectStartLoc(playerid, response, listitem)
 	    LocID = ALoads[ProductID][ToLocations][i];
 	    // Check if it a valid location-id (not 0)
 	    if (LocID != 0)
-			format(TotalEndLocList, 1000, "%s%s\n", TotalEndLocList, ALocations[LocID][LocationName]); // Add the location-name to the list
+			format(TotalEndLocList, sizeof(TotalEndLocList), "%s%s\n", TotalEndLocList, ALocations[LocID][LocationName]); // Add the location-name to the list
 		else
 		    break; // As soon as an invalid location-id has been found, stop adding entries to the location-list
 	}
@@ -385,9 +385,9 @@ Dialog_TruckerSelectEndLoc(playerid, response, listitem)
 	APlayerData[playerid][JobLoc2] = ALoads[ProductID][ToLocations][listitem];
 
     // Get the names for the load, startlocation and endlocation
-	format(loadName, 50, "%s", ALoads[ProductID][LoadName]);
-	format(startlocName, 50, "%s", ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
-	format(endlocName, 50, "%s", ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
+	format(loadName, sizeof(loadName), "%s", ALoads[ProductID][LoadName]);
+	format(startlocName, sizeof(startlocName), "%s", ALocations[APlayerData[playerid][JobLoc1]][LocationName]);
+	format(endlocName, sizeof(endlocName), "%s", ALocations[APlayerData[playerid][JobLoc2]][LocationName]);
 
 	// Job has started
 	APlayerData[playerid][JobStarted] = true;
@@ -398,7 +398,7 @@ Dialog_TruckerSelectEndLoc(playerid, response, listitem)
 	// Set jobstep to 1 (going to load the goods)
 	APlayerData[playerid][JobStep] = 1;
 	// Combine all data into a string for the TextDraw (the player can see this all the time) to describe the mission
-	format(RouteText, 255, TXT_HaulingCargoFromToPickup, loadName, startlocName, endlocName);
+	format(RouteText, sizeof(RouteText), TXT_HaulingCargoFromToPickup, loadName, startlocName, endlocName);
 	// Set the TextDraw so the player can see it
 	TextDrawSetString(APlayerData[playerid][MissionText], RouteText);
 	// Grab the x, y, z positions for the first location
@@ -410,7 +410,7 @@ Dialog_TruckerSelectEndLoc(playerid, response, listitem)
 	// Set the job-fail-time for the global vehicle-timer
 	APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 	// Inform the player that he must load his goods
-	format(LoadMsg, 128, TXT_PickupCargoAt, loadName, startlocName);
+	format(LoadMsg, sizeof(LoadMsg), TXT_PickupCargoAt, loadName, startlocName);
 	SendClientMessage(playerid, COLOR_WHITE, LoadMsg);
 
 	return 1;
@@ -440,9 +440,9 @@ Dialog_BusSelectJobMethod(playerid, response, listitem)
 				{
 					// Get the data about the route
 					BusLine = ABusRoutes[i][LineNumber];
-					format(Description, 100, ABusRoutes[i][RouteDescription]);
+					format(Description, sizeof(Description), ABusRoutes[i][RouteDescription]);
 					// Add the busline to the list
-					format(TotalRouteList, 500, "%s%sLine %i (%s)", TotalRouteList, "\n", BusLine, Description);
+					format(TotalRouteList, sizeof(TotalRouteList), "%s%sLine %i (%s)", TotalRouteList, "\n", BusLine, Description);
 				}
 
 				// Let the player choose a busroute
@@ -539,7 +539,7 @@ Dialog_Bike(playerid, response, listitem)
 	GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
 	APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 	// Inform all players about it
-	format(msg, 120, TXT_PlayerSpawnedVehicle, pName, vID, CarID, x, y, z);
+	format(msg, sizeof(msg), TXT_PlayerSpawnedVehicle, pName, vID, CarID, x, y, z);
 	SendClientMessageToAll(COLOR_WHITE, msg);
 
 	return 1;
@@ -601,7 +601,7 @@ Dialog_Car(playerid, response, listitem)
 			GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
 			APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 			// Inform all players about it
-			format(msg, 120, TXT_PlayerSpawnedVehicle, pName, vID, ACars[CarIndex][CarModel], x, y, z);
+			format(msg, sizeof(msg), TXT_PlayerSpawnedVehicle, pName, vID, ACars[CarIndex][CarModel], x, y, z);
 			SendClientMessageToAll(COLOR_WHITE, msg);
 			// Also, after spawning a vehicle, reset FirstCar (so next time, the list starts from the start)
 			APlayerData[playerid][DialogCarFirstCar] = 0;
@@ -667,7 +667,7 @@ Dialog_Plane(playerid, response, listitem)
 			GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
 			APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 			// Inform the player about it
-			format(msg, 128, TXT_PlayerSpawnedVehicle, pName, vID, APlanes[PlaneIndex][PlaneModel], x, y, z);
+			format(msg, sizeof(msg), TXT_PlayerSpawnedVehicle, pName, vID, APlanes[PlaneIndex][PlaneModel], x, y, z);
 			SendClientMessageToAll(COLOR_WHITE, msg);
 			// Also, after spawning a vehicle, reset FirstPlane (so next time, the list starts from the start)
 			APlayerData[playerid][DialogPlaneFirstPlane] = 0;
@@ -723,7 +723,7 @@ Dialog_Trailer(playerid, response, listitem)
 			// Also set max-fuel and save the model for the vehicle
 			vID = Vehicle_Create(ATrailers[TrailerIndex][TrailerModel], x, y + 10.0, z + 5.0, 0.0, random(126), random(126), 600);
 			// Inform the player about it
-			format(msg, 128, TXT_PlayerSpawnedVehicle, pName, vID, ATrailers[TrailerIndex][TrailerModel], x, y + 10.0, z + 5.0);
+			format(msg, sizeof(msg), TXT_PlayerSpawnedVehicle, pName, vID, ATrailers[TrailerIndex][TrailerModel], x, y + 10.0, z + 5.0);
 			SendClientMessageToAll(COLOR_WHITE, msg);
 			// Also, after spawning a vehicle, reset FirstTrailer (so next time, the list starts from the start)
 			APlayerData[playerid][DialogTrailerFirstTrailer] = 0;
@@ -777,7 +777,7 @@ Dialog_Boat(playerid, response, listitem)
 	GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
 	APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 	// Inform all players about it
-	format(msg, 120, TXT_PlayerSpawnedVehicle, pName, vID, CarID, x, y, z);
+	format(msg, sizeof(msg), TXT_PlayerSpawnedVehicle, pName, vID, CarID, x, y, z);
 	SendClientMessageToAll(COLOR_WHITE, msg);
 
 	return 1;
@@ -918,7 +918,7 @@ Dialog_RentProcessClass(playerid, response, listitem)
 		if (ABuyableVehicles[i][VehicleClass] == APlayerData[playerid][DialogRentVClass])
 		{
 			// Add the carname to the list and it's price
-			format(CarList, 1000, "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price] / 10); // Add the name of the next car to the list on the next line
+			format(CarList, sizeof(CarList), "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price] / 10); // Add the name of the next car to the list on the next line
 		}
 	}
 
@@ -934,21 +934,21 @@ Dialog_RentProcessClass(playerid, response, listitem)
 	// Set a title for the dialog based on the requested vehicleclass
 	switch (APlayerData[playerid][DialogRentVClass])
 	{
-		case VClassBike: format(DialogTitle, 128, TXT_RentBike);
-		case VClassBoat: format(DialogTitle, 128, TXT_RentBoat);
-		case VClassConvertible: format(DialogTitle, 128, TXT_RentConvertible);
-		case VClassHelicopter: format(DialogTitle, 128, TXT_RentHelicopter);
-		case VClassIndustrial: format(DialogTitle, 128, TXT_RentIndustrial);
-		case VClassLowRider: format(DialogTitle, 128, TXT_RentLowRider);
-		case VClassOffRoad: format(DialogTitle, 128, TXT_RentOffRoad);
-		case VClassPlane: format(DialogTitle, 128, TXT_RentPlane);
-		case VClassPublic: format(DialogTitle, 128, TXT_RentPublicService);
-		case VClassRCVehicle: format(DialogTitle, 128, TXT_RentRC);
-		case VClassSaloons: format(DialogTitle, 128, TXT_RentSaloon);
-		case VClassSportCar: format(DialogTitle, 128, TXT_RentSport);
-		case VClassStationCar: format(DialogTitle, 128, TXT_RentStationWagon);
-		case VClassTrailer: format(DialogTitle, 128, TXT_RentTrailer);
-		case VClassUnique: format(DialogTitle, 128, TXT_RentUnique);
+		case VClassBike: format(DialogTitle, sizeof(DialogTitle), TXT_RentBike);
+		case VClassBoat: format(DialogTitle, sizeof(DialogTitle), TXT_RentBoat);
+		case VClassConvertible: format(DialogTitle, sizeof(DialogTitle), TXT_RentConvertible);
+		case VClassHelicopter: format(DialogTitle, sizeof(DialogTitle), TXT_RentHelicopter);
+		case VClassIndustrial: format(DialogTitle, sizeof(DialogTitle), TXT_RentIndustrial);
+		case VClassLowRider: format(DialogTitle, sizeof(DialogTitle), TXT_RentLowRider);
+		case VClassOffRoad: format(DialogTitle, sizeof(DialogTitle), TXT_RentOffRoad);
+		case VClassPlane: format(DialogTitle, sizeof(DialogTitle), TXT_RentPlane);
+		case VClassPublic: format(DialogTitle, sizeof(DialogTitle), TXT_RentPublicService);
+		case VClassRCVehicle: format(DialogTitle, sizeof(DialogTitle), TXT_RentRC);
+		case VClassSaloons: format(DialogTitle, sizeof(DialogTitle), TXT_RentSaloon);
+		case VClassSportCar: format(DialogTitle, sizeof(DialogTitle), TXT_RentSport);
+		case VClassStationCar: format(DialogTitle, sizeof(DialogTitle), TXT_RentStationWagon);
+		case VClassTrailer: format(DialogTitle, sizeof(DialogTitle), TXT_RentTrailer);
+		case VClassUnique: format(DialogTitle, sizeof(DialogTitle), TXT_RentUnique);
 	}
 
 	// Ask which car the player wants to have by showing the dialog
@@ -1020,7 +1020,7 @@ Dialog_RentCar(playerid, response, listitem)
 					// Let the player pay for renting the vehicle
 					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - (ABuyableVehicles[i][Price] / 10);
 					// Let the player know he rented a vehicle
-					format(Msg, 128, TXT_PlayerRentsVehicle, ABuyableVehicles[i][CarName], (ABuyableVehicles[i][Price] / 10));
+					format(Msg, sizeof(Msg), TXT_PlayerRentsVehicle, ABuyableVehicles[i][CarName], (ABuyableVehicles[i][Price] / 10));
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 				else // The player has not enough money to rent this vehicle
@@ -1190,7 +1190,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 			// Only the house-owner can use this option
 			if (House_PlayerIsOwner(playerid, HouseID) == 1)
 			{
-		        format(DialogTitle, 200, TXT_DialogOldHouseName, AHouseData[HouseID][HouseName]);
+		        format(DialogTitle, sizeof(DialogTitle), TXT_DialogOldHouseName, AHouseData[HouseID][HouseName]);
 				ShowPlayerDialog(playerid, DialogHouseNameChange, DIALOG_STYLE_INPUT, DialogTitle, TXT_DialogEnterNewHouseName, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
@@ -1211,9 +1211,9 @@ Dialog_HouseMenu(playerid, response, listitem)
 					    UpgradePrice = ((AHouseData[HouseID][HousePrice] * Counter) / 100) * HouseUpgradePercent;
 					    // Add the upgrade-info in green if the player can afford it, and in red if he cannot afford it
 						if (APlayerData[playerid][PlayerMoney] >= UpgradePrice)
-							format(UpgradeList, 2000, "%s{00FF00}%s (level %i)\t\t$%i\n", UpgradeList, AHouseInteriors[i][InteriorName], i, UpgradePrice);
+							format(UpgradeList, sizeof(UpgradeList), "%s{00FF00}%s (level %i)\t\t$%i\n", UpgradeList, AHouseInteriors[i][InteriorName], i, UpgradePrice);
 						else
-							format(UpgradeList, 2000, "%s{FF0000}%s (level %i)\t\t$%i\n", UpgradeList, AHouseInteriors[i][InteriorName], i, UpgradePrice);
+							format(UpgradeList, sizeof(UpgradeList), "%s{FF0000}%s (level %i)\t\t$%i\n", UpgradeList, AHouseInteriors[i][InteriorName], i, UpgradePrice);
 					}
 
 			        // Show another dialog to let the player select which upgrade he wants for his house
@@ -1236,21 +1236,21 @@ Dialog_HouseMenu(playerid, response, listitem)
 			    if (CarSlot != -1)
 			    {
 				    // Let the player choose a vehicle-class
-					format(VehicleClassList, 1000, "%s{00FF00}%s{FFFFFF}\n", VehicleClassList, "Bikes");
-					format(VehicleClassList, 1000, "%s{40FF00}%s{FFFFFF}\n", VehicleClassList, "Boats");
-					format(VehicleClassList, 1000, "%s{80FF00}%s{FFFFFF}\n", VehicleClassList, "Convertibles");
-					format(VehicleClassList, 1000, "%s{B0FF00}%s{FFFFFF}\n", VehicleClassList, "Helicopters");
-					format(VehicleClassList, 1000, "%s{FFFF00}%s{FFFFFF}\n", VehicleClassList, "Industrial vehicles");
-					format(VehicleClassList, 1000, "%s{B0FF40}%s{FFFFFF}\n", VehicleClassList, "Low-riders");
-					format(VehicleClassList, 1000, "%s{80FF80}%s{FFFFFF}\n", VehicleClassList, "Off-Road vehicles");
-					format(VehicleClassList, 1000, "%s{40FFB0}%s{FFFFFF}\n", VehicleClassList, "Planes");
-					format(VehicleClassList, 1000, "%s{00FFFF}%s{FFFFFF}\n", VehicleClassList, "Public Service vehicles");
-					format(VehicleClassList, 1000, "%s{00B0FF}%s{FFFFFF}\n", VehicleClassList, "RC vehicles");
-					format(VehicleClassList, 1000, "%s{0080FF}%s{FFFFFF}\n", VehicleClassList, "Saloon vehicles");
-					format(VehicleClassList, 1000, "%s{0040FF}%s{FFFFFF}\n", VehicleClassList, "Sport vehicles");
-					format(VehicleClassList, 1000, "%s{0000FF}%s{FFFFFF}\n", VehicleClassList, "Station wagons");
-					format(VehicleClassList, 1000, "%s{4000FF}%s{FFFFFF}\n", VehicleClassList, "Trailers");
-					format(VehicleClassList, 1000, "%s{8000FF}%s{FFFFFF}\n", VehicleClassList, "Unique vehicles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{00FF00}%s{FFFFFF}\n", VehicleClassList, "Bikes");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{40FF00}%s{FFFFFF}\n", VehicleClassList, "Boats");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{80FF00}%s{FFFFFF}\n", VehicleClassList, "Convertibles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{B0FF00}%s{FFFFFF}\n", VehicleClassList, "Helicopters");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{FFFF00}%s{FFFFFF}\n", VehicleClassList, "Industrial vehicles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{B0FF40}%s{FFFFFF}\n", VehicleClassList, "Low-riders");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{80FF80}%s{FFFFFF}\n", VehicleClassList, "Off-Road vehicles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{40FFB0}%s{FFFFFF}\n", VehicleClassList, "Planes");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{00FFFF}%s{FFFFFF}\n", VehicleClassList, "Public Service vehicles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{00B0FF}%s{FFFFFF}\n", VehicleClassList, "RC vehicles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{0080FF}%s{FFFFFF}\n", VehicleClassList, "Saloon vehicles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{0040FF}%s{FFFFFF}\n", VehicleClassList, "Sport vehicles");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{0000FF}%s{FFFFFF}\n", VehicleClassList, "Station wagons");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{4000FF}%s{FFFFFF}\n", VehicleClassList, "Trailers");
+					format(VehicleClassList, sizeof(VehicleClassList), "%s{8000FF}%s{FFFFFF}\n", VehicleClassList, "Unique vehicles");
 					// Ask which vehicle class the player wants to see to buy a vehicle
 					ShowPlayerDialog(playerid, DialogBuyCarClass, DIALOG_STYLE_LIST, TXT_DialogBuyCarSelectClass, VehicleClassList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			    }
@@ -1273,7 +1273,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 			        if (APlayerData[playerid][PlayerMoney] >= (AHouseData[HouseID][HousePrice] / 10))
 			        {
 					    // Construct the message for the dialog, this includes the price for the insurance
-					    format(MsgInsurance, 128, TXT_DialogBuyInsurance, AHouseData[HouseID][HousePrice] / 10);
+					    format(MsgInsurance, sizeof(MsgInsurance), TXT_DialogBuyInsurance, AHouseData[HouseID][HousePrice] / 10);
 						// Ask the player if the wants to buy an insurance for this house's vehicles
 						ShowPlayerDialog(playerid, DialogBuyInsurance, DIALOG_STYLE_MSGBOX, TXT_DialogTitleBuyInsurance, MsgInsurance, TXT_DialogButtonYes, TXT_DialogButtonNo);
 					}
@@ -1309,10 +1309,10 @@ Dialog_HouseMenu(playerid, response, listitem)
 						    // Get the index where the first vehicle is found in the ABuyableVehicles array
 						    BuyableCarIndex = VehicleBuyable_GetIndex(GetVehicleModel(AHouseData[HouseID][VehicleIDs][CarSlot]));
 						    // Add the name of the vehicle to the list
-						    format(VehicleList, 500, "%s{00FF00}%s: $%i{FFFFFF}\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][Price] / 2);
+						    format(VehicleList, sizeof(VehicleList), "%s{00FF00}%s: $%i{FFFFFF}\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][Price] / 2);
 						}
 						else
-							format(VehicleList, 500, TXT_EmptyCarSlot, VehicleList);
+							format(VehicleList, sizeof(VehicleList), TXT_EmptyCarSlot, VehicleList);
 					}
 
 					// Ask which vehicle class the player wants to see to buy a vehicle
@@ -1340,7 +1340,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 				// Check if all house-cars have been sold (all slots are empty)
 				if (HouseHasCars == false)
 				{
-				    format(Msg, 128, TXT_SureSellHouse, House_CalcSellPrice(HouseID));
+				    format(Msg, sizeof(Msg), TXT_SureSellHouse, House_CalcSellPrice(HouseID));
 					ShowPlayerDialog(playerid, DialogSellHouse, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Msg, TXT_DialogButtonYes, TXT_DialogButtonNo);
 				}
 				else
@@ -1412,7 +1412,7 @@ Dialog_UpgradeHouse(playerid, response, listitem)
 		// Let the player pay for the upgrade
 		new Msg[128];
 		RewardPlayer(playerid, -Payment, 0);
-		format(Msg, 128, TXT_PlayerUpgradedHouse, AHouseData[HouseID][HouseLevel], Payment);
+		format(Msg, sizeof(Msg), TXT_PlayerUpgradedHouse, AHouseData[HouseID][HouseLevel], Payment);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 		// Also update the 3DText at the entrance of the house
@@ -1492,7 +1492,7 @@ Dialog_BuyCarClass(playerid, response, listitem)
 		if (ABuyableVehicles[i][VehicleClass] == APlayerData[playerid][DialogBuyVClass])
 		{
 			// Add the carname to the list and it's price
-			format(CarList, 1000, "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price]); // Add the name of the next car to the list on the next line
+			format(CarList, sizeof(CarList), "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price]); // Add the name of the next car to the list on the next line
 		}
 	}
 
@@ -1508,21 +1508,21 @@ Dialog_BuyCarClass(playerid, response, listitem)
 	// Set a title for the dialog based on the requested vehicleclass
 	switch (APlayerData[playerid][DialogBuyVClass])
 	{
-		case VClassBike: format(DialogTitle, 128, TXT_BuyBike);
-		case VClassBoat: format(DialogTitle, 128, TXT_BuyBoat);
-		case VClassConvertible: format(DialogTitle, 128, TXT_BuyConvertible);
-		case VClassHelicopter: format(DialogTitle, 128, TXT_BuyHelicopter);
-		case VClassIndustrial: format(DialogTitle, 128, TXT_BuyIndustrial);
-		case VClassLowRider: format(DialogTitle, 128, TXT_BuyLowRider);
-		case VClassOffRoad: format(DialogTitle, 128, TXT_BuyOffRoad);
-		case VClassPlane: format(DialogTitle, 128, TXT_BuyPlane);
-		case VClassPublic: format(DialogTitle, 128, TXT_BuyPublicService);
-		case VClassRCVehicle: format(DialogTitle, 128, TXT_BuyRC);
-		case VClassSaloons: format(DialogTitle, 128, TXT_BuySaloon);
-		case VClassSportCar: format(DialogTitle, 128, TXT_BuySport);
-		case VClassStationCar: format(DialogTitle, 128, TXT_BuyStationWagon);
-		case VClassTrailer: format(DialogTitle, 128, TXT_BuyTrailer);
-		case VClassUnique: format(DialogTitle, 128, TXT_BuyUnique);
+		case VClassBike: format(DialogTitle, sizeof(DialogTitle), TXT_BuyBike);
+		case VClassBoat: format(DialogTitle, sizeof(DialogTitle), TXT_BuyBoat);
+		case VClassConvertible: format(DialogTitle, sizeof(DialogTitle), TXT_BuyConvertible);
+		case VClassHelicopter: format(DialogTitle, sizeof(DialogTitle), TXT_BuyHelicopter);
+		case VClassIndustrial: format(DialogTitle, sizeof(DialogTitle), TXT_BuyIndustrial);
+		case VClassLowRider: format(DialogTitle, sizeof(DialogTitle), TXT_BuyLowRider);
+		case VClassOffRoad: format(DialogTitle, sizeof(DialogTitle), TXT_BuyOffRoad);
+		case VClassPlane: format(DialogTitle, sizeof(DialogTitle), TXT_BuyPlane);
+		case VClassPublic: format(DialogTitle, sizeof(DialogTitle), TXT_BuyPublicService);
+		case VClassRCVehicle: format(DialogTitle, sizeof(DialogTitle), TXT_BuyRC);
+		case VClassSaloons: format(DialogTitle, sizeof(DialogTitle), TXT_BuySaloon);
+		case VClassSportCar: format(DialogTitle, sizeof(DialogTitle), TXT_BuySport);
+		case VClassStationCar: format(DialogTitle, sizeof(DialogTitle), TXT_BuyStationWagon);
+		case VClassTrailer: format(DialogTitle, sizeof(DialogTitle), TXT_BuyTrailer);
+		case VClassUnique: format(DialogTitle, sizeof(DialogTitle), TXT_BuyUnique);
 	}
 
 	// Ask which car the player wants to have by showing the dialog
@@ -1562,7 +1562,7 @@ Dialog_BuyCar(playerid, response, listitem)
 					// Let the player pay for buying the vehicle
 					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - ABuyableVehicles[i][Price];
 					// Let the player know he bought a vehicle
-					format(Msg, 128, TXT_PlayerBoughtVehicle, ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price]);
+					format(Msg, sizeof(Msg), TXT_PlayerBoughtVehicle, ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price]);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 					SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustUseGetcarAndPark);
 
@@ -1600,7 +1600,7 @@ Dialog_BuyInsurance(playerid, response)
 	RewardPlayer(playerid, -(AHouseData[HouseID][HousePrice] / 10), 0);
 
 	// Let the player know he has bought a vehicle-insurance for this house
-	format(Msg, 128, TXT_PlayerBoughtInsurance, AHouseData[HouseID][HousePrice] / 10);
+	format(Msg, sizeof(Msg), TXT_PlayerBoughtInsurance, AHouseData[HouseID][HousePrice] / 10);
 	SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 	// Save the player-file (and his houses)
@@ -1701,7 +1701,7 @@ Dialog_SellCar(playerid, response, listitem)
 		// Refund the player with 50% of the vehicle's buying price
 		APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] + (ABuyableVehicles[BuyableCarIndex][Price] / 2);
 		// Let the player know about it
-		format(Msg, 128, TXT_PlayerSoldVehicle, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][Price] / 2);
+		format(Msg, sizeof(Msg), TXT_PlayerSoldVehicle, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][Price] / 2);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 		// Save the player-file (and his houses)
@@ -1749,12 +1749,12 @@ Dialog_GetCarSelectHouse(playerid, response, listitem)
 				    BuyableCarIndex = VehicleBuyable_GetIndex(GetVehicleModel(AHouseData[HouseID][VehicleIDs][CarSlot]));
 				    // Add the name of the vehicle to the list
 					if (AVehicleData[AHouseData[HouseID][VehicleIDs][CarSlot]][Clamped] == true)
-					    format(VehicleList, 500, "%s{00FF00}%s (clamped)\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName]);
+					    format(VehicleList, sizeof(VehicleList), "%s{00FF00}%s (clamped)\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName]);
 					else
-					    format(VehicleList, 500, "%s{00FF00}%s\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName]);
+					    format(VehicleList, sizeof(VehicleList), "%s{00FF00}%s\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName]);
 				}
 				else
-					format(VehicleList, 500, TXT_EmptyCarSlot, VehicleList);
+					format(VehicleList, sizeof(VehicleList), TXT_EmptyCarSlot, VehicleList);
 			}
 
 			// Ask which vehicle the player wants to teleport to his location
@@ -1870,7 +1870,7 @@ Dialog_CreateBusSelType(playerid, response, listitem)
 	BusinessFile_Save(BusID);
 
 	// Inform the player that he created a new house
-	format(Msg, 128, "{00FF00}You've succesfully created business {FF00FF}%i{00FF00}", BusID);
+	format(Msg, sizeof(Msg), "{00FF00}You've succesfully created business {FF00FF}%i{00FF00}", BusID);
 	SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 	return 1;
@@ -1894,7 +1894,7 @@ Dialog_BusinessMenu(playerid, response, listitem)
 	{
 	    case 0: // Change business name
 	    {
-	        format(DialogTitle, 200, TXT_DialogOldBusinessName, ABusinessData[BusID][BusinessName]);
+	        format(DialogTitle, sizeof(DialogTitle), TXT_DialogOldBusinessName, ABusinessData[BusID][BusinessName]);
 			ShowPlayerDialog(playerid, DialogBusinessNameChange, DIALOG_STYLE_INPUT, DialogTitle, TXT_DialogEnterNewBusinessName, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 	    }
 	    case 1: // Upgrade the business
@@ -1916,7 +1916,7 @@ Dialog_BusinessMenu(playerid, response, listitem)
 					// Update the 3DText near the business's entrance to show what level the business is
 					Business_UpdateEntrance(BusID);
 					// Let the player know about it
-					format(Msg, 128, "{00FF00}You have upgraded your business to level {FFFF00}%i", ABusinessData[BusID][BusinessLevel]);
+					format(Msg, sizeof(Msg), "{00FF00}You have upgraded your business to level {FFFF00}%i", ABusinessData[BusID][BusinessLevel]);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 				else
@@ -1932,7 +1932,7 @@ Dialog_BusinessMenu(playerid, response, listitem)
 		}
 		case 3: // Sell business
 		{
-		    format(Msg, 128, TXT_SureSellBusiness, (ABusinessInteriors[BusType][BusPrice] * ABusinessData[BusID][BusinessLevel]) / 2);
+		    format(Msg, sizeof(Msg), TXT_SureSellBusiness, (ABusinessInteriors[BusType][BusPrice] * ABusinessData[BusID][BusinessLevel]) / 2);
 			ShowPlayerDialog(playerid, DialogSellBusiness, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Msg, TXT_DialogButtonYes, TXT_DialogButtonNo);
 		}
 	    case 4: // Exit the business
@@ -2182,7 +2182,7 @@ Dialog_UnclampVehicles(playerid, response)
 		RewardPlayer(playerid, -UnclampPrice, 0);
 
 		// Let the player know his vehicles have been unclamped
-		format(Msg, 128, "{00FF00}Your vehicles have been unclamped for {FFFF00}$%i", UnclampPrice);
+		format(Msg, sizeof(Msg), "{00FF00}Your vehicles have been unclamped for {FFFF00}$%i", UnclampPrice);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 		// Save the player's profile
@@ -2239,7 +2239,7 @@ Dialog_StatsOtherPlayer(playerid, response, listitem)
 		{
 			// Construct the dialog-title
 			GetPlayerName(OtherPlayer, Name, sizeof(Name));
-			format(DialogTitle, 128, "Houses of player: %s", Name);
+			format(DialogTitle, sizeof(DialogTitle), "Houses of player: %s", Name);
 
 			// Add all house-names of the other player to the list
 			for (new i; i < MAX_HOUSESPERPLAYER; i++)
@@ -2249,9 +2249,9 @@ Dialog_StatsOtherPlayer(playerid, response, listitem)
 
 				// Check if this houseindex is occupied
 				if (HouseID != 0)
-					format(HouseList, 1000, "%s{00FF00}%s{FFFFFF}\n", HouseList, AHouseData[HouseID][HouseName]);
+					format(HouseList, sizeof(HouseList), "%s{00FF00}%s{FFFFFF}\n", HouseList, AHouseData[HouseID][HouseName]);
 				else
-					format(HouseList, 1000, "%s{FFFFFF}%s{FFFFFF}\n", HouseList, "Empty house-slot");
+					format(HouseList, sizeof(HouseList), "%s{FFFFFF}%s{FFFFFF}\n", HouseList, "Empty house-slot");
 			}
 
 			// Display the dialog (displays all statistics about the house, such as level, bought vehicles, insurance, ...)
@@ -2261,7 +2261,7 @@ Dialog_StatsOtherPlayer(playerid, response, listitem)
 		{
 			// Construct the dialog-title
 			GetPlayerName(OtherPlayer, Name, sizeof(Name));
-			format(DialogTitle, 128, "Businesses of player: %s", Name);
+			format(DialogTitle, sizeof(DialogTitle), "Businesses of player: %s", Name);
 
 			// Ask to which business the player wants to port
 			for (new i; i < MAX_BUSINESSPERPLAYER; i++)
@@ -2275,10 +2275,10 @@ Dialog_StatsOtherPlayer(playerid, response, listitem)
 					// Get the business-type
 					BusType = ABusinessData[BusID][BusinessType];
 					Earnings = (BusinessTransactionTime - ABusinessData[BusID][LastTransaction]) * ABusinessInteriors[BusType][BusEarnings] * ABusinessData[BusID][BusinessLevel];
-					format(BusinessList, 1000, "%s{00FF00}%s{FFFFFF} (earnings: $%i)\n", BusinessList, ABusinessData[BusID][BusinessName], Earnings);
+					format(BusinessList, sizeof(BusinessList), "%s{00FF00}%s{FFFFFF} (earnings: $%i)\n", BusinessList, ABusinessData[BusID][BusinessName], Earnings);
 				}
 				else
-					format(BusinessList, 1000, "%s{FFFFFF}%s{FFFFFF}\n", BusinessList, "Empty business-slot");
+					format(BusinessList, sizeof(BusinessList), "%s{FFFFFF}%s{FFFFFF}\n", BusinessList, "Empty business-slot");
 			}
 
 			// Display the dialog (and allow the player to port there)
@@ -2304,7 +2304,7 @@ Dialog_StatsHouse(playerid, response, listitem)
 
 	// Construct the dialog-title
 	GetPlayerName(OtherPlayer, Name, sizeof(Name));
-	format(DialogTitle, 128, "House of player: %s", Name);
+	format(DialogTitle, sizeof(DialogTitle), "House of player: %s", Name);
 
 	// Check if this is a valid HouseID
 	if (HouseID != 0)
@@ -2330,12 +2330,12 @@ Dialog_StatsHouse(playerid, response, listitem)
 			    BuyableCarIndex = VehicleBuyable_GetIndex(GetVehicleModel(AHouseData[HouseID][VehicleIDs][CarSlot]));
 			    // Add the name of the vehicle to the list
 				if (AVehicleData[AHouseData[HouseID][VehicleIDs][CarSlot]][Clamped] == true)
-				    format(HouseData, 500, "%s{00FF00}%s (clamped)\n", HouseData, ABuyableVehicles[BuyableCarIndex][CarName]);
+				    format(HouseData, sizeof(HouseData), "%s{00FF00}%s (clamped)\n", HouseData, ABuyableVehicles[BuyableCarIndex][CarName]);
 				else
-				    format(HouseData, 500, "%s{00FF00}%s\n", HouseData, ABuyableVehicles[BuyableCarIndex][CarName]);
+				    format(HouseData, sizeof(HouseData), "%s{00FF00}%s\n", HouseData, ABuyableVehicles[BuyableCarIndex][CarName]);
 			}
 			else
-				format(HouseData, 500, TXT_EmptyCarSlot, HouseData);
+				format(HouseData, sizeof(HouseData), TXT_EmptyCarSlot, HouseData);
 		}
 
 		// Store the HouseID that was chosen of the other player so the other dialogs can display the statistics further
@@ -2556,7 +2556,7 @@ Dialog_BankDeposit(playerid, response, inputtext[])
 			// Save the bank account
 			BankFile_Save(playerid);
 			// Inform the player that his money has been deposited
-			format(Msg, 128, "{00FF00}You have deposited {FFFF00}$%i{00FF00} into your bank account", DepositMoney);
+			format(Msg, sizeof(Msg), "{00FF00}You have deposited {FFFF00}$%i{00FF00} into your bank account", DepositMoney);
 			SendClientMessage(playerid, COLOR_WHITE, Msg);
 			// Show the bank dialog
 			ShowBankMenu(playerid);
@@ -2597,7 +2597,7 @@ Dialog_BankWithdraw(playerid, response, inputtext[])
 			// Save the bank account
 			BankFile_Save(playerid);
 			// Inform the player that his money has been withdrawn
-			format(Msg, 128, "{00FF00}You have withdrawn {FFFF00}$%i{00FF00} from your bank account", WithdrawMoney);
+			format(Msg, sizeof(Msg), "{00FF00}You have withdrawn {FFFF00}$%i{00FF00} from your bank account", WithdrawMoney);
 			SendClientMessage(playerid, COLOR_WHITE, Msg);
 			// Show the bank dialog
 			ShowBankMenu(playerid);
@@ -2697,17 +2697,17 @@ Dialog_BankTransferName(playerid, response, inputtext[])
 				BankFile_Save(OtherPlayer);
 				BankFile_Save(playerid);
 				// Inform the receiver that money was transferred to his bank account
-				format(Msg, 128, "{00FF00}Your bank account has received a transfer of {FFFF00}$%i{00FF00} from {FFFF00}%s", APlayerData[playerid][UseMoney], SenderName);
+				format(Msg, sizeof(Msg), "{00FF00}Your bank account has received a transfer of {FFFF00}$%i{00FF00} from {FFFF00}%s", APlayerData[playerid][UseMoney], SenderName);
 				SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 				// Inform the sender that money was transferred from his bank account to the receiver
-				format(Msg, 128, "{00FF00}You have transferred {FFFF00}$%i{00FF00} to {FFFF00}%s{00FF00}'s bank account", APlayerData[playerid][UseMoney], ReceiverName);
+				format(Msg, sizeof(Msg), "{00FF00}You have transferred {FFFF00}$%i{00FF00} to {FFFF00}%s{00FF00}'s bank account", APlayerData[playerid][UseMoney], ReceiverName);
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 				// Exit the function (bank transfer was completed), skipping offline transfer
 				return 1;
 			}
 			else // The target player is online, but has no bank account
 			{
-				format(Msg, 128, "{FF0000}Player {FFFF00}%s{FF0000} is online, but has no bank account, transfer failed", inputtext);
+				format(Msg, sizeof(Msg), "{FF0000}Player {FFFF00}%s{FF0000} is online, but has no bank account, transfer failed", inputtext);
 			    SendClientMessage(playerid, COLOR_WHITE, Msg);
 				// Exit the function (bank transfer failed as the target player has no bank account), skipping offline transfer
 				return 1;
@@ -2735,9 +2735,9 @@ Dialog_BankTransferName(playerid, response, inputtext[])
 		BFile = fopen(file, io_append); // Open the receiver's bank account for appending data to it
 
 		fwrite(BFile, "[Transfer]\r\n");
-		format(LineForFile, 100, "TransferMoney %i\r\n", APlayerData[playerid][UseMoney]); // Construct the line: "TransferMoney <TransferMoney>"
+		format(LineForFile, sizeof(LineForFile), "TransferMoney %i\r\n", APlayerData[playerid][UseMoney]); // Construct the line: "TransferMoney <TransferMoney>"
 		fwrite(BFile, LineForFile); // And save it to the file
-		format(LineForFile, 100, "TransferName %s\r\n", SenderName); // Construct the line: "TransferName <SenderName>"
+		format(LineForFile, sizeof(LineForFile), "TransferName %s\r\n", SenderName); // Construct the line: "TransferName <SenderName>"
 		fwrite(BFile, LineForFile); // And save it to the file
 		// Get the current date and time
 		getdate(Year, Month, Day);
@@ -2758,7 +2758,7 @@ Dialog_BankTransferName(playerid, response, inputtext[])
 		if (Minute < 10) format(sMinute, sizeof(sMinute), "0%i", Minute);
 		else format(sMinute, sizeof(sMinute), "%i", Minute);
 
-		format(LineForFile, 100, "TransferTime %s/%s/%s %s:%s\r\n", sDay, sMonth, sYear, sHour, sMinute); // Construct the line: "TransferTime <TransferTime>"
+		format(LineForFile, sizeof(LineForFile), "TransferTime %s/%s/%s %s:%s\r\n", sDay, sMonth, sYear, sHour, sMinute); // Construct the line: "TransferTime <TransferTime>"
 		fwrite(BFile, LineForFile); // And save it to the file
 		fwrite(BFile, "[/Transfer]\r\n"); // Save the transfer-terminator string to the file
 
@@ -2770,12 +2770,12 @@ Dialog_BankTransferName(playerid, response, inputtext[])
 		BankFile_Save(playerid);
 
 		// Inform the sender that the transfer was completed
-		format(Msg, 128, "{00FF00}Player {FFFF00}%s{00FF00} is offline and has a bank account, transfer of {FFFF00}$%i{00FF00} was succesfull", inputtext, APlayerData[playerid][UseMoney]);
+		format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} is offline and has a bank account, transfer of {FFFF00}$%i{00FF00} was succesfull", inputtext, APlayerData[playerid][UseMoney]);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 	else
 	{
-		format(Msg, 128, "{FF0000}Account-name {FFFF00}%s{FF0000} not found, transfer failed", inputtext);
+		format(Msg, sizeof(Msg), "{FF0000}Account-name {FFFF00}%s{FF0000} not found, transfer failed", inputtext);
 	    SendClientMessage(playerid, COLOR_WHITE, Msg);
 	}
 
@@ -2830,10 +2830,10 @@ Dialog_HelpItemChosen(playerid, response, listitem)
 	new DialogTitle[128];
 
 	// Clear the dialog-message
-	format(DialogMsg5000, 5000, "");
+	format(DialogMsg5000, sizeof(DialogMsg5000), "");
 
 	// Set the dialog-title for the help-topic to be shown
-	format(DialogTitle, 128, AHelpTopics[listitem]);
+	format(DialogTitle, sizeof(DialogTitle), AHelpTopics[listitem]);
 
 	// Select the help-item and create a dialog that displays all text about that item
 	for (new i; i < sizeof(AHelpText); i++)
@@ -2842,7 +2842,7 @@ Dialog_HelpItemChosen(playerid, response, listitem)
 		if (AHelpText[i][HelpID] == listitem)
 		{
 		    // Add all help-textlines to the list
-			format(DialogMsg5000, 5000, "%s%s\n", DialogMsg5000, AHelpText[i][HelpText]);
+			format(DialogMsg5000, sizeof(DialogMsg5000), "%s%s\n", DialogMsg5000, AHelpText[i][HelpText]);
 		}
 	}
 
@@ -2902,9 +2902,9 @@ Dialog_NewPassword(playerid, response, inputtext[])
 			// Store the new password
 			format(APlayerData[playerid][PlayerNewPassword], 50, inputtext);
 			// Construct the content of the dialog, which displays the old and new password
-			format(Msg, 256, "{FFFFFF}Your old password: \t{00FF00}%s{FFFFFF}\n", APlayerData[playerid][PlayerPassword]);
-			format(Msg, 256, "%sYour new password: \t{00FF00}%s{FFFFFF}\n \n", Msg, APlayerData[playerid][PlayerNewPassword]);
-			format(Msg, 256, "%sAre you sure you want to change your password?", Msg);
+			format(Msg, sizeof(Msg), "{FFFFFF}Your old password: \t{00FF00}%s{FFFFFF}\n", APlayerData[playerid][PlayerPassword]);
+			format(Msg, sizeof(Msg), "%sYour new password: \t{00FF00}%s{FFFFFF}\n \n", Msg, APlayerData[playerid][PlayerNewPassword]);
+			format(Msg, sizeof(Msg), "%sAre you sure you want to change your password?", Msg);
 
 			// Ask the player if he really wants to change his password
 			ShowPlayerDialog(playerid, DialogConfirmPassword, DIALOG_STYLE_MSGBOX, "Are you sure?", Msg, "Yes", "No");

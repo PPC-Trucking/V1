@@ -78,10 +78,10 @@ Assistance_FixVehicle(playerid)
 							// Let the other player pay for the repairs
 							RewardPlayer(OtherPlayer, -Payment, 0);
 							// Let the other player know that his vehicle has been repaired
-							format(Msg, 128, "{00FF00}Your vehicle has been repaired for {FFFF00}$%i{00FF00} by \"{FFFF00}%s{00FF00}\"", Payment, AssistName);
+							format(Msg, sizeof(Msg), "{00FF00}Your vehicle has been repaired for {FFFF00}$%i{00FF00} by \"{FFFF00}%s{00FF00}\"", Payment, AssistName);
 							SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 							// Let the assistance player know who's vehicle has been repaired
-							format(Msg, 128, "{00FF00}You have repaired {FFFF00}%s{00FF00}'s vehicle and earned {FFFF00}$%i", Name, Payment);
+							format(Msg, sizeof(Msg), "{00FF00}You have repaired {FFFF00}%s{00FF00}'s vehicle and earned {FFFF00}$%i", Name, Payment);
 							SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 							// Calculate the amount of fuel that needs to be refuelled
@@ -97,10 +97,10 @@ Assistance_FixVehicle(playerid)
 							// Increase the stats
 							APlayerData[playerid][StatsAssistance]++;
 							// Let the other player know that his vehicle has been refuelled
-							format(Msg, 128, "{00FF00}Your vehicle has also been refuelled for {FFFF00}$%i{00FF00} by \"{FFFF00}%s{00FF00}\"", Payment, AssistName);
+							format(Msg, sizeof(Msg), "{00FF00}Your vehicle has also been refuelled for {FFFF00}$%i{00FF00} by \"{FFFF00}%s{00FF00}\"", Payment, AssistName);
 							SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 							// Let the assistance player know who's vehicle has been refuelled
-							format(Msg, 128, "{00FF00}You have also refuelled {FFFF00}%s{00FF00}'s vehicle and earned {FFFF00}$%i", Name, Payment);
+							format(Msg, sizeof(Msg), "{00FF00}You have also refuelled {FFFF00}%s{00FF00}'s vehicle and earned {FFFF00}$%i", Name, Payment);
 							SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 							// Save the player's account
