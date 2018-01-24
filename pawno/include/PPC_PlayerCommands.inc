@@ -4003,7 +4003,7 @@ COMMAND:freeze(playerid, params[])
 COMMAND:unfreeze(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], Reason[128], OtherPlayer, Duration;
+	new Msg[128], Name[24], AdminName[24], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unfreeze", params);
@@ -4014,7 +4014,7 @@ COMMAND:unfreeze(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "uis[128]", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/unfreeze <Player>\"");
+			if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/unfreeze <Player>\"");
 			else
 			{
 				// Check if the otherplayer is online
@@ -4030,7 +4030,7 @@ COMMAND:unfreeze(playerid, params[])
 						GetPlayerName(playerid, AdminName, sizeof(AdminName));
 						GetPlayerName(OtherPlayer, Name, sizeof(Name));
 						// Let the other player know that he has been un-frozen
-						format(Msg, 128, "{FF0000}You have been un-frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
+						format(Msg, 128, "{FF0000}You have been un-frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName);
 						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 						// Let the admin know who he has un-frozen
 						format(Msg, 128, "{00FF00}You have un-frozen {FFFF00}%s", Name);
@@ -5120,7 +5120,7 @@ COMMAND:setcash(playerid, params[])
 					format(Msg, 128, "{00FF00}Your cash has been set to {FFFF00}%i{00FF00} by {FFFF00}%s", pMoney, Name);
 					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 					// Let the player know he has set the money of the other player
-					format(Msg, 128, "{00FF00}You've set the cash of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pScore);
+					format(Msg, 128, "{00FF00}You've set the cash of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pMoney);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 					// Save the other player's account
 					PlayerFile_Save(OtherPlayer);
