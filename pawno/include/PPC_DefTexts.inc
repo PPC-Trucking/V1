@@ -14,7 +14,6 @@
 // Banned texts (also kick messages)
 #define TXT_StillBanned "{FF0000}You're still banned" // Define the text that the player sees when he's still banned when trying to login
 #define TXT_BannedDuration "{FF0000}Remaining: Days: %i, Hours: %i, Minutes: %i, Seconds: %i" // Define the remaining ban-time text
-#define TXT_MutedDuration "{FF0000}Remaining: Minutes: %i, Seconds: %i" // Define the remaining muted time text
 #define TXT_KickSpeedHack "{FF0000}You've been kicked for using speed-hack and/or air braking"
 #define TXT_KickJetPackHack "{FF0000}You've been kicked for using jetpack-hack"
 #define TXT_KickHealthHack "{FF0000}You've been kicked for using health-hack"
@@ -134,14 +133,14 @@
 #define TXT_FailedMission "~w~You ~r~failed~w~ your mission. You lost ~y~$1000~w~ to cover expenses." // Define game-text when player fails a mission
 
 // Class related
-#define TXT_ClassTrucker "Truck driver" // Define the game-text that shows when the player is choosing classes (this one = trucker)
-#define TXT_ClassBusDriver "Bus driver" // Define the game-text that shows when the player is choosing classes (this one = bus-driver)
+#define TXT_ClassTrucker "Truck Driver" // Define the game-text that shows when the player is choosing classes (this one = trucker)
+#define TXT_ClassBusDriver "Bus Driver" // Define the game-text that shows when the player is choosing classes (this one = bus-driver)
 #define TXT_ClassPilot "Pilot" // Define the game-text that shows when the player is choosing classes (this one = pilot)
 #define TXT_ClassPolice "Police" // Define the game-text that shows when the player is choosing classes (this one = police)
 #define TXT_ClassMafia "Mafia" // Define the game-text that shows when the player is choosing classes (this one = mafia)
 #define TXT_ClassCourier "Courier" // Define the game-text that shows when the player is choosing classes (this one = courier)
 #define TXT_ClassAssistance "Assistance" // Define the game-text that shows when the player is choosing classes (this one = assistance)
-#define TXT_ClassRoadWorker "Road worker" // Define the game-text that shows when the player is choosing classes (this one = roadworker)
+#define TXT_ClassRoadWorker "Road Worker" // Define the game-text that shows when the player is choosing classes (this one = roadworker)
 
 // No-job texts for all classes
 #define Trucker_NoJobText "No job at the moment. Enter \"~y~/work~w~\" to start a job"
@@ -158,6 +157,15 @@
 #define TXT_PlayerSelfSpectate "{FF0000}You can't spectate yourself."
 #define TXT_PlayerSpectating "{FF0000}%s is currently spectating a player. You can't teleport to him."
 #define TXT_PlayerNotSpawned "{FF0000}You can't spectate that player because he didn't spawn yet."
+#define TXT_CmdNotExists "That command is not valid, please see /commands"
+#define TXT_SscanfFailedUsuage "Usage: \"%s\""
+#define TXT_NeedToLogin "You need to login to use that command."
+#define TXT_StillMuted "You are still muted."
+#define TXT_PlayerMuted "~w~You have been~n~~r~muted"
+#define TXT_PlayerUnMuted "~w~You have been~n~~g~unmuted"
+#define TXT_MutedDuration "Remaining: Minutes: %i, Seconds: %i"
+#define TXT_MessageTooLong "Your message is too long. Please shorten it."
+#define TXT_MessageTooLongWithLimit "Your message is too long. Please shorten it to %i characters."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
