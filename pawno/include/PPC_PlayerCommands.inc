@@ -14,14 +14,17 @@ COMMAND:me(playerid,params[])
 		else
 		{
 		    // Check if the player isn't muted
-		    if (APlayerData[playerid][Muted] == false)
+		    if (APlayerData[playerid][Muted] < gettime())
 		    {
 				GetPlayerName(playerid, Name, sizeof(Name));
 				format(Msg, sizeof(Msg), "* %s %s", Name, Message);
 				SendClientMessageToAll(COLOR_YELLOW, Msg);
 			}
-			else
+			else {
 			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You are still muted");
+
+			    ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
+			}
 		}
 	}
 	else
@@ -53,7 +56,7 @@ COMMAND:pm(playerid, params[])
 			if (IsPlayerConnected(OtherPlayer))
 			{
 			    // Check if the player isn't muted
-			    if (APlayerData[playerid][Muted] == false)
+			    if (APlayerData[playerid][Muted] < gettime())
 			    {
 				    // Get both names
 					GetPlayerName(playerid, YourName, sizeof(YourName));
@@ -66,8 +69,11 @@ COMMAND:pm(playerid, params[])
 					SendClientMessage(playerid, COLOR_WHITE, Msg1);
 					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg2);
 				}
-				else
+				else {
 				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You are still muted");
+
+				    ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
+				}
 			}
 			else
 			    SendClientMessage(playerid, COLOR_RED, "Player is not online");
@@ -3467,7 +3473,7 @@ COMMAND:gobus(playerid, params[])
 COMMAND:mute(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], Reason[128], OtherPlayer;
+	new Msg[128], Name[24], AdminName[24], Reason[128], OtherPlayer, TimeToMute;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/mute", params);
@@ -3478,31 +3484,39 @@ COMMAND:mute(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "us[128]", OtherPlayer, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/mute <Player> <Reason>\"");
+			if (sscanf(params, "uis[128]", OtherPlayer, TimeToMute, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/mute <Player> <Duration (in minutes)> <Reason>\"");
 			else
 			{
 				// Check if the otherplayer is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
-					//Check if another player is not muted
-					if(APlayerData[OtherPlayer][Muted] == false)
-					{
-						// Get the player-names
-						GetPlayerName(playerid, AdminName, sizeof(AdminName));
-						GetPlayerName(OtherPlayer, Name, sizeof(Name));
-						// Mute the other player
-						APlayerData[OtherPlayer][Muted] = true;
-						// Let the other player know that he has been muted
-						format(Msg, sizeof(Msg), "{FF0000}You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
-						SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
-						// Let the admin know who he has muted
-						format(Msg, sizeof(Msg), "{00FF00}You have muted {FFFF00}%s", Name);
-						SendClientMessage(playerid, 0xFFFFFFFF, Msg);
-						// Save the player-stats
-						PlayerFile_Save(OtherPlayer);
-					}
-					else
-						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is already muted");
+					// Check if the muted time is in range
+					if(TimeToMute < 1 || TimeToMute > 60)
+						return SendClientMessage(playerid, COLOR_RED, "The time to mute must be between 1 minute and 60 minutes");
+
+					// Check if another player is muted
+					if(APlayerData[OtherPlayer][Muted] > gettime())
+						return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player is already muted");
+
+					// Get the player-names
+					GetPlayerName(playerid, AdminName, sizeof(AdminName));
+					GetPlayerName(OtherPlayer, Name, sizeof(Name));
+					// Mute the other player
+					APlayerData[OtherPlayer][Muted] = (TimeToMute * 60) + gettime();
+					// Let the other player know that he has been muted
+					format(Msg, sizeof(Msg), "{FF0000}You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+
+					ShowRemainingMutedTime(OtherPlayer); // Show the remaining muted time to the player
+
+					// Let the admin know who he has muted
+					format(Msg, sizeof(Msg), "{00FF00}You have muted {FFFF00}%s", Name);
+					SendClientMessage(playerid, COLOR_WHITE, Msg);
+
+					ShowRemainingMutedTime(playerid); // Show the remaining muted time to the admin
+
+					// Save the player-stats
+					PlayerFile_Save(OtherPlayer);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
@@ -3539,25 +3553,23 @@ COMMAND:unmute(playerid, params[])
 				// Check if the otherplayer is online
 				if (IsPlayerConnected(OtherPlayer))
 				{
-					//Check if the another player is muted
-					if(APlayerData[OtherPlayer][Muted] == true)
-					{
-						// Get the player-names
-						GetPlayerName(playerid, AdminName, sizeof(AdminName));
-						GetPlayerName(OtherPlayer, Name, sizeof(Name));
-						// Un-mute the other player
-						APlayerData[OtherPlayer][Muted] = false;
-						// Let the other player know that he has been un-muted
-						format(Msg, sizeof(Msg), "{FF0000}You have been un-muted by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
-						// Let the admin know who he has un-muted
-						format(Msg, sizeof(Msg), "{00FF00}You have un-muted {FFFF00}%s", Name);
-						SendClientMessage(playerid, 0xFFFFFFFF, Msg);
-						// Save the player-stats
-						PlayerFile_Save(OtherPlayer);
-					}
-					else
-						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is not muted");
+					// Check if the another player is not muted
+					if(APlayerData[OtherPlayer][Muted] < gettime())
+						return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is not muted");
+					
+					// Get the player-names
+					GetPlayerName(playerid, AdminName, sizeof(AdminName));
+					GetPlayerName(OtherPlayer, Name, sizeof(Name));
+					// Un-mute the other player
+					APlayerData[OtherPlayer][Muted] = 0;
+					// Let the other player know that he has been un-muted
+					format(Msg, sizeof(Msg), "{FF0000}You have been un-muted by {FFFF00}%s", AdminName);
+					SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+					// Let the admin know who he has un-muted
+					format(Msg, sizeof(Msg), "{00FF00}You have un-muted {FFFF00}%s", Name);
+					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					// Save the player-stats
+					PlayerFile_Save(OtherPlayer);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
@@ -3594,7 +3606,7 @@ COMMAND:muted(playerid, params[])
 				// Check if that player is online
 				if (IsPlayerConnected(i))
 				{
-				    if (APlayerData[i][Muted] == true)
+				    if (APlayerData[i][Muted] > gettime())
 					{
 						// Get the player's name
 						GetPlayerName(i, Name, sizeof(Name));

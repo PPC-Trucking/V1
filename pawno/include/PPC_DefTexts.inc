@@ -14,6 +14,7 @@
 // Banned texts (also kick messages)
 #define TXT_StillBanned "{FF0000}You're still banned" // Define the text that the player sees when he's still banned when trying to login
 #define TXT_BannedDuration "{FF0000}Remaining: Days: %i, Hours: %i, Minutes: %i, Seconds: %i" // Define the remaining ban-time text
+#define TXT_MutedDuration "{FF0000}Remaining: Minutes: %i, Seconds: %i" // Define the remaining muted time text
 #define TXT_KickSpeedHack "{FF0000}You've been kicked for using speed-hack and/or air braking"
 #define TXT_KickJetPackHack "{FF0000}You've been kicked for using jetpack-hack"
 #define TXT_KickHealthHack "{FF0000}You've been kicked for using health-hack"

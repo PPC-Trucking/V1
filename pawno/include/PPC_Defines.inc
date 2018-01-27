@@ -581,7 +581,7 @@ enum TPlayerData
 	Bans, // Holds the number of bans for this player
 	BanTime, // Holds the time where the player is unbanned automatically (when the ban is over)
 	bool:LoggedIn, // Holds true if the player has properly logged in
-	bool:Muted, // Holds "true" if the player is muted
+	Muted, // Holds the time where the player is unmuted automatically
 	bool:RulesRead, // Holds "true" if the player accepted the rules
 	AutoReportTime, // Used to prevent the anti-hack system reporting the player every half a second when the player uses hacks
 
@@ -1013,7 +1013,7 @@ new ACommands[][TCommands] =
 	{1, "/get <Player>",                                   		"Teleports another player to your location"},
 	{1, "/jail <Player> <Duration (in Seconds)> <Reason>",                     "Jails another player for a certain time in seconds"},
 	{1, "/kick <Player> <Reason>",                                "Kick a player"},
-	{1, "/mute <Player> <Reason>",                                 "Mute a player"},
+	{1, "/mute <Player> <Duration (in minutes)> <Reason>",                                 "Mute a player for x minutes"},
 	{1, "/muted",                                   					"Display muted players"},
 	{1, "/nos",                                   						"Adds nitro to your vehicle"},
 	{1, "/plane",                                   					"Spawns a plane of your choice"},

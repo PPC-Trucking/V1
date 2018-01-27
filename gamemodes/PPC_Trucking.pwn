@@ -233,6 +233,30 @@ ShowRemainingBanTime(playerid)
 }
 
 
+// This function shows the player how long his muted time is
+ShowRemainingMutedTime(playerid)
+{
+	// Setup local variables
+	new TotalMutedTime, Minutes, Seconds, Msg[128];
+
+	// Get the total muted time
+	TotalMutedTime = APlayerData[playerid][Muted] - gettime();
+
+	// Calculate minutes
+	if (TotalMutedTime >= 60)
+	{
+		Minutes = TotalMutedTime / 60;
+		TotalMutedTime = TotalMutedTime - (Minutes * 60);
+	}
+	// Calculate seconds
+	Seconds = TotalMutedTime;
+
+	// Display the remaining muted time for this player
+	format(Msg, sizeof(Msg), TXT_MutedDuration, Minutes, Seconds);
+	SendClientMessage(playerid, COLOR_WHITE, Msg);
+}
+
+
 
 // This callback gets called when a player disconnects from the server
 public OnPlayerDisconnect(playerid, reason)
@@ -262,6 +286,9 @@ public OnPlayerDisconnect(playerid, reason)
 	// Send a message to all players to let them know somebody left the server
 	format(Msg, sizeof(Msg), TXT_PlayerLeftServer, Name, playerid);
 	SendClientMessageToAll(COLOR_WHITE, Msg);
+
+	// Reset muted time so the player gets unmuted automatically
+	APlayerData[playerid][Muted] = 0;
 
 	// If the player entered a proper password (the player has an account)
 	if (strlen(APlayerData[playerid][PlayerPassword]) != 0)
@@ -312,7 +339,6 @@ public OnPlayerDisconnect(playerid, reason)
 	APlayerData[playerid][PlayerFrozen] = 0; // Clearing this variable automatically kills the frozentimer
 	APlayerData[playerid][Bans] = 0;
 	APlayerData[playerid][BanTime] = 0;
-	APlayerData[playerid][Muted] = false;
 	APlayerData[playerid][RulesRead] = false;
 	APlayerData[playerid][AutoReportTime] = 0;
 	APlayerData[playerid][TruckerLicense] = 0;
@@ -398,10 +424,12 @@ public OnPlayerDisconnect(playerid, reason)
 public OnPlayerText(playerid, text[])
 {
 	// Block the player's text if he has been muted
-    if (APlayerData[playerid][Muted] == true || APlayerData[playerid][LoggedIn] == false)
+    if ((APlayerData[playerid][Muted] > gettime()) || APlayerData[playerid][LoggedIn] == false)
 	{
 		// Let the player know he's still muted
 		SendClientMessage(playerid, COLOR_RED, "You are still muted");
+
+		ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
 
 		// Don't allow his text to be sent to the chatbox
 		return 0;
