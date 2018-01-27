@@ -359,10 +359,10 @@ SpikeStrip_Create(playerid)
 		// Create a timer that checks all players in range to see if they run over the spikestrip
 		ASpikeStrips[StripIndex][SpikeTimer] = SetTimerEx("CheckSpikeStrip", 100, true, "i", StripIndex);
 		// Let the player know he created a spikestrip
-		SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've placed a spikestrip");
+		SendClientMessage(playerid, COLOR_GREEN, "You've placed a spikestrip");
 	}
 	else
-	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}The maximum number of spikestrips have been created, try again later");
+	    SendClientMessage(playerid, COLOR_RED, "The maximum number of spikestrips have been created, try again later");
 }
 
 // This timer checks the spikestrips that have been planted (they automatically disappear after one minute)

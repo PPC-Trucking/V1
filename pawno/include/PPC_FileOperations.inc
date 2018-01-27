@@ -880,7 +880,7 @@ BankFile_Load(playerid)
 	if (fexist(file))
 	{
 		// Send a message to the player to inform him that he has a bank account
-	    SendClientMessage(playerid, COLOR_WHITE, "{00BBFF}You have a bank-account. Use {FFBB00}/bank{00BBFF} to login");
+	    SendClientMessage(playerid, COLOR_DODGERBLUE, "You have a bank-account. Use {FFBB00}/bank{00BBFF} to login");
 
 		BFile = fopen(file, io_read); // Open the bankfile for reading
 
@@ -973,7 +973,7 @@ BankFile_Load(playerid)
 	else
 	{
 		// Send a message if the player doesn't have a bank account
-	    SendClientMessage(playerid, COLOR_WHITE, "{00BBFF}You don't have a bank-account. Use {FFBB00}/bank{00BBFF} to set it up");
+	    SendClientMessage(playerid, COLOR_DODGERBLUE, "You don't have a bank-account. Use {FFBB00}/bank{00BBFF} to set it up");
 
 	    return 0; // Return 0 if the file couldn't be read (doesn't exist)
 	}

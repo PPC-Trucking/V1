@@ -129,7 +129,7 @@ Player_PortOutAdminZone(playerid, Float:x1, Float:y1, Float:z1, Float:x2, Float:
 		    if ((y1 < y) && (y < y2))
 		        if ((z1 < z) && (z < z2))
 				{
-					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not allowed inside an admin-area");
+					SendClientMessage(playerid, COLOR_RED, "You're not allowed inside an admin-area");
 					SetPlayerPos(playerid, x3, y3, z3); // Port the player out of the area
 				}
 }

@@ -125,7 +125,7 @@ Assistance_FixOwnVehicle(playerid)
 	// Refuel the other player's vehicle
 	AVehicleData[vid][Fuel] = MaxFuel;
 	// Let the player know that he has repaired and refuelled his own vehicle
-	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You have repaired and refuelled your own vehicle");
+	SendClientMessage(playerid, COLOR_GREEN, "You have repaired and refuelled your own vehicle");
 }
 
 // This function gets called when the assistance player dies (or changes class)

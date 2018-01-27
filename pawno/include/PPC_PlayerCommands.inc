@@ -21,7 +21,7 @@ COMMAND:me(playerid,params[])
 				SendClientMessageToAll(COLOR_YELLOW, Msg);
 			}
 			else {
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You are still muted");
+			    SendClientMessage(playerid, COLOR_RED, "You are still muted");
 
 			    ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
 			}
@@ -50,7 +50,7 @@ COMMAND:pm(playerid, params[])
 		else
 		{
 			if (OtherPlayer == playerid)
-				return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can't send a private message to yourself");
+				return SendClientMessage(playerid, COLOR_RED, "You can't send a private message to yourself");
 
 			// Check if that other player is online
 			if (IsPlayerConnected(OtherPlayer))
@@ -70,7 +70,7 @@ COMMAND:pm(playerid, params[])
 					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg2);
 				}
 				else {
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You are still muted");
+				    SendClientMessage(playerid, COLOR_RED, "You are still muted");
 
 				    ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
 				}
@@ -230,10 +230,10 @@ COMMAND:delhouse(playerid, params[])
 				}
 
 				// There was no house in range, so let the player know about it
-				SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No house in range to delete");
+				SendClientMessage(playerid, COLOR_RED, "No house in range to delete");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can't be inside a vehicle to delete a house");
+			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to delete a house");
 		}
 		else
 		    return 0;
@@ -335,7 +335,7 @@ COMMAND:enter(playerid, params[])
 							if (House_PlayerIsOwner(playerid, HouseID) == 0)
 							{
 							    // Let the player know that this house isn't open to the public and he can't enter it
-								SendClientMessage(playerid, COLOR_WHITE, "{FF0000}This house isn't open to the public, you can't enter it");
+								SendClientMessage(playerid, COLOR_RED, "This house isn't open to the public, you can't enter it");
 							    return 1;
 							}
 						}
@@ -353,7 +353,7 @@ COMMAND:enter(playerid, params[])
 						// Also set a tracking-variable to enable /housemenu to track in which house the player is
 						APlayerData[playerid][CurrentHouse] = HouseID;
 						// Also let the player know he can use /housemenu to upgrade/exit his house
-						SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Use {FFFF00}/housemenu{00FF00} to change options for your house");
+						SendClientMessage(playerid, COLOR_GREEN, "Use {FFFF00}/housemenu{00FF00} to change options for your house");
 
 						// Exit the function
 						return 1;
@@ -385,7 +385,7 @@ COMMAND:enter(playerid, params[])
 						// Also set a tracking-variable to enable /busmenu to track in which business the player is
 						APlayerData[playerid][CurrentBusiness] = BusID;
 						// Also let the player know he can use /busmenu to upgrade/exit his business
-						SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Use {FFFF00}/busmenu{00FF00} to change options for your business");
+						SendClientMessage(playerid, COLOR_GREEN, "Use {FFFF00}/busmenu{00FF00} to change options for your business");
 
 						// Exit the function
 						return 1;
@@ -670,7 +670,7 @@ COMMAND:gohome(playerid, params[])
 			    SendClientMessage(playerid, COLOR_RED, "You cannot use /gohome when you're in jail");
 		}
 		else
-			SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /gohome when you're wanted");
+			SendClientMessage(playerid, COLOR_RED, "You cannot use /gohome when you're wanted");
 	}
 	else
 	    return 0;
@@ -849,7 +849,7 @@ COMMAND:reclass(playerid, params[])
 			    SendClientMessage(playerid, COLOR_RED, "You cannot use /reclass when you're in jail");
 		}
 		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /reclass when you're wanted");
+		    SendClientMessage(playerid, COLOR_RED, "You cannot use /reclass when you're wanted");
 	}
 	else
 	    return 0;
@@ -1136,7 +1136,7 @@ COMMAND:gobase(playerid, params[])
 			    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobase when you're in jail");
 		}
 		else
-		    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /gobase when you're wanted");
+		    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobase when you're wanted");
 	}
 	else
 	    return 0;
@@ -1604,7 +1604,7 @@ COMMAND:unban(playerid, params[])
 					SendClientMessageToAll(COLOR_GRAY, Msg);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}There is no account with that playername");
+				    SendClientMessage(playerid, COLOR_RED, "There is no account with that playername");
 			}
 		}
 		else
@@ -1753,10 +1753,10 @@ COMMAND:portloc(playerid, params[])
 					}
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portloc when you're in jail");
+				    SendClientMessage(playerid, COLOR_RED, "You cannot use /portloc when you're in jail");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portloc when you're wanted");
+			    SendClientMessage(playerid, COLOR_RED, "You cannot use /portloc when you're wanted");
 		}
 		else
 		    return 0;
@@ -1811,10 +1811,10 @@ COMMAND:port(playerid, params[])
 					}
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /port when you're in jail");
+				    SendClientMessage(playerid, COLOR_RED, "You cannot use /port when you're in jail");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /port when you're wanted");
+			    SendClientMessage(playerid, COLOR_RED, "You cannot use /port when you're wanted");
 		}
 		else
 		    return 0;
@@ -1926,10 +1926,10 @@ COMMAND:portvehicle(playerid, params[])
 					}
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portvehicle when you're in jail");
+				    SendClientMessage(playerid, COLOR_RED, "You cannot use /portvehicle when you're in jail");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portvehicle when you're wanted");
+			    SendClientMessage(playerid, COLOR_RED, "You cannot use /portvehicle when you're wanted");
 		}
 		else
 		    return 0;
@@ -2153,7 +2153,7 @@ COMMAND:color1(playerid, params[])
 				ShowPlayerDialog(playerid, DialogPrimaryCarColor, DIALOG_STYLE_LIST, "Choose a primary color:", ColorList, "Select", TXT_DialogButtonCancel);
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not the owner of the vehicle");
+			    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
 		}
 		else
 			SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to apply a color");
@@ -2194,7 +2194,7 @@ COMMAND:color2(playerid, params[])
 				ShowPlayerDialog(playerid, DialogSedundaryCarColor, DIALOG_STYLE_LIST, "Choose a secundary color:", ColorList, "Select", TXT_DialogButtonCancel);
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not the owner of the vehicle");
+			    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
 		}
 		else
 			SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to apply a color");
@@ -2779,7 +2779,7 @@ COMMAND:delcamera(playerid, params[])
 			}
 
 			// In case the player wasn't near a speedcamera, inform him about it
-			SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You must be near a speedcamera to delete it");
+			SendClientMessage(playerid, COLOR_RED, "You must be near a speedcamera to delete it");
 		}
 		else
 		    return 0;
@@ -2829,7 +2829,7 @@ COMMAND:get(playerid, params[])
 					SendClientMessage(playerid, COLOR_WHITE, PortMsg);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -2952,13 +2952,13 @@ COMMAND:cleanupvehicle(playerid, params[])
 							SendClientMessage(playerid, COLOR_GREEN, Msg);
 						}
 						else
-							SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That vehicle belongs to a player, you can use /clamp");
+							SendClientMessage(playerid, COLOR_RED, "That vehicle belongs to a player, you can use /clamp");
 					}
 					else
-						SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That vehicle is a static vehicle, delete it in the script");
+						SendClientMessage(playerid, COLOR_RED, "That vehicle is a static vehicle, delete it in the script");
 				}
 				else
-					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That vehicle doesn't exist");
+					SendClientMessage(playerid, COLOR_RED, "That vehicle doesn't exist");
 			}
 		}
 		else
@@ -3011,7 +3011,7 @@ COMMAND:assist(playerid, params[])
 			// Set yourself as "AssistanceNeeded"
 			APlayerData[playerid][AssistanceNeeded] = true;
 			// Let the player know he called for assistance
-			SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've called for assistance");
+			SendClientMessage(playerid, COLOR_GREEN, "You've called for assistance");
 		}
 		else // No assistance is online
 		{
@@ -3025,8 +3025,8 @@ COMMAND:assist(playerid, params[])
 				// Let the player pay for the repairs and refuel (default $2000)
 				RewardPlayer(playerid, -2000, 0);
 				// Let the player know he spent $2000 for auto-repair because there were no assistance players online
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Your vehicle has been auto-repaired and refuelled for $2000");
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}because there is no assistance player online");
+			    SendClientMessage(playerid, COLOR_RED, "Your vehicle has been auto-repaired and refuelled for $2000");
+			    SendClientMessage(playerid, COLOR_RED, "because there is no assistance player online");
 			}
 		}
 	}
@@ -3148,7 +3148,7 @@ COMMAND:spec(playerid, params[])
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -3182,7 +3182,7 @@ COMMAND:endspec(playerid, params[])
 				APlayerData[playerid][SpectateType] = ADMIN_SPEC_TYPE_NONE;
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You are not spectating");
+			    SendClientMessage(playerid, COLOR_RED, "You are not spectating");
 		}
 		else
 		    return 0;
@@ -3300,10 +3300,10 @@ COMMAND:delbusiness(playerid, params[])
 				}
 
 				// There was no house in range, so let the player know about it
-				SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No business in range to delete");
+				SendClientMessage(playerid, COLOR_RED, "No business in range to delete");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can't be inside a vehicle to delete a business");
+			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to delete a business");
 		}
 		else
 		    return 0;
@@ -3457,7 +3457,7 @@ COMMAND:gobus(playerid, params[])
 					SendClientMessage(playerid, COLOR_RED, "You need to be on-foot to port to your business");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /gobus when you're wanted");
+			    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobus when you're wanted");
 		}
 		else
 		    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobus when you're in jail");
@@ -3496,7 +3496,7 @@ COMMAND:mute(playerid, params[])
 
 					// Check if another player is muted
 					if(APlayerData[OtherPlayer][Muted] > gettime())
-						return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player is already muted");
+						return SendClientMessage(playerid, COLOR_RED, "That player is already muted");
 
 					// Get the player-names
 					GetPlayerName(playerid, AdminName, sizeof(AdminName));
@@ -3519,7 +3519,7 @@ COMMAND:mute(playerid, params[])
 					PlayerFile_Save(OtherPlayer);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -3555,7 +3555,7 @@ COMMAND:unmute(playerid, params[])
 				{
 					// Check if the another player is not muted
 					if(APlayerData[OtherPlayer][Muted] < gettime())
-						return SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is not muted");
+						return SendClientMessage(playerid, COLOR_RED, "That player is not muted");
 					
 					// Get the player-names
 					GetPlayerName(playerid, AdminName, sizeof(AdminName));
@@ -3563,16 +3563,16 @@ COMMAND:unmute(playerid, params[])
 					// Un-mute the other player
 					APlayerData[OtherPlayer][Muted] = 0;
 					// Let the other player know that he has been un-muted
-					format(Msg, sizeof(Msg), "{FF0000}You have been un-muted by {FFFF00}%s", AdminName);
-					SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+					format(Msg, sizeof(Msg), "You have been un-muted by {FFFF00}%s", AdminName);
+					SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
 					// Let the admin know who he has un-muted
-					format(Msg, sizeof(Msg), "{00FF00}You have un-muted {FFFF00}%s", Name);
-					SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+					format(Msg, sizeof(Msg), "You have un-muted {FFFF00}%s", Name);
+					SendClientMessage(playerid, COLOR_GREEN, Msg);
 					// Save the player-stats
 					PlayerFile_Save(OtherPlayer);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -3620,7 +3620,7 @@ COMMAND:muted(playerid, params[])
 			if (strlen(PlayerList) != 0)
 				ShowPlayerDialog(playerid, DialogNoResponse, DIALOG_STYLE_LIST, "Muted players:", PlayerList, TXT_DialogButtonOk, TXT_DialogButtonCancel);
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{00FF00}There are no muted players");
+			    SendClientMessage(playerid, COLOR_GREEN, "There are no muted players");
 		}
 		else
 		    return 0;
@@ -3670,7 +3670,7 @@ COMMAND:freeze(playerid, params[])
 					PlayerFile_Save(OtherPlayer);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -3724,7 +3724,7 @@ COMMAND:unfreeze(playerid, params[])
 						SendClientMessage(playerid, COLOR_RED, "That player has not been frozen");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -3753,7 +3753,7 @@ COMMAND:givecash(playerid, params[])
 		else
 		{
 			if (OtherPlayer == playerid)
-				return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can't give money to yourself");
+				return SendClientMessage(playerid, COLOR_RED, "You can't give money to yourself");
 
 			// Check if the otherplayer is online
 			if (IsPlayerConnected(OtherPlayer))
@@ -3782,13 +3782,13 @@ COMMAND:givecash(playerid, params[])
 						PlayerFile_Save(OtherPlayer);
 					}
 					else
-					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You don't have enough money");
+					    SendClientMessage(playerid, COLOR_RED, "You don't have enough money");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You must use values higher than 0");
+				    SendClientMessage(playerid, COLOR_RED, "You must use values higher than 0");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+			    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 		}
 	}
 	else
@@ -3830,7 +3830,7 @@ COMMAND:respawnvehicle(playerid, params[])
 					}
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You have to use a vehicle-id between 1 and 1999");
+				    SendClientMessage(playerid, COLOR_RED, "You have to use a vehicle-id between 1 and 1999");
 			}
 		}
 		else
@@ -3862,7 +3862,7 @@ COMMAND:createspike(playerid, params[])
 				SpikeStrip_Create(playerid);
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You must be on foot to place a spikestrip");
+			    SendClientMessage(playerid, COLOR_RED, "You must be on foot to place a spikestrip");
 		}
 		else
 			return 0;
@@ -3912,16 +3912,16 @@ COMMAND:eject(playerid, params[])
 							SendClientMessage(playerid, COLOR_WHITE, Msg);
 						}
 						else
-							SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player is not in your vehicle");
+							SendClientMessage(playerid, COLOR_RED, "That player is not in your vehicle");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not the driver of a vehicle");
+					    SendClientMessage(playerid, COLOR_RED, "You're not the driver of a vehicle");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
 			}
 			else
-				SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can not eject yourself from the vehicle");
+				SendClientMessage(playerid, COLOR_RED, "You can not eject yourself from the vehicle");
 		}
 	}
 	else
@@ -4113,7 +4113,7 @@ COMMAND:clamp(playerid, params[])
 					PlayerFile_Save(HouseOwner);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That vehicle doesn't belong to a player, you cannot clamp it");
+				    SendClientMessage(playerid, COLOR_RED, "That vehicle doesn't belong to a player, you cannot clamp it");
 			}
 		}
 		else
@@ -4230,7 +4230,7 @@ COMMAND:report(playerid, params[])
 		else
 		{
 			if (OtherPlayer == playerid)
-				return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You can't report yourself");
+				return SendClientMessage(playerid, COLOR_RED, "You can't report yourself");
 
 		    // Check if that other player is logged in
 		    if (APlayerData[OtherPlayer][LoggedIn] == true)
@@ -4245,7 +4245,7 @@ COMMAND:report(playerid, params[])
 				SendClientMessage(playerid, COLOR_WHITE, Msg);
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
+			    SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
 		}
 	}
 	else
@@ -4353,26 +4353,26 @@ COMMAND:overload(playerid, params[])
 							    // Add 2 to the player's wanted level
 							    SetPlayerWantedLevel(playerid, GetPlayerWantedLevel(playerid) + 2);
 							    // Let the player know he has been overloaded now
-							    SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You have overloaded your truck, watch out for the police");
+							    SendClientMessage(playerid, COLOR_YELLOW, "You have overloaded your truck, watch out for the police");
 								// Inform the police this trucker is overloaded
 								GetPlayerName(playerid, Name, sizeof(Name));
 								format(Msg, sizeof(Msg), "{00FF00}Trucker {FFFF00}%s{00FF00} is overloaded, pursue and fine him", Name);
 								Police_SendMessage(Msg);
 							}
 							else
-							    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Your vehicle cannot be overloaded");
+							    SendClientMessage(playerid, COLOR_RED, "Your vehicle cannot be overloaded");
 						}
 						else
-						    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You must be near the loading point to overload your truck");
+						    SendClientMessage(playerid, COLOR_RED, "You must be near the loading point to overload your truck");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You are overloaded already");
+					    SendClientMessage(playerid, COLOR_RED, "You are overloaded already");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You must load your truck first");
+				    SendClientMessage(playerid, COLOR_RED, "You must load your truck first");
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You haven't started a job yet");
+			    SendClientMessage(playerid, COLOR_RED, "You haven't started a job yet");
 		}
 		else
 			return 0;
@@ -4462,7 +4462,7 @@ COMMAND:resetplayer(playerid, params[])
 					PlayerFile_Save(OtherPlayer);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
 			}
 		}
 		else
@@ -4541,7 +4541,7 @@ COMMAND:fixplayer(playerid, params[])
 					PlayerFile_Save(OtherPlayer);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't connected");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
 			}
 		}
 		else
@@ -4594,10 +4594,10 @@ COMMAND:setskin(playerid, params[])
 						SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
 					}
 					else
-						SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Invalid skin-id, you can only use skins 0-299");
+						SendClientMessage(playerid, COLOR_RED, "Invalid skin-id, you can only use skins 0-299");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -4707,11 +4707,11 @@ COMMAND:rangeban(playerid, params[])
 					SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToBan)), false, "i", PlayerToBan);
 
 					// Inform everybody else which player was ip-range-banned
-					format(Msg, sizeof(Msg), "{808080}%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
-					SendClientMessageToAll(COLOR_WHITE, Msg);
+					format(Msg, sizeof(Msg), "%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
+					SendClientMessageToAll(COLOR_GRAY, Msg);
 				}
 				else
-					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player isn't online");
+					SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -4760,7 +4760,7 @@ COMMAND:setscore(playerid, params[])
 					PlayerFile_Save(OtherPlayer);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -4810,7 +4810,7 @@ COMMAND:setcash(playerid, params[])
 					PlayerFile_Save(OtherPlayer);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't online");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -4988,7 +4988,7 @@ COMMAND:givelicense(playerid,params[])
 			    if (APlayerData[OtherPlayer][LoggedIn] == true)
 			    {
 			    	if (1 == APlayerData[OtherPlayer][TruckerLicense])
-			    		return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player has already a trucker license");
+			    		return SendClientMessage(playerid, COLOR_RED, "That player has already a trucker license");
 
 					// Get the admin's name
 					GetPlayerName(playerid, Name, sizeof(Name));
@@ -5008,7 +5008,7 @@ COMMAND:givelicense(playerid,params[])
 					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}That player isn't logged in");
+				    SendClientMessage(playerid, COLOR_RED, "That player isn't logged in");
 			}
 		}
 		else
@@ -5035,7 +5035,7 @@ COMMAND:announce(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if(APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Style (0-6)> <Time in Seconds 1-5> <Message>\"");
+			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/announce <Style (0-6)> <Time in Seconds 1-5> <Message>\"");
 			else
 			{
 				if ((Style >= 0) && (Style <= 6) && 2 != Style)
