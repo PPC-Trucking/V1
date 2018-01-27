@@ -233,6 +233,7 @@ ShowRemainingBanTime(playerid)
 }
 
 
+
 // This function shows the player how long his muted time is
 ShowRemainingMutedTime(playerid)
 {
@@ -253,7 +254,7 @@ ShowRemainingMutedTime(playerid)
 
 	// Display the remaining muted time for this player
 	format(Msg, sizeof(Msg), TXT_MutedDuration, Minutes, Seconds);
-	SendClientMessage(playerid, COLOR_WHITE, Msg);
+	SendClientMessage(playerid, COLOR_SILVERCHALICE, Msg);
 }
 
 
@@ -423,20 +424,67 @@ public OnPlayerDisconnect(playerid, reason)
 // This callback gets called whenever a player uses the chat-box
 public OnPlayerText(playerid, text[])
 {
-	// Block the player's text if he has been muted
-    if ((APlayerData[playerid][Muted] > gettime()) || APlayerData[playerid][LoggedIn] == false)
+	// Check if the player is not logged in
+	if (APlayerData[playerid][LoggedIn] != true)
 	{
-		// Let the player know he's still muted
-		SendClientMessage(playerid, COLOR_RED, "You are still muted");
+		// Let the player know that he must login first
+		SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
 
-		ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
+		// Do not send the text to the chatbox
+		return 0;
+	}
 
-		// Don't allow his text to be sent to the chatbox
+	// Block the player's text if he has been muted
+    if ((APlayerData[playerid][Muted] > gettime()))
+	{
+		// Let the player know that he is still muted
+		SendClientMessage(playerid, COLOR_ORANGE, TXT_StillMuted);
+
+		// Show the remaining muted time to the player
+		ShowRemainingMutedTime(playerid);
+
+		// Do not send the text to the chatbox
 		return 0;
 	}
 
     return 1;
 }
+
+
+
+public OnPlayerCommandReceived(playerid, cmdtext[]) {
+	if (APlayerData[playerid][LoggedIn] != true)
+		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+
+	if (strfind(cmdtext, "/me ", true) != -1 || strfind(cmdtext, "/pm ", true) != -1)
+	{
+		// Check if the player is muted
+		if (APlayerData[playerid][Muted] > gettime())
+		{
+			// Let the player know that he is still muted
+			SendClientMessage(playerid, COLOR_ORANGE, TXT_StillMuted);
+			
+			// Show the remaining muted time to the player
+			ShowRemainingMutedTime(playerid);
+
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
+
+
+public OnPlayerCommandPerformed( playerid, cmdtext[ ], success )
+ {
+	// Check if the command is not valid
+	if (!success)
+		SendClientMessage(playerid, COLOR_RED, TXT_CmdNotExists);
+
+	return 1;
+}
+
 
 
 // This callback gets called when a player interacts with a dialog
