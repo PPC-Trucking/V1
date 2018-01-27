@@ -1,34 +1,30 @@
-// This is just a joke command
+// This commands can be used to send messages like
+// "/me is now afk" which becomes "* Player is now afk"
 COMMAND:me(playerid,params[])
 {
 	// Setup local variables
-	new Msg[128], Message[128], Name[24];
+	// 144 i/o message size limit - 24 name - 19 extra characters (see format) = 101
+	new Action[101], Message[144], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/me", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	if (sscanf(params, "s[101]", Action))
 	{
-		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/me <Action>\"");
-		else
-		{
-		    // Check if the player isn't muted
-		    if (APlayerData[playerid][Muted] < gettime())
-		    {
-				GetPlayerName(playerid, Name, sizeof(Name));
-				format(Msg, sizeof(Msg), "* %s %s", Name, Message);
-				SendClientMessageToAll(COLOR_YELLOW, Msg);
-			}
-			else {
-			    SendClientMessage(playerid, COLOR_RED, "You are still muted");
-
-			    ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
-			}
-		}
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/me <Action>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if Action is in range of allowed characters
+	if (strlen(params) > sizeof(Action))
+	{
+		format(Message, sizeof(Message), TXT_MessageTooLongWithLimit, sizeof(Action));
+		return SendClientMessage(playerid, COLOR_SILVERCHALICE, Message);
+	}
+
+	GetPlayerName(playerid, Name, sizeof(Name));
+	format(Message, sizeof(Message), "* %s %s {808080}( /me )", Name, Action);
+	SendClientMessageToAll(COLOR_PALECANARY, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -55,9 +51,6 @@ COMMAND:pm(playerid, params[])
 			// Check if that other player is online
 			if (IsPlayerConnected(OtherPlayer))
 			{
-			    // Check if the player isn't muted
-			    if (APlayerData[playerid][Muted] < gettime())
-			    {
 				    // Get both names
 					GetPlayerName(playerid, YourName, sizeof(YourName));
 					GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
@@ -68,12 +61,6 @@ COMMAND:pm(playerid, params[])
 					// Send the messages
 					SendClientMessage(playerid, COLOR_WHITE, Msg1);
 					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg2);
-				}
-				else {
-				    SendClientMessage(playerid, COLOR_RED, "You are still muted");
-
-				    ShowRemainingMutedTime(playerid); // Show the remaining muted time to the player
-				}
 			}
 			else
 			    SendClientMessage(playerid, COLOR_RED, "Player is not online");
@@ -1358,7 +1345,7 @@ COMMAND:jail(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/jail <Player> <Duration (in Seconds)> <Reason>\"");
+			if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/jail <Player> <Duration (in seconds)> <Reason>\"");
 			else
 				if (IsPlayerConnected(PlayerToJail)) // If the player is a valid playerid (he's connected)
 				{
@@ -3498,6 +3485,8 @@ COMMAND:mute(playerid, params[])
 					if(APlayerData[OtherPlayer][Muted] > gettime())
 						return SendClientMessage(playerid, COLOR_RED, "That player is already muted");
 
+					GameTextForPlayer(playerid, TXT_PlayerMuted, 2000, 6);
+
 					// Get the player-names
 					GetPlayerName(playerid, AdminName, sizeof(AdminName));
 					GetPlayerName(OtherPlayer, Name, sizeof(Name));
@@ -3557,6 +3546,8 @@ COMMAND:unmute(playerid, params[])
 					if(APlayerData[OtherPlayer][Muted] < gettime())
 						return SendClientMessage(playerid, COLOR_RED, "That player is not muted");
 					
+					GameTextForPlayer(playerid, TXT_PlayerUnMuted, 2000, 6);
+
 					// Get the player-names
 					GetPlayerName(playerid, AdminName, sizeof(AdminName));
 					GetPlayerName(OtherPlayer, Name, sizeof(Name));
@@ -3647,7 +3638,7 @@ COMMAND:freeze(playerid, params[])
 		// Check if the player's admin-level is at least 1
 		if (APlayerData[playerid][PlayerLevel] >= 1)
 		{
-			if (sscanf(params, "uis[128]", OtherPlayer, Duration, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/freeze <Player> <Duration (in Seconds)> <Reason>\"");
+			if (sscanf(params, "uis[128]", OtherPlayer, Duration, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/freeze <Player> <Duration (in seconds)> <Reason>\"");
 			else
 			{
 				// Check if the otherplayer is online
@@ -3947,17 +3938,21 @@ COMMAND:radio(playerid, params[])
 	switch (APlayerData[playerid][PlayerClass])
 	{
 		case ClassTruckDriver: // Truckdriver class
-			ClassName = "Trucker";
+			ClassName = TXT_ClassTrucker;
 		case ClassBusDriver: // BusDriver class
-			ClassName = "Bus Driver";
+			ClassName = TXT_ClassBusDriver;
 		case ClassPilot: // Pilot class
-			ClassName = "Pilot";
+			ClassName = TXT_ClassPilot;
+		case ClassPolice: // Police class
+			ClassName = TXT_ClassPolice;
 		case ClassMafia: // Mafia class
-			ClassName = "Mafia";
+			ClassName = TXT_ClassPolice;
 		case ClassCourier: // Courier class
-			ClassName = "Courier";
+			ClassName = TXT_ClassMafia;
+		case ClassAssistance: // Assistance class
+			ClassName = TXT_ClassAssistance;
 		case ClassRoadWorker: // Roadworker class
-			ClassName = "Roadworker";
+			ClassName = TXT_ClassCourier;
 	}
 
 	// Check if the player has logged in
@@ -5035,7 +5030,7 @@ COMMAND:announce(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if(APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/announce <Style (0-6)> <Time in Seconds 1-5> <Message>\"");
+			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/announce <Style (0-6)> <Time in seconds 1-5> <Message>\"");
 			else
 			{
 				if ((Style >= 0) && (Style <= 6) && 2 != Style)
