@@ -216,6 +216,7 @@
 
 
 // Define messagecolors
+// see http://chir.ag/projects/name-that-color/
 #define COLOR_RED 0xFF0000FF
 #define COLOR_YELLOW 0xFFFF00FF
 #define COLOR_WHITE 0xFFFFFFFF
@@ -225,6 +226,9 @@
 #define COLOR_SILVERCHALICE 0xA0A0A0FF
 #define COLOR_TEAL 0x008080FF
 #define COLOR_DODGERBLUE 0x00BBFFFF
+#define COLOR_SCARLET 0xFF3300FF
+#define COLOR_ORANGE 0xFF681FFF
+#define COLOR_PALECANARY 0xFFFF99FF
 
 // Define Virtual Worlds
 #define WORLD_JAIL 10254
@@ -1008,11 +1012,11 @@ new ACommands[][TCommands] =
 	{1, "/boat",                                   						"Spawns a boat of your choice"},
 	{1, "/car",                                   						"Spawns a car of your choice"},
 	{1, "/endspec",                                   					"Stop spectating a player"},
-	{1, "/freeze <Player> <Duration (in Seconds)> <Reason>",                    "Freeze a player for a certain time in seconds"},
+	{1, "/freeze <Player> <Duration (in seconds)> <Reason>",                    "Freeze a player for a certain time in seconds"},
 	{1, "/unfreeze <Player>",                    "Unfreeze a player"},
 	{1, "/fuel",                                   						"Refuels your vehicle for free"},
 	{1, "/get <Player>",                                   		"Teleports another player to your location"},
-	{1, "/jail <Player> <Duration (in Seconds)> <Reason>",                     "Jails another player for a certain time in seconds"},
+	{1, "/jail <Player> <Duration (in seconds)> <Reason>",                     "Jails another player for a certain time in seconds"},
 	{1, "/kick <Player> <Reason>",                                "Kick a player"},
 	{1, "/mute <Player> <Duration (in minutes)> <Reason>",                                 "Mute a player for x minutes"},
 	{1, "/muted",                                   					"Display muted players"},
@@ -1029,7 +1033,7 @@ new ACommands[][TCommands] =
 	{1, "/trailer",                                   					"Spawns a trailer of your choice"},
 	{1, "/unmute <Player>",                                   		"Un-mutes a player"},
 	{1, "/warn <PlayerToWarn> <Reason>",                                "Warn a player, up to three times"},
-	{2, "/announce <Style (0-6)> <Time in Seconds 1-5> <Message>",		"Shows a message on player's screen (GameText)"},
+	{2, "/announce <Style (0-6)> <Time in seconds 1-5> <Message>",		"Shows a message on player's screen (GameText)"},
 	{2, "/setwanted <Player> <Stars (0-6)>",                                   "Set a player's wanted level"},
 	{3, "/ban <Player> <Days> <Hours> <Reason>",                   "Ban a player for a certain time"},
 	{3, "/caroption",                                   				"Changes some options for your vehicle"},
