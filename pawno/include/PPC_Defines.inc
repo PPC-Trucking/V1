@@ -300,10 +300,10 @@ new AdminLevelName[6][24] =
 {
 	{"Player"}, // Admin-level 0
 	{"Moderator"}, // Admin-level 1
-	{"Helper-admin"}, // Admin-level 2
-	{"Admin"}, // Admin-level 3
-	{"Head-admin"}, // Admin-level 4
-	{"Owner-admin"} // Admin-level 5
+	{"Junior Admin"}, // Admin-level 2
+	{"Senior Admin"}, // Admin-level 3
+	{"Head Admin"}, // Admin-level 4
+	{"Owner"} // Admin-level 5
 };
 
 
