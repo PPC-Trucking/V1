@@ -1511,17 +1511,17 @@ COMMAND:ban(playerid, params[])
 					APlayerData[PlayerToBan][Bans]++;
 					// Calculate the total bantime (when the player can login again)
 					TotalBanTime = (Days * 86400) + (Hours * 3600) + gettime();
-					// Check if this is the player's 5th ban
-					if (APlayerData[PlayerToBan][Bans] == 5)
+					// Check if this is the player's maximum ban
+					if (APlayerData[PlayerToBan][Bans] == MAX_BANS)
 						APlayerData[PlayerToBan][BanTime] = 2147483640; // Make the ban permanent (as high as it can go)
 					else
 						APlayerData[PlayerToBan][BanTime] = TotalBanTime; // Store this value for the player
 
 					// Inform the player about his ban
-					// Check if this is the player's 5th ban
-					if (APlayerData[PlayerToBan][Bans] == 5)
+					// Check if this is the player's maximum ban
+					if (APlayerData[PlayerToBan][Bans] == MAX_BANS)
 					{
-						format(Msg, sizeof(Msg), "You have been banned permanently by %s, this was your 5th ban", AdminName);
+						format(Msg, sizeof(Msg), "You have been banned permanently by %s, this was your %ith ban", AdminName, MAX_BANS);
 						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
 					}
 					else
@@ -1530,7 +1530,7 @@ COMMAND:ban(playerid, params[])
 						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
 						format(Msg, sizeof(Msg), "Reason: %s", Reason);
 						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
-						format(Msg, sizeof(Msg), "You've been banned %i times now, 5th time is permament", APlayerData[PlayerToBan][Bans]);
+						format(Msg, sizeof(Msg), "You've been banned %i times now, %ith time is permanent", APlayerData[PlayerToBan][Bans], MAX_BANS);
 						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
 					}
 
