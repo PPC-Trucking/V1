@@ -1375,10 +1375,6 @@ Dialog_HouseMenu(playerid, response, listitem)
 			else
 			    SendClientMessage(playerid, COLOR_RED, "Only the house-owner can use this option");
 	    }
-	    case 8: // Exit the house
-	    {
-			House_Exit(playerid, HouseID);
-	    }
 	}
 
 	return 1;
@@ -1935,10 +1931,6 @@ Dialog_BusinessMenu(playerid, response, listitem)
 		    format(Msg, sizeof(Msg), TXT_SureSellBusiness, (ABusinessInteriors[BusType][BusPrice] * ABusinessData[BusID][BusinessLevel]) / 2);
 			ShowPlayerDialog(playerid, DialogSellBusiness, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Msg, TXT_DialogButtonYes, TXT_DialogButtonNo);
 		}
-	    case 4: // Exit the business
-	    {
-			Business_Exit(playerid, BusID);
-	    }
 	}
 
 	return 1;

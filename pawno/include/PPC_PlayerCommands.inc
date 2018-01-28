@@ -314,6 +314,8 @@ COMMAND:enter(playerid, params[])
 				if (House_PlayerIsOwner(playerid, HouseID) != 0)
 					SendClientMessage(playerid, COLOR_GREEN, TXT_UseHousemenu);
 
+				SendClientMessage(playerid, COLOR_GREEN, TXT_ExitToLeaveProperty);
+
 				// Exit the function
 				return 1;
 			}
@@ -344,6 +346,8 @@ COMMAND:enter(playerid, params[])
 				if (Business_PlayerIsOwner(playerid, BusID) != 0)
 					SendClientMessage(playerid, COLOR_GREEN, TXT_UseBusmenu);
 
+				SendClientMessage(playerid, COLOR_GREEN, TXT_ExitToLeaveProperty);
+
 				// Exit the function
 				return 1;
 			}
@@ -351,6 +355,37 @@ COMMAND:enter(playerid, params[])
 	}
 
 	SendClientMessage(playerid, COLOR_RED, TXT_NoHouseOrBusinessToEnter);
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
+
+// This command lets the player exit from a property (house / business)
+COMMAND:exit(playerid, params[])
+{
+	new BusID, HouseID;
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/exit", params);
+
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	HouseID = APlayerData[playerid][CurrentHouse];
+	BusID = APlayerData[playerid][CurrentBusiness];
+
+	// Check if the player is inside a house
+	if (HouseID != 0)
+		return House_Exit(playerid, HouseID);
+	// Check if the player is inside a house
+	else if (BusID != 0)
+		return Business_Exit(playerid, BusID);
+
+	// Tell the player that he is not in a house or business
+	// and can not use the /exit command
+	SendClientMessage(playerid, COLOR_RED, TXT_NoHouseOrBusToExit);
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -383,7 +418,6 @@ COMMAND:housemenu(playerid, params[])
 			format(OptionsList, sizeof(OptionsList), "%sSell house\n", OptionsList);
 			format(OptionsList, sizeof(OptionsList), "%sOpen house to the public\n", OptionsList);
 			format(OptionsList, sizeof(OptionsList), "%sClose house to the public\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sExit house\n", OptionsList);
 			// Show the housemenu
 			ShowPlayerDialog(playerid, DialogHouseMenu, DIALOG_STYLE_LIST, DialogTitle, OptionsList, "Select", TXT_DialogButtonCancel);
 		}
@@ -3356,7 +3390,6 @@ COMMAND:busmenu(playerid, params[])
 			format(OptionsList, sizeof(OptionsList), "%sUpgrade business\n", OptionsList);
 			format(OptionsList, sizeof(OptionsList), "%sRetrieve business earnings\n", OptionsList);
 			format(OptionsList, sizeof(OptionsList), "%sSell business\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sExit business\n", OptionsList);
 			// Show the businessmenu
 			ShowPlayerDialog(playerid, DialogBusinessMenu, DIALOG_STYLE_LIST, DialogTitle, OptionsList, "Select", TXT_DialogButtonCancel);
 		}

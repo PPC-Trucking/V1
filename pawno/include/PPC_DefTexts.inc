@@ -187,6 +187,7 @@
 #define TXT_UseBusmenu "Use {FFFF00}/busmenu{00FF00} to change options for your business."
 #define TXT_NoHouseOrBusinessToEnter "You are not in range of a house or business that you can /enter."
 #define TXT_NoHouseOrBusToExit "You are not inside a house or business."
+#define TXT_ExitToLeaveProperty "You can use {FFFF00}/exit{00FF00} to leave the property."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
