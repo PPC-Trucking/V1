@@ -483,7 +483,7 @@ public OnPlayerCommandPerformed( playerid, cmdtext[ ], success )
  {
 	// Check if the command is not valid
 	if (!success)
-		SendClientMessage(playerid, COLOR_RED, TXT_CmdNotExists);
+		SendClientMessage(playerid, COLOR_GRAY, TXT_CmdNotExists);
 
 	return 1;
 }
