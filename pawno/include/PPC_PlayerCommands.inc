@@ -1,4 +1,4 @@
-// This commands can be used to send messages like
+// This command can be used to send messages like
 // "/me is now afk" which becomes "* Player is now afk"
 COMMAND:me(playerid,params[])
 {
@@ -9,7 +9,7 @@ COMMAND:me(playerid,params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/me", params);
 
-	if (sscanf(params, "s[101]", Action))
+	if (sscanf(params, "s[128]", Action))
 	{
 		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/me <Action>");
 		return SendClientMessage(playerid, COLOR_RED, Message);
@@ -30,48 +30,65 @@ COMMAND:me(playerid,params[])
 	return 1;
 }
 
-// This commands allows the player to send a private message to another player
+
+
+// This command allows players to send each other a private message
 COMMAND:pm(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Message[128], Msg1[128], Msg2[128], YourName[24], OtherPlayerName[24];
+	// 144 i/o message size limit - 24 name - 18 extra characters + id (see format) = 102
+	new OtherPlayer, Message[144], Name[128], Text[102];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/pm", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	if (sscanf(params, "us[128]", OtherPlayer, Text))
 	{
-		if (sscanf(params, "us[128]", OtherPlayer, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/pm <Player> <Message>\"");
-		else
-		{
-			if (OtherPlayer == playerid)
-				return SendClientMessage(playerid, COLOR_RED, "You can't send a private message to yourself");
-
-			// Check if that other player is online
-			if (IsPlayerConnected(OtherPlayer))
-			{
-				    // Get both names
-					GetPlayerName(playerid, YourName, sizeof(YourName));
-					GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
-				    // Construct the message that is sent to yourself
-					format(Msg1, sizeof(Msg1), "{808080}PM to %s{FFFFFF}: %s", OtherPlayerName, Message);
-					// Construct the message that is sent to the other player
-					format(Msg2, sizeof(Msg2), "{A0A0A0}PM by %s{FFFFFF}: %s", YourName, Message);
-					// Send the messages
-					SendClientMessage(playerid, COLOR_WHITE, Msg1);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg2);
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "Player is not online");
-		}
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/pm <Player> <Message>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	 return 0;
+
+	// Check if OtherPlayer is playerid
+	// which means the player trys to send a private message to himself... *lol*
+	if (OtherPlayer == playerid)
+		return SendClientMessage(playerid, COLOR_RED, TXT_NoPrivMessageToU);
+
+	// Check if that other player is not online
+	if (!IsPlayerConnected(OtherPlayer))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
+
+	// Check if the player is not logged in
+	if (APlayerData[OtherPlayer][LoggedIn] != true)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
+
+	// Check if the private message is in range
+	if (strlen(Text) > sizeof(Text))
+	{
+		format(Message, sizeof(Message), TXT_MessageTooLongWithLimit, sizeof(Text));
+		return SendClientMessage(playerid, COLOR_SILVERCHALICE, Message);
+	}
+
+	// Get the name of the receiver
+	GetPlayerName(OtherPlayer, Name, sizeof(Name));
+	// Construct the message that is sent to the sender
+	format(Message, sizeof(Message), TXT_PrivMessageTo, Name, OtherPlayer, Text);
+	SendClientMessage(playerid, COLOR_BIRDFLOWER, Message);
+
+	// Get the name of the sender
+	GetPlayerName(playerid, Name, sizeof(Name));
+	// Construct the message that is sent to the receiver
+	format(Message, sizeof(Message), TXT_PrivMessageFrom, Name, playerid, Text);
+	SendClientMessage(OtherPlayer, COLOR_BIRDFLOWER, Message);
+
+	// Play sound for receiver
+	// Do not set any coordinates so the sound
+	// will be played just in the player's area
+	PlayerPlaySound(OtherPlayer, 1085, 0, 0, 0);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
 
 
 // Lets the player add new houses

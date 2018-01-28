@@ -166,6 +166,11 @@
 #define TXT_MutedDuration "Remaining: Minutes: %i, Seconds: %i"
 #define TXT_MessageTooLong "Your message is too long. Please shorten it."
 #define TXT_MessageTooLongWithLimit "Your message is too long. Please shorten it to %i characters."
+#define TXT_NoPrivMessageToU "You can not send a private message to yourself."
+#define TXT_PrivMessageTo "[PM To] %s (%i): %s"
+#define TXT_PrivMessageFrom "[PM From] %s (%i): %s"
+#define TXT_PlayerNotOnline "That player is not online."
+#define TXT_PlayerNotLoggedIn "That player has not logged in yet."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
