@@ -188,7 +188,7 @@ COMMAND:delhouse(playerid, params[])
 
 	// Check if the house is owned
 	if (AHouseData[HouseID][Owned] != false)
-		return SendClientMessage(playerid, COLOR_RED, TXT_CantDeleteOwnedHouse);
+		return SendClientMessage(playerid, COLOR_RED, TXT_HouseIsOwned);
 
 	// Check if the player is not in range of the house-pickup
 	if (!IsPlayerInRangeOfPoint(playerid, 10, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
@@ -229,60 +229,42 @@ COMMAND:delhouse(playerid, params[])
 
 
 
-// This command lets the player buy a house when he's standing in range of a house that isn't owned yet
+// This command lets the player buy a house when he is standing in
+// range of a house that is not owned yet
 COMMAND:buyhouse(playerid, params[])
 {
-	// Setup local variables
-	new Msg[128];
-
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/buyhouse", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Make sure the player isn't inside a vehicle
-		if (GetPlayerVehicleID(playerid) == 0)
-		{
-			// Check if the player is near a house-pickup
-			for (new i = 1; i < sizeof(AHouseData); i++)
-			{
-				// Check if this house is created (it would have a valid pickup in front of the door)
-				if (AHouseData[i][PickupID] != 0)
-				{
-					// Check if the player is in range of the house-pickup
-					if (IsPlayerInRangeOfPoint(playerid, 2.5, AHouseData[i][HouseX], AHouseData[i][HouseY], AHouseData[i][HouseZ]))
-					{
-					    // Check if the house isn't owned yet
-					    if (AHouseData[i][Owned] == false)
-					    {
-					        // Check if the player can afford this house
-					        if (APlayerData[playerid][PlayerMoney] >= AHouseData[i][HousePrice])
-					            House_SetOwner(playerid, i); // Give ownership of the house to the player
-					        else
-					            SendClientMessage(playerid, COLOR_RED, "You cannot afford this house"); // The player cannot afford this house
-					    }
-					    else
-					    {
-					        // Let the player know that this house is already owned by a player
-							format(Msg, sizeof(Msg), "{FF0000}This house is already owned by {00FF00}%s{FFFFFF}", AHouseData[i][Owner]);
-							SendClientMessage(playerid, COLOR_WHITE, Msg);
-					    }
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
 
-						// The player was in range of a house-pickup, so stop searching for the other house pickups
-					    return 1;
-					}
+	// Loop through all houses
+	for (new HouseID = 1; HouseID < sizeof(AHouseData); HouseID++)
+	{
+		// Check if this house is created (it would have a valid pickup in front of the door)
+		if (AHouseData[HouseID][PickupID] != 0)
+		{
+			// Check if the player is in range of the house-pickup
+			if (IsPlayerInRangeOfPoint(playerid, 2.5, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
+			{
+				// Check if the house is not owned
+				if (AHouseData[HouseID][Owned] == false)
+				{
+					// Check if the player can afford this house
+					if (APlayerData[playerid][PlayerMoney] >= AHouseData[HouseID][HousePrice])
+						// Give ownership of the house to the player if he can buy it
+						return House_SetOwner(playerid, HouseID);
+					else
+						// Tell player that he can not afford to pay the house
+						return SendClientMessage(playerid, COLOR_RED, TXT_CantAffordHouse);
 				}
 			}
-
-			// All houses have been processed, but the player wasn't in range of any house-pickup, let him know about it
-			SendClientMessage(playerid, COLOR_RED, "To buy a house, you have to be near a house-pickup");
 		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You can't buy a house when you're inside a vehicle");
 	}
-	else
-	    return 0;
+
+	SendClientMessage(playerid, COLOR_RED, TXT_NoBuyableHouseInRange);
 
 	// Let the server know that this was a valid command
 	return 1;

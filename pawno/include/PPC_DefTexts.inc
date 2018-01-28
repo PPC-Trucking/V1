@@ -174,11 +174,14 @@
 #define TXT_MustBeOnFoot "You must be on foot to use this command."
 #define TXT_HouseMaxLevelNotInRange "You have to use a max-level from %i to %i."
 #define TXT_HouseMaxReached "The maximum amount of houses (%i) has been reached."
-#define TXT_HouseCreated "You've succesfully created house {FF00FF}%i{00FF00}."
+#define TXT_HouseCreated "You have succesfully created house {FF00FF}%i{00FF00}."
 #define TXT_HouseIDNotFound "This house could not be found."
 #define TXT_HouseNotInRange "You are not in range of this house."
-#define TXT_CantDeleteOwnedHouse "You can not delete a house which has been owned."
+#define TXT_HouseIsOwned "This house is owned."
 #define TXT_HouseDeleted "You have deleted the house."
+#define TXT_HouseBelongsToPlayer "This house already belongs to you. Use /enter to get inside."
+#define TXT_CantAffordHouse "You do not have enough money to buy this house."
+#define TXT_NoBuyableHouseInRange "You are not in range of a buyable house."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
