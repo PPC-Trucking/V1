@@ -385,10 +385,10 @@ House_CalcSellPrice(HouseID)
 	return SellPrice;
 }
 
-// his function returns "1" if the given player is the owner of the given house
+// This function returns "1" if the given player is the owner of the given house
 House_PlayerIsOwner(playerid, HouseID)
 {
-	// Loop through all houses owner by this player
+	// Loop through all houses
 	for (new i; i < MAX_HOUSESPERPLAYER; i++)
 	{
 		// Check if the player owns the house in any of his house-slots

@@ -446,7 +446,7 @@ enum TBusinessData
 	bool:Owned, // Holds true if the Business is owned by somebody
 	Owner[24] // Holds the name of the owner of the Business
 }
-// Holds the data for all houses
+// Holds the data for all businesses
 new ABusinessData[MAX_BUSINESS][TBusinessData];
 // This variable holds the business-time (this value is increased every hour and is used to calculate the amount of money a business
 // has generated after the last transaction of the business)

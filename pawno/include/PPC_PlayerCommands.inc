@@ -270,102 +270,93 @@ COMMAND:buyhouse(playerid, params[])
 	return 1;
 }
 
-// This command lets the player enter the house/business if he's the owner
+
+
+// This command lets the player enter a property (house / business)
 COMMAND:enter(playerid, params[])
 {
 	// Setup local variables
-	new HouseID, hLevel, BusID, BusType;
+	new Level, BusType;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/enter", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	// Loop through all houses
+	for (new HouseID = 1; HouseID < MAX_HOUSES; HouseID++)
 	{
-		// Make sure the player isn't inside a vehicle
-		if (GetPlayerVehicleID(playerid) == 0)
+		// Check if this house exists
+		if (AHouseData[HouseID][PickupID] != 0)
 		{
-			// Loop through all houses
-			for (HouseID = 1; HouseID < MAX_HOUSES; HouseID++)
+			// Check if the player is in range of the house-pickup
+			if (IsPlayerInRangeOfPoint(playerid, 2.5, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
 			{
-				// Check if this house exists
-				if (AHouseData[HouseID][PickupID] != 0)
-				{
-					// Check if the player is in range of the house-pickup
-					if (IsPlayerInRangeOfPoint(playerid, 2.5, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
-					{
-						// Check if the house is closed to the public
-						if (AHouseData[HouseID][HouseOpened] == false)
-						{
-							// The house isn't open to the public, so keep anyone out who isn't the owner of the house
-							if (House_PlayerIsOwner(playerid, HouseID) == 0)
-							{
-							    // Let the player know that this house isn't open to the public and he can't enter it
-								SendClientMessage(playerid, COLOR_RED, "This house isn't open to the public, you can't enter it");
-							    return 1;
-							}
-						}
+				// Check if the house is closed to the public
+				// and if the player is not the owner
+				if (AHouseData[HouseID][HouseOpened] == false && House_PlayerIsOwner(playerid, HouseID) == 0)
+					return SendClientMessage(playerid, COLOR_RED, TXT_HouseIsNotOpened);
 
-						// The house is open to the public, or the player trying to enter is the owner, so let the player inside the house
+			    // Get the level of the house
+				Level = AHouseData[HouseID][HouseLevel];
+				// Set the worldid so other players cannot see him anymore
+				SetPlayerVirtualWorld(playerid, 5000 + HouseID);
+				// Set the player inside the interior of the house
+				SetPlayerInterior(playerid, AHouseInteriors[Level][InteriorID]);
+				// Set the position of the player at the spawn-location of the house's interior
+				SetPlayerPos(playerid, AHouseInteriors[Level][IntX], AHouseInteriors[Level][IntY], AHouseInteriors[Level][IntZ]);
+				// Also set a tracking-variable to enable /housemenu to track in which house the player is
+				APlayerData[playerid][CurrentHouse] = HouseID;
 
-					    // Get the level of the house
-						hLevel = AHouseData[HouseID][HouseLevel];
-						// Set the worldid so other players cannot see him anymore
-						SetPlayerVirtualWorld(playerid, 5000 + HouseID);
-						// Set the player inside the interior of the house
-						SetPlayerInterior(playerid, AHouseInteriors[hLevel][InteriorID]);
-						// Set the position of the player at the spawn-location of the house's interior
-						SetPlayerPos(playerid, AHouseInteriors[hLevel][IntX], AHouseInteriors[hLevel][IntY], AHouseInteriors[hLevel][IntZ]);
-						// Also set a tracking-variable to enable /housemenu to track in which house the player is
-						APlayerData[playerid][CurrentHouse] = HouseID;
-						// Also let the player know he can use /housemenu to upgrade/exit his house
-						SendClientMessage(playerid, COLOR_GREEN, "Use {FFFF00}/housemenu{00FF00} to change options for your house");
+				// Tell the owner that he can use /housemenu for more options
+				if (House_PlayerIsOwner(playerid, HouseID) != 0)
+					SendClientMessage(playerid, COLOR_GREEN, TXT_UseHousemenu);
 
-						// Exit the function
-						return 1;
-					}
-				}
-			}
-
-			// Loop through all player-owned businesses
-			for (new i; i < MAX_BUSINESSPERPLAYER; i++)
-			{
-			    // Get the business-id at the selected slot from the player
-			    BusID = APlayerData[playerid][Business][i];
-
-				// Check if the player has owned a business in this slot
-				if (BusID != 0)
-				{
-					// Check if the player is in range of the business-pickup
-					if (IsPlayerInRangeOfPoint(playerid, 2.5, ABusinessData[BusID][BusinessX], ABusinessData[BusID][BusinessY], ABusinessData[BusID][BusinessZ]))
-					{
-					    // Get the business-type
-					    BusType = ABusinessData[BusID][BusinessType];
-						// Set the worldid so other players cannot see him anymore
-						SetPlayerVirtualWorld(playerid, 1000 + playerid);
-						// Set the player inside the interior of the business
-						SetPlayerInterior(playerid, ABusinessInteriors[BusType][InteriorID]);
-
-						// Set the position of the player at the spawn-location of the business's interior
-						SetPlayerPos(playerid, ABusinessInteriors[BusType][IntX], ABusinessInteriors[BusType][IntY], ABusinessInteriors[BusType][IntZ]);
-						// Also set a tracking-variable to enable /busmenu to track in which business the player is
-						APlayerData[playerid][CurrentBusiness] = BusID;
-						// Also let the player know he can use /busmenu to upgrade/exit his business
-						SendClientMessage(playerid, COLOR_GREEN, "Use {FFFF00}/busmenu{00FF00} to change options for your business");
-
-						// Exit the function
-						return 1;
-					}
-				}
+				// Exit the function
+				return 1;
 			}
 		}
 	}
-	else
-	    return 0;
+
+	// Loop through all businesses
+	for (new BusID = 1; BusID < MAX_BUSINESS; BusID++)
+	{
+		// Check if the business exists
+		if (ABusinessData[BusID][PickupID] != 0)
+		{
+			// Check if the player is in range of the business-pickup
+			if (IsPlayerInRangeOfPoint(playerid, 2.5, ABusinessData[BusID][BusinessX], ABusinessData[BusID][BusinessY], ABusinessData[BusID][BusinessZ]))
+			{
+			    // Get the business-type
+			    BusType = ABusinessData[BusID][BusinessType];
+				// Set the worldid so other players cannot see him anymore
+				SetPlayerVirtualWorld(playerid, 1000 + BusID);
+				// Set the player inside the interior of the business
+				SetPlayerInterior(playerid, ABusinessInteriors[BusType][InteriorID]);
+
+				// Set the position of the player at the spawn-location of the business's interior
+				SetPlayerPos(playerid, ABusinessInteriors[BusType][IntX], ABusinessInteriors[BusType][IntY], ABusinessInteriors[BusType][IntZ]);
+				// Also set a tracking-variable to enable /busmenu to track in which business the player is
+				APlayerData[playerid][CurrentBusiness] = BusID;
+				// Tell the owner that he can use /busmenu for more options
+				if (Business_PlayerIsOwner(playerid, BusID) != 0)
+					SendClientMessage(playerid, COLOR_GREEN, TXT_UseBusmenu);
+
+				// Exit the function
+				return 1;
+			}
+		}
+	}
+
+	SendClientMessage(playerid, COLOR_RED, TXT_NoHouseOrBusinessToEnter);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command opens a menu when you're inside your house to allow to access the options of your house
 COMMAND:housemenu(playerid, params[])

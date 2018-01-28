@@ -182,6 +182,11 @@
 #define TXT_HouseBelongsToPlayer "This house already belongs to you. Use /enter to get inside."
 #define TXT_CantAffordHouse "You do not have enough money to buy this house."
 #define TXT_NoBuyableHouseInRange "You are not in range of a buyable house."
+#define TXT_HouseIsNotOpened "The owner of this house locked his house to the public. You can not /enter it."
+#define TXT_UseHousemenu "Use {FFFF00}/housemenu{00FF00} to change options for your house."
+#define TXT_UseBusmenu "Use {FFFF00}/busmenu{00FF00} to change options for your business."
+#define TXT_NoHouseOrBusinessToEnter "You are not in range of a house or business that you can /enter."
+#define TXT_NoHouseOrBusToExit "You are not inside a house or business."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
