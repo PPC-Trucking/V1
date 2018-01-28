@@ -95,7 +95,7 @@ COMMAND:pm(playerid, params[])
 COMMAND:createhouse(playerid, params[])
 {
 	// Setup local variables
-	new Message[144], Price, MaxLevel, HouseID;
+	new Message[128], Price, MaxLevel, HouseID;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/createhouse", params);
@@ -1001,6 +1001,9 @@ COMMAND:work(playerid, params[])
 // Stops the current job
 COMMAND:stopwork(playerid, params[])
 {
+	// Setup local variables
+	new Message[128];
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/stopwork", params);
 
@@ -1022,10 +1025,11 @@ COMMAND:stopwork(playerid, params[])
 				default: SendClientMessage(playerid, COLOR_RED, "Your class has no job to end");
 			}
 
+			format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
 			// Inform the player that he failed the mission
-			GameTextForPlayer(playerid, "~w~You ~r~failed~w~ your mission. You lost ~y~$1000~w~ to cover expenses.", 5000, 4);
-			// Reduce the player's cash by 1000
-			RewardPlayer(playerid, -1000, 0);
+			GameTextForPlayer(playerid, Message, 5000, 4);
+			// Reduce the player's cash
+			RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 		}
 		else
 			SendClientMessage(playerid, COLOR_RED, "You are not doing any job");
@@ -2058,7 +2062,7 @@ COMMAND:fly(playerid, params[])
 COMMAND:paint(playerid, params[])
 {
     // Setup local variables
-	new PaintjobID, vid;
+	new PaintjobID, vid, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/paint", params);
@@ -2092,9 +2096,11 @@ COMMAND:paint(playerid, params[])
 						AVehicleData[vid][Color2] = 1;
 
 						// Let the player pay for the paintjob
-						RewardPlayer(playerid, -500, 0);
+						RewardPlayer(playerid, -PRICE_PAINT_JOB, 0);
 						// Inform the player about it
-						SendClientMessage(playerid, COLOR_GREEN, "You repainted your vehicle for $500");
+						format(Message, sizeof(Message), TXT_VehPaintJobPaid, PRICE_PAINT_JOB);
+						SendClientMessage(playerid, COLOR_GREEN, Message);
+
 						// Save the player-file (along with the houses and businesses)
 						PlayerFile_Save(playerid);
 					}
@@ -2966,7 +2972,7 @@ COMMAND:cleanupvehicle(playerid, params[])
 COMMAND:assist(playerid, params[])
 {
 	// Setup local variables
-	new bool:AssistOnline = false, Msg[128], Name[24];
+	new bool:AssistOnline = false, Message[128], Name[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/assist", params);
@@ -2977,7 +2983,7 @@ COMMAND:assist(playerid, params[])
 		// Get the player's name
 		GetPlayerName(playerid, Name, sizeof(Name));
 		// Preset the message that needs to be sent to assistance players
-		format(Msg, sizeof(Msg), "{00FF00}Player {FFFF00}%s{00FF00} needs assistance, go help him", Name);
+		format(Message, sizeof(Message), "{00FF00}Player {FFFF00}%s{00FF00} needs assistance, go help him", Name);
 
 		// Check if there is at least one assistance player online
 		for (new i; i < MAX_PLAYERS; i++)
@@ -2991,7 +2997,7 @@ COMMAND:assist(playerid, params[])
 					// Set the flag to indicate that at least one assistance player is online
 				    AssistOnline = true;
 				    // Send the assistance player a message to inform him who needs assistance
-				    SendClientMessage(i, COLOR_WHITE, Msg);
+				    SendClientMessage(i, COLOR_WHITE, Message);
 				}
 			}
 		}
@@ -3013,11 +3019,11 @@ COMMAND:assist(playerid, params[])
 				RepairVehicle(GetPlayerVehicleID(playerid));
 				// Also re-fuel the vehicle
 				AVehicleData[GetPlayerVehicleID(playerid)][Fuel] = MaxFuel;
-				// Let the player pay for the repairs and refuel (default $2000)
-				RewardPlayer(playerid, -2000, 0);
-				// Let the player know he spent $2000 for auto-repair because there were no assistance players online
-			    SendClientMessage(playerid, COLOR_RED, "Your vehicle has been auto-repaired and refuelled for $2000");
-			    SendClientMessage(playerid, COLOR_RED, "because there is no assistance player online");
+				// Let the player pay for the repairs and refuel
+				RewardPlayer(playerid, -PRICE_AUTO_ASSIST, 0);
+				// Let the player know he spent money for auto-repair because there were no assistance players online
+				format(Message, sizeof(Message), TXT_VehColorChangePaid, PRICE_AUTO_ASSIST);
+				SendClientMessage(playerid, COLOR_GREEN, Message);
 			}
 		}
 	}

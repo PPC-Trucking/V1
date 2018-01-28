@@ -130,7 +130,7 @@
 
 // Job related, for all classes
 #define TXT_RewardJob "{00FF00}You finished the mission and earned $%i"
-#define TXT_FailedMission "~w~You ~r~failed~w~ your mission. You lost ~y~$1000~w~ to cover expenses." // Define game-text when player fails a mission
+#define TXT_FailedMission "~w~You ~r~failed~w~ your mission. You lost ~y~$%i~w~ to cover expenses." // Define game-text when player fails a mission
 
 // Class related
 #define TXT_ClassTrucker "Truck Driver" // Define the game-text that shows when the player is choosing classes (this one = trucker)
@@ -153,7 +153,7 @@
 #define RoadWorker_NoJobText "No job at the moment. Enter \"~y~/work~w~\" to start a job"
 
 // Command related
-#define TXT_PlayerRescued "{0000FF}You've been rescued. $200 has been deducted."
+#define TXT_PlayerRescued "You have been sent to your base for {FF0000}$%i"
 #define TXT_PlayerSelfSpectate "{FF0000}You can't spectate yourself."
 #define TXT_PlayerSpectating "{FF0000}%s is currently spectating a player. You can't teleport to him."
 #define TXT_PlayerNotSpawned "{FF0000}You can't spectate that player because he didn't spawn yet."
@@ -346,3 +346,8 @@
 #define TXT_BusinessReachedMaxLevel "{FF0000}Your business has reached the maximum level, you cannot upgrade it further"
 #define TXT_SureSellBusiness "Are you sure you want to sell your business for $%i?"
 #define TXT_PlayerSoldBusiness "{00FF00}You've sold your business"
+
+// Prices related
+#define TXT_VehColorChangePaid "You have changed the color of your vehicle for {FFFF00}$%i"
+#define TXT_VehPaintJobPaid "You have repainted your vehicle for {FFFF00}$%i"
+#define TXT_AutoAssistPaid "Your vehicle has been auto-repaired and refuelled for {FFFF00}$%i {00FF00}as there is no assistance player online."

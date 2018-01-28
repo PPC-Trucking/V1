@@ -51,6 +51,15 @@ new RefuelMaxPrice = 1000;
 // Defines for the speedcameras
 #define MAX_CAMERAS					120
 
+// Define prices
+#define PRICE_PAINT_JOB				200
+#define PRICE_COLOR_CHANGE			150
+#define PRICE_RESPRAY				150
+#define PRICE_FAILED_JOB			1000
+#define PRICE_GOBASE				200
+#define PRICE_AUTO_ASSIST			2000
+
+
 // Defines for police
 new bool:PoliceGetsWeapons = true;
 // These are the weapons that a police player will get when "PoliceGetsWeapons = true"

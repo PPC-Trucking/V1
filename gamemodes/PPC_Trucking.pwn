@@ -1168,11 +1168,15 @@ public OnVehicleSpawn(vehicleid)
 // This callback is called when the vehicle leaves a mod shop
 public OnVehicleRespray(playerid, vehicleid, color1, color2)
 {
-	// Let the player pay $150 for changing the color (if they have been changed)
+	// Setup local variables
+	new Message[128];
+
+	// Let the player pay for changing the color (if they have been changed)
 	if ((AVehicleData[vehicleid][Color1] != color1) || (AVehicleData[vehicleid][Color2] != color2))
 	{
-		RewardPlayer(playerid, -150, 0);
-		SendClientMessage(playerid, COLOR_GREEN, "You've changed the color of your vehicle for $150");
+		RewardPlayer(playerid, -PRICE_RESPRAY, 0);
+		format(Message, sizeof(Message), TXT_VehColorChangePaid, PRICE_RESPRAY);
+		return SendClientMessage(playerid, COLOR_GREEN, Message);
 	}
 
 	// Save the colors
@@ -1248,7 +1252,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 public OnPlayerExitVehicle(playerid, vehicleid)
 {
 	// Setup local variables
-	new engine, lights, alarm, doors, bonnet, boot, objective;
+	new engine, lights, alarm, doors, bonnet, boot, objective, Message[128];
 
 	// Check if the player is the driver of the vehicle
 	if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
@@ -1266,10 +1270,11 @@ public OnPlayerExitVehicle(playerid, vehicleid)
 		{
 		    // End the job (clear data)
 			Pilot_EndJob(playerid);
+			format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
 			// Inform the player that he failed the mission
-			GameTextForPlayer(playerid, TXT_FailedMission, 5000, 4);
-			// Reduce the player's cash by 1000
-			RewardPlayer(playerid, -1000, 0);
+			GameTextForPlayer(playerid, Message, 5000, 4);
+			// Reduce the player's cash
+			RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 		}
 	}
 

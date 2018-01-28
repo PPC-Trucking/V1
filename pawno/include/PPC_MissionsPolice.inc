@@ -196,6 +196,9 @@ Police_PayFine(playerid, PlayerToFine)
 // This function ports the player inside the jail and sets a timer to get him back out
 Police_JailPlayer(playerid, JailTime)
 {
+	// Setup local variables
+	new Message[128];
+
 	// First remove the player from his vehicle
 	RemovePlayerFromVehicle(playerid);
 	// Set the player in the virtual world of the jail (so other players cannot see the jailed players on their radar)
@@ -226,10 +229,11 @@ Police_JailPlayer(playerid, JailTime)
 			case ClassAssistance: Assistance_EndJob(playerid);
 		}
 
+		format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
 		// Inform the player that he failed the mission
-		GameTextForPlayer(playerid, TXT_FailedMission, 5000, 4);
-		// Reduce the player's cash by 1000
-		RewardPlayer(playerid, -1000, 0);
+		GameTextForPlayer(playerid, Message, 5000, 4);
+		// Reduce the player's cash
+		RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 	}
 
 	return 1;
@@ -238,6 +242,7 @@ Police_JailPlayer(playerid, JailTime)
 // This is the timer that runs for every player who's in jail
 public UnjailPlayer(playerid)
 {
+	// Setup local variables
 	new JailMsg[20];
 
 	// Check if the player is allowed to leave yet

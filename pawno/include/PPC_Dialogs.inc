@@ -90,6 +90,9 @@ Dialog_Login(playerid, response, inputtext[])
 // Process the rescue dialog
 Dialog_Rescue(playerid, response, listitem)
 {
+	// Setup local variables
+	new Message[128];
+
 	// Just close the dialog if the player clicked TXT_DialogButtonCancel
 	if(!response) return 1;
 
@@ -154,9 +157,10 @@ Dialog_Rescue(playerid, response, listitem)
 	}
 
 	SpawnPlayer(playerid); // Force the player to spawn at the requested coordinates
-	SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerRescued); // Send the player a message that using "/gobase" costs $200
-	// Reduce the player's money by 200
-	RewardPlayer(playerid, -200, 0);
+	format(Message, sizeof(Message), TXT_PlayerRescued, PRICE_GOBASE);
+	SendClientMessage(playerid, COLOR_GREEN, Message); // Send the player a message that using "/gobase"
+	// Reduce the player's money
+	RewardPlayer(playerid, -PRICE_GOBASE, 0);
 
 	return 1;
 }
@@ -2063,6 +2067,9 @@ Dialog_PlayerCommands(playerid, response, listitem)
 // Process the primary car color dialog
 Dialog_PrimaryCarColor(playerid, response, listitem)
 {
+	// Setup local variables
+	new Message[128];
+
 	// Just close the dialog if the player clicked TXT_DialogButtonCancel
 	if(!response) return 1;
 
@@ -2076,9 +2083,10 @@ Dialog_PrimaryCarColor(playerid, response, listitem)
 	if (listitem == 0)
 		AVehicleData[vid][PaintJob] = 0;
 
-	// Let the player pay $150 for changing the color
-	RewardPlayer(playerid, -150, 0);
-	SendClientMessage(playerid, COLOR_GREEN, "You've changed the color of your vehicle for $150");
+	// Let the player pay for changing the color
+	RewardPlayer(playerid, -PRICE_COLOR_CHANGE, 0);
+	format(Message, sizeof(Message), TXT_VehColorChangePaid, PRICE_COLOR_CHANGE);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	return 1;
 }
@@ -2086,6 +2094,9 @@ Dialog_PrimaryCarColor(playerid, response, listitem)
 // Process the secundary car color dialog
 Dialog_SedundaryCarColor(playerid, response, listitem)
 {
+	// Setup local variables
+	new Message[128];
+
 	// Just close the dialog if the player clicked TXT_DialogButtonCancel
 	if(!response) return 1;
 
@@ -2096,9 +2107,10 @@ Dialog_SedundaryCarColor(playerid, response, listitem)
 	AVehicleData[vid][Color2] = listitem;
 	ChangeVehicleColor(GetPlayerVehicleID(playerid), AVehicleData[vid][Color1], AVehicleData[vid][Color2]);
 
-	// Let the player pay $150 for changing the color
-	RewardPlayer(playerid, -150, 0);
-	SendClientMessage(playerid, COLOR_GREEN, "You've changed the color of your vehicle for $150");
+	// Let the player pay for changing the color
+	RewardPlayer(playerid, -PRICE_COLOR_CHANGE, 0);
+	format(Message, sizeof(Message), TXT_VehColorChangePaid, PRICE_COLOR_CHANGE);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	return 1;
 }
