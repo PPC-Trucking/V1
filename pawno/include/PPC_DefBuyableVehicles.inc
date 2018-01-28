@@ -22,7 +22,7 @@ enum TBuyableVehicle
 	CarName[50], // Holds the name of the vehicle
 	VehicleClass, // Holds the ID of the vehicleclass
 	CarModel, // Holds the model-ID of the vehicle
-	Price // Holds the price for the vehicle (renting it will be 10% of this price)
+	VehiclePrice // Holds the price for the vehicle (renting it will be 10% of this price)
 }
 
 new ABuyableVehicles[][TBuyableVehicle] =

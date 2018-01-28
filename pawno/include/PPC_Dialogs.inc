@@ -918,7 +918,7 @@ Dialog_RentProcessClass(playerid, response, listitem)
 		if (ABuyableVehicles[i][VehicleClass] == APlayerData[playerid][DialogRentVClass])
 		{
 			// Add the carname to the list and it's price
-			format(CarList, sizeof(CarList), "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price] / 10); // Add the name of the next car to the list on the next line
+			format(CarList, sizeof(CarList), "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][VehiclePrice] / 10); // Add the name of the next car to the list on the next line
 		}
 	}
 
@@ -978,7 +978,7 @@ Dialog_RentCar(playerid, response, listitem)
 		    if (Counter == listitem)
 			{
 			    // Check if the player has enough money to afford renting this vehicle
-			    if (APlayerData[playerid][PlayerMoney] >= (ABuyableVehicles[i][Price] / 10))
+			    if (APlayerData[playerid][PlayerMoney] >= (ABuyableVehicles[i][VehiclePrice] / 10))
 			    {
 					// Check if the player already has a rented vehicle
 					if (APlayerData[playerid][RentedVehicleID] != 0)
@@ -1018,9 +1018,9 @@ Dialog_RentCar(playerid, response, listitem)
 					GetPlayerPos(playerid, APlayerData[playerid][PreviousX], APlayerData[playerid][PreviousY], APlayerData[playerid][PreviousZ]);
 					APlayerData[playerid][PreviousInt] = GetPlayerInterior(playerid);
 					// Let the player pay for renting the vehicle
-					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - (ABuyableVehicles[i][Price] / 10);
+					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - (ABuyableVehicles[i][VehiclePrice] / 10);
 					// Let the player know he rented a vehicle
-					format(Msg, sizeof(Msg), TXT_PlayerRentsVehicle, ABuyableVehicles[i][CarName], (ABuyableVehicles[i][Price] / 10));
+					format(Msg, sizeof(Msg), TXT_PlayerRentsVehicle, ABuyableVehicles[i][CarName], (ABuyableVehicles[i][VehiclePrice] / 10));
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 				}
 				else // The player has not enough money to rent this vehicle
@@ -1309,7 +1309,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 						    // Get the index where the first vehicle is found in the ABuyableVehicles array
 						    BuyableCarIndex = VehicleBuyable_GetIndex(GetVehicleModel(AHouseData[HouseID][VehicleIDs][CarSlot]));
 						    // Add the name of the vehicle to the list
-						    format(VehicleList, sizeof(VehicleList), "%s{00FF00}%s: $%i{FFFFFF}\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][Price] / 2);
+						    format(VehicleList, sizeof(VehicleList), "%s{00FF00}%s: $%i{FFFFFF}\n", VehicleList, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][VehiclePrice] / 2);
 						}
 						else
 							format(VehicleList, sizeof(VehicleList), TXT_EmptyCarSlot, VehicleList);
@@ -1492,7 +1492,7 @@ Dialog_BuyCarClass(playerid, response, listitem)
 		if (ABuyableVehicles[i][VehicleClass] == APlayerData[playerid][DialogBuyVClass])
 		{
 			// Add the carname to the list and it's price
-			format(CarList, sizeof(CarList), "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price]); // Add the name of the next car to the list on the next line
+			format(CarList, sizeof(CarList), "%s%s%s ($%i)", CarList, "\n", ABuyableVehicles[i][CarName], ABuyableVehicles[i][VehiclePrice]); // Add the name of the next car to the list on the next line
 		}
 	}
 
@@ -1553,16 +1553,16 @@ Dialog_BuyCar(playerid, response, listitem)
 		    if (Counter == listitem)
 			{
 			    // Check if the player has enough money to afford buying this vehicle
-			    if (APlayerData[playerid][PlayerMoney] >= (ABuyableVehicles[i][Price]))
+			    if (APlayerData[playerid][PlayerMoney] >= (ABuyableVehicles[i][VehiclePrice]))
 			    {
 					// Add the vehicle to the house (this sets ownership and other data that's needed)
 					// The vehicles are by default created inside the hangar of KACC Military Fuels instead of near the EasterBoard Farm
 					House_AddVehicle(HouseID, ABuyableVehicles[i][CarModel], 0, cComponents, 2585.0, 2829.0, 10.9, 0.0, -1, -1);
 
 					// Let the player pay for buying the vehicle
-					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - ABuyableVehicles[i][Price];
+					APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] - ABuyableVehicles[i][VehiclePrice];
 					// Let the player know he bought a vehicle
-					format(Msg, sizeof(Msg), TXT_PlayerBoughtVehicle, ABuyableVehicles[i][CarName], ABuyableVehicles[i][Price]);
+					format(Msg, sizeof(Msg), TXT_PlayerBoughtVehicle, ABuyableVehicles[i][CarName], ABuyableVehicles[i][VehiclePrice]);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
 					SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustUseGetcarAndPark);
 
@@ -1699,9 +1699,9 @@ Dialog_SellCar(playerid, response, listitem)
 		DestroyDynamic3DTextLabel(AVehicleData[vid][VehicleText]);
 
 		// Refund the player with 50% of the vehicle's buying price
-		APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] + (ABuyableVehicles[BuyableCarIndex][Price] / 2);
+		APlayerData[playerid][PlayerMoney] = APlayerData[playerid][PlayerMoney] + (ABuyableVehicles[BuyableCarIndex][VehiclePrice] / 2);
 		// Let the player know about it
-		format(Msg, sizeof(Msg), TXT_PlayerSoldVehicle, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][Price] / 2);
+		format(Msg, sizeof(Msg), TXT_PlayerSoldVehicle, ABuyableVehicles[BuyableCarIndex][CarName], ABuyableVehicles[BuyableCarIndex][VehiclePrice] / 2);
 		SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 		// Save the player-file (and his houses)
