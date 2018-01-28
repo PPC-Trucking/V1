@@ -171,6 +171,10 @@
 #define TXT_PrivMessageFrom "[PM From] %s (%i): %s"
 #define TXT_PlayerNotOnline "That player is not online."
 #define TXT_PlayerNotLoggedIn "That player has not logged in yet."
+#define TXT_MustBeOnFoot "You must be on foot to use this command."
+#define TXT_HouseMaxLevelNotInRange "You have to use a max-level from %i to %i."
+#define TXT_HouseMaxReached "The maximum amount of houses (%i) has been reached."
+#define TXT_HouseCreated "You've succesfully created house {FF00FF}%i{00FF00}."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

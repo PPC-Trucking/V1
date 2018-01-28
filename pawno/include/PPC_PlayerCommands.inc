@@ -95,76 +95,69 @@ COMMAND:pm(playerid, params[])
 COMMAND:createhouse(playerid, params[])
 {
 	// Setup local variables
-	new HPrice, MaxLevel, HouseID;
+	new Message[144], Price, MaxLevel, HouseID;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/createhouse", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			// Check if the player isn't inside a vehicle
-			if (GetPlayerVehicleSeat(playerid) == -1)
-			{
-				if (sscanf(params, "ii", HPrice, MaxLevel)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createhouse <Price> <Max Level (1-10)>\"");
-				else
-				{
-					// Check if the player entered a proper maxlevel
-					if ((MaxLevel >= 1) && (MaxLevel <= 10))
-					{
-						// Find the first free HouseID
-						for (HouseID = 1; HouseID < MAX_HOUSES; HouseID++)
-							if (AHouseData[HouseID][PickupID] == 0) // Check if an empty house-index has been found (PickupID is 0)
-							    break; // Stop searching, the first free HouseID has been found now
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 5)
+		return 0;
 
-					    // Check if the house-limit hasn't been reached yet
-						if (HouseID < MAX_HOUSES)
-						{
-						    // Setup some local variables
-							new Float:x, Float:y, Float:z, Msg[128];
-							// Get the player's position
-							GetPlayerPos(playerid, x, y, z);
-							// Set some default data
-							AHouseData[HouseID][HouseX] = x;
-							AHouseData[HouseID][HouseY] = y;
-							AHouseData[HouseID][HouseZ] = z;
-							AHouseData[HouseID][HouseLevel] = 1;
-							AHouseData[HouseID][HouseMaxLevel] = MaxLevel;
-							AHouseData[HouseID][HousePrice] = HPrice;
-							AHouseData[HouseID][Owned] = false;
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
 
-							// Add the pickup and 3DText at the location of the house-entrance (where the player is standing when he creates the house)
-							House_CreateEntrance(HouseID);
-
-							// Save the house
-							HouseFile_Save(HouseID);
-
-							// Inform the player that he created a new house
-							format(Msg, sizeof(Msg), "{00FF00}You've succesfully created house {FF00FF}%i{00FF00}", HouseID);
-							SendClientMessage(playerid, COLOR_WHITE, Msg);
-						}
-						else
-						    SendClientMessage(playerid, COLOR_RED, "The maximum amount of houses has been reached");
-					}
-					else
-					    SendClientMessage(playerid, COLOR_RED, "You have to use a max-level from 1 to 10");
-				}
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to create a house");
-		}
-		else
-			return 0;
+	if (sscanf(params, "ii", Price, MaxLevel)) {
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/createhouse <Price> <Max Level (1-10)>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if the player entered an invalid max level
+	if (MaxLevel < 1 || MaxLevel > 10) {
+		format(Message, sizeof(Message), TXT_HouseMaxLevelNotInRange, 1, 10);
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+	// Find the first free HouseID
+	for (HouseID = 1; HouseID < MAX_HOUSES; HouseID++)
+		if (AHouseData[HouseID][PickupID] == 0) // Check if an empty house-index has been found (PickupID is 0)
+		    break; // Stop searching, the first free HouseID has been found now
+
+    // Check if the house-limit has been reached yet
+	if (HouseID > MAX_HOUSES) {
+		format(Message, sizeof(Message), TXT_HouseMaxReached, MAX_HOUSES);
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+    // Setup local variables
+	new Float:x, Float:y, Float:z;
+	// Get the player's position
+	GetPlayerPos(playerid, x, y, z);
+	// Set default data
+	AHouseData[HouseID][HouseX] = x;
+	AHouseData[HouseID][HouseY] = y;
+	AHouseData[HouseID][HouseZ] = z;
+	AHouseData[HouseID][HouseLevel] = 1;
+	AHouseData[HouseID][HouseMaxLevel] = MaxLevel;
+	AHouseData[HouseID][HousePrice] = Price;
+	AHouseData[HouseID][Owned] = false;
+
+	// Add the pickup and 3DText at the location of the house-entrance (where the player is standing when he creates the house)
+	House_CreateEntrance(HouseID);
+
+	// Save the house
+	HouseFile_Save(HouseID);
+
+	// Inform the player that he created a new house
+	format(Message, sizeof(Message), TXT_HouseCreated, HouseID);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command lets the player delete a house
 COMMAND:delhouse(playerid, params[])
