@@ -453,9 +453,12 @@ public OnPlayerText(playerid, text[])
 
 
 public OnPlayerCommandReceived(playerid, cmdtext[]) {
+	// Check if the player is not logged in
 	if (APlayerData[playerid][LoggedIn] != true)
+		// Let the player know that he must login first
 		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
 
+	// Check if the player is using the commands /me or /pm
 	if (strfind(cmdtext, "/me ", true) != -1 || strfind(cmdtext, "/pm ", true) != -1)
 	{
 		// Check if the player is muted
