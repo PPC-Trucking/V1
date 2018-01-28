@@ -606,3 +606,22 @@ RemoveAllPlayersFromVehicle(vid)
 	}
 }
 
+// This function returns true or false whether the
+// playerid is dead or in class-selection
+stock IsPlayerDeadOrInClassSelection(playerid)
+{
+	if (GetPlayerState(playerid) == PLAYER_STATE_WASTED)
+		return true;
+	else
+		return false;
+}
+
+// This function returns true or false whether the
+// playerid is spectating
+stock IsPlayerSpectating(playerid)
+{
+	if (GetPlayerState(playerid) == PLAYER_STATE_SPECTATING)
+		return true;
+	else
+		return false;
+}
