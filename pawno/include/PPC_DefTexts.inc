@@ -175,6 +175,10 @@
 #define TXT_HouseMaxLevelNotInRange "You have to use a max-level from %i to %i."
 #define TXT_HouseMaxReached "The maximum amount of houses (%i) has been reached."
 #define TXT_HouseCreated "You've succesfully created house {FF00FF}%i{00FF00}."
+#define TXT_HouseIDNotFound "This house could not be found."
+#define TXT_HouseNotInRange "You are not in range of this house."
+#define TXT_CantDeleteOwnedHouse "You can not delete a house which has been owned."
+#define TXT_HouseDeleted "You have deleted the house."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
@@ -288,7 +292,7 @@
 #define TXT_PlayerOwnsMaxHouses "{FF0000}You already own the maximum amount of allowed houses per player"
 #define TXT_ExitHouseReloadEnv "Waiting for the environment to load"
 #define TXT_PickupHouseOwned "%s\nOwned by: %s\nHouse-level: %i\n/enter"
-#define TXT_PickupHouseForSale "House available for\n$%i\nMax-level: %i\n/buyhouse"
+#define TXT_PickupHouseForSale "House (%i) available for\n$%i\nMax-level: %i\n/buyhouse"
 #define TXT_DialogOldHouseName "Old house-name: %s"
 #define TXT_DialogEnterNewHouseName "Give a new name to your house"
 #define TXT_DialogSelectHouseUpgrade "Select upgrade:"

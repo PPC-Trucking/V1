@@ -163,84 +163,71 @@ COMMAND:createhouse(playerid, params[])
 COMMAND:delhouse(playerid, params[])
 {
 	// Setup local variables
-	new file[100], Msg[128];
+	new HouseID, file[100], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/delhouse", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 5)
+		return 0;
+
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	if (sscanf(params, "i", HouseID))
 	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			// Make sure the player isn't inside a vehicle
-			if (GetPlayerVehicleID(playerid) == 0)
-			{
-				// Loop through all player-owned houses
-				for (new HouseID = 1; HouseID < MAX_HOUSES; HouseID++)
-				{
-					// Check if the house exists
-					if (AHouseData[HouseID][PickupID] != 0)
-					{
-						// Check if the house has no owner
-						if (AHouseData[HouseID][Owned] == false)
-						{
-							// Check if the player is in range of the house-pickup
-							if (IsPlayerInRangeOfPoint(playerid, 2.5, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
-							{
-								// Clear all data of the house
-	                            AHouseData[HouseID][HouseName] = 0;
-	                            AHouseData[HouseID][Insurance] = 0;
-	                            AHouseData[HouseID][HouseX] = 0.0;
-	                            AHouseData[HouseID][HouseY] = 0.0;
-	                            AHouseData[HouseID][HouseZ] = 0.0;
-	                            AHouseData[HouseID][HouseLevel] = 0;
-	                            AHouseData[HouseID][HouseMaxLevel] = 0;
-	                            AHouseData[HouseID][HousePrice] = 0;
-	                            AHouseData[HouseID][Owned] = false;
-	                            AHouseData[HouseID][Owner] = 0;
-	                            AHouseData[HouseID][HouseName] = 0;
-	                            AHouseData[HouseID][HouseName] = 0;
-	                            AHouseData[HouseID][HouseName] = 0;
-								// Destroy the mapicon, 3DText and pickup for the house
-								DestroyDynamicPickup(AHouseData[HouseID][PickupID]);
-								DestroyDynamicMapIcon(AHouseData[HouseID][MapIconID]);
-								DestroyDynamic3DTextLabel(AHouseData[HouseID][DoorText]);
-	                            AHouseData[HouseID][PickupID] = 0;
-	                            AHouseData[HouseID][MapIconID] = 0;
-
-								// Delete the House-file
-								format(file, sizeof(file), HouseFile, HouseID); // Construct the complete filename for this house-file
-								if (fexist(file)) // Make sure the file exists
-									fremove(file); // Delete the file
-
-								// Also let the player know he deleted the house
-								format(Msg, sizeof(Msg), "{00FF00}You have deleted the house with ID: {FFFF00}%i", HouseID);
-								SendClientMessage(playerid, COLOR_WHITE, Msg);
-
-								// Exit the function
-								return 1;
-							}
-						}
-					}
-				}
-
-				// There was no house in range, so let the player know about it
-				SendClientMessage(playerid, COLOR_RED, "No house in range to delete");
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to delete a house");
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/delhouse <HouseID>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if the house does not exist
+	if (AHouseData[HouseID][PickupID] == 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_HouseIDNotFound);
+
+	// Check if the house is owned
+	if (AHouseData[HouseID][Owned] != false)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CantDeleteOwnedHouse);
+
+	// Check if the player is not in range of the house-pickup
+	if (!IsPlayerInRangeOfPoint(playerid, 10, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
+		return SendClientMessage(playerid, COLOR_RED, TXT_HouseNotInRange);
+
+	// Clear all data of the house
+    AHouseData[HouseID][HouseName] = 0;
+    AHouseData[HouseID][Insurance] = 0;
+    AHouseData[HouseID][HouseX] = 0.0;
+    AHouseData[HouseID][HouseY] = 0.0;
+    AHouseData[HouseID][HouseZ] = 0.0;
+    AHouseData[HouseID][HouseLevel] = 0;
+    AHouseData[HouseID][HouseMaxLevel] = 0;
+    AHouseData[HouseID][HousePrice] = 0;
+    AHouseData[HouseID][Owned] = false;
+    AHouseData[HouseID][Owner] = 0;
+    AHouseData[HouseID][HouseName] = 0;
+    AHouseData[HouseID][HouseName] = 0;
+    AHouseData[HouseID][HouseName] = 0;
+	// Destroy the mapicon, 3DText and pickup for the house
+	DestroyDynamicPickup(AHouseData[HouseID][PickupID]);
+	DestroyDynamicMapIcon(AHouseData[HouseID][MapIconID]);
+	DestroyDynamic3DTextLabel(AHouseData[HouseID][DoorText]);
+    AHouseData[HouseID][PickupID] = 0;
+    AHouseData[HouseID][MapIconID] = 0;
+
+	// Delete the house-file
+	format(file, sizeof(file), HouseFile, HouseID); // Construct the complete filename for this house-file
+	if (fexist(file)) // Make sure the file exists
+		fremove(file); // Delete the file
+
+	// Also let the player know he deleted the house
+	SendClientMessage(playerid, COLOR_GREEN, TXT_HouseDeleted);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command lets the player buy a house when he's standing in range of a house that isn't owned yet
 COMMAND:buyhouse(playerid, params[])
