@@ -24,7 +24,7 @@ Dialog_Register(playerid, response, inputtext[])
 			SendClientMessage(playerid, COLOR_WHITE, TXT_AccountRegistered);
 			APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
 		}
-	    case 0: // Player clicked TXT_DialogButtonCancel
+	    case 0: // Player clicked "Cancel"
 		{
 			// Show a message that the player must be registered to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustRegister);
@@ -73,7 +73,7 @@ Dialog_Login(playerid, response, inputtext[])
 				}
 			}
 		}
-	    case 0: // Player clicked TXT_DialogButtonCancel
+	    case 0: // Player clicked "Cancel"
 		{
 			// Show a message that the player must be logged in to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustLogin);
@@ -93,7 +93,7 @@ Dialog_Rescue(playerid, response, listitem)
 	// Setup local variables
 	new Message[128];
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Check the class of the player
@@ -170,7 +170,7 @@ Dialog_Rescue(playerid, response, listitem)
 // Process the BuyLicense dialog
 Dialog_BuyLicenses(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	switch (listitem)
@@ -242,7 +242,7 @@ Dialog_TruckerSelectJobMethod(playerid, response, listitem)
 	// Setup local variables
 	new ProductList[50], NumProducts, TotalLoadList[1000];
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Select what to do after the player chose "Select your own load" or "Auto assigned load"
@@ -292,7 +292,7 @@ Dialog_TruckerSelectLoad(playerid, response, listitem)
     // Setup local variables
 	new TotalStartLocList[1000], ProductList[50], NumProducts, ProductID, LocID;
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// First get the list of products again, so we can retrieve the selected load from it
@@ -346,7 +346,7 @@ Dialog_TruckerSelectStartLoc(playerid, response, listitem)
     // Setup local variables
 	new ProductID, LocID, TotalEndLocList[1000];
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the LoadID that's stored in the player's account
@@ -380,7 +380,7 @@ Dialog_TruckerSelectEndLoc(playerid, response, listitem)
     // Setup local variables
 	new RouteText[128], loadName[50], startlocName[50], endlocName[50], LoadMsg[128], Float:x, Float:y, Float:z, ProductID;
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the LoadID that's stored in the player's account
@@ -428,7 +428,7 @@ Dialog_BusSelectJobMethod(playerid, response, listitem)
 	// Setup local variables
 	new BusLine, Description[100], TotalRouteList[500];
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
     // Check if the player already started a job
@@ -465,7 +465,7 @@ Dialog_BusSelectJobMethod(playerid, response, listitem)
 // Process the work dialog for licensed busdrivers (let the player start the job he selects from the busroute-list)
 Dialog_BusSelectRoute(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// The selected listitem is automatically the busroute, so start the job based on the item selected in the busroute-list
@@ -479,7 +479,7 @@ Dialog_BusSelectRoute(playerid, response, listitem)
 // Process the chosen quantity for courier job
 Dialog_CourierSelectQuant(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Listitem 0 represent maximum 2 houses to deliver a package, listitem 1 is max 5 houses, item 2 is max 10 houses
@@ -501,7 +501,7 @@ Dialog_CourierSelectQuant(playerid, response, listitem)
 // Process the bike dialog
 Dialog_Bike(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -554,7 +554,7 @@ Dialog_Bike(playerid, response, listitem)
 // Process the car dialog
 Dialog_Car(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response)
 	{
 		// Reset the FirstCar (so the list won't start at an unexpected location in the list, but back at the start of the list)
@@ -620,7 +620,7 @@ Dialog_Car(playerid, response, listitem)
 // Process the Plane dialog
 Dialog_Plane(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response)
 	{
 		// Reset the FirstPlane (so the list won't start at an unexpected location in the list, but back at the start of the list)
@@ -686,7 +686,7 @@ Dialog_Plane(playerid, response, listitem)
 // Process the Trailer dialog
 Dialog_Trailer(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response)
 	{
 		// Reset the FirstTrailer (so the list won't start at an unexpected location in the list, but back at the start of the list)
@@ -742,7 +742,7 @@ Dialog_Trailer(playerid, response, listitem)
 // Process the boat dialog
 Dialog_Boat(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -792,7 +792,7 @@ Dialog_Boat(playerid, response, listitem)
 // Process the neon dialog
 Dialog_Neon(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -906,7 +906,7 @@ Dialog_Neon(playerid, response, listitem)
 // Process the chosen vehicleclass to show the actual vehicle-list of this vehicleclass
 Dialog_RentProcessClass(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -966,7 +966,7 @@ Dialog_RentProcessClass(playerid, response, listitem)
 // This dialog gives the chosen vehicle to the player (bought or rented)
 Dialog_RentCar(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1046,7 +1046,7 @@ Dialog_RentCar(playerid, response, listitem)
 // Process the weather dialog
 Dialog_Weather(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1079,7 +1079,7 @@ Dialog_Weather(playerid, response, listitem)
 // Process the caroption dialog
 Dialog_CarOption(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
     // Setup local variables
@@ -1141,7 +1141,7 @@ Dialog_CarOption(playerid, response, listitem)
 // This function processes the convoy dialog
 Dialog_SelectConvoy(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1177,7 +1177,7 @@ Dialog_SelectConvoy(playerid, response, listitem)
 // This function processes the housemenu dialog
 Dialog_HouseMenu(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1387,7 +1387,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 // This function processes the house-upgrade menu
 Dialog_UpgradeHouse(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the HouseID of the house where the player is
@@ -1432,7 +1432,7 @@ Dialog_UpgradeHouse(playerid, response, listitem)
 // Check which house the player chose, and port him to it
 Dialog_GoHome(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1457,7 +1457,7 @@ Dialog_GoHome(playerid, response, listitem)
 // Let the player change the name of his house
 Dialog_ChangeHouseName(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel or if the player didn't input any text
+	// Just close the dialog if the player clicked "Cancel" or if the player didn't input any text
 	if ((!response) || (strlen(inputtext) == 0)) return 1;
 
 	// Change the name of the house
@@ -1476,7 +1476,7 @@ Dialog_ChangeHouseName(playerid, response, inputtext[])
 // Choose a vehicle class from which to buy a vehicle
 Dialog_BuyCarClass(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1534,7 +1534,7 @@ Dialog_BuyCarClass(playerid, response, listitem)
 // Buy a vehicle and assign it to the house
 Dialog_BuyCar(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1614,7 +1614,7 @@ Dialog_BuyInsurance(playerid, response)
 // Sell the house
 Dialog_SellHouse(playerid, response)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the HouseID where the player is right now
@@ -1669,7 +1669,7 @@ Dialog_SellHouse(playerid, response)
 // Sell the house
 Dialog_SellCar(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1716,7 +1716,7 @@ Dialog_SellCar(playerid, response, listitem)
 // This dialog processes the selected house from which to get a vehicle using /getcar
 Dialog_GetCarSelectHouse(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the houseid based on the chosen listitem
@@ -1772,7 +1772,7 @@ Dialog_GetCarSelectHouse(playerid, response, listitem)
 // This dialog processes the chosen car and spawns it at the player's location
 Dialog_GetCarSelectCar(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the HouseID from which to get the car
@@ -1824,7 +1824,7 @@ Dialog_GetCarSelectCar(playerid, response, listitem)
 // This dialog processes the chosen business-type and creates the business
 Dialog_CreateBusSelType(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
     // Setup some local variables
@@ -1879,7 +1879,7 @@ Dialog_CreateBusSelType(playerid, response, listitem)
 // This function processes the businessmenu dialog
 Dialog_BusinessMenu(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1943,7 +1943,7 @@ Dialog_BusinessMenu(playerid, response, listitem)
 // This function processes the /gobus dialog
 Dialog_GoBusiness(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -1968,7 +1968,7 @@ Dialog_GoBusiness(playerid, response, listitem)
 // Let the player change the name of his business
 Dialog_ChangeBusinessName(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel or if the player didn't input any text
+	// Just close the dialog if the player clicked "Cancel" or if the player didn't input any text
 	if ((!response) || (strlen(inputtext) == 0)) return 1;
 
 	// Change the name of the business
@@ -1987,7 +1987,7 @@ Dialog_ChangeBusinessName(playerid, response, inputtext[])
 // Sell the business
 Dialog_SellBusiness(playerid, response)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the BusinessID where the player is right now and the business-type
@@ -2041,7 +2041,7 @@ Dialog_SellBusiness(playerid, response)
 // Process the commands dialog
 Dialog_PlayerCommands(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response)
 	{
 		// Reset the FirstCommand (so the list won't start at an unexpected location in the list, but back at the start of the list)
@@ -2070,7 +2070,7 @@ Dialog_PrimaryCarColor(playerid, response, listitem)
 	// Setup local variables
 	new Message[128];
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2097,7 +2097,7 @@ Dialog_SedundaryCarColor(playerid, response, listitem)
 	// Setup local variables
 	new Message[128];
 
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2118,7 +2118,7 @@ Dialog_SedundaryCarColor(playerid, response, listitem)
 // Process the unclamp dialog
 Dialog_UnclampVehicles(playerid, response)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2201,7 +2201,7 @@ Dialog_UnclampVehicles(playerid, response)
 // Process the rules dialog
 Dialog_Rules(playerid, response)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Check if the player accepted the rules already
@@ -2227,7 +2227,7 @@ Dialog_Rules(playerid, response)
 // Process the dialog that displays statistics of another player (accessed through the scoreboard)
 Dialog_StatsOtherPlayer(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2296,7 +2296,7 @@ Dialog_StatsOtherPlayer(playerid, response, listitem)
 // Process the chosen house from another player (displays the statistics of the chosen house)
 Dialog_StatsHouse(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2357,7 +2357,7 @@ Dialog_StatsHouse(playerid, response, listitem)
 // Port to the house that was chosen by the player when viewing stats about a house and choosing "Goto"
 Dialog_StatsGoHouse(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2397,7 +2397,7 @@ Dialog_StatsGoHouse(playerid, response, listitem)
 // Process the chosen business from another player to port to
 Dialog_StatsGoBusiness(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2424,7 +2424,7 @@ Dialog_StatsGoBusiness(playerid, response, listitem)
 // Process the password to register a bank account
 Dialog_BankPasswordRegister(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Check if the player entered a valid password
@@ -2446,7 +2446,7 @@ Dialog_BankPasswordRegister(playerid, response, inputtext[])
 // Process the password to login to your bank account
 Dialog_BankPasswordLogin(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Check if the player entered a valid password
@@ -2474,7 +2474,7 @@ Dialog_BankPasswordLogin(playerid, response, inputtext[])
 // Process the options in the bank dialog
 Dialog_BankOptions(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2536,7 +2536,7 @@ Dialog_BankOptions(playerid, response, listitem)
 // Process the entered amount of money that needs to be deposited into the player's bank account
 Dialog_BankDeposit(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2577,7 +2577,7 @@ Dialog_BankDeposit(playerid, response, inputtext[])
 // Process the entered amount of money that needs to be withdrawn from the player's bank account
 Dialog_BankWithdraw(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2618,7 +2618,7 @@ Dialog_BankWithdraw(playerid, response, inputtext[])
 // Process the transfer option (player entered the amount of money to transfer to another player)
 Dialog_BankTransferMoney(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2660,7 +2660,7 @@ Dialog_BankTransferMoney(playerid, response, inputtext[])
 // Process the transfer option (player entered the name of the other player who must receive the money)
 Dialog_BankTransferName(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2827,7 +2827,7 @@ Dialog_BankCancel(playerid, response)
 // Process the chosen help-item
 Dialog_HelpItemChosen(playerid, response, listitem)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2856,10 +2856,10 @@ Dialog_HelpItemChosen(playerid, response, listitem)
 	return 1;
 }
 
-// Process the help-item (select "Back" or TXT_DialogButtonCancel
+// Process the help-item (select "Back" or "Cancel"
 Dialog_HelpItem(playerid, response)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// If the player chose "Back", re-open the helplist
@@ -2873,7 +2873,7 @@ Dialog_HelpItem(playerid, response)
 // Process the old password of the player
 Dialog_OldPassword(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Check if the entered password is the same as the password saved in the player's account
@@ -2891,7 +2891,7 @@ Dialog_OldPassword(playerid, response, inputtext[])
 // Process the new password of the player
 Dialog_NewPassword(playerid, response, inputtext[])
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Setup local variables
@@ -2925,7 +2925,7 @@ Dialog_NewPassword(playerid, response, inputtext[])
 // Process the dialog where the player needs to confirm the password-change
 Dialog_ConfirmPassword(playerid, response)
 {
-	// Just close the dialog if the player clicked TXT_DialogButtonCancel
+	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Copy the new password to the old one, overwriting the old one
