@@ -1192,7 +1192,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 	    case 0: // Change house name
 	    {
 			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
+			if (House_PlayerIsOwner(playerid, HouseID) != 0)
 			{
 		        format(DialogTitle, sizeof(DialogTitle), TXT_DialogOldHouseName, AHouseData[HouseID][HouseName]);
 				ShowPlayerDialog(playerid, DialogHouseNameChange, DIALOG_STYLE_INPUT, DialogTitle, TXT_DialogEnterNewHouseName, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
@@ -1203,7 +1203,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 	    case 1: // Upgrade the house
 	    {
 			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
+			if (House_PlayerIsOwner(playerid, HouseID) != 0)
 			{
 		        // Check if it's possible to upgrade further
 				if (AHouseData[HouseID][HouseLevel] < AHouseData[HouseID][HouseMaxLevel])
@@ -1232,7 +1232,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 		case 2: // Buy house-car
 		{
 			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
+			if (House_PlayerIsOwner(playerid, HouseID) != 0)
 			{
 			    // Find a free carslot
 			    CarSlot = House_GetFreeCarSlot(HouseID);
@@ -1267,7 +1267,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 		case 3: // Buy house-car insurance
 		{
 			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
+			if (House_PlayerIsOwner(playerid, HouseID) != 0)
 			{
 			    new MsgInsurance[128];
 			    // Check if this house doesn't have insurance yet
@@ -1293,7 +1293,7 @@ Dialog_HouseMenu(playerid, response, listitem)
 		case 4: // Sell house-car
 		{
 			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
+			if (House_PlayerIsOwner(playerid, HouseID) != 0)
 			{
 			    new BuyableCarIndex, bool:HouseHasCars = false;
 
@@ -1328,10 +1328,31 @@ Dialog_HouseMenu(playerid, response, listitem)
 			else
 			    SendClientMessage(playerid, COLOR_RED, "Only the house-owner can use this option");
 		}
-		case 5: // Sell house
+	    case 5: // Open/Close the house to the public (everyone can enter it)
+	    {
+			// Only the house-owner can use this option
+			if (House_PlayerIsOwner(playerid, HouseID) != 0)
+			{
+				// Check the if the house is closed to the public
+				if (AHouseData[HouseID][HouseOpened] != true) {
+					// Set the status to open
+					AHouseData[HouseID][HouseOpened] = true;
+					// ... and inform the owner about it
+					SendClientMessage(playerid, COLOR_WHITE, TXT_HouseOpenedForEveryone);
+				} else {
+					// Otherwise set the status to closed
+					AHouseData[HouseID][HouseOpened] = false;
+					// ... and inform the owner about it
+					SendClientMessage(playerid, COLOR_WHITE, TXT_HouseClosedForEveryone);
+				}
+			}
+			else
+			    SendClientMessage(playerid, COLOR_RED, "Only the house-owner can use this option");
+	    }
+		case 6: // Sell house
 		{
 			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
+			if (House_PlayerIsOwner(playerid, HouseID) != 0)
 			{
 			    // Setup local variables
 			    new bool:HouseHasCars = false;
@@ -1353,32 +1374,6 @@ Dialog_HouseMenu(playerid, response, listitem)
 			else
 			    SendClientMessage(playerid, COLOR_RED, "Only the house-owner can use this option");
 		}
-	    case 6: // Open the house to the public (everyone can enter it)
-	    {
-			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
-			{
-			    // Open the house to the public
-				AHouseData[HouseID][HouseOpened] = true;
-				// Let the player know he opened the house to the public
-				SendClientMessage(playerid, COLOR_GREEN, "You've opened the house to the public, anyone can enter it");
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "Only the house-owner can use this option");
-	    }
-	    case 7: // Close the house to the public (only the owner can enter it)
-	    {
-			// Only the house-owner can use this option
-			if (House_PlayerIsOwner(playerid, HouseID) == 1)
-			{
-			    // Close the house to the public
-				AHouseData[HouseID][HouseOpened] = false;
-				// Let the player know he closed the house to the public
-				SendClientMessage(playerid, COLOR_GREEN, "You've closed the house to the public, only you can enter it");
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "Only the house-owner can use this option");
-	    }
 	}
 
 	return 1;

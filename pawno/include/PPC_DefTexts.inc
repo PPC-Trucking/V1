@@ -332,6 +332,18 @@
 #define TXT_HouseAlreadyHasInsurance "{FF0000}This house already has an insurance for it's vehicles"
 #define TXT_PlayerBoughtInsurance "{00FF00}You've bought a vehicle-insurance for all vehicles in this house for $%i"
 #define TXT_CannotAffordInsurance "{FF0000}You cannot afford the vehicle-insurance"
+#define TXT_NotInsideAHouse "You must be inside your house to use this command."
+#define TXT_HouseMenuTitle "Please select an option for"
+#define TXT_HouseMenuChangeHouseName "Change house name"
+#define TXT_HouseMenuUpgradeHouse "Upgrade house"
+#define TXT_HouseMenuBuyHouseVehicle "Buy house-vehicle"
+#define TXT_HouseMenuBuyHouseVehicleInsurance "Buy house-vehicle insurance"
+#define TXT_HouseMenuSellHouseVehicle "Sell house-vehicle"
+#define TXT_HouseMenuOpenHouse "Open house (Currently: {FF0000}Closed{FFFFFF})"
+#define TXT_HouseMenuCloseHouse "Close house (Currently: {00FF00}Opened{FFFFFF})"
+#define TXT_HouseOpenedForEveryone "You have opened the house to the public. {00FF00}Everyone can /enter it."
+#define TXT_HouseClosedForEveryone "You have closed the house to the public. {FF0000}Only you can /enter it."
+#define TXT_HouseMenuSellHouse "Sell house"
 
 // Business related
 #define TXT_PickupBusinessOwned "%s\nOwned by: %s\nBusiness-level: %i\n/enter"

@@ -402,34 +402,31 @@ COMMAND:housemenu(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/housemenu", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player is inside a house
-		if (APlayerData[playerid][CurrentHouse] != 0)
-		{
-			format(DialogTitle, sizeof(DialogTitle), "Select option for %s", AHouseData[APlayerData[playerid][CurrentHouse]][HouseName]);
+	// Check if the player is inside a house
+	if (APlayerData[playerid][CurrentHouse] == 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_NotInsideAHouse);
 
-			format(OptionsList, sizeof(OptionsList), "%sChange house-name\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sUpgrade house\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sBuy house-car\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sBuy house-car insurance\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sSell house-car\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sSell house\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sOpen house to the public\n", OptionsList);
-			format(OptionsList, sizeof(OptionsList), "%sClose house to the public\n", OptionsList);
-			// Show the housemenu
-			ShowPlayerDialog(playerid, DialogHouseMenu, DIALOG_STYLE_LIST, DialogTitle, OptionsList, "Select", TXT_DialogButtonCancel);
-		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You're not inside a house");
-	}
+	format(DialogTitle, sizeof(DialogTitle), "%s %s", TXT_HouseMenuTitle, AHouseData[APlayerData[playerid][CurrentHouse]][HouseName]);
+
+	format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuChangeHouseName);
+	format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuUpgradeHouse);
+	format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuBuyHouseVehicle);
+	format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuBuyHouseVehicleInsurance);
+	format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuSellHouseVehicle);
+	// Check if the house is open
+	if (AHouseData[APlayerData[playerid][CurrentHouse]][HouseOpened] != true)
+		format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuOpenHouse);
 	else
-	    return 0;
+		format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuCloseHouse);
+	format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuSellHouse);
+	// Show the housemenu
+	ShowPlayerDialog(playerid, DialogHouseMenu, DIALOG_STYLE_LIST, DialogTitle, OptionsList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command allows you to port a vehicle from your house to your location
 COMMAND:getcar(playerid, params[])
