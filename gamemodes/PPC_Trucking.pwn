@@ -527,8 +527,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DialogBoat: Dialog_Boat(playerid, response, listitem); // The boat-dialog
 		case DialogNeon: Dialog_Neon(playerid, response, listitem); // The neon-dialog
 
-		case DialogRentCarClass: Dialog_RentProcessClass(playerid, response, listitem); // The player chose a vehicleclass from where he can rent a vehicle
-		case DialogRentCar: Dialog_RentCar(playerid, response, listitem); // The player chose a vehicle from the list of vehicles from the vehicleclass he chose before
+		case DialogRentVehicleClass: Dialog_RentProcessClass(playerid, response, listitem); // The player chose a vehicleclass from where he can rent a vehicle
+		case DialogRentVehicle: Dialog_RentVehicle(playerid, response, listitem); // The player chose a vehicle from the list of vehicles from the vehicleclass he chose before
 
 		case DialogPlayerCommands: Dialog_PlayerCommands(playerid, response, listitem); // Displays all commands in a split-dialog structure
 		case DialogPrimaryCarColor: Dialog_PrimaryCarColor(playerid, response, listitem);
@@ -548,8 +548,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DialogBuyCar: Dialog_BuyCar(playerid, response, listitem); // The player chose a vehicle from the list of vehicles from the vehicleclass he chose before
 		case DialogSellCar: Dialog_SellCar(playerid, response, listitem);
 		case DialogBuyInsurance: Dialog_BuyInsurance(playerid, response);
-		case DialogGetCarSelectHouse: Dialog_GetCarSelectHouse(playerid, response, listitem);
-		case DialogGetCarSelectCar: Dialog_GetCarSelectCar(playerid, response, listitem);
+		case DialogGetVehicleSelectHouse: Dialog_GetVehicleSelectHouse(playerid, response, listitem);
+		case DialogGetVehicleSelectCar: Dialog_GetVehicleSelectCar(playerid, response, listitem);
 		case DialogUnclampVehicles: Dialog_UnclampVehicles(playerid, response);
 
 		case DialogCreateBusSelType: Dialog_CreateBusSelType(playerid, response, listitem);

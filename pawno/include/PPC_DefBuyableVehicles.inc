@@ -1,4 +1,4 @@
-// This file holds an array of defined buyable vehicles, used in the /buycar and /rentcar dialogs
+// This file holds an array of defined buyable vehicles, used in the /buycar and /rentvehicle dialogs
 
 
 #define VClassBike          1

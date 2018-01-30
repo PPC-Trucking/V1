@@ -930,7 +930,7 @@ Dialog_RentProcessClass(playerid, response, listitem)
 	if (strlen(CarList) == 0)
 	{
 		// Send the player a message that all vehicles have been disabled of the chosen class (no vehicles in the array of this class)
-		SendClientMessage(playerid, COLOR_WHITE, TXT_BuyRentCarEmptyList);
+		SendClientMessage(playerid, COLOR_WHITE, TXT_BuyRentVehicleEmptyList);
 		// Exit the function (don't ask to choose a vehicle)
 		return 1;
 	}
@@ -956,7 +956,7 @@ Dialog_RentProcessClass(playerid, response, listitem)
 	}
 
 	// Ask which car the player wants to have by showing the dialog
-	ShowPlayerDialog(playerid, DialogRentCar, DIALOG_STYLE_LIST, DialogTitle, CarList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+	ShowPlayerDialog(playerid, DialogRentVehicle, DIALOG_STYLE_LIST, DialogTitle, CarList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
 	return 1;
 }
@@ -964,7 +964,7 @@ Dialog_RentProcessClass(playerid, response, listitem)
 
 
 // This dialog gives the chosen vehicle to the player (bought or rented)
-Dialog_RentCar(playerid, response, listitem)
+Dialog_RentVehicle(playerid, response, listitem)
 {
 	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
@@ -1495,7 +1495,7 @@ Dialog_BuyCarClass(playerid, response, listitem)
 	if (strlen(CarList) == 0)
 	{
 		// Send the player a message that all vehicles have been disabled of the chosen class (no vehicles in the array of this class)
-		SendClientMessage(playerid, COLOR_WHITE, TXT_BuyRentCarEmptyList);
+		SendClientMessage(playerid, COLOR_WHITE, TXT_BuyRentVehicleEmptyList);
 		// Exit the function (don't ask to choose a vehicle)
 		return 1;
 	}
@@ -1559,7 +1559,7 @@ Dialog_BuyCar(playerid, response, listitem)
 					// Let the player know he bought a vehicle
 					format(Msg, sizeof(Msg), TXT_PlayerBoughtVehicle, ABuyableVehicles[i][CarName], ABuyableVehicles[i][VehiclePrice]);
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
-					SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustUseGetcarAndPark);
+					SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustUseGetVehicleAndPark);
 
 					// Save the player-file (and his houses)
 					PlayerFile_Save(playerid);
@@ -1708,8 +1708,8 @@ Dialog_SellCar(playerid, response, listitem)
 	return 1;
 }
 
-// This dialog processes the selected house from which to get a vehicle using /getcar
-Dialog_GetCarSelectHouse(playerid, response, listitem)
+// This dialog processes the selected house from which to get a vehicle using /getvehicle
+Dialog_GetVehicleSelectHouse(playerid, response, listitem)
 {
 	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
@@ -1724,7 +1724,7 @@ Dialog_GetCarSelectHouse(playerid, response, listitem)
 	    new BuyableCarIndex, VehicleList[500], bool:HouseHasCars = false, CarSlot;
 
 		// Store the HouseID, otherwise the next dialog won't be able to get a car from the chosen house
-		APlayerData[playerid][DialogGetCarHouseID] = HouseID;
+		APlayerData[playerid][DialogGetVehicleHouseID] = HouseID;
 
 		// Check if the house has any cars assigned to it
 		for (CarSlot = 0; CarSlot < 10; CarSlot++)
@@ -1753,7 +1753,7 @@ Dialog_GetCarSelectHouse(playerid, response, listitem)
 			}
 
 			// Ask which vehicle the player wants to teleport to his location
-			ShowPlayerDialog(playerid, DialogGetCarSelectCar, DIALOG_STYLE_LIST, TXT_SelectVehicleToGet, VehicleList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+			ShowPlayerDialog(playerid, DialogGetVehicleSelectCar, DIALOG_STYLE_LIST, TXT_SelectVehicleToGet, VehicleList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		else
 		    SendClientMessage(playerid, COLOR_WHITE, TXT_NoHouseVehicles);
@@ -1765,13 +1765,13 @@ Dialog_GetCarSelectHouse(playerid, response, listitem)
 }
 
 // This dialog processes the chosen car and spawns it at the player's location
-Dialog_GetCarSelectCar(playerid, response, listitem)
+Dialog_GetVehicleSelectCar(playerid, response, listitem)
 {
 	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the HouseID from which to get the car
-	new HouseID = APlayerData[playerid][DialogGetCarHouseID];
+	new HouseID = APlayerData[playerid][DialogGetVehicleHouseID];
 
 	// Get the vehicleid from the chosen listitem
 	new vid = AHouseData[HouseID][VehicleIDs][listitem];

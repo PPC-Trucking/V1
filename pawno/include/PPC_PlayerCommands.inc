@@ -429,13 +429,13 @@ COMMAND:housemenu(playerid, params[])
 
 
 // This command allows you to port a vehicle from your house to your location
-COMMAND:getcar(playerid, params[])
+COMMAND:getvehicle(playerid, params[])
 {
 	// Setup local variables
 	new HouseList[1000];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/getcar", params);
+	SendAdminText(playerid, "/getvehicle", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -455,13 +455,13 @@ COMMAND:getcar(playerid, params[])
 					else
 						format(HouseList, sizeof(HouseList), "%s{FFFFFF}%s{FFFFFF}\n", HouseList, "Empty house-slot");
 				}
-				ShowPlayerDialog(playerid, DialogGetCarSelectHouse, DIALOG_STYLE_LIST, "Choose the house to get a car from:", HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+				ShowPlayerDialog(playerid, DialogGetVehicleSelectHouse, DIALOG_STYLE_LIST, "Choose the house to get a car from:", HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
 				SendClientMessage(playerid, COLOR_RED, "You need to be on-foot to port a vehicle to your location");
 		}
 		else
-		    SendClientMessage(playerid, COLOR_RED, "You cannot use /getcar when you're in jail");
+		    SendClientMessage(playerid, COLOR_RED, "You cannot use /getvehicle when you're in jail");
 	}
 	else
 	    return 0;
@@ -557,13 +557,13 @@ COMMAND:park(playerid, params[])
 
 
 // Lets the player rent a vehicle
-COMMAND:rentcar(playerid, params[])
+COMMAND:rentvehicle(playerid, params[])
 {
 	// Setup local variables
 	new VehicleClassList[1000];
 
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/rentcar", params);
+	SendAdminText(playerid, "/rentvehicle", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -597,7 +597,7 @@ COMMAND:rentcar(playerid, params[])
 						format(VehicleClassList, sizeof(VehicleClassList), "%s{4000FF}%s{FFFFFF}\n", VehicleClassList, "Trailers");
 						format(VehicleClassList, sizeof(VehicleClassList), "%s{8000FF}%s{FFFFFF}\n", VehicleClassList, "Unique vehicles");
 						// Ask which vehicle class the player wants to see to buy a vehicle
-						ShowPlayerDialog(playerid, DialogRentCarClass, DIALOG_STYLE_LIST, "Select vehicle class:", VehicleClassList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+						ShowPlayerDialog(playerid, DialogRentVehicleClass, DIALOG_STYLE_LIST, "Select vehicle class:", VehicleClassList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 						// Exit the function
 						return 1;
 					}
@@ -2031,10 +2031,10 @@ COMMAND:fuel(playerid, params[])
 }
 
 // Let the player use a jetpack
-COMMAND:fly(playerid, params[])
+COMMAND:jetpack(playerid, params[])
 {
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/fly", params);
+	SendAdminText(playerid, "/jetpack", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
@@ -4258,10 +4258,10 @@ COMMAND:report(playerid, params[])
 
 
 // Lets the admins see the list of reports
-COMMAND:rep(playerid, params[])
+COMMAND:reports(playerid, params[])
 {
 	// Send the command to all admins so they can see it
-	SendAdminText(playerid, "/rep", params);
+	SendAdminText(playerid, "/reports", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)

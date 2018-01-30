@@ -175,8 +175,8 @@
 #define DialogBuyCar                607
 #define DialogSellCar               608
 #define DialogBuyInsurance          609
-#define DialogGetCarSelectHouse     610
-#define DialogGetCarSelectCar       611
+#define DialogGetVehicleSelectHouse     610
+#define DialogGetVehicleSelectCar       611
 #define DialogUnclampVehicles       612
 
 #define DialogCreateBusSelType      701
@@ -677,7 +677,7 @@ enum TPlayerData
 	DialogBuyVClass, // Holds the ID of the chose vehicle class to process when buying a vehicle
 	DialogBuyCarIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to buy
 
-	DialogGetCarHouseID, // Holds the HouseID from which to get a vehicle when using /getcar
+	DialogGetVehicleHouseID, // Holds the HouseID from which to get a vehicle when using /getvehicle
 
 	DialogOtherPlayer, // Holds the id of the other player when viewing that other player's stats
 	DialogOtherPlayerHouse, // Holds the HouseID of the other player when viewing the stats for that house
@@ -987,7 +987,7 @@ new ACommands[][TCommands] =
 	{0, "/engine",                                 						"Toggle engine-status on or off"},
 	{0, "/enter",                                   					"Enter your business or house"},
 	{0, "/flip",                                   						"Flips your vehicle back onto it's wheels"},
-	{0, "/getcar",                                   					"Teleports a house-car to your location"},
+	{0, "/getvehicle",                                   					"Teleports a house-car to your location"},
 	{0, "/givecash <Player> <Amount>",                              "Give money to another player"},
 	{0, "/gobase",                                   					"Teleports you to a location where your class starts"},
 	{0, "/gobus",                                   					"Teleport to a business you own"},
@@ -1178,7 +1178,7 @@ new AHelpText[][THelpItem] =
 	{HelpIDPoliceClass, " "},
 	{HelpIDPoliceClass, "Any player with a wanted level appears as a red dot on your radar."},
 	{HelpIDPoliceClass, "You need to pursue the player and try to stop him, so you can fine him."},
-	{HelpIDPoliceClass, "If you want to stop a player in his vehicle you can use /createspike on foot to stop them."},
+	{HelpIDPoliceClass, "If you want to stop a player in his vehicle you can use /createspike to place spikes on the road."},
 	{HelpIDPoliceClass, "When you get close to the wanted player, you can use the LCTRL button on your keyboard to warn them."},
 	{HelpIDPoliceClass, "The wanted player will be informed that he's being chased by cops and that he needs to pull over."},
 	{HelpIDPoliceClass, " "},
@@ -1292,7 +1292,7 @@ new AHelpText[][THelpItem] =
 	{HelpIDBuyingVehicles, "Players can buy vehicles once they have earned enough money to buy a house first."},
 	{HelpIDBuyingVehicles, "Entering your house and using the \"/housemenu\" command will allow you to buy vehicles."},
 	{HelpIDBuyingVehicles, "The vehicles are connected to the house from which you've bought them."},
-	{HelpIDBuyingVehicles, "Once you've bought a vehicle, you can exit your house and use the \"/getcar\" command to spawn it."},
+	{HelpIDBuyingVehicles, "Once you've bought a vehicle, you can exit your house and use the \"/getvehicle\" command to spawn it."},
 	{HelpIDBuyingVehicles, "Now you can drive your vehicle to a desired spot where you can park it permanently using the \"/park\" command."},
 	{HelpIDBuyingVehicles, " "},
 	{HelpIDBuyingVehicles, "Bought vehicles can also be modded (tuned) with spoilers, nitro, other wheels, and much more."},
