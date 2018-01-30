@@ -2254,7 +2254,7 @@ Dialog_StatsOtherPlayer(playerid, response, listitem)
 			}
 
 			// Display the dialog (displays all statistics about the house, such as level, bought vehicles, insurance, ...)
-			ShowPlayerDialog(playerid, DialogStatsHouse, DIALOG_STYLE_LIST, DialogTitle, HouseList, "Select", TXT_DialogButtonCancel);
+			ShowPlayerDialog(playerid, DialogStatsHouse, DIALOG_STYLE_LIST, DialogTitle, HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		case 21: // Player chose to display the other player's businesses
 		{

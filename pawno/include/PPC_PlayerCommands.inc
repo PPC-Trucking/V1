@@ -455,7 +455,7 @@ COMMAND:getcar(playerid, params[])
 					else
 						format(HouseList, sizeof(HouseList), "%s{FFFFFF}%s{FFFFFF}\n", HouseList, "Empty house-slot");
 				}
-				ShowPlayerDialog(playerid, DialogGetCarSelectHouse, DIALOG_STYLE_LIST, "Choose the house to get a car from:", HouseList, "Select", TXT_DialogButtonCancel);
+				ShowPlayerDialog(playerid, DialogGetCarSelectHouse, DIALOG_STYLE_LIST, "Choose the house to get a car from:", HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
 				SendClientMessage(playerid, COLOR_RED, "You need to be on-foot to port a vehicle to your location");
@@ -597,7 +597,7 @@ COMMAND:rentcar(playerid, params[])
 						format(VehicleClassList, sizeof(VehicleClassList), "%s{4000FF}%s{FFFFFF}\n", VehicleClassList, "Trailers");
 						format(VehicleClassList, sizeof(VehicleClassList), "%s{8000FF}%s{FFFFFF}\n", VehicleClassList, "Unique vehicles");
 						// Ask which vehicle class the player wants to see to buy a vehicle
-						ShowPlayerDialog(playerid, DialogRentCarClass, DIALOG_STYLE_LIST, "Select vehicle class:", VehicleClassList, "Select", TXT_DialogButtonCancel);
+						ShowPlayerDialog(playerid, DialogRentCarClass, DIALOG_STYLE_LIST, "Select vehicle class:", VehicleClassList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 						// Exit the function
 						return 1;
 					}
@@ -649,7 +649,7 @@ COMMAND:gohome(playerid, params[])
 						else
 							format(HouseList, sizeof(HouseList), "%s{FFFFFF}%s{FFFFFF}\n", HouseList, "Empty house-slot");
 					}
-					ShowPlayerDialog(playerid, DialogGoHome, DIALOG_STYLE_LIST, "Choose the house to go to:", HouseList, "Select", TXT_DialogButtonCancel);
+					ShowPlayerDialog(playerid, DialogGoHome, DIALOG_STYLE_LIST, "Choose the house to go to:", HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 				}
 				else
 					SendClientMessage(playerid, COLOR_RED, "You need to be on-foot to port to your house");
@@ -885,14 +885,14 @@ COMMAND:work(playerid, params[])
 						{
 							case VehicleFlatbed, VehicleDFT30, VehicleCementTruck: // Flatbed, DFT-30, CementTruck
 								if (APlayerData[playerid][TruckerLicense] == 1) // Check if the player has acquired a truckers license
-									ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", "Select", TXT_DialogButtonCancel);
+									ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 								else
 								    Trucker_StartRandomJob(playerid); // Start a random job
 
 							case VehicleLineRunner, VehicleTanker, VehicleRoadTrain: // Player is driving a truck which needs a trailer
 								if(IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) // Check if there is a trailer attached
 									if (APlayerData[playerid][TruckerLicense] == 1) // Check if the player has acquired a truckers license
-										ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", "Select", TXT_DialogButtonCancel);
+										ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 									else
 									    Trucker_StartRandomJob(playerid); // Start a random job
 								else
@@ -910,7 +910,7 @@ COMMAND:work(playerid, params[])
 					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
 						if (GetVehicleModel(GetPlayerVehicleID(playerid)) == VehicleCoach) // Check if the player is inside a valid busdriver vehicle
 							if (APlayerData[playerid][BusLicense] == 1) // Check if the player has acquired a busdriver license
-								ShowPlayerDialog(playerid, DialogBusJobMethod, DIALOG_STYLE_LIST, "Select method:", "Choose your own busroute\r\nAuto assigned busroute", "Select", TXT_DialogButtonCancel);
+								ShowPlayerDialog(playerid, DialogBusJobMethod, DIALOG_STYLE_LIST, "Select method:", "Choose your own busroute\r\nAuto assigned busroute", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 							else
 								BusDriver_StartJob(playerid, random(sizeof(ABusRoutes))); // Start a random job
 						else
@@ -2144,7 +2144,7 @@ COMMAND:color1(playerid, params[])
 					format(ColorList, sizeof(ColorList), "%s%s%s\n", ColorList, AVehicleColors[i], "CarColor");
 
 				// Show the dialog with all the colors
-				ShowPlayerDialog(playerid, DialogPrimaryCarColor, DIALOG_STYLE_LIST, "Choose a primary color:", ColorList, "Select", TXT_DialogButtonCancel);
+				ShowPlayerDialog(playerid, DialogPrimaryCarColor, DIALOG_STYLE_LIST, "Choose a primary color:", ColorList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
 			    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
@@ -2185,7 +2185,7 @@ COMMAND:color2(playerid, params[])
 					format(ColorList, sizeof(ColorList), "%s%s%s\n", ColorList, AVehicleColors[i], "CarColor");
 
 				// Show the dialog with all the colors
-				ShowPlayerDialog(playerid, DialogSedundaryCarColor, DIALOG_STYLE_LIST, "Choose a secundary color:", ColorList, "Select", TXT_DialogButtonCancel);
+				ShowPlayerDialog(playerid, DialogSedundaryCarColor, DIALOG_STYLE_LIST, "Choose a secundary color:", ColorList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
 			    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
@@ -2284,7 +2284,7 @@ COMMAND:weather(playerid, params[])
 		if (APlayerData[playerid][PlayerLevel] >= 4)
 		{
 			// Let the player select a weather-type
-			ShowPlayerDialog(playerid, DialogWeather, DIALOG_STYLE_LIST, "Select weather type:", "Normal\nStormy\nFoggy\nScorching Hot\nDull, cloudy, rainy\nSandstorm\nGreen Fog\nDark, cloudy, brown\nExtremely bright\nDark toxic clouds\nBlack & white sky", "Select", TXT_DialogButtonCancel);
+			ShowPlayerDialog(playerid, DialogWeather, DIALOG_STYLE_LIST, "Select weather type:", "Normal\nStormy\nFoggy\nScorching Hot\nDull, cloudy, rainy\nSandstorm\nGreen Fog\nDark, cloudy, brown\nExtremely bright\nDark toxic clouds\nBlack & white sky", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		else
 		    return 0;
@@ -2410,7 +2410,7 @@ COMMAND:convoy(playerid, params[])
 		}
 
 		// Show the dialog
-		ShowPlayerDialog(playerid, DialogSelectConvoy, DIALOG_STYLE_LIST, "Select convoy:", ConvoyList, "Select", TXT_DialogButtonCancel);
+		ShowPlayerDialog(playerid, DialogSelectConvoy, DIALOG_STYLE_LIST, "Select convoy:", ConvoyList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 	}
 	else
 	    return 0;
@@ -3215,7 +3215,7 @@ COMMAND:createbusiness(playerid, params[])
 				}
 
 				// Let the player choose a business-type via a dialog
-				ShowPlayerDialog(playerid, DialogCreateBusSelType, DIALOG_STYLE_LIST, "Choose business-type:", BusinessList, "Select", TXT_DialogButtonCancel);
+				ShowPlayerDialog(playerid, DialogCreateBusSelType, DIALOG_STYLE_LIST, "Choose business-type:", BusinessList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 			}
 			else
 			    SendClientMessage(playerid, COLOR_RED, "You can't be inside a vehicle to create a business");
@@ -3394,7 +3394,7 @@ COMMAND:busmenu(playerid, params[])
 			format(OptionsList, sizeof(OptionsList), "%sRetrieve business earnings\n", OptionsList);
 			format(OptionsList, sizeof(OptionsList), "%sSell business\n", OptionsList);
 			// Show the businessmenu
-			ShowPlayerDialog(playerid, DialogBusinessMenu, DIALOG_STYLE_LIST, DialogTitle, OptionsList, "Select", TXT_DialogButtonCancel);
+			ShowPlayerDialog(playerid, DialogBusinessMenu, DIALOG_STYLE_LIST, DialogTitle, OptionsList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		else
 		    SendClientMessage(playerid, COLOR_RED, "You're not inside a business");
@@ -3444,7 +3444,7 @@ COMMAND:gobus(playerid, params[])
 						else
 							format(BusinessList, sizeof(BusinessList), "%s{FFFFFF}%s{FFFFFF}\n", BusinessList, "Empty business-slot");
 					}
-					ShowPlayerDialog(playerid, DialogGoBusiness, DIALOG_STYLE_LIST, "Choose the business to go to:", BusinessList, "Select", TXT_DialogButtonCancel);
+					ShowPlayerDialog(playerid, DialogGoBusiness, DIALOG_STYLE_LIST, "Choose the business to go to:", BusinessList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 				}
 				else
 					SendClientMessage(playerid, COLOR_RED, "You need to be on-foot to port to your business");
@@ -4933,7 +4933,7 @@ COMMAND:neon(playerid, params[])
 			format(OptionsList, sizeof(OptionsList), "%sWhite lights\n", OptionsList);
 			format(OptionsList, sizeof(OptionsList), "%sRemove neons\n", OptionsList);
 			// Show the neon menu
-			ShowPlayerDialog(playerid, DialogNeon, DIALOG_STYLE_LIST, DialogTitle, OptionsList, "Select", TXT_DialogButtonCancel);
+			ShowPlayerDialog(playerid, DialogNeon, DIALOG_STYLE_LIST, DialogTitle, OptionsList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		else
 		    SendClientMessage(playerid, COLOR_RED, "You're not the driver of a vehicle");
