@@ -151,8 +151,8 @@
 #define DialogCar                   102
 #define DialogPlane                 103
 #define DialogTrailer               104
-#define DialogRentCarClass       	105
-#define DialogRentCar	        	106
+#define DialogRentVehicleClass       	105
+#define DialogRentVehicle	        	106
 #define DialogBoat                  107
 #define DialogNeon                  108
 
@@ -273,7 +273,7 @@ new ATimedMessages[][128] =
 	{TXT_TimedRefuel},
 	{TXT_TimedConvoy},
 	{TXT_TimedGohome},
-	{TXT_TimedRentCar},
+	{TXT_TimedRentVehicle},
 	{TXT_TimedLicense},
 	{TXT_TimedSpeedTraps},
 	{TXT_TimedGoBusiness}
@@ -673,7 +673,7 @@ enum TPlayerData
 	DialogTrailerFirstTrailer, // Holds the first array-index where the trailerlist should start when the player asks to choose a trailer to spawn ("/trailer")
 
 	DialogRentVClass, // Holds the ID of the chosen vehicle class to process when renting a vehicle
-	DialogRentCarIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to rent
+	DialogRentVehicleIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to rent
 	DialogBuyVClass, // Holds the ID of the chose vehicle class to process when buying a vehicle
 	DialogBuyCarIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to buy
 
