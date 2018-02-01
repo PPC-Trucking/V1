@@ -83,6 +83,7 @@ COMMAND:pm(playerid, params[])
 	// Play sound for receiver
 	// Do not set any coordinates so the sound
 	// will be played just in the player's area
+	// soundid: SOUND_ROULETTE_NO_CASH
 	PlayerPlaySound(OtherPlayer, 1085, 0, 0, 0);
 
 	// Let the server know that this was a valid command
