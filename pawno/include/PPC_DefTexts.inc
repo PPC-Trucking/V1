@@ -188,6 +188,8 @@
 #define TXT_NoHouseOrBusinessToEnter "You are not in range of a house or business that you can /enter."
 #define TXT_NoHouseOrBusToExit "You are not inside a house or business."
 #define TXT_ExitToLeaveProperty "You can use {FFFF00}/exit{00FF00} to leave the property."
+#define TXT_CmdNotAllowedInsideBuilding "You can not use this command when you are inside a building."
+#define TXT_CmdOnlyAllowedInsideBuilding "You can only use this command inside a building."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

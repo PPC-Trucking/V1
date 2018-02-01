@@ -105,6 +105,10 @@ COMMAND:createhouse(playerid, params[])
 	if (APlayerData[playerid][PlayerLevel] < 5)
 		return 0;
 
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
 	// Check if the player is not on foot
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
 		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
@@ -173,6 +177,10 @@ COMMAND:delhouse(playerid, params[])
 	if (APlayerData[playerid][PlayerLevel] < 5)
 		return 0;
 
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
 	// Check if the player is not on foot
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
 		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
@@ -237,6 +245,10 @@ COMMAND:buyhouse(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/buyhouse", params);
 
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
 	// Check if the player is not on foot
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
 		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
@@ -281,6 +293,10 @@ COMMAND:enter(playerid, params[])
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/enter", params);
+
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
 
 	// Check if the player is not on foot
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
@@ -370,6 +386,10 @@ COMMAND:exit(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/exit", params);
 
+	// Check if the player is inside a building
+	if (!IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAllowedInsideBuilding);
+
 	// Check if the player is not on foot
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
 		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
@@ -402,6 +422,10 @@ COMMAND:housemenu(playerid, params[])
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/housemenu", params);
+
+	// Check if the player is inside a building
+	if (!IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAllowedInsideBuilding);
 
 	// Check if the player is inside a house
 	if (APlayerData[playerid][CurrentHouse] == 0)

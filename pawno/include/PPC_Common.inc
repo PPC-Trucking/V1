@@ -625,3 +625,13 @@ stock IsPlayerSpectating(playerid)
 	else
 		return false;
 }
+
+// This function returns true or false whether the
+// playerid is spectating
+stock IsPlayerInsideABuilding(playerid)
+{
+	if (GetPlayerInterior(playerid) != 0)
+		return true;
+	else
+		return false;
+}
