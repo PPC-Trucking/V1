@@ -311,7 +311,8 @@
 #define TXT_DialogBuyCarSelectClass "Select vehicle class:"
 #define TXT_HouseHasMaxVehicles "{FF0000}This house has the maximum amount of house-cars already"
 #define TXT_AlreadyBoughtRecentVehicle "{FF0000}You already bought a vehicle recently, use \"/getvehicle\" and \"/park\" to park it before buying a new one"
-#define TXT_EmptyCarSlot "%s{FFFFFF}Empty car-slot{FFFFFF}\n"
+#define TXT_EmptyCarSlot "%s{FFFFFF}Empty vehicle-slot{FFFFFF}\n"
+#define TXT_EmptyHouseSlot "Empty house-slot"
 #define TXT_SelectVehicleToSell "Select vehicle to sell:"
 #define TXT_SelectVehicleToGet "Select vehicle to port to your location:"
 #define TXT_NoHouseVehicles "{FF0000}This house has no vehicles assigned to it"
@@ -346,6 +347,8 @@
 #define TXT_HouseOpenedForEveryone "You have opened the house to the public. {00FF00}Everyone can /enter it."
 #define TXT_HouseClosedForEveryone "You have closed the house to the public. {FF0000}Only you can /enter it."
 #define TXT_HouseMenuSellHouse "Sell house"
+#define TXT_GetVehicleTitle "Choose the house to get a car from:"
+#define TXT_NoHouseFound "You do not have any house."
 
 // Business related
 #define TXT_PickupBusinessOwned "%s\nOwned by: %s\nBusiness-level: %i\n/enter"

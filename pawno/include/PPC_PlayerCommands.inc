@@ -453,47 +453,49 @@ COMMAND:housemenu(playerid, params[])
 
 
 
-// This command allows you to port a vehicle from your house to your location
+// This command allows a player to port a vehicle from his house to his location
 COMMAND:getvehicle(playerid, params[])
 {
 	// Setup local variables
-	new HouseList[1000];
+	new HouseList[1000], EmptySlot;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/getvehicle", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	// Ask to which house the player wants to add his vehicle
+	for (new i; i < MAX_HOUSESPERPLAYER; i++)
 	{
-		// Check if the player is not jailed
-		if (APlayerData[playerid][PlayerJailed] == 0)
-		{
-			// Check if the player is not inside a vehicle
-			if (GetPlayerVehicleID(playerid) == 0)
-			{
-				// Ask to which house the player wants to add his vehicle
-				for (new i; i < MAX_HOUSESPERPLAYER; i++)
-				{
-					// Check if this houseindex is occupied
-					if (APlayerData[playerid][Houses][i] != 0)
-						format(HouseList, sizeof(HouseList), "%s{00FF00}%s{FFFFFF}\n", HouseList, AHouseData[APlayerData[playerid][Houses][i]][HouseName]);
-					else
-						format(HouseList, sizeof(HouseList), "%s{FFFFFF}%s{FFFFFF}\n", HouseList, "Empty house-slot");
-				}
-				ShowPlayerDialog(playerid, DialogGetVehicleSelectHouse, DIALOG_STYLE_LIST, "Choose the house to get a car from:", HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-			}
-			else
-				SendClientMessage(playerid, COLOR_RED, "You need to be on-foot to port a vehicle to your location");
+		// Check if this houseindex is occupied
+		if (APlayerData[playerid][Houses][i] != 0)
+			format(HouseList, sizeof(HouseList), "%s{00FF00}%s (%i){FFFFFF}\n", HouseList, AHouseData[APlayerData[playerid][Houses][i]][HouseName], i);
+		else {
+			// If this slot is not in use count this variable
+			EmptySlot++;
 		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You cannot use /getvehicle when you're in jail");
 	}
+
+	// See if the variable EmptySlot does not equal
+	// the maximum number of house-slots per player
+	if (MAX_HOUSESPERPLAYER != EmptySlot)
+		// If not, it means that there is atleast one occupied slot
+		ShowPlayerDialog(playerid, DialogGetVehiclesSelectHouse, DIALOG_STYLE_LIST, TXT_GetVehicleTitle, HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 	else
-	    return 0;
+		// If yes, no slot is in use which means the player has no houses
+		return SendClientMessage(playerid, COLOR_RED, TXT_NoHouseFound);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command checks if the player is inside a vehicle that he owns and if he's in range of the house where the vehicle is assigned to
 COMMAND:park(playerid, params[])

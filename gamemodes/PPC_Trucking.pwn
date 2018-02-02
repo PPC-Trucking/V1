@@ -548,8 +548,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DialogBuyCar: Dialog_BuyCar(playerid, response, listitem); // The player chose a vehicle from the list of vehicles from the vehicleclass he chose before
 		case DialogSellCar: Dialog_SellCar(playerid, response, listitem);
 		case DialogBuyInsurance: Dialog_BuyInsurance(playerid, response);
-		case DialogGetVehicleSelectHouse: Dialog_GetVehicleSelectHouse(playerid, response, listitem);
-		case DialogGetVehicleSelectCar: Dialog_GetVehicleSelectCar(playerid, response, listitem);
+		case DialogGetVehiclesSelectHouse: Dialog_GetVehiclesSelectHouse(playerid, response, inputtext);
+		case DialogGetVehiclesSelectVehicle: Dialog_GetVehiclesSelectVehicle(playerid, response, listitem);
 		case DialogUnclampVehicles: Dialog_UnclampVehicles(playerid, response);
 
 		case DialogCreateBusSelType: Dialog_CreateBusSelType(playerid, response, listitem);

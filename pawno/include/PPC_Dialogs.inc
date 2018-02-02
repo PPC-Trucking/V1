@@ -1709,13 +1709,18 @@ Dialog_SellCar(playerid, response, listitem)
 }
 
 // This dialog processes the selected house from which to get a vehicle using /getvehicle
-Dialog_GetVehicleSelectHouse(playerid, response, listitem)
+Dialog_GetVehiclesSelectHouse(playerid, response, inputtext[])
 {
+	// Setup local variables
+	new SelectedSlotID, SelectedSlotName[100];
+
 	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
-	// Get the houseid based on the chosen listitem
-	new HouseID = APlayerData[playerid][Houses][listitem];
+	sscanf(inputtext, "s[100]i", SelectedSlotName, SelectedSlotID);
+
+	// Get the houseid based on the chosen selected slot
+	new HouseID = APlayerData[playerid][Houses][SelectedSlotID];
 
 	// Check if it was a valid house
 	if (HouseID != 0)
@@ -1724,7 +1729,7 @@ Dialog_GetVehicleSelectHouse(playerid, response, listitem)
 	    new BuyableCarIndex, VehicleList[500], bool:HouseHasCars = false, CarSlot;
 
 		// Store the HouseID, otherwise the next dialog won't be able to get a car from the chosen house
-		APlayerData[playerid][DialogGetVehicleHouseID] = HouseID;
+		APlayerData[playerid][DialogGetVehiclesHouseID] = HouseID;
 
 		// Check if the house has any cars assigned to it
 		for (CarSlot = 0; CarSlot < 10; CarSlot++)
@@ -1753,7 +1758,7 @@ Dialog_GetVehicleSelectHouse(playerid, response, listitem)
 			}
 
 			// Ask which vehicle the player wants to teleport to his location
-			ShowPlayerDialog(playerid, DialogGetVehicleSelectCar, DIALOG_STYLE_LIST, TXT_SelectVehicleToGet, VehicleList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+			ShowPlayerDialog(playerid, DialogGetVehiclesSelectVehicle, DIALOG_STYLE_LIST, TXT_SelectVehicleToGet, VehicleList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 		}
 		else
 		    SendClientMessage(playerid, COLOR_WHITE, TXT_NoHouseVehicles);
@@ -1765,13 +1770,13 @@ Dialog_GetVehicleSelectHouse(playerid, response, listitem)
 }
 
 // This dialog processes the chosen car and spawns it at the player's location
-Dialog_GetVehicleSelectCar(playerid, response, listitem)
+Dialog_GetVehiclesSelectVehicle(playerid, response, listitem)
 {
 	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
 	// Get the HouseID from which to get the car
-	new HouseID = APlayerData[playerid][DialogGetVehicleHouseID];
+	new HouseID = APlayerData[playerid][DialogGetVehiclesHouseID];
 
 	// Get the vehicleid from the chosen listitem
 	new vid = AHouseData[HouseID][VehicleIDs][listitem];

@@ -175,8 +175,8 @@
 #define DialogBuyCar                607
 #define DialogSellCar               608
 #define DialogBuyInsurance          609
-#define DialogGetVehicleSelectHouse     610
-#define DialogGetVehicleSelectCar       611
+#define DialogGetVehiclesSelectHouse     610
+#define DialogGetVehiclesSelectVehicle       611
 #define DialogUnclampVehicles       612
 
 #define DialogCreateBusSelType      701
@@ -677,7 +677,7 @@ enum TPlayerData
 	DialogBuyVClass, // Holds the ID of the chose vehicle class to process when buying a vehicle
 	DialogBuyCarIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to buy
 
-	DialogGetVehicleHouseID, // Holds the HouseID from which to get a vehicle when using /getvehicle
+	DialogGetVehiclesHouseID, // Holds the HouseID from which to get a vehicle when using /getvehicle
 
 	DialogOtherPlayer, // Holds the id of the other player when viewing that other player's stats
 	DialogOtherPlayerHouse, // Holds the HouseID of the other player when viewing the stats for that house
