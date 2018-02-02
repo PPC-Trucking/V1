@@ -5055,17 +5055,17 @@ COMMAND:announce(playerid, params[])
 			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/announce <Style (0-6)> <Time in seconds 1-5> <Message>\"");
 			else
 			{
-				if ((Style >= 0) && (Style <= 6) && 2 != Style)
+				if ((Style >= 1) && (Style <= 6) && (Style != 2))
 				{
 					if ((DisplayTime >= 1) && (DisplayTime <= 5))
 					{
 						GameTextForAll(Message, (DisplayTime * 1000), Style);
 					}
 					else
-						SendClientMessage(playerid, COLOR_RED, "Invalid time, you can only use 1-5 seconds");
+						SendClientMessage(playerid, COLOR_RED, "Invalid time, you can only use 1-5 seconds.");
 				}
 				else
-    				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 0-6 except 2");
+    				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 1-6 except 2.");
 			}
 		}
 		else
