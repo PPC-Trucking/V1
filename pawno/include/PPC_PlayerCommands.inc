@@ -378,6 +378,7 @@ COMMAND:enter(playerid, params[])
 }
 
 
+
 // This command lets the player exit from a property (house / business)
 COMMAND:exit(playerid, params[])
 {
@@ -497,85 +498,73 @@ COMMAND:getvehicle(playerid, params[])
 
 
 
-// This command checks if the player is inside a vehicle that he owns and if he's in range of the house where the vehicle is assigned to
+// This command allowes a player to park his vehicle near his house
 COMMAND:park(playerid, params[])
 {
 	// Setup local variables
-	new Float:x, Float:y, Float:z, Float:rot, vid, HouseID, Msg[128];
+	new Float:x, Float:y, Float:z, Float:rot, vid, HouseID, Message[128];
 	new engine,lights,alarm,doors,bonnet,boot,objective;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/park", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+
+	// Get the vehicle-id
+	vid = GetPlayerVehicleID(playerid);
+	// Get the HouseID to which this vehicle belongs
+	HouseID = AVehicleData[vid][BelongsToHouse];
+
+	// Check if the vehicle is not owned (owner-check is not really required, as another
+	// player would get kicked out very fast) AND it must belong to a house that the player owns
+	if ((AVehicleData[vid][Owned] != true) || (HouseID == 0))
+		return SendClientMessage(playerid, COLOR_RED, TXT_OwnVehicleCanBeParkedOnly);
+
+	// Check if the vehicle is not in range of the house-entrance
+	if (!IsPlayerInRangeOfPoint(playerid, ParkRange, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
 	{
-		// Check if the player is inside a vehicle (he must be the driver)
-		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-		{
-			// Get the vehicle-id
-			vid = GetPlayerVehicleID(playerid);
-			// Get the HouseID to which this vehicle belongs
-			HouseID = AVehicleData[vid][BelongsToHouse];
-
-			// Check if the vehicle is owned (owner-check is not really required, as another player would get kicked out very fast)
-			// AND it must belong to a house that the player owns
-			if ((AVehicleData[vid][Owned] == true) && (HouseID != 0))
-			{
-				// Check if the vehicle is in range of the house-entrance (you cannot park a vehicle further away from your house than 150m)
-				if (IsPlayerInRangeOfPoint(playerid, ParkRange, AHouseData[HouseID][HouseX], AHouseData[HouseID][HouseY], AHouseData[HouseID][HouseZ]))
-				{
-					// Get the player's position and angle
-					GetVehiclePos(vid, x, y, z);
-					GetVehicleZAngle(vid, rot);
-					// Save those values for the vehicle
-					AVehicleData[vid][SpawnX] = x;
-					AVehicleData[vid][SpawnY] = y;
-					AVehicleData[vid][SpawnZ] = z;
-					AVehicleData[vid][SpawnRot] = rot;
-
-					// Find the vehicle in the player's houses
-					for (new i; i < MAX_HOUSESPERPLAYER; i++)
-					{
-						// Get the HouseID of the current house
-					    HouseID = APlayerData[playerid][Houses][i];
-
-						// Loop through all carslots of this house to find the vehicle-id
-						for (new CarSlot; CarSlot < 10; CarSlot++)
-						{
-							// Check if this carslot holds the same vehicle-id
-						    if (AHouseData[HouseID][VehicleIDs][CarSlot] == vid)
-						    {
-			                    House_ReplaceVehicle(HouseID, CarSlot); // Re-create the vehicle at the same spot the player wants to park his vehicle
-			                    PutPlayerInVehicle(playerid, AHouseData[HouseID][VehicleIDs][CarSlot], 0);
-								// Turn on the engine
-								GetVehicleParamsEx(AHouseData[HouseID][VehicleIDs][CarSlot], engine, lights, alarm, doors, bonnet, boot, objective);
-								SetVehicleParamsEx(AHouseData[HouseID][VehicleIDs][CarSlot], 1, lights, alarm, doors, bonnet, boot, objective);
-			                    break; // Stop the for-loop
-							}
-						}
-					}
-
-					// Let the player know he parked his vehicle
-					SendClientMessage(playerid, COLOR_GREEN, "You've parked your vehicle");
-
-					// Save the player-file (and his houses)
-					PlayerFile_Save(playerid);
-				}
-				else
-				{
-				    format(Msg, sizeof(Msg), "{FF0000}You need to be within %.0fm of your house to park this vehicle", ParkRange);
-				    SendClientMessage(playerid, COLOR_WHITE, Msg);
-				}
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot park a vehicle that's not owned by you");
-		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You must be driving a vehicle you own to park it");
+	    format(Message, sizeof(Message), TXT_NotInRangeOfHouse, ParkRange);
+	    SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Get the player's position and angle
+	GetVehiclePos(vid, x, y, z);
+	GetVehicleZAngle(vid, rot);
+	// Save those values for the vehicle
+	AVehicleData[vid][SpawnX] = x;
+	AVehicleData[vid][SpawnY] = y;
+	AVehicleData[vid][SpawnZ] = z;
+	AVehicleData[vid][SpawnRot] = rot;
+
+	// Find the vehicle in the player's houses
+	for (new i; i < MAX_HOUSESPERPLAYER; i++)
+	{
+		// Get the HouseID of the current house
+	    HouseID = APlayerData[playerid][Houses][i];
+
+		// Loop through all carslots of this house to find the vehicle-id
+		for (new CarSlot; CarSlot < 10; CarSlot++)
+		{
+			// Check if this carslot holds the same vehicle-id
+		    if (AHouseData[HouseID][VehicleIDs][CarSlot] == vid)
+		    {
+                House_ReplaceVehicle(HouseID, CarSlot); // Re-create the vehicle at the same spot the player wants to park his vehicle
+                PutPlayerInVehicle(playerid, AHouseData[HouseID][VehicleIDs][CarSlot], 0);
+				// Turn on the engine
+				GetVehicleParamsEx(AHouseData[HouseID][VehicleIDs][CarSlot], engine, lights, alarm, doors, bonnet, boot, objective);
+				SetVehicleParamsEx(AHouseData[HouseID][VehicleIDs][CarSlot], 1, lights, alarm, doors, bonnet, boot, objective);
+                break; // Stop the for-loop
+			}
+		}
+	}
+
+	// Let the player know he parked his vehicle
+	SendClientMessage(playerid, COLOR_GREEN, TXT_VehicleParked);
+
+	// Save the player-file (and his houses)
+	PlayerFile_Save(playerid);
 
 	// Let the server know that this was a valid command
 	return 1;
