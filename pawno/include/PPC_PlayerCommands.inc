@@ -386,6 +386,9 @@ COMMAND:enter(playerid, params[])
 // This command lets the player exit from a property (house / business)
 COMMAND:exit(playerid, params[])
 {
+	// Setup local variables
+	new HouseID, BusID;
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/exit", params);
 
@@ -397,11 +400,14 @@ COMMAND:exit(playerid, params[])
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
 		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
 
+	HouseID = APlayerData[playerid][CurrentHouse];
+	BusID = APlayerData[playerid][CurrentBusiness];
+
 	// Check if the player is inside a house
-	if (APlayerData[playerid][CurrentHouse] != 0)
+	if (HouseID != 0)
 		return House_Exit(playerid, HouseID);
 	// Check if the player is inside a house
-	else if (APlayerData[playerid][CurrentBusiness] != 0)
+	else if (BusID != 0)
 		return Business_Exit(playerid, BusID);
 
 	// Tell the player that he is not in a house or business
