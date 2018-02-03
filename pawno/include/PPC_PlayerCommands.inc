@@ -49,7 +49,7 @@ COMMAND:pm(playerid, params[])
 	}
 
 	// Check if OtherPlayer is playerid
-	// which means the player trys to send a private message to himself... *lol*
+	// which means the player tries to send a private message to himself... *lol*
 	if (OtherPlayer == playerid)
 		return SendClientMessage(playerid, COLOR_RED, TXT_NoPrivMessageToU);
 
@@ -76,13 +76,12 @@ COMMAND:pm(playerid, params[])
 
 	// Get the name of the sender
 	GetPlayerName(playerid, Name, sizeof(Name));
+	
 	// Construct the message that is sent to the receiver
 	format(Message, sizeof(Message), TXT_PrivMessageFrom, Name, playerid, Text);
 	SendClientMessage(OtherPlayer, COLOR_BIRDFLOWER, Message);
 
-	// Play sound for receiver
-	// Do not set any coordinates so the sound
-	// will be played just in the player's area
+	// Play sound for receiver, will be played in the player's area
 	// soundid: SOUND_ROULETTE_NO_CASH
 	PlayerPlaySound(OtherPlayer, 1085, 0, 0, 0);
 
@@ -217,6 +216,7 @@ COMMAND:delhouse(playerid, params[])
     AHouseData[HouseID][HouseName] = 0;
     AHouseData[HouseID][HouseName] = 0;
     AHouseData[HouseID][HouseName] = 0;
+	
 	// Destroy the mapicon, 3DText and pickup for the house
 	DestroyDynamicPickup(AHouseData[HouseID][PickupID]);
 	DestroyDynamicMapIcon(AHouseData[HouseID][MapIconID]);
@@ -318,12 +318,16 @@ COMMAND:enter(playerid, params[])
 
 			    // Get the level of the house
 				Level = AHouseData[HouseID][HouseLevel];
+				
 				// Set the worldid so other players cannot see him anymore
 				SetPlayerVirtualWorld(playerid, 5000 + HouseID);
+				
 				// Set the player inside the interior of the house
 				SetPlayerInterior(playerid, AHouseInteriors[Level][InteriorID]);
+				
 				// Set the position of the player at the spawn-location of the house's interior
 				SetPlayerPos(playerid, AHouseInteriors[Level][IntX], AHouseInteriors[Level][IntY], AHouseInteriors[Level][IntZ]);
+				
 				// Also set a tracking-variable to enable /housemenu to track in which house the player is
 				APlayerData[playerid][CurrentHouse] = HouseID;
 
@@ -382,8 +386,6 @@ COMMAND:enter(playerid, params[])
 // This command lets the player exit from a property (house / business)
 COMMAND:exit(playerid, params[])
 {
-	new BusID, HouseID;
-
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/exit", params);
 
@@ -395,14 +397,11 @@ COMMAND:exit(playerid, params[])
 	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
 		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
 
-	HouseID = APlayerData[playerid][CurrentHouse];
-	BusID = APlayerData[playerid][CurrentBusiness];
-
 	// Check if the player is inside a house
-	if (HouseID != 0)
+	if (APlayerData[playerid][CurrentHouse] != 0)
 		return House_Exit(playerid, HouseID);
 	// Check if the player is inside a house
-	else if (BusID != 0)
+	else if (APlayerData[playerid][CurrentBusiness] != 0)
 		return Business_Exit(playerid, BusID);
 
 	// Tell the player that he is not in a house or business
@@ -445,6 +444,7 @@ COMMAND:housemenu(playerid, params[])
 	else
 		format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuCloseHouse);
 	format(OptionsList, sizeof(OptionsList), "%s%s\n", OptionsList, TXT_HouseMenuSellHouse);
+
 	// Show the housemenu
 	ShowPlayerDialog(playerid, DialogHouseMenu, DIALOG_STYLE_LIST, DialogTitle, OptionsList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
@@ -514,6 +514,7 @@ COMMAND:park(playerid, params[])
 
 	// Get the vehicle-id
 	vid = GetPlayerVehicleID(playerid);
+	
 	// Get the HouseID to which this vehicle belongs
 	HouseID = AVehicleData[vid][BelongsToHouse];
 
@@ -532,6 +533,7 @@ COMMAND:park(playerid, params[])
 	// Get the player's position and angle
 	GetVehiclePos(vid, x, y, z);
 	GetVehicleZAngle(vid, rot);
+	
 	// Save those values for the vehicle
 	AVehicleData[vid][SpawnX] = x;
 	AVehicleData[vid][SpawnY] = y;
@@ -550,12 +552,16 @@ COMMAND:park(playerid, params[])
 			// Check if this carslot holds the same vehicle-id
 		    if (AHouseData[HouseID][VehicleIDs][CarSlot] == vid)
 		    {
-                House_ReplaceVehicle(HouseID, CarSlot); // Re-create the vehicle at the same spot the player wants to park his vehicle
-                PutPlayerInVehicle(playerid, AHouseData[HouseID][VehicleIDs][CarSlot], 0);
+				// Re-create the vehicle at the same spot the player wants to park his vehicle
+				House_ReplaceVehicle(HouseID, CarSlot);
+				PutPlayerInVehicle(playerid, AHouseData[HouseID][VehicleIDs][CarSlot], 0);
+
 				// Turn on the engine
 				GetVehicleParamsEx(AHouseData[HouseID][VehicleIDs][CarSlot], engine, lights, alarm, doors, bonnet, boot, objective);
 				SetVehicleParamsEx(AHouseData[HouseID][VehicleIDs][CarSlot], 1, lights, alarm, doors, bonnet, boot, objective);
-                break; // Stop the for-loop
+				
+				// Stop the for-loop
+				break; 
 			}
 		}
 	}
