@@ -194,6 +194,7 @@
 #define TXT_OwnVehicleCanBeParkedOnly "You must driving a vehicle that you own to /park it."
 #define TXT_NotInRangeOfHouse "You need to be within %.0fm of your house to park your vehicle."
 #define TXT_VehicleParked "You have parked your vehicle."
+#define TXT_CarDealerNotInRange "You are not close to a car dealer."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

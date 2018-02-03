@@ -587,53 +587,47 @@ COMMAND:rentvehicle(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/rentvehicle", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Make sure the player isn't inside a vehicle
-		if (GetPlayerVehicleID(playerid) == 0)
-		{
-			// Check if the player is near a cardealerpickup
-			for (new i; i < sizeof(ACarDealerPickups); i++)
-			{
-				// Check if a valid cardealerpickup is found
-				if (ACarDealerPickups[i][PickupID] != 0)
-				{
-					// Check if the player is in range of the cardealerpickup
-					if(IsPlayerInRangeOfPoint(playerid, 2.5, ACarDealerPickups[i][pux], ACarDealerPickups[i][puy], ACarDealerPickups[i][puz]))
-					{
-					    // Let the player choose a vehicle-class
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{00FF00}%s{FFFFFF}\n", VehicleClassList, "Bikes");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{40FF00}%s{FFFFFF}\n", VehicleClassList, "Boats");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{80FF00}%s{FFFFFF}\n", VehicleClassList, "Convertibles");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{B0FF00}%s{FFFFFF}\n", VehicleClassList, "Helicopters");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{FFFF00}%s{FFFFFF}\n", VehicleClassList, "Industrial vehicles");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{B0FF40}%s{FFFFFF}\n", VehicleClassList, "Low-riders");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{80FF80}%s{FFFFFF}\n", VehicleClassList, "Off-Road vehicles");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{40FFB0}%s{FFFFFF}\n", VehicleClassList, "Planes");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{00FFFF}%s{FFFFFF}\n", VehicleClassList, "Public Service vehicles");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{00B0FF}%s{FFFFFF}\n", VehicleClassList, "RC vehicles");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{0080FF}%s{FFFFFF}\n", VehicleClassList, "Saloon vehicles");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{0040FF}%s{FFFFFF}\n", VehicleClassList, "Sport vehicles");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{0000FF}%s{FFFFFF}\n", VehicleClassList, "Station wagons");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{4000FF}%s{FFFFFF}\n", VehicleClassList, "Trailers");
-						format(VehicleClassList, sizeof(VehicleClassList), "%s{8000FF}%s{FFFFFF}\n", VehicleClassList, "Unique vehicles");
-						// Ask which vehicle class the player wants to see to buy a vehicle
-						ShowPlayerDialog(playerid, DialogRentVehicleClass, DIALOG_STYLE_LIST, "Select vehicle class:", VehicleClassList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-						// Exit the function
-						return 1;
-					}
-				}
-			}
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
 
-			// The player wasn't in range of a cardealer
-			SendClientMessage(playerid, COLOR_RED, "You cannot rent a vehicle when you're not close to a cardealer");
+	// Check if the player is near a cardealerpickup
+	for (new i; i < sizeof(ACarDealerPickups); i++)
+	{
+		// Check if a valid cardealerpickup is found
+		if (ACarDealerPickups[i][PickupID] != 0)
+		{
+			// Check if the player is in range of the cardealerpickup
+			if(IsPlayerInRangeOfPoint(playerid, 2.5, ACarDealerPickups[i][pux], ACarDealerPickups[i][puy], ACarDealerPickups[i][puz]))
+			{
+			    // Let the player choose a vehicle-class
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{00FF00}%s{FFFFFF}\n", VehicleClassList, "Bikes");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{40FF00}%s{FFFFFF}\n", VehicleClassList, "Boats");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{80FF00}%s{FFFFFF}\n", VehicleClassList, "Convertibles");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{B0FF00}%s{FFFFFF}\n", VehicleClassList, "Helicopters");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{FFFF00}%s{FFFFFF}\n", VehicleClassList, "Industrial vehicles");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{B0FF40}%s{FFFFFF}\n", VehicleClassList, "Low-riders");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{80FF80}%s{FFFFFF}\n", VehicleClassList, "Off-Road vehicles");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{40FFB0}%s{FFFFFF}\n", VehicleClassList, "Planes");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{00FFFF}%s{FFFFFF}\n", VehicleClassList, "Public Service vehicles");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{00B0FF}%s{FFFFFF}\n", VehicleClassList, "RC vehicles");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{0080FF}%s{FFFFFF}\n", VehicleClassList, "Saloon vehicles");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{0040FF}%s{FFFFFF}\n", VehicleClassList, "Sport vehicles");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{0000FF}%s{FFFFFF}\n", VehicleClassList, "Station wagons");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{4000FF}%s{FFFFFF}\n", VehicleClassList, "Trailers");
+				format(VehicleClassList, sizeof(VehicleClassList), "%s{8000FF}%s{FFFFFF}\n", VehicleClassList, "Unique vehicles");
+				
+				// Ask which vehicle class the player wants to see to buy a vehicle
+				ShowPlayerDialog(playerid, DialogRentVehicleClass, DIALOG_STYLE_LIST, "Select vehicle class:", VehicleClassList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+				
+				// Exit the function
+				return 1;
+			}
 		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You cannot rent a vehicle when you're inside a car");
 	}
-	else
-	    return 0;
+
+	// The player is not in range of a cardealer
+	SendClientMessage(playerid, COLOR_RED, TXT_CarDealerNotInRange);
 
 	// Let the server know that this was a valid command
 	return 1;
