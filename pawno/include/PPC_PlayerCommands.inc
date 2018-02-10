@@ -514,6 +514,10 @@ COMMAND:park(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/park", params);
 
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
 	// Check if the player is inside a vehicle (he must be the driver)
 	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
 		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
