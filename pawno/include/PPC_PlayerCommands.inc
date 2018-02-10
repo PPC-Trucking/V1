@@ -696,23 +696,38 @@ COMMAND:gohome(playerid, params[])
 // Detaches the trailer from the vehicle
 COMMAND:detach(playerid, params[])
 {
+	// Setup local variables
+	new vid;
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/detach", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Detach the trailer from the vehicle
-		DetachTrailerFromVehicle(GetPlayerVehicleID(playerid));
-		// Send the player a message that the trailer has been detached
-		SendClientMessage(playerid, COLOR_BLUE, "Your trailer is detached");
-	}
-	else
-		return 0;
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+
+	// Get the vehicle-id
+	vid = GetPlayerVehicleID(playerid);
+
+	// Check if the vehicle has no trailer attached
+	if (IsTrailerAttachedToVehicle(vid) != 1)
+		return SendClientMessage(playerid, COLOR_RED, TXT_NoTrailerAttached);
+
+	// Detach the trailer from the vehicle
+	DetachTrailerFromVehicle(vid);
+
+	// Send the player a message that the trailer has been detached
+	SendClientMessage(playerid, COLOR_BLUE, TXT_TrailerDetached);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Puts the player's vehicle back onto his wheels
 COMMAND:flip(playerid, params[])

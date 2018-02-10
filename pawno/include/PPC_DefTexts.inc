@@ -196,6 +196,8 @@
 #define TXT_VehicleParked "You have parked your vehicle."
 #define TXT_CarDealerNotInRange "You are not close to a car dealer."
 #define TXT_MustBeInnocent "You must be innocent (no wanted level) to use this command."
+#define TXT_NoTrailerAttached "There is no trailer attached to this vehicle."
+#define TXT_TrailerDetached "You have detached the trailer."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
