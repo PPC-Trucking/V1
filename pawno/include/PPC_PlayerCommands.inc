@@ -732,34 +732,37 @@ COMMAND:detach(playerid, params[])
 // Puts the player's vehicle back onto his wheels
 COMMAND:flip(playerid, params[])
 {
+	// Setup local variables
+	new Float:x = 0.0, Float:y = 0.0, Float:z = 0.0, vid;
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/flip", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER) {
-			// Setup some local variables
-			new Float:x = 0.0, Float:y = 0.0, Float:z = 0.0;
-			// Check if the player is inside a vehicle
-			if(IsPlayerInAnyVehicle(playerid))
-				SetCameraBehindPlayer(playerid);
-			// Get the player's position
-			GetPlayerPos(playerid, x, y, z);
-			// Set the vehicle on the player's coordinates
-			SetVehiclePos(GetPlayerVehicleID(playerid), x, y, z);
-			// Let the vehicle point north
-			SetVehicleZAngle(GetPlayerVehicleID(playerid), 0.0);
-		}
-		else
-			return SendClientMessage(playerid, COLOR_RED, "You must be the driver of a vehicle to use this command");
-	}
-	else
-	    return 0;
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+
+	// Restore the camera for player
+	SetCameraBehindPlayer(playerid);
+	// Get the player's position
+	GetPlayerPos(playerid, x, y, z);
+	// Set the vehicle on the player's coordinates
+	SetVehiclePos(vid, x, y, z);
+	// Let the vehicle point north
+	SetVehicleZAngle(vid, 0.0);
+
+	// Send the player a message that the trailer has been detached
+	SendClientMessage(playerid, COLOR_BLUE, TXT_VehicleFlipped);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Repairs the player's vehicle
 COMMAND:repair(playerid, params[])
