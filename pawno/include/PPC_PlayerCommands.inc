@@ -645,53 +645,53 @@ COMMAND:rentvehicle(playerid, params[])
 
 
 
-// This command teleports you to your selected house
+// This command teleports a player to his selected house
 COMMAND:gohome(playerid, params[])
 {
 	// Setup local variables
-	new HouseList[1000];
+	new HouseList[1000], EmptySlot;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/gohome", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	// Check if the player has a wanted level
+	if (GetPlayerWantedLevel(playerid) >= 1)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeInnocent);
+
+	// Ask to which house the player wants to go
+	for (new i; i < MAX_HOUSESPERPLAYER; i++)
 	{
-		// Check if the player has a wanted level of less than 3
-		if (GetPlayerWantedLevel(playerid) < 3)
-		{
-			// Check if the player is not jailed
-			if (APlayerData[playerid][PlayerJailed] == 0)
-			{
-				// Check if the player is not inside a vehicle
-				if (GetPlayerVehicleID(playerid) == 0)
-				{
-					// Ask to which house the player wants to add his vehicle
-					for (new i; i < MAX_HOUSESPERPLAYER; i++)
-					{
-						// Check if this houseindex is occupied
-						if (APlayerData[playerid][Houses][i] != 0)
-							format(HouseList, sizeof(HouseList), "%s{00FF00}%s{FFFFFF}\n", HouseList, AHouseData[APlayerData[playerid][Houses][i]][HouseName]);
-						else
-							format(HouseList, sizeof(HouseList), "%s{FFFFFF}%s{FFFFFF}\n", HouseList, "Empty house-slot");
-					}
-					ShowPlayerDialog(playerid, DialogGoHome, DIALOG_STYLE_LIST, "Choose the house to go to:", HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-				}
-				else
-					SendClientMessage(playerid, COLOR_RED, "You need to be on-foot to port to your house");
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /gohome when you're in jail");
+		// Check if this houseindex is occupied
+		if (APlayerData[playerid][Houses][i] != 0)
+			format(HouseList, sizeof(HouseList), "%s{00FF00}%s (%i){FFFFFF}\n", HouseList, AHouseData[APlayerData[playerid][Houses][i]][HouseName], i);
+		else {
+			// If this slot is not in use count this variable
+			EmptySlot++;
 		}
-		else
-			SendClientMessage(playerid, COLOR_RED, "You cannot use /gohome when you're wanted");
 	}
+
+	// See if the variable EmptySlot does not equal
+	// the maximum number of house-slots per player
+	if (MAX_HOUSESPERPLAYER != EmptySlot)
+		// If not, it means that there is atleast one occupied slot
+		ShowPlayerDialog(playerid, DialogGoHome, DIALOG_STYLE_LIST, TXT_GoHomeTitle, HouseList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 	else
-	    return 0;
+		// If yes, no slot is in use which means the player has no houses
+		return SendClientMessage(playerid, COLOR_RED, TXT_NoHouseFound);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Detaches the trailer from the vehicle
 COMMAND:detach(playerid, params[])

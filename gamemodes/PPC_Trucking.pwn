@@ -541,7 +541,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 		case DialogHouseMenu: Dialog_HouseMenu(playerid, response, listitem); // Process the main housemenu
 		case DialogUpgradeHouse: Dialog_UpgradeHouse(playerid, response, listitem); // Process the house-upgrade menu
-		case DialogGoHome: Dialog_GoHome(playerid, response, listitem); // Port to one of your houses
+		case DialogGoHome: Dialog_GoHome(playerid, response, inputtext); // Port to one of your houses
 		case DialogHouseNameChange: Dialog_ChangeHouseName(playerid, response, inputtext); // Change the name of your house
 		case DialogSellHouse: Dialog_SellHouse(playerid, response); // Sell the house
 		case DialogBuyCarClass: Dialog_BuyCarClass(playerid, response, listitem); // The player chose a vehicleclass from where he can buy a vehicle

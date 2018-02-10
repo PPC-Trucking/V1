@@ -195,6 +195,7 @@
 #define TXT_NotInRangeOfHouse "You need to be within %.0fm of your house to park your vehicle."
 #define TXT_VehicleParked "You have parked your vehicle."
 #define TXT_CarDealerNotInRange "You are not close to a car dealer."
+#define TXT_MustBeInnocent "You must be innocent (no wanted level) to use this command."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
@@ -353,6 +354,7 @@
 #define TXT_HouseClosedForEveryone "You have closed the house to the public. {FF0000}Only you can /enter it."
 #define TXT_HouseMenuSellHouse "Sell house"
 #define TXT_GetVehicleTitle "Choose the house to get a car from:"
+#define TXT_GoHomeTitle "Choose the house to go to:"
 #define TXT_NoHouseFound "You do not have any house."
 
 // Business related
