@@ -757,7 +757,7 @@ COMMAND:flip(playerid, params[])
 
 	// Set the vehicle on the player's coordinates
 	SetVehiclePos(vid, x, y, z);
-	
+
 	// Let the vehicle point north
 	SetVehicleZAngle(vid, 0.0);
 
@@ -773,32 +773,38 @@ COMMAND:flip(playerid, params[])
 // Repairs the player's vehicle
 COMMAND:repair(playerid, params[])
 {
+	// Setup local variables
+	new vid;
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/repair", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-		    // Check if the player is inside a vehicle
-			if(!IsPlayerInAnyVehicle(playerid))
-				return SendClientMessage(playerid, COLOR_RED, "You are not in a vehicle!"); // Let the player know he's not inside a vehicle and let the server know that this was a valid command
-			// Fully repair the vehicle (damage value and bodywork)
-			RepairVehicle(GetPlayerVehicleID(playerid));
-			// Send the player a message to inform him that his vehicle has been repaired
-			SendClientMessage(playerid, COLOR_GREEN, "Your vehicle has been successfully repaired!");
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (!IsPlayerInAnyVehicle(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+
+	// Get the vehicle-id
+	vid = GetPlayerVehicleID(playerid);
+
+	// Fully repair the vehicle (damage value and bodywork)
+	RepairVehicle(vid);
+
+	// Send the player a message to inform him that his vehicle has been repaired
+	SendClientMessage(playerid, COLOR_BLUE, TXT_VehicleRepaired);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Repairs all vehicles
 COMMAND:repairall(playerid, params[])

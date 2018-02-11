@@ -191,6 +191,7 @@
 #define TXT_CmdNotAllowedInsideBuilding "You can not use this command when you are inside a building."
 #define TXT_CmdOnlyAllowedInsideBuilding "You can only use this command inside a building."
 #define TXT_CmdOnlyAvailableAsDriver "You can only use this command when you are driving a vehicle."
+#define TXT_CmdOnlyAvailableInVehicle "You can only use this command inside a vehicle."
 #define TXT_OwnVehicleCanBeParkedOnly "You must driving a vehicle that you own to /park it."
 #define TXT_NotInRangeOfHouse "You need to be within %.0fm of your house to park your vehicle."
 #define TXT_VehicleParked "You have parked your vehicle."
@@ -199,6 +200,7 @@
 #define TXT_NoTrailerAttached "There is no trailer attached to this vehicle."
 #define TXT_TrailerDetached "You have detached the trailer."
 #define TXT_VehicleFlipped "You have flipped the vehicle."
+#define TXT_VehicleRepaired "Your vehicle has been repaired."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
