@@ -876,35 +876,29 @@ COMMAND:reclass(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/reclass", params);
 	
-	if (GetPlayerState(playerid) == PLAYER_STATE_WASTED || GetPlayerState(playerid) == PLAYER_STATE_NONE)
-        return 0;
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
+	// Check if the player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	// Check if the player has a wanted level
+	if (GetPlayerWantedLevel(playerid) >= 1)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeInnocent);
 	
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player has a wanted level of less than 3
-		if (GetPlayerWantedLevel(playerid) < 3)
-		{
-			// Check if the player isn't in jail
-			if (APlayerData[playerid][PlayerJailed] == 0)
-			{
-			    // Force the player back into class-selection
-				ForceClassSelection(playerid);
-				// Kill the player (required after ForceClassSelection)
-				SetPlayerHealth(playerid, 0.0);
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /reclass when you're in jail");
-		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You cannot use /reclass when you're wanted");
-	}
-	else
-	    return 0;
+	// Force the player back into class-selection
+	ForceClassSelection(playerid);
+
+	// Kill the player (required after ForceClassSelection)
+	SetPlayerHealth(playerid, 0);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Starts a job
 COMMAND:work(playerid, params[])
