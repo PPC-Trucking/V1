@@ -746,12 +746,18 @@ COMMAND:flip(playerid, params[])
 	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
 		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
 
+	// Get the vehicle-id
+	vid = GetPlayerVehicleID(playerid);
+
 	// Restore the camera for player
 	SetCameraBehindPlayer(playerid);
+
 	// Get the player's position
 	GetPlayerPos(playerid, x, y, z);
+
 	// Set the vehicle on the player's coordinates
 	SetVehiclePos(vid, x, y, z);
+	
 	// Let the vehicle point north
 	SetVehicleZAngle(vid, 0.0);
 
