@@ -190,7 +190,7 @@
 #define TXT_ExitToLeaveProperty "You can use {FFFF00}/exit{00FF00} to leave the property."
 #define TXT_CmdNotAllowedInsideBuilding "You can not use this command when you are inside a building."
 #define TXT_CmdOnlyAllowedInsideBuilding "You can only use this command inside a building."
-#define TXT_CmdOnlyAvailableInVehicle "You can only use this command when you are driving a vehicle."
+#define TXT_CmdOnlyAvailableAsDriver "You can only use this command when you are driving a vehicle."
 #define TXT_OwnVehicleCanBeParkedOnly "You must driving a vehicle that you own to /park it."
 #define TXT_NotInRangeOfHouse "You need to be within %.0fm of your house to park your vehicle."
 #define TXT_VehicleParked "You have parked your vehicle."
