@@ -520,7 +520,7 @@ COMMAND:park(playerid, params[])
 
 	// Check if the player is inside a vehicle (he must be the driver)
 	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
-		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
 
 	// Get the vehicle-id
 	vid = GetPlayerVehicleID(playerid);
@@ -708,7 +708,7 @@ COMMAND:detach(playerid, params[])
 
 	// Check if the player is inside a vehicle (he must be the driver)
 	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
-		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
 
 	// Get the vehicle-id
 	vid = GetPlayerVehicleID(playerid);
@@ -744,7 +744,7 @@ COMMAND:flip(playerid, params[])
 
 	// Check if the player is inside a vehicle (he must be the driver)
 	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
-		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
 
 	// Restore the camera for player
 	SetCameraBehindPlayer(playerid);
