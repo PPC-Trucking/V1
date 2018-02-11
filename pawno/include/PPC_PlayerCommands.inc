@@ -809,31 +809,34 @@ COMMAND:repair(playerid, params[])
 // Repairs all vehicles
 COMMAND:repairall(playerid, params[])
 {
+	// Setup local variables
+	new Message[128], AdminName[MAX_PLAYER_NAME];
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/repairall", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			// Loop through all vehicles
-			for (new i; i < 2000; i++)
-				RepairVehicle(i); // Fully repair the vehicle (damage value and bodywork)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 3)
+		return 0;
 
-			// Send all players a message to inform them that all vehicles have been repaired
-			SendClientMessageToAll(COLOR_GREEN, "All vehicles have been successfully repaired!");
-		}
-		else
-		    return 0;
+	// Loop through all vehicles
+	for (new i; i < MAX_VEHICLES; i++) {
+		// Fully repair the vehicle (damage value and bodywork)
+		RepairVehicle(i);
 	}
-	else
-	    return 0;
+
+	// Get the name of the player who jailed the player
+	GetPlayerName(playerid, AdminName, sizeof(AdminName));
+
+	// Construct message and inform every player that an admin repaired all vehicles
+	format(Message, sizeof(Message), TXT_AdminRepairedAllVehicles, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	SendClientMessageToAll(COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Heals all players
 COMMAND:healall(playerid, params[])
