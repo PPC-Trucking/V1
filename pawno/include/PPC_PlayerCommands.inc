@@ -825,7 +825,7 @@ COMMAND:repairall(playerid, params[])
 		RepairVehicle(i);
 	}
 
-	// Get the name of the player who jailed the player
+	// Get the name of the admin
 	GetPlayerName(playerid, AdminName, sizeof(AdminName));
 
 	// Construct message and inform every player that an admin repaired all vehicles
@@ -841,33 +841,34 @@ COMMAND:repairall(playerid, params[])
 // Heals all players
 COMMAND:healall(playerid, params[])
 {
+	// Setup local variables
+	new Message[128], AdminName[MAX_PLAYER_NAME];
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/healall", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			// Loop through all players
-			for (new i; i < MAX_PLAYERS; i++)
-				if (IsPlayerConnected(i)) // Check if the player is connected
-				    if (IsPlayerInAnyVehicle(i) == 0) // Check if the player isn't inside a vehicle
-				        SetPlayerHealth(i, 100.0); // Heal the player
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 3)
+		return 0;
 
-			// Send all players a message to inform them that all players have been healed
-			SendClientMessageToAll(COLOR_GREEN, "All players have been healed!");
-		}
-		else
-		    return 0;
+	// Loop through all players
+	for (new i; i < MAX_PLAYERS; i++) {
+		// Set player health to 100%
+		SetPlayerHealth(i, 100);
 	}
-	else
-	    return 0;
+
+	// Get the name of the admin
+	GetPlayerName(playerid, AdminName, sizeof(AdminName));
+
+	// Construct message and inform every player that an admin healed them all
+	format(Message, sizeof(Message), TXT_AdminHealedAllPlayers, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	SendClientMessageToAll(COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Lets the player choose another class
 COMMAND:reclass(playerid, params[])

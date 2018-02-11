@@ -202,6 +202,7 @@
 #define TXT_VehicleFlipped "You have flipped the vehicle."
 #define TXT_VehicleRepaired "Your vehicle has been repaired."
 #define TXT_AdminRepairedAllVehicles "%s %s has repaired all vehicles."
+#define TXT_AdminHealedAllPlayers "%s %s has healed all players."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
