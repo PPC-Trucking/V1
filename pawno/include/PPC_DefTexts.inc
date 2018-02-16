@@ -204,6 +204,7 @@
 #define TXT_AdminRepairedAllVehicles "%s %s has repaired all vehicles."
 #define TXT_AdminHealedAllPlayers "%s %s has healed all players."
 #define TXT_AlreadyDoingAJob "You are already doing a job."
+#define TXT_NotDoingAJob "You are not doing any job."
 #define TXT_NotTheLeaderOfConvoy "You are not the leader of the convoy, you can not start a job."
 #define TXT_NotInsideATruckDriverVehicle "You need to be the driver of a trucking vehicle to start a job."
 #define TXT_NotInsideABusDriverVehicle "You need to be the driver of a bus to start a job."

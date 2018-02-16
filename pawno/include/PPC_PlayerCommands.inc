@@ -1055,39 +1055,34 @@ COMMAND:stopwork(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/stopwork", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-	    // Check if the player has a job started
-		if (APlayerData[playerid][JobStarted] == true)
-		{
-		    // Check the class of the player
-			switch (APlayerData[playerid][PlayerClass])
-			{
-				case ClassTruckDriver: Trucker_EndJob(playerid); // Stop any trucker job
-				case ClassBusDriver: BusDriver_EndJob(playerid); // Stop any busdriver job
-				case ClassPilot: Pilot_EndJob(playerid); // Stop any pilot job
-				case ClassMafia: Mafia_EndJob(playerid); // Stop any mafia job
-				case ClassCourier: Courier_EndJob(playerid);
-				case ClassRoadWorker: Roadworker_EndJob(playerid);
-				default: SendClientMessage(playerid, COLOR_RED, "Your class has no job to end");
-			}
+	// First check if the player already has a job
+	if (APlayerData[playerid][JobStarted] != true)
+		return SendClientMessage(playerid, COLOR_RED, TXT_NotDoingAJob);
 
-			format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
-			// Inform the player that he failed the mission
-			GameTextForPlayer(playerid, Message, 5000, 4);
-			// Reduce the player's cash
-			RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
-		}
-		else
-			SendClientMessage(playerid, COLOR_RED, "You are not doing any job");
+    // Check the class of the player
+	switch (APlayerData[playerid][PlayerClass])
+	{
+		// Stop any job related to the player's class
+		case ClassTruckDriver: Trucker_EndJob(playerid);
+		case ClassBusDriver: BusDriver_EndJob(playerid);
+		case ClassPilot: Pilot_EndJob(playerid);
+		case ClassMafia: Mafia_EndJob(playerid);
+		case ClassCourier: Courier_EndJob(playerid);
+		case ClassRoadWorker: Roadworker_EndJob(playerid);
+		default: return 0;
 	}
-	else
-	    return 0;
+
+	format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
+	// Inform the player that he failed the mission
+	GameTextForPlayer(playerid, Message, 5000, 4);
+	// Reduce the player's cash
+	RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Displays the player's coordinates on the map
 COMMAND:loc(playerid, params[])
