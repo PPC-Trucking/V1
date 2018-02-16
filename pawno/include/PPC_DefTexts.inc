@@ -203,6 +203,14 @@
 #define TXT_VehicleRepaired "Your vehicle has been repaired."
 #define TXT_AdminRepairedAllVehicles "%s %s has repaired all vehicles."
 #define TXT_AdminHealedAllPlayers "%s %s has healed all players."
+#define TXT_AlreadyDoingAJob "You are already doing a job."
+#define TXT_NotTheLeaderOfConvoy "You are not the leader of the convoy, you can not start a job."
+#define TXT_NotInsideATruckDriverVehicle "You need to be the driver of a trucking vehicle to start a job."
+#define TXT_NotInsideABusDriverVehicle "You need to be the driver of a bus to start a job."
+#define TXT_NotInsideAPilotVehicle "You need to be the driver of an aircraft vehicle to start a job."
+#define TXT_NotInsideAMafiaVehicle "You need to be the driver of a mafia vehicle to start a job."
+#define TXT_NotInsideACourierVehicle "You need to be the driver of a courier vehicle to start a job."
+#define TXT_NotInsideARoadWorkerVehicle "You need to be the driver of a roadworker vehicle to start a job."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

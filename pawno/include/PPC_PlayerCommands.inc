@@ -903,151 +903,148 @@ COMMAND:reclass(playerid, params[])
 // Starts a job
 COMMAND:work(playerid, params[])
 {
+	// Setup local variables
+	new vModel = GetVehicleModel(GetPlayerVehicleID(playerid));
+
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/work", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// First check if the player already has a job
+	if (APlayerData[playerid][JobStarted] != false)
+		return SendClientMessage(playerid, COLOR_RED, TXT_AlreadyDoingAJob);
+
+	// Check the player's class
+	switch (APlayerData[playerid][PlayerClass])
 	{
-		// First check if the player already has a job
-		if (APlayerData[playerid][JobStarted] == false)
+		case ClassTruckDriver:
 		{
-		    // Check the player's class
-			switch (APlayerData[playerid][PlayerClass])
+			// Check if the player is the driver of a vehicle
+			if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+				return SendClientMessage(playerid, COLOR_RED, TXT_NotInsideATruckDriverVehicle);
+
+			// Get the id of the convoy (if the player is in a convoy)
+			new Convoy = APlayerData[playerid][ConvoyID];
+
+			// Check if the player is part of a convoy AND is not the leader
+			if ((APlayerData[playerid][InConvoy] == true) && (AConvoys[Convoy][Members][0] != playerid))
 			{
-				case ClassTruckDriver:
-				{
-					// Get the id of the convoy (if the player is in a convoy)
-					new Convoy = APlayerData[playerid][ConvoyID];
+				// Let the player know he's not the leader of his convoy and cannot start a job
+				return SendClientMessage(playerid, COLOR_RED, TXT_NotTheLeaderOfConvoy);
+			}
 
-					// Check if the player is part of a convoy AND is not the leader
-					if ((APlayerData[playerid][InConvoy] == true) && (AConvoys[Convoy][Members][0] != playerid))
-					{
-						// Let the player know he's not the leader of his convoy and cannot start a job
-						SendClientMessage(playerid, COLOR_RED, "You're not the leader of your convoy, you cannot start a job");
-						// Exit the function
-						return 1;
-					}
+			// A convoy-leader proceeds here, and also a normal player (no convoy-member)
 
-					// A convoy-leader proceeds here, and also a normal player (no convoy-member)
+			// Check if the player is inside a valid trucking vehicle
+			switch (vModel)
+			{
+				case VehicleFlatbed, VehicleDFT30, VehicleCementTruck: // Flatbed, DFT-30, CementTruck
+				
+				if (APlayerData[playerid][TruckerLicense] == 1) // Check if the player has acquired a truckers license
+					ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+				else
+					Trucker_StartRandomJob(playerid); // Start a random job
 
-					// Check if the player is the driver of a vehicle
-					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-					{
-						// Check if the player is inside a valid trucking vehicle
-						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
-						{
-							case VehicleFlatbed, VehicleDFT30, VehicleCementTruck: // Flatbed, DFT-30, CementTruck
-								if (APlayerData[playerid][TruckerLicense] == 1) // Check if the player has acquired a truckers license
-									ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-								else
-								    Trucker_StartRandomJob(playerid); // Start a random job
-
-							case VehicleLineRunner, VehicleTanker, VehicleRoadTrain: // Player is driving a truck which needs a trailer
-								if(IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) // Check if there is a trailer attached
-									if (APlayerData[playerid][TruckerLicense] == 1) // Check if the player has acquired a truckers license
-										ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-									else
-									    Trucker_StartRandomJob(playerid); // Start a random job
-								else
-								    SendClientMessage(playerid, COLOR_RED, "You need a trailer to start a job");
-
-							default: SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a trucking vehicle to start a job");
-						}
-					}
-					else
-		                SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a trucking vehicle to start a job");
-				}
-				case ClassBusDriver:
-				{
-					// Check if the player is the driver of a vehicle
-					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-						if (GetVehicleModel(GetPlayerVehicleID(playerid)) == VehicleCoach) // Check if the player is inside a valid busdriver vehicle
-							if (APlayerData[playerid][BusLicense] == 1) // Check if the player has acquired a busdriver license
-								ShowPlayerDialog(playerid, DialogBusJobMethod, DIALOG_STYLE_LIST, "Select method:", "Choose your own busroute\r\nAuto assigned busroute", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-							else
-								BusDriver_StartJob(playerid, random(sizeof(ABusRoutes))); // Start a random job
+				// Player is driving a truck which needs a trailer
+				case VehicleLineRunner, VehicleTanker, VehicleRoadTrain:
+					if(IsTrailerAttachedToVehicle(GetPlayerVehicleID(playerid))) // Check if there is a trailer attached
+						// Check if the player has acquired a truckers license
+						if (APlayerData[playerid][TruckerLicense] == 1)
+							ShowPlayerDialog(playerid, DialogTruckerJobMethod, DIALOG_STYLE_LIST, "Select method:", "Setup your own load and route\r\nAuto assigned load", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 						else
-			                SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a bus to start a job");
+							// Start a random job
+							Trucker_StartRandomJob(playerid);
 					else
-		                SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a bus to start a job");
-				}
-				case ClassPilot:
-				{
-					// Check if the player is the driver of a vehicle
-					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-					{
-						// Check if the player is inside a valid piloting vehicle
-						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
-						{
-							case VehicleShamal, VehicleNevada, VehicleMaverick, VehicleCargobob: // Plane (Shamal), Plane (Nevada), helicopter (Maverick)
-								Pilot_StartRandomJob(playerid); // Start a random piloting job
-							default: SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a piloting vehicle to start a job");
-						}
-					}
-					else
-		                SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a piloting vehicle to start a job");
-				}
-				case ClassMafia:
-				{
-					// Check if the player is the driver of a vehicle
-					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-					{
-						// Check if the player is inside a valid piloting vehicle
-						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
-						{
-							case VehicleSandKing, VehicleMoonbeam: // Sangking, Moonbeam
-								Mafia_StartRandomJob(playerid); // Start a random mafia job
-							default: SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a mafia vehicle to start a job");
-						}
-					}
-					else
-		                SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a mafia vehicle to start a job");
-				}
-				case ClassCourier:
-				{
-					// Check if the player is the driver of a vehicle
-					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-					{
-						// Check if the player is inside a valid courier vehicle
-						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
-						{
-							case VehicleBurrito, VehicleFaggio, VehicleBenson: // Van (Burrito), bike (Faggio)
-								Courier_StartJob(playerid); // Start a random courier job
-							default: SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a courier vehicle to start a job");
-						}
-					}
-					else
-		                SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a courier vehicle to start a job");
-				}
-				case ClassRoadWorker:
-				{
-					// Check if the player is the driver of a vehicle
-					if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-					{
-						// Check if the player is inside a valid courier vehicle
-						switch (GetVehicleModel(GetPlayerVehicleID(playerid)))
-						{
-							case VehicleUtilityVan, VehicleTowTruck: // Utility Van, Towtruck
-								Roadworker_StartRandomJob(playerid); // Start a random roadworker job
-							default: SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a roadworker vehicle to start a job");
-						}
-					}
-					else
-		                SendClientMessage(playerid, COLOR_RED, "You need to be the driver of a roadworker vehicle to start a job");
-				}
-				default: SendClientMessage(playerid, COLOR_RED, "Your class cannot do any jobs");
+						SendClientMessage(playerid, COLOR_RED, "You need a trailer to start a job");
+
+				default: SendClientMessage(playerid, COLOR_RED, TXT_NotInsideATruckDriverVehicle);
 			}
 		}
-		else // Send a message to let the player know he already has a job
-		    SendClientMessage(playerid, COLOR_RED, "You're already doing a job");
+
+		case ClassBusDriver:
+		{
+			// Check if the player is the driver of a vehicle
+			if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+				return SendClientMessage(playerid, COLOR_RED, TXT_NotInsideABusDriverVehicle);
+
+			// Check if the player is inside a valid busdriver vehicle
+			if (vModel == VehicleCoach) 
+				// Check if the player has acquired a busdriver license
+				if (APlayerData[playerid][BusLicense] == 1)
+					ShowPlayerDialog(playerid, DialogBusJobMethod, DIALOG_STYLE_LIST, "Select method:", "Choose your own busroute\r\nAuto assigned busroute", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+				else
+					// Start a random job
+					BusDriver_StartJob(playerid, random(sizeof(ABusRoutes)));
+			else
+				SendClientMessage(playerid, COLOR_RED, TXT_NotInsideABusDriverVehicle);
+		}
+
+		case ClassPilot:
+		{
+			// Check if the player is the driver of a vehicle
+			if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+				return SendClientMessage(playerid, COLOR_RED, TXT_NotInsideAPilotVehicle);
+
+			// Check if the player is inside a valid piloting vehicle
+			switch (vModel)
+			{
+				case VehicleShamal, VehicleNevada, VehicleMaverick, VehicleCargobob: // Plane (Shamal), Plane (Nevada), helicopter (Maverick)
+				Pilot_StartRandomJob(playerid); // Start a random piloting job
+				default: SendClientMessage(playerid, COLOR_RED, TXT_NotInsideAPilotVehicle);
+			}
+		}
+
+		case ClassMafia:
+		{
+			// Check if the player is the driver of a vehicle
+			if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+				return SendClientMessage(playerid, COLOR_RED, TXT_NotInsideAMafiaVehicle);
+
+			// Check if the player is inside a valid piloting vehicle
+			switch (vModel)
+			{
+				case VehicleSandKing, VehicleMoonbeam: // Sangking, Moonbeam
+				Mafia_StartRandomJob(playerid); // Start a random mafia job
+				default: SendClientMessage(playerid, COLOR_RED, TXT_NotInsideAMafiaVehicle);
+			}
+		}
+
+		case ClassCourier:
+		{
+			// Check if the player is the driver of a vehicle
+			if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+				return SendClientMessage(playerid, COLOR_RED, TXT_NotInsideACourierVehicle);
+
+			// Check if the player is inside a valid courier vehicle
+			switch (vModel)
+			{
+				case VehicleBurrito, VehicleFaggio, VehicleBenson: // Van (Burrito), bike (Faggio)
+				Courier_StartJob(playerid); // Start a random courier job
+				default: SendClientMessage(playerid, COLOR_RED, TXT_NotInsideACourierVehicle);
+			}
+		}
+
+		case ClassRoadWorker:
+		{
+			// Check if the player is the driver of a vehicle
+			if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+				return SendClientMessage(playerid, COLOR_RED, TXT_NotInsideARoadWorkerVehicle);
+
+			// Check if the player is inside a valid courier vehicle
+			switch (vModel)
+			{
+				case VehicleUtilityVan, VehicleTowTruck: // Utility Van, Towtruck
+				Roadworker_StartRandomJob(playerid); // Start a random roadworker job
+				default: SendClientMessage(playerid, COLOR_RED, TXT_NotInsideARoadWorkerVehicle);
+			}
+		}
+		default: return 0;
 	}
-	else
-	    return 0;
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Stops the current job
 COMMAND:stopwork(playerid, params[])
