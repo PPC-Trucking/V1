@@ -1081,7 +1081,7 @@ COMMAND:stopwork(playerid, params[])
 
 	// by Chat Message
 	format(Message, sizeof(Message), TXT_FailedMissionCM, PRICE_FAILED_JOB);
-	SendClientMessage(playerid, COLOR_, Message);
+	SendClientMessage(playerid, COLOR_WHITE, Message);
 
 	// Finally reduce the expensive costs
 	RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
