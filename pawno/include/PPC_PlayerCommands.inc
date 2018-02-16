@@ -1072,10 +1072,18 @@ COMMAND:stopwork(playerid, params[])
 		default: return 0;
 	}
 
+	// Construct message and inform player that he has to pay
+	// for the expenses as he failed to do his job
+	
+	// by GameText
 	format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
-	// Inform the player that he failed the mission
 	GameTextForPlayer(playerid, Message, 5000, 4);
-	// Reduce the player's cash
+
+	// by Chat Message
+	format(Message, sizeof(Message), TXT_FailedMissionCM, PRICE_FAILED_JOB);
+	SendClientMessage(playerid, COLOR_, Message);
+
+	// Finally reduce the expensive costs
 	RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 
 	// Let the server know that this was a valid command

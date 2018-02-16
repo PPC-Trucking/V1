@@ -131,6 +131,7 @@
 // Job related, for all classes
 #define TXT_RewardJob "{00FF00}You finished the mission and earned $%i"
 #define TXT_FailedMission "~w~You ~r~failed~w~ your mission. You lost ~y~$%i~w~ to cover expenses." // Define game-text when player fails a mission
+#define TXT_FailedMissionCM "You {FF0000}failed{FFFFFF} your mission. You lost {FFFF00}$%i{FFFFFF} to cover expenses." // Define game-text when player fails a mission (Chat Message)
 
 // Class related
 #define TXT_ClassTrucker "Truck Driver" // Define the game-text that shows when the player is choosing classes (this one = trucker)
