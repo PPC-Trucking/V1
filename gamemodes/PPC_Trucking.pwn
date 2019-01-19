@@ -3,7 +3,11 @@
 
 #pragma unused ret_memcpy
 
-
+#if __Pawn >= 0x0400
+   #error This script does not support PAWN 4.0
+#elseif __Pawn < 0x0300
+   #error This script does not support PAWN 2.0/1.0
+#endif
 
 // ********************************************************************************************************************
 // Set default gamemode name
