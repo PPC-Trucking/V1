@@ -2,7 +2,7 @@
 COMMAND:me(playerid,params[])
 {
 	// Setup local variables
-	new Msg[128], Message[128], Name[24];
+	new Msg[128], Message[128], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/me", params);
@@ -35,7 +35,7 @@ COMMAND:me(playerid,params[])
 COMMAND:pm(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Message[128], Msg1[128], Msg2[128], YourName[24], OtherPlayerName[24];
+	new OtherPlayer, Message[128], Msg1[128], Msg2[128], YourName[MAX_PLAYER_NAME], OtherPlayerName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/pm", params);
@@ -1341,7 +1341,7 @@ COMMAND:boat(playerid, params[])
 // Jail a player
 COMMAND:jail(playerid, params[])
 {
-	new PlayerToJail, JailTime, Reason[128], Msg[128], Name[24], AdminName[24];
+	new PlayerToJail, JailTime, Reason[128], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/jail", params);
@@ -1386,7 +1386,7 @@ COMMAND:jail(playerid, params[])
 // Warn a player
 COMMAND:warn(playerid, params[])
 {
-	new PlayerToWarn, Reason[128], ReasonMsg[128], Name[24];
+	new PlayerToWarn, Reason[128], ReasonMsg[128], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/warn", params);
@@ -1447,7 +1447,7 @@ COMMAND:warn(playerid, params[])
 // Kicks a player with a reason
 COMMAND:kick(playerid, params[])
 {
-	new PlayerToKick, Reason[128], ReasonMsg[128], Name[24];
+	new PlayerToKick, Reason[128], ReasonMsg[128], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/kick", params);
@@ -1489,7 +1489,7 @@ COMMAND:kick(playerid, params[])
 COMMAND:ban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, Days, Hours, Reason[128], TotalBanTime, Msg[128], Name[24], AdminName[24];
+	new PlayerToBan, Days, Hours, Reason[128], TotalBanTime, Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/ban", params);
@@ -1561,7 +1561,7 @@ COMMAND:ban(playerid, params[])
 COMMAND:unban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToUnban[24], Msg[128], Name[24];
+	new PlayerToUnban[MAX_PLAYER_NAME], Msg[128], Name[MAX_PLAYER_NAME];
 	new file[100], File:PFile, LineForFile[100];
 
 	// Send the command to all admins so they can see it
@@ -1824,7 +1824,7 @@ COMMAND:port(playerid, params[])
 COMMAND:tele(playerid, params[])
 {
 	// Setup local variables
-	new Player1, Player2, Float:x, Float:y, Float:z, PortMsg[128], IntID, WorldID, Name[24], AdminName[24];
+	new Player1, Player2, Float:x, Float:y, Float:z, PortMsg[128], IntID, WorldID, Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/tele", params);
@@ -1939,7 +1939,7 @@ COMMAND:portvehicle(playerid, params[])
 COMMAND:setlevel(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Level, Msg[128], Name[24], AdminName[24], OldLevel;
+	new OtherPlayer, Level, Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], OldLevel;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setlevel", params);
@@ -2302,7 +2302,7 @@ COMMAND:weather(playerid, params[])
 COMMAND:admins(playerid, params[])
 {
 	// Setup local variables
-	new AdminList[500], Name[24];
+	new AdminList[500], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/admins", params);
@@ -2371,7 +2371,7 @@ COMMAND:cmds(playerid, params[])
 COMMAND:convoy(playerid, params[])
 {
 	// Setup local variables
-	new ConvoyList[750], Name[24], NumMembers, ConvoyStatus[10];
+	new ConvoyList[750], Name[MAX_PLAYER_NAME], NumMembers, ConvoyStatus[10];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoy", params);
@@ -2423,7 +2423,7 @@ COMMAND:convoy(playerid, params[])
 COMMAND:convoykick(playerid, params[])
 {
 	// Setup local variables
-	new Convoy, LeaderID, OtherPlayer, LeaderName[24], MemberName[24], Msg[128];
+	new Convoy, LeaderID, OtherPlayer, LeaderName[MAX_PLAYER_NAME], MemberName[MAX_PLAYER_NAME], Msg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoykick", params);
@@ -2547,7 +2547,7 @@ COMMAND:convoycancel(playerid, params[])
 COMMAND:convoymembers(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], MemberList[1000], Convoy;
+	new Name[MAX_PLAYER_NAME], MemberList[1000], Convoy;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoymembers", params);
@@ -2791,7 +2791,7 @@ COMMAND:delcamera(playerid, params[])
 COMMAND:get(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Float:x, Float:y, Float:z, PortMsg[128], IntID, WorldID, Name[24];
+	new OtherPlayer, Float:x, Float:y, Float:z, PortMsg[128], IntID, WorldID, Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/get", params);
@@ -2969,7 +2969,7 @@ COMMAND:cleanupvehicle(playerid, params[])
 COMMAND:assist(playerid, params[])
 {
 	// Setup local variables
-	new bool:AssistOnline = false, Msg[128], Name[24];
+	new bool:AssistOnline = false, Msg[128], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/assist", params);
@@ -3068,7 +3068,7 @@ COMMAND:nos(playerid, params[])
 COMMAND:spec(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Name[24], Msg[128], Float:x, Float:y, Float:z, Float:angle;
+	new OtherPlayer, Name[MAX_PLAYER_NAME], Msg[128], Float:x, Float:y, Float:z, Float:angle;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/spec", params);
@@ -3467,7 +3467,7 @@ COMMAND:gobus(playerid, params[])
 COMMAND:mute(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], Reason[128], OtherPlayer;
+	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[128], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/mute", params);
@@ -3522,7 +3522,7 @@ COMMAND:mute(playerid, params[])
 COMMAND:unmute(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], OtherPlayer;
+	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unmute", params);
@@ -3577,7 +3577,7 @@ COMMAND:unmute(playerid, params[])
 COMMAND:muted(playerid, params[])
 {
 	// Setup local variables
-	new PlayerList[1000], Name[24];
+	new PlayerList[1000], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/muted", params);
@@ -3624,7 +3624,7 @@ COMMAND:muted(playerid, params[])
 COMMAND:freeze(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], Reason[128], OtherPlayer, Duration;
+	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[128], OtherPlayer, Duration;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/freeze", params);
@@ -3675,7 +3675,7 @@ COMMAND:freeze(playerid, params[])
 COMMAND:unfreeze(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], OtherPlayer;
+	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unfreeze", params);
@@ -3729,7 +3729,7 @@ COMMAND:unfreeze(playerid, params[])
 COMMAND:givecash(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], OtherName[24], OtherPlayer, Money;
+	new Msg[128], Name[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME], OtherPlayer, Money;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/givecash", params);
@@ -3866,7 +3866,7 @@ COMMAND:createspike(playerid, params[])
 COMMAND:eject(playerid, params[])
 {
 	// Setup local variables
-	new DriverName[24], Msg[128], OtherPlayer, OtherPlayerName[24];
+	new DriverName[MAX_PLAYER_NAME], Msg[128], OtherPlayer, OtherPlayerName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/eject", params);
@@ -3923,7 +3923,7 @@ COMMAND:eject(playerid, params[])
 COMMAND:radio(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], Msg[128], Message[128], ClassName[24];
+	new Name[MAX_PLAYER_NAME], Msg[128], Message[128], ClassName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/radio", params);
@@ -3981,7 +3981,7 @@ COMMAND:radio(playerid, params[])
 COMMAND:achat(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], Msg[128], Message[128];
+	new Name[MAX_PLAYER_NAME], Msg[128], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/achat", params);
@@ -4028,7 +4028,7 @@ COMMAND:achat(playerid, params[])
 COMMAND:clamp(playerid, params[])
 {
 	// Setup local variables
-	new vid, Reason[128], HouseID, HouseOwner, Name[24], AdminName[24], Msg[128];
+	new vid, Reason[128], HouseID, HouseOwner, Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Msg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/clamp", params);
@@ -4206,7 +4206,7 @@ COMMAND:rules(playerid, params[])
 COMMAND:report(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Name[24], Reason[128], Msg[128];
+	new OtherPlayer, Name[MAX_PLAYER_NAME], Reason[128], Msg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/report", params);
@@ -4289,7 +4289,7 @@ COMMAND:rep(playerid, params[])
 COMMAND:overload(playerid, params[])
 {
 	// Setup local variables
-	new vModel, bool:ValidOverLoad = false, Float:x, Float:y, Float:z, Name[24], Msg[128];
+	new vModel, bool:ValidOverLoad = false, Float:x, Float:y, Float:z, Name[MAX_PLAYER_NAME], Msg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/overload", params);
@@ -4376,7 +4376,7 @@ COMMAND:overload(playerid, params[])
 COMMAND:resetplayer(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], AdminName[24], Reason[128], Msg[128], OtherPlayer, ClearMoney, ClearScore, ClearStats;
+	new Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[128], Msg[128], OtherPlayer, ClearMoney, ClearScore, ClearStats;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/resetplayer", params);
@@ -4467,7 +4467,7 @@ COMMAND:resetplayer(playerid, params[])
 COMMAND:fixplayer(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], AdminName[24], Msg[128], OtherPlayer;
+	new Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Msg[128], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/fixplayer", params);
@@ -4546,7 +4546,7 @@ COMMAND:fixplayer(playerid, params[])
 COMMAND:setskin(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], AdminName[24], OtherName[24], OtherPlayer, Skin;
+	new Msg[128], AdminName[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME], OtherPlayer, Skin;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setskin", params);
@@ -4602,7 +4602,7 @@ COMMAND:setskin(playerid, params[])
 COMMAND:ipban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, Reason[128], Msg[128], Name[24], AdminName[24];
+	new PlayerToBan, Reason[128], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/ipban", params);
@@ -4653,7 +4653,7 @@ COMMAND:ipban(playerid, params[])
 COMMAND:rangeban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, PlayerIP[16], FirstPartsOfIP[16], BanCmd[24], Reason[128], Msg[128], Name[24], AdminName[24];
+	new PlayerToBan, PlayerIP[16], FirstPartsOfIP[16], BanCmd[24], Reason[128], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/rangeban", params);
@@ -4715,7 +4715,7 @@ COMMAND:rangeban(playerid, params[])
 COMMAND:setscore(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], OtherName[24], OtherPlayer, pScore;
+	new Msg[128], Name[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME], OtherPlayer, pScore;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setscore", params);
@@ -4765,7 +4765,7 @@ COMMAND:setscore(playerid, params[])
 COMMAND:setcash(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], OtherName[24], OtherPlayer, pMoney;
+	new Msg[128], Name[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME], OtherPlayer, pMoney;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setcash", params);
@@ -4815,7 +4815,7 @@ COMMAND:setcash(playerid, params[])
 COMMAND:bank(playerid, params[])
 {
 	// Setup local variables
-	new file[100], Name[24];
+	new file[100], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/bank", params);
@@ -4958,7 +4958,7 @@ COMMAND:bonus(playerid, params[])
 COMMAND:givelicense(playerid,params[])
 {
 	// Setup local variables
-	new OtherPlayer, Msg[128], Name[24], OtherName[24];
+	new OtherPlayer, Msg[128], Name[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/givelicense", params);
