@@ -1,27 +1,28 @@
 // This is just a joke command
-COMMAND:me(playerid,params[])
+COMMAND:me(playerid, params[])
 {
-	// Setup local variables
-	new Msg[128], Message[128], Name[MAX_PLAYER_NAME];
-
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/me", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/me <Action>\"");
+		// Setup local variables
+		new Message[MAX_STRING];
+		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: /me <Action>");
 		else
 		{
+			// Setup local variables
+			new Msg[MAX_STRING], Name[MAX_PLAYER_NAME];
 		    // Check if the player isn't muted
 		    if (APlayerData[playerid][Muted] == false)
 		    {
 				GetPlayerName(playerid, Name, sizeof(Name));
-				format(Msg, sizeof(Msg), "* %s %s", Name, Message);
+				format(Msg, sizeof Msg, "* %s %s", Name, Message);
 				SendClientMessageToAll(COLOR_YELLOW, Msg);
 			}
 			else
-			    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You are still muted");
+			    SendClientMessage(playerid, COLOR_RED, "You are still muted");
 		}
 	}
 	else
