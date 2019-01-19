@@ -409,6 +409,7 @@ public OnPlayerDisconnect(playerid, reason)
 		APlayerData[playerid][RentedVehicleID] = 0;
 	}
 
+   SendDeathMessage(INVALID_PLAYER_ID, playerid, 201); // 201 = DEATHMESSAGE_DISCONNECT
 	return 1;
 }
 
