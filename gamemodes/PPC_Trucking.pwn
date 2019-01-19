@@ -3,6 +3,8 @@
 
 #pragma unused ret_memcpy
 
+#pragma semicolon 1
+
 #if __Pawn >= 0x0400
    #error This script does not support PAWN 4.0
 #elseif __Pawn < 0x0300
