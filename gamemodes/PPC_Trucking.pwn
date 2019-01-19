@@ -103,7 +103,7 @@ public OnGameModeInit()
 
 	Convoys_Init(); // Setup textdraws and default data for convoys
 
-	ShowPlayerMarkers(1); // Show players on the entire map (and on the radar)
+	ShowPlayerMarkers(PLAYER_MARKERS_MODE_GLOBAL); // Show players on the entire map (and on the radar)
 	ShowNameTags(1); // Show player names (and health) above their head
 	ManualVehicleEngineAndLights(); // Let the server control the vehicle's engine and lights
 	EnableStuntBonusForAll(0); // Disable stunt bonus for all players
@@ -138,6 +138,8 @@ public OnPlayerConnect(playerid)
 	// Always allow NPC's to login without password or account
 	if (IsPlayerNPC(playerid))
 		return 1;
+
+   SendDeathMessage(INVALID_PLAYER_ID, playerid, 200); // 200 = DEATHMESSAGE_CONNECT
 
 	// Setup local variables
 	new Name[MAX_PLAYER_NAME], NewPlayerMsg[128], HouseID;
