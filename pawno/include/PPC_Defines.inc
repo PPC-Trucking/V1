@@ -240,6 +240,9 @@
 #define ADMIN_SPEC_TYPE_VEHICLE 2
 
 
+// Define strings
+#define MAX_STRING 128
+
 
 // Create some global variables that are used to display large dialogs
 new DialogMsg5000[5000];
