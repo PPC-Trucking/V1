@@ -1181,32 +1181,23 @@ COMMAND:setwanted(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setwanted", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 2
-		if (APlayerData[playerid][PlayerLevel] >= 2)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 2)
+		return 0;
+
+	// Check if given player is not online
+	if (!IsPlayerConnected(OtherPlayer))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
+
+	if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setwanted <Player> <Stars (0-6)>\"");
+	else
+		if ((Stars >= 0) && (Stars <= 6))
 		{
-			if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setwanted <Player> <Stars (0-6)>\"");
-			else
-				if (IsPlayerConnected(OtherPlayer)) // If the player is a valid playerid (he's connected)
-				{
-					if ((Stars >= 0) && (Stars <= 6))
-					{
-						SetPlayerWantedLevel(OtherPlayer, Stars);
-						SendClientMessage(OtherPlayer, COLOR_BLUE, "Your wanted level has been set by an admin");
-					}
-					else
-						SendClientMessage(playerid, COLOR_RED, "Invalid wanted level, you can only use 0-6");
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
+			SetPlayerWantedLevel(OtherPlayer, Stars);
+			SendClientMessage(OtherPlayer, COLOR_BLUE, "Your wanted level has been set by an admin");
 		}
 		else
-		    return 0;
-	}
-	else
-	    return 0;
+			return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
 
 	// Let the server know that this was a valid command
 	return 1;

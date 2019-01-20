@@ -215,6 +215,8 @@
 #define TXT_NotInsideAMafiaVehicle "You need to be the driver of a mafia vehicle to start a job."
 #define TXT_NotInsideACourierVehicle "You need to be the driver of a courier vehicle to start a job."
 #define TXT_NotInsideARoadWorkerVehicle "You need to be the driver of a roadworker vehicle to start a job."
+#define TXT_InvalidWantedLevel "You have entered an invalid wanted level. Only 0-6 are possible."
+
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
