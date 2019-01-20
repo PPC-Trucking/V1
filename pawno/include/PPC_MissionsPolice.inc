@@ -248,14 +248,7 @@ public UnjailPlayer(playerid)
 	// Check if the player is allowed to leave yet
 	if (APlayerData[playerid][PlayerJailed] == 0)
 	{
-		// Set the player in the normal world
-		SetPlayerVirtualWorld(playerid, 0);
-		// Set player interior to the outside
-		SetPlayerInterior(playerid, 0);
-		// Put the player outside the jail (he should spawn at the location where he spawned after login or after choosing a rescue-point)
-		SpawnPlayer(playerid);
-		// Also, kill the jailtimer
-		KillTimer(APlayerData[playerid][PlayerJailedTimer]);
+		ReleasePlayerFromJail(playerid);
 	}
 	else
 	{
@@ -426,3 +419,16 @@ Police_SendMessage(PoliceMessage[])
 				SendClientMessage(PoliceID, COLOR_WHITE, PoliceMessage); // Send the message to the police player
 }
 
+// This function releases the player from jail and
+// spawns him immediately (used for Unjail timer and /unjail)
+ReleasePlayerFromJail(playerid)
+{
+	// Set the player in the normal world
+	SetPlayerVirtualWorld(playerid, 0);
+	// Set player interior to the outside
+	SetPlayerInterior(playerid, 0);
+	// Put the player outside the jail (he should spawn at the location where he spawned after login or after choosing a rescue-point)
+	SpawnPlayer(playerid);
+	// Also, kill the jailtimer
+	KillTimer(APlayerData[playerid][PlayerJailedTimer]);
+}

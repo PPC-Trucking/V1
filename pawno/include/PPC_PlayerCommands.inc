@@ -1366,6 +1366,52 @@ COMMAND:jail(playerid, params[])
 
 
 
+// Unjail a player
+COMMAND:unjail(playerid, params[])
+{
+	new PlayerToUnjail, Msg[128], Name[24], AdminName[24];
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/unjail", params);
+
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	if (sscanf(params, "ui", PlayerToUnjail))
+	{
+		format(Msg, sizeof(Msg), TXT_SscanfFailedUsuage, "/unjail <Player>");
+		return SendClientMessage(playerid, COLOR_RED, Msg);
+	}
+
+	// Check if given player is not online
+	if (!IsPlayerConnected(PlayerToUnjail))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
+
+	// Check if given player is jailed
+	if (APlayerData[PlayerToUnjail][PlayerJailed] == 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotJailed);
+
+	// Release player from jail
+	ReleasePlayerFromJail(PlayerToUnjail);
+	// Get the name of the player who unjailed the player
+	GetPlayerName(playerid, AdminName, sizeof(AdminName));
+	// Get the name of the unjailed player
+	GetPlayerName(PlayerToUnjail, Name, sizeof(Name));
+	// Send the jailed player a message who jailed him, why he's been jailed and how long
+	format(Msg, sizeof(Msg), TXT_UnJailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	SendClientMessage(PlayerToUnjail, COLOR_GREEN, Msg);
+
+	// Send confirmation about unjailed player to Admin
+	format(Msg, sizeof(Msg), TXT_UnJailedByAdminConfirmation, Name);
+	SendClientMessage(playerid, COLOR_WHITE, Msg);
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
+
+
 // Warn a player
 COMMAND:warn(playerid, params[])
 {

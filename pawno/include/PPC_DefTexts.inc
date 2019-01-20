@@ -217,9 +217,12 @@
 #define TXT_NotInsideARoadWorkerVehicle "You need to be the driver of a roadworker vehicle to start a job."
 #define TXT_InvalidWantedLevel "You have entered an invalid wanted level. Only 0-6 are possible."
 #define TXT_PlayerAlreadyJailed "That player has been jailed already."
+#define TXT_PlayerNotJailed "That player is not in jail."
 #define TXT_JailedByAdmin "You have been jailed by %s %s for %i seconds."
+#define TXT_UnJailedByAdmin "You have been un-jailed by %s %s."
 #define TXT_JailedByAdminReason "Reason: %s"
 #define TXT_JailedByAdminConfirmation "You have jailed {FFFF00}%s{00FF00} for {FFFF00}%i{00FF00} seconds."
+#define TXT_UnJailedByAdminConfirmation "You have un-jailed {FFFF00}%s."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
