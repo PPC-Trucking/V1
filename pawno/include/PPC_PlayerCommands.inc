@@ -1185,19 +1185,21 @@ COMMAND:setwanted(playerid, params[])
 	if (APlayerData[playerid][PlayerLevel] < 2)
 		return 0;
 
+	if (sscanf(params, "ui", OtherPlayer, Stars))
+	{
+		format(Msg, sizeof(Msg), TXT_SscanfFailedUsuage, "/setwanted <Player> <Stars (0-6)>");
+		return SendClientMessage(playerid, COLOR_RED, Msg);
+	}
+
 	// Check if given player is not online
 	if (!IsPlayerConnected(OtherPlayer))
 		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
 
-	if (sscanf(params, "ui", OtherPlayer, Stars)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setwanted <Player> <Stars (0-6)>\"");
-	else
-		if ((Stars >= 0) && (Stars <= 6))
-		{
-			SetPlayerWantedLevel(OtherPlayer, Stars);
-			SendClientMessage(OtherPlayer, COLOR_BLUE, "Your wanted level has been set by an admin");
-		}
-		else
-			return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
+	if ((Stars < 0) || (Stars > 6))
+		return SendClientMessage(playerid, COLOR_RED, TXT_InvalidWantedLevel);
+
+	SetPlayerWantedLevel(OtherPlayer, Stars);
+	SendClientMessage(OtherPlayer, COLOR_BLUE, "Your wanted level has been set by an admin");
 
 	// Let the server know that this was a valid command
 	return 1;
