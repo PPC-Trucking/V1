@@ -1211,28 +1211,16 @@ COMMAND:bike(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/bike", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			// Make sure the player isn't inside a vehicle
-			if (GetPlayerVehicleID(playerid) == 0)
-			{
-				// Ask which motorcycle the player wants to have
-				ShowPlayerDialog(playerid, DialogBike, DIALOG_STYLE_LIST, "Choose a motorcycle:", "Bike\r\nBMX\r\nMountain Bike\r\nFaggio\r\nPizzaboy\r\nBF-400\r\nNRG-500\r\nPCJ-600\r\nFCR-900\r\nFreeway\r\nWayfarer\r\nSanchez\r\nQuad", "Spawn", TXT_DialogButtonCancel);
-				// Let the server know that this was a valid command
-				return 1;
-			}
-			else
-				SendClientMessage(playerid, COLOR_RED, "You must be on foot to use this command");
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	// Check if player is not on foot
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	// Ask which motorcycle the player wants to have
+	ShowPlayerDialog(playerid, DialogBike, DIALOG_STYLE_LIST, "Choose a motorcycle:", "Bike\r\nBMX\r\nMountain Bike\r\nFaggio\r\nPizzaboy\r\nBF-400\r\nNRG-500\r\nPCJ-600\r\nFCR-900\r\nFreeway\r\nWayfarer\r\nSanchez\r\nQuad", "Spawn", TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
