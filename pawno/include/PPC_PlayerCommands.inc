@@ -1098,40 +1098,34 @@ COMMAND:loc(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/loc", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-		    // Setup some local variables
-			new Message[200], Float:x, Float:y, Float:z, Float:rot, Interior, World;
-			// Get the player's position
-			GetPlayerPos(playerid, x, y, z);
-			// Check if the player is on foot or in a vehicle
-			if (GetPlayerVehicleSeat(playerid) == -1)
-				GetPlayerFacingAngle(playerid, rot); // Get the player's angle
-			else
-			    GetVehicleZAngle(GetPlayerVehicleID(playerid), rot);
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 3)
+		return 0;
 
-			// Get the interior where the player is located
-			Interior = GetPlayerInterior(playerid);
-			// Get the virtual world of the player
-			World = GetPlayerVirtualWorld(playerid);
-			// combine the position and angle into a proper message
-		    format(Message, sizeof(Message), "Location: X=%4.2f, Y=%4.2f, Z=%4.2f, rotation=%4.2f, interior=%i, world=%i", x, y, z, rot, Interior, World);
-		    // Send the message with the coordinates and the angle of the player
-			SendClientMessage(playerid, COLOR_RED, Message);
-		}
-		else
-		    return 0;
-	}
+	// Setup some local variables
+	new Message[200], Float:x, Float:y, Float:z, Float:rot, Interior, World;
+	// Get the player's position
+	GetPlayerPos(playerid, x, y, z);
+	// Check if the player is on foot or in a vehicle
+	if (GetPlayerVehicleSeat(playerid) == -1)
+		GetPlayerFacingAngle(playerid, rot); // Get the player's angle
 	else
-	    return 0;
+		GetVehicleZAngle(GetPlayerVehicleID(playerid), rot);
+
+	// Get the interior where the player is located
+	Interior = GetPlayerInterior(playerid);
+	// Get the virtual world of the player
+	World = GetPlayerVirtualWorld(playerid);
+	// combine the position and angle into a proper message
+	format(Message, sizeof(Message), "Location: X=%4.2f, Y=%4.2f, Z=%4.2f, rotation=%4.2f, interior=%i, world=%i", x, y, z, rot, Interior, World);
+	// Send the message with the coordinates and the angle of the player
+	SendClientMessage(playerid, COLOR_RED, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Lets the player choose where he wants to respawn (costs $200)
 COMMAND:gobase(playerid, params[])
