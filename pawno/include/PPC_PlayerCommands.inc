@@ -1176,7 +1176,7 @@ COMMAND:gobase(playerid, params[])
 // Sets the player's wanted level
 COMMAND:setwanted(playerid, params[])
 {
-	new OtherPlayer, Stars;
+	new OtherPlayer, Stars, Msg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setwanted", params);
