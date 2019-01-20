@@ -1324,42 +1324,45 @@ COMMAND:jail(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/jail", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason))
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/jail <Player> <Duration (in seconds)> <Reason>\"");
-			else
-				if (IsPlayerConnected(PlayerToJail)) // If the player is a valid playerid (he's connected)
-				{
-				    // Jail the player
-					Police_JailPlayer(PlayerToJail, JailTime);
-					// Get the name of the player who jailed the player
-					GetPlayerName(playerid, AdminName, sizeof(AdminName));
-					// Get the name of the player who's being sent to jail
-					GetPlayerName(PlayerToJail, Name, sizeof(Name));
-					// Send the jailed player a message who jailed him, why he's been jailed and how long
-					format(Msg, sizeof(Msg), "You have been jailed by %s %s for %i seconds", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, JailTime);
-					SendClientMessage(PlayerToJail, COLOR_RED, Msg);
-					format(Msg, sizeof(Msg), "Reason: %s", Reason);
-					SendClientMessage(PlayerToJail, COLOR_RED, Msg);
-					format(Msg, sizeof(Msg), "{00FF00}You have jailed {FFFF00}%s{00FF00} for {FFFF00}%i{00FF00} seconds", Name, JailTime);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
-		}
-		else
-		    return 0;
+		format(Msg, sizeof(Msg), TXT_SscanfFailedUsuage, "/jail <Player> <Duration (in seconds)> <Reason>");
+		return SendClientMessage(playerid, COLOR_RED, Msg);
 	}
-	else
-	    return 0;
+
+	// Check if given player is not online
+	if (!IsPlayerConnected(PlayerToJail))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
+
+	// Check if given player is not jailed
+	if (APlayerData[PlayerToJail][PlayerJailed] != 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerAlreadyJailed);
+
+	// Jail the player
+	Police_JailPlayer(PlayerToJail, JailTime);
+	// Get the name of the player who jailed the player
+	GetPlayerName(playerid, AdminName, sizeof(AdminName));
+	// Get the name of the player who's being sent to jail
+	GetPlayerName(PlayerToJail, Name, sizeof(Name));
+	// Send the jailed player a message who jailed him, why he's been jailed and how long
+	format(Msg, sizeof(Msg), TXT_JailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, JailTime);
+	SendClientMessage(PlayerToJail, COLOR_RED, Msg);
+	format(Msg, sizeof(Msg), TXT_JailedByAdminReason, Reason);
+	SendClientMessage(PlayerToJail, COLOR_RED, Msg);
+
+	// Send confirmation about jailed player to Admin
+	format(Msg, sizeof(Msg), TXT_JailedByAdminConfirmation, Name, JailTime);
+	SendClientMessage(playerid, COLOR_WHITE, Msg);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Warn a player
 COMMAND:warn(playerid, params[])
