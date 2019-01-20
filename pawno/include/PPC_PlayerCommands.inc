@@ -1393,6 +1393,7 @@ COMMAND:unjail(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotJailed);
 
 	// Release player from jail
+	APlayerData[playerid][PlayerJailed] = 0;
 	ReleasePlayerFromJail(PlayerToUnjail);
 	// Get the name of the player who unjailed the player
 	GetPlayerName(playerid, AdminName, sizeof(AdminName));
