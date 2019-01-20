@@ -198,6 +198,8 @@
 #define TXT_VehicleParked "You have parked your vehicle."
 #define TXT_CarDealerNotInRange "You are not close to a car dealer."
 #define TXT_MustBeInnocent "You must be innocent (no wanted level) to use this command."
+#define TXT_CmdOnlyIfNotDoingAJob "You can not use this command while doing a job."
+#define TXT_CmdOnlyIfNotJailed "You can not use this command when you are in jail."
 #define TXT_NoTrailerAttached "There is no trailer attached to this vehicle."
 #define TXT_TrailerDetached "You have detached the trailer."
 #define TXT_VehicleFlipped "You have flipped the vehicle."

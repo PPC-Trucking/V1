@@ -1132,58 +1132,46 @@ COMMAND:gobase(playerid, params[])
 {
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/gobase", params);
-	
-	if (GetPlayerState(playerid) == PLAYER_STATE_WASTED || GetPlayerState(playerid) == PLAYER_STATE_NONE)
-        return 0;
-	
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+
+	// Check if player is not on foot
+	//
+	// Make sure you can't use "/gobase" when you're inside a vehicle (doesn't respawn you at the requested coords
+	// and puts a random item (bottle, sigarette, ...) in the player's hands
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeOnFoot);
+
+	// Check if player has a wanted level
+	if (GetPlayerWantedLevel(playerid) != 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeInnocent);
+
+	// Check if player is not doing a job
+	if (APlayerData[playerid][JobStarted] != false)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyIfNotDoingAJob);
+
+	// Check if player is not jailed
+	if (APlayerData[playerid][PlayerJailed] != 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyIfNotJailed);
+
+	// Create a dialog based on the player's class
+	switch (APlayerData[playerid][PlayerClass])
 	{
-		// Check if the player has a wanted level of less than 3
-		if (GetPlayerWantedLevel(playerid) < 3)
-		{
-			// Check if the player isn't in jail
-			if (APlayerData[playerid][PlayerJailed] == 0)
-			{
-				if (APlayerData[playerid][JobStarted] == false)
-				{
-					// Make sure you can't use "/gobase" when you're inside a vehicle (doesn't respawn you at the requested coords
-					// and puts a random item (bottle, sigarette, ...) in the player's hands
-					if (GetPlayerVehicleID(playerid) == 0)
-					{
-					    // Create a dialog based on the player's class
-						switch (APlayerData[playerid][PlayerClass])
-						{
-							case ClassTruckDriver: // Ask where the trucker player wants to respawn
-								ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose trucker spawn point:", "Fallen Tree Depot\r\nFlint Trucking Depot\r\nLVA Freight Depot\r\nDoherty Depot\r\nEl Corona Depot\r\nLas Payasdas Depot\r\nQuarry Top\r\nShady Creek Depot", "Spawn", TXT_DialogButtonCancel);
-							case ClassBusDriver: // Ask where the busdriver wants to respawn
-								ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose busdriver spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
-							case ClassPilot: // Ask where the pilot wants to respawn
-								ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose pilot spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
-							case ClassPolice: // Ask where the police player wants to respawn
-								ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose police spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
-							case ClassCourier: // Ask where the courier player wants to respawn
-								ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose courier spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
-						}
-					}
-					else
-						SendClientMessage(playerid, COLOR_RED, "You cannot use '/gobase' when you're inside a vehicle"); // "/gobase" doesn't work inside a vehicle
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "You cannot use gobase when doing a job"); // "/gobase" doesn't work during a job
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobase when you're in jail");
-		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You cannot use /gobase when you're wanted");
+		case ClassTruckDriver: // Ask where the trucker player wants to respawn
+			ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose trucker spawn point:", "Fallen Tree Depot\r\nFlint Trucking Depot\r\nLVA Freight Depot\r\nDoherty Depot\r\nEl Corona Depot\r\nLas Payasdas Depot\r\nQuarry Top\r\nShady Creek Depot", "Spawn", TXT_DialogButtonCancel);
+		case ClassBusDriver: // Ask where the busdriver wants to respawn
+			ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose busdriver spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
+		case ClassPilot: // Ask where the pilot wants to respawn
+			ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose pilot spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
+		case ClassPolice: // Ask where the police player wants to respawn
+			ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose police spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
+		case ClassCourier: // Ask where the courier player wants to respawn
+			ShowPlayerDialog(playerid, DialogRescue, DIALOG_STYLE_LIST, "Choose courier spawn point:", "Los Santos\r\nSan Fierro\r\nLas Venturas", "Spawn", TXT_DialogButtonCancel);
 	}
-	else
-	    return 0;
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Sets the player's wanted level
 COMMAND:setwanted(playerid, params[])
