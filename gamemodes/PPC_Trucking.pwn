@@ -3,7 +3,8 @@
 
 #pragma unused ret_memcpy
 
-
+// Forces the compiler to use semicolons(;) to close lines
+#pragma semicolon 1
 
 // ********************************************************************************************************************
 // Set default gamemode name
