@@ -3541,15 +3541,15 @@ COMMAND:unmute(playerid, params[])
 						APlayerData[OtherPlayer][Muted] = false;
 						// Let the other player know that he has been un-muted
 						format(Msg, sizeof(Msg), "{FF0000}You have been un-muted by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, 0xFFFFFFFF, Msg);
+						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
 						// Let the admin know who he has un-muted
 						format(Msg, sizeof(Msg), "{00FF00}You have un-muted {FFFF00}%s", Name);
-						SendClientMessage(playerid, 0xFFFFFFFF, Msg);
+						SendClientMessage(playerid, COLOR_WHITE, Msg);
 						// Save the player-stats
 						PlayerFile_Save(OtherPlayer);
 					}
 					else
-						SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player is not muted");
+						SendClientMessage(playerid, COLOR_RED, "That player is not muted");
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -4691,7 +4691,7 @@ COMMAND:rangeban(playerid, params[])
 					SendClientMessageToAll(COLOR_WHITE, Msg);
 				}
 				else
-					SendClientMessage(playerid, 0xFFFFFFFF, "{FF0000}That player isn't online");
+					SendClientMessage(playerid, COLOR_RED, "That player isn't online");
 			}
 		}
 		else
@@ -5016,7 +5016,7 @@ COMMAND:announce(playerid, params[])
 		// Check if the player's admin-level is at least 2
 		if(APlayerData[playerid][PlayerLevel] >= 2)
 		{
-			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, 0xFF0000AA, "Usage: \"/announce <Style (0-6)> <Time in Seconds 1-5> <Message>\"");
+			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/announce <Style (0-6)> <Time in Seconds 1-5> <Message>\"");
 			else
 			{
 				if ((Style >= 0) && (Style <= 6) && 2 != Style)
