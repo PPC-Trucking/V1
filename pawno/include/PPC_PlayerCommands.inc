@@ -1176,7 +1176,7 @@ COMMAND:gobase(playerid, params[])
 // Sets the player's wanted level
 COMMAND:setwanted(playerid, params[])
 {
-	new OtherPlayer, Stars, Msg[128];
+	new OtherPlayer, Stars, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setwanted", params);
@@ -1187,8 +1187,8 @@ COMMAND:setwanted(playerid, params[])
 
 	if (sscanf(params, "ui", OtherPlayer, Stars))
 	{
-		format(Msg, sizeof(Msg), TXT_SscanfFailedUsuage, "/setwanted <Player> <Stars (0-6)>");
-		return SendClientMessage(playerid, COLOR_RED, Msg);
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/setwanted <Player> <Stars (0-6)>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
 	// Check if given player is not online
@@ -1321,7 +1321,7 @@ COMMAND:boat(playerid, params[])
 // Jail a player
 COMMAND:jail(playerid, params[])
 {
-	new PlayerToJail, JailTime, Reason[128], Msg[128], Name[24], AdminName[24];
+	new PlayerToJail, JailTime, Reason[128], Message[128], Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/jail", params);
@@ -1332,8 +1332,8 @@ COMMAND:jail(playerid, params[])
 
 	if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason))
 	{
-		format(Msg, sizeof(Msg), TXT_SscanfFailedUsuage, "/jail <Player> <Duration (in seconds)> <Reason>");
-		return SendClientMessage(playerid, COLOR_RED, Msg);
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/jail <Player> <Duration (in seconds)> <Reason>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
 	// Check if given player is not online
@@ -1351,14 +1351,14 @@ COMMAND:jail(playerid, params[])
 	// Get the name of the player who's being sent to jail
 	GetPlayerName(PlayerToJail, Name, sizeof(Name));
 	// Send the jailed player a message who jailed him, why he's been jailed and how long
-	format(Msg, sizeof(Msg), TXT_JailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, JailTime);
-	SendClientMessage(PlayerToJail, COLOR_RED, Msg);
-	format(Msg, sizeof(Msg), TXT_GivenReason, Reason);
-	SendClientMessage(PlayerToJail, COLOR_RED, Msg);
+	format(Message, sizeof(Message), TXT_JailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, JailTime);
+	SendClientMessage(PlayerToJail, COLOR_RED, Message);
+	format(Message, sizeof(Message), TXT_GivenReason, Reason);
+	SendClientMessage(PlayerToJail, COLOR_RED, Message);
 
 	// Send confirmation about jailed player to Admin
-	format(Msg, sizeof(Msg), TXT_JailedByAdminConfirmation, Name, JailTime);
-	SendClientMessage(playerid, COLOR_WHITE, Msg);
+	format(Message, sizeof(Message), TXT_JailedByAdminConfirmation, Name, JailTime);
+	SendClientMessage(playerid, COLOR_WHITE, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -1369,7 +1369,7 @@ COMMAND:jail(playerid, params[])
 // Unjail a player
 COMMAND:unjail(playerid, params[])
 {
-	new PlayerToUnjail, Msg[128], Name[24], AdminName[24];
+	new PlayerToUnjail, Message[128], Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unjail", params);
@@ -1380,8 +1380,8 @@ COMMAND:unjail(playerid, params[])
 
 	if (sscanf(params, "u", PlayerToUnjail))
 	{
-		format(Msg, sizeof(Msg), TXT_SscanfFailedUsuage, "/unjail <Player>");
-		return SendClientMessage(playerid, COLOR_RED, Msg);
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/unjail <Player>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
 	// Check if given player is not online
@@ -1400,12 +1400,12 @@ COMMAND:unjail(playerid, params[])
 	// Get the name of the unjailed player
 	GetPlayerName(PlayerToUnjail, Name, sizeof(Name));
 	// Send the jailed player a message who jailed him, why he's been jailed and how long
-	format(Msg, sizeof(Msg), TXT_UnJailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
-	SendClientMessage(PlayerToUnjail, COLOR_GREEN, Msg);
+	format(Message, sizeof(Message), TXT_UnJailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	SendClientMessage(PlayerToUnjail, COLOR_GREEN, Message);
 
 	// Send confirmation about unjailed player to Admin
-	format(Msg, sizeof(Msg), TXT_UnJailedByAdminConfirmation, Name);
-	SendClientMessage(playerid, COLOR_WHITE, Msg);
+	format(Message, sizeof(Message), TXT_UnJailedByAdminConfirmation, Name);
+	SendClientMessage(playerid, COLOR_WHITE, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -1475,7 +1475,7 @@ COMMAND:warn(playerid, params[])
 // Kicks a player with a reason
 COMMAND:kick(playerid, params[])
 {
-	new PlayerToKick, Reason[128], ReasonMsg[128], Name[24];
+	new PlayerToKick, Reason[128], Message[128], Name[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/kick", params);
@@ -1493,10 +1493,10 @@ COMMAND:kick(playerid, params[])
 					// Get the name of the player who warned the player
 					GetPlayerName(playerid, Name, sizeof(Name));
 					// Send the warned player a message who kicked him and why he's been kicked
-					format(ReasonMsg, sizeof(ReasonMsg), "You have been kicked by %s %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
-					SendClientMessage(PlayerToKick, COLOR_RED, ReasonMsg);
-					format(ReasonMsg, sizeof(ReasonMsg), "Reason: %s", Reason);
-					SendClientMessage(PlayerToKick, COLOR_RED, ReasonMsg);
+					format(Message, sizeof(Message), "You have been kicked by %s %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
+					SendClientMessage(PlayerToKick, COLOR_RED, Message);
+					format(Message, sizeof(Message), "Reason: %s", Reason);
+					SendClientMessage(PlayerToKick, COLOR_RED, Message);
 					// Kick the player
 					SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToKick)), false, "i", PlayerToKick);
 				}
@@ -1517,7 +1517,7 @@ COMMAND:kick(playerid, params[])
 COMMAND:ban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, Days, Hours, Reason[128], TotalBanTime, Msg[128], Name[24], AdminName[24];
+	new PlayerToBan, Days, Hours, Reason[128], TotalBanTime, Message[128], Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/ban", params);
@@ -1552,25 +1552,25 @@ COMMAND:ban(playerid, params[])
 					// Check if this is the player's maximum ban
 					if (APlayerData[PlayerToBan][Bans] == MAX_BANS)
 					{
-						format(Msg, sizeof(Msg), "You have been banned permanently by %s, this was your %ith ban", AdminName, MAX_BANS);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
+						format(Message, sizeof(Message), "You have been banned permanently by %s, this was your %ith ban", AdminName, MAX_BANS);
+						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
 					}
 					else
 					{
-						format(Msg, sizeof(Msg), "You have been banned by %s for %i days and %i hours", AdminName, Days, Hours);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
-						format(Msg, sizeof(Msg), "Reason: %s", Reason);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
-						format(Msg, sizeof(Msg), "You've been banned %i times now, %ith time is permanent", APlayerData[PlayerToBan][Bans], MAX_BANS);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Msg);
+						format(Message, sizeof(Message), "You have been banned by %s for %i days and %i hours", AdminName, Days, Hours);
+						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
+						format(Message, sizeof(Message), "Reason: %s", Reason);
+						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
+						format(Message, sizeof(Message), "You've been banned %i times now, %ith time is permanent", APlayerData[PlayerToBan][Bans], MAX_BANS);
+						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
 					}
 
 					// Kick the player (his data will be saved)
 					SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToBan)), false, "i", PlayerToBan);
 
 					// Inform everybody else which player was banned and for how long
-					format(Msg, sizeof(Msg), "%s %s has banned %s for %i days and %i hours", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days, Hours);
-					SendClientMessageToAll(COLOR_GRAY, Msg);
+					format(Message, sizeof(Message), "%s %s has banned %s for %i days and %i hours", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days, Hours);
+					SendClientMessageToAll(COLOR_GRAY, Message);
 				}
 				else
 					SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
@@ -1589,7 +1589,7 @@ COMMAND:ban(playerid, params[])
 COMMAND:unban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToUnban[24], Msg[128], Name[24];
+	new PlayerToUnban[24], Message[128], Name[24];
 	new file[100], File:PFile, LineForFile[100];
 
 	// Send the command to all admins so they can see it
@@ -1622,8 +1622,8 @@ COMMAND:unban(playerid, params[])
 					fclose(PFile); // Close the file
 
 					// Inform everybody else which player was unbanned
-					format(Msg, sizeof(Msg), "%s %s has un-banned %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name, PlayerToUnban);
-					SendClientMessageToAll(COLOR_GRAY, Msg);
+					format(Message, sizeof(Message), "%s %s has un-banned %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name, PlayerToUnban);
+					SendClientMessageToAll(COLOR_GRAY, Message);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "There is no account with that playername");
@@ -1642,7 +1642,7 @@ COMMAND:unban(playerid, params[])
 COMMAND:createobject(playerid, params[])
 {
     // Setup local variables
-	new ObjectModel, ObjID, Msg[128], Float:x, Float:y, Float:z, Float:Angle;
+	new ObjectModel, ObjID, Message[128], Float:x, Float:y, Float:z, Float:Angle;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/createobject", params);
@@ -1659,8 +1659,8 @@ COMMAND:createobject(playerid, params[])
 				// Spawn the object 5 units north of the player
 				ObjID = CreateObject(ObjectModel, x, y, z, 0.0, 0.0, Angle, 250.0);
 				// Inform the player about it
-				format(Msg, sizeof(Msg), "You spawned object-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", ObjID, ObjectModel, x, y, z);
-				SendClientMessage(playerid, COLOR_GREEN, Msg);
+				format(Message, sizeof(Message), "You spawned object-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", ObjID, ObjectModel, x, y, z);
+				SendClientMessage(playerid, COLOR_GREEN, Message);
 			}
 		}
 		else
@@ -1677,7 +1677,7 @@ COMMAND:createobject(playerid, params[])
 COMMAND:createpickup(playerid, params[])
 {
     // Setup local variables
-	new PickupModel, PickID, Msg[128], Float:x, Float:y, Float:z, PickupType;
+	new PickupModel, PickID, Message[128], Float:x, Float:y, Float:z, PickupType;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/createpickup", params);
@@ -1694,8 +1694,8 @@ COMMAND:createpickup(playerid, params[])
 				// Spawn the pickup
 				PickID = CreatePickup(PickupModel, PickupType, x, y, z, -1);
 				// Inform the player about it
-				format(Msg, sizeof(Msg), "You spawned pickup-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", PickID, PickupModel, x, y, z);
-				SendClientMessage(playerid, COLOR_GREEN, Msg);
+				format(Message, sizeof(Message), "You spawned pickup-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", PickID, PickupModel, x, y, z);
+				SendClientMessage(playerid, COLOR_GREEN, Message);
 			}
 		}
 		else
@@ -1712,7 +1712,7 @@ COMMAND:createpickup(playerid, params[])
 COMMAND:delobject(playerid, params[])
 {
     // Setup local variables
-	new oID, Msg[128];
+	new oID, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/delobject", params);
@@ -1729,8 +1729,8 @@ COMMAND:delobject(playerid, params[])
 				// Destroy the given vehicle
 				DestroyObject(oID);
 				// Inform the player about it
-				format(Msg, sizeof(Msg), "You deleted object-id %i", oID);
-				SendClientMessage(playerid, COLOR_GREEN, Msg);
+				format(Message, sizeof(Message), "You deleted object-id %i", oID);
+				SendClientMessage(playerid, COLOR_GREEN, Message);
 			}
 		}
 		else
@@ -1747,7 +1747,7 @@ COMMAND:delobject(playerid, params[])
 COMMAND:portloc(playerid, params[])
 {
 	// Setup local variables
-	new Float:x, Float:y, Float:z, PortMsg[128];
+	new Float:x, Float:y, Float:z, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/portloc", params);
@@ -1770,8 +1770,8 @@ COMMAND:portloc(playerid, params[])
 						// Port the player to the given location
 						SetPlayerPos(playerid, x, y, z);
 						// Let the player know about it
-						format(PortMsg, sizeof(PortMsg), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z);
-						SendClientMessage(playerid, COLOR_GREEN, PortMsg);
+						format(Message, sizeof(Message), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z);
+						SendClientMessage(playerid, COLOR_GREEN, Message);
 					}
 				}
 				else
@@ -1794,7 +1794,7 @@ COMMAND:portloc(playerid, params[])
 COMMAND:port(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Float:x, Float:y, Float:z, PortMsg[128], IntID, WorldID;
+	new OtherPlayer, Float:x, Float:y, Float:z, Message[128], IntID, WorldID;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/port", params);
@@ -1826,7 +1826,7 @@ COMMAND:port(playerid, params[])
 							SetPlayerInterior(playerid, IntID);
 							SetPlayerPos(playerid, x, y, z + 3.0);
 							// Let the player know about it
-							format(PortMsg, sizeof(PortMsg), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
+							format(Message, sizeof(Message), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
 						}
 						else
 						    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -1852,7 +1852,7 @@ COMMAND:port(playerid, params[])
 COMMAND:tele(playerid, params[])
 {
 	// Setup local variables
-	new Player1, Player2, Float:x, Float:y, Float:z, PortMsg[128], IntID, WorldID, Name[24], AdminName[24];
+	new Player1, Player2, Float:x, Float:y, Float:z, Message[128], IntID, WorldID, Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/tele", params);
@@ -1885,8 +1885,8 @@ COMMAND:tele(playerid, params[])
 							SetPlayerInterior(Player1, IntID);
 							SetPlayerPos(Player1, x, y, z + 3.0);
 							// Let the first player know he's been ported
-							format(PortMsg, sizeof(PortMsg), "{00FF00}You have been ported to player {FFFF00}%s{00FF00} by {FFFF00}%s", Name, AdminName);
-							SendClientMessage(Player1, COLOR_WHITE, PortMsg);
+							format(Message, sizeof(Message), "{00FF00}You have been ported to player {FFFF00}%s{00FF00} by {FFFF00}%s", Name, AdminName);
+							SendClientMessage(Player1, COLOR_WHITE, Message);
 						}
 						else
 						    SendClientMessage(playerid, COLOR_RED, "Player 2 isn't online");
@@ -1912,7 +1912,7 @@ COMMAND:tele(playerid, params[])
 COMMAND:portvehicle(playerid, params[])
 {
 	// Setup local variables
-	new Car, Float:x, Float:y, Float:z, PortMsg[128];
+	new Car, Float:x, Float:y, Float:z, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/portvehicle", params);
@@ -1940,8 +1940,8 @@ COMMAND:portvehicle(playerid, params[])
 							// Port the player to the given location
 							SetPlayerPos(playerid, x, y, z + 3.0);
 							// Let the player know about it
-							format(PortMsg, sizeof(PortMsg), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
-							SendClientMessage(playerid, COLOR_GREEN, PortMsg);
+							format(Message, sizeof(Message), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
+							SendClientMessage(playerid, COLOR_GREEN, Message);
 						}
 						else
 							SendClientMessage(playerid, COLOR_RED, "The vehicle id its not valid");
@@ -1967,7 +1967,7 @@ COMMAND:portvehicle(playerid, params[])
 COMMAND:setlevel(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Level, Msg[128], Name[24], AdminName[24], OldLevel;
+	new OtherPlayer, Level, Message[128], Name[24], AdminName[24], OldLevel;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setlevel", params);
@@ -2000,10 +2000,10 @@ COMMAND:setlevel(playerid, params[])
 					{
 						// Check if the player has been promoted or demoted
 						if (OldLevel < Level)
-							format(Msg, sizeof(Msg), "Player %s has been promoted to %s by %s", Name, AdminLevelName[Level], AdminName);
+							format(Message, sizeof(Message), "Player %s has been promoted to %s by %s", Name, AdminLevelName[Level], AdminName);
 						if (OldLevel > Level)
-							format(Msg, sizeof(Msg), "Player %s has been demoted to %s by %s", Name, AdminLevelName[Level], AdminName);
-						SendClientMessageToAll(COLOR_GREEN, Msg);
+							format(Message, sizeof(Message), "Player %s has been demoted to %s by %s", Name, AdminLevelName[Level], AdminName);
+						SendClientMessageToAll(COLOR_GREEN, Message);
 					}
 					else
 						SendClientMessage(playerid, COLOR_RED, "Other player's level hasn't been changed");
@@ -2453,7 +2453,7 @@ COMMAND:convoy(playerid, params[])
 COMMAND:convoykick(playerid, params[])
 {
 	// Setup local variables
-	new Convoy, LeaderID, OtherPlayer, LeaderName[24], MemberName[24], Msg[128];
+	new Convoy, LeaderID, OtherPlayer, LeaderName[24], MemberName[24], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoykick", params);
@@ -2485,11 +2485,11 @@ COMMAND:convoykick(playerid, params[])
 								GetPlayerName(playerid, LeaderName, sizeof(LeaderName));
 								GetPlayerName(OtherPlayer, MemberName, sizeof(MemberName));
 								// Inform the leader that he has kicked the other player
-								format(Msg, sizeof(Msg), "You've kicked {0000FF}%s{00FF00} from the convoy", MemberName);
-								SendClientMessage(playerid, COLOR_GREEN, Msg);
+								format(Message, sizeof(Message), "You've kicked {0000FF}%s{00FF00} from the convoy", MemberName);
+								SendClientMessage(playerid, COLOR_GREEN, Message);
 								// Inform the leader that he has kicked the other player
-								format(Msg, sizeof(Msg), "Leader {0000FF}%s{00FF00} kicked you from the convoy", LeaderName);
-								SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+								format(Message, sizeof(Message), "Leader {0000FF}%s{00FF00} kicked you from the convoy", LeaderName);
+								SendClientMessage(OtherPlayer, COLOR_GREEN, Message);
 							}
 							else
 							    SendClientMessage(playerid, COLOR_RED, "You cannot kick a player that's not part of your convoy");
@@ -2678,7 +2678,7 @@ COMMAND:stats(playerid, params[])
 COMMAND:createcamera(playerid, params[])
 {
 	// Setup local variables
-	new Float:x, Float:y, Float:z, Float:Angle, MaxSpeed, file[100], File:PFile, LineForFile[100], Msg[128];
+	new Float:x, Float:y, Float:z, Float:Angle, MaxSpeed, file[100], File:PFile, LineForFile[100], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/createcamera", params);
@@ -2728,8 +2728,8 @@ COMMAND:createcamera(playerid, params[])
 						fclose(PFile); // Close the file
 
 						// Let the player know he created a new camera
-						format(Msg, sizeof(Msg), "You've created a speed-camera with ID: %i", CamID);
-						SendClientMessage(playerid, COLOR_GREEN, Msg);
+						format(Message, sizeof(Message), "You've created a speed-camera with ID: %i", CamID);
+						SendClientMessage(playerid, COLOR_GREEN, Message);
 
 						// Exit the function
 						return 1;
@@ -2737,8 +2737,8 @@ COMMAND:createcamera(playerid, params[])
 				}
 
 				// In case all camera-slots are occupied (100 camera's have been created already), let the player know about it
-				format(Msg, sizeof(Msg), "{FF0000}You cannot create more than %i speedcamera's", MAX_CAMERAS);
-				SendClientMessage(playerid, COLOR_WHITE, Msg);
+				format(Message, sizeof(Message), "{FF0000}You cannot create more than %i speedcamera's", MAX_CAMERAS);
+				SendClientMessage(playerid, COLOR_WHITE, Message);
 			}
 		}
 		else
@@ -2755,7 +2755,7 @@ COMMAND:createcamera(playerid, params[])
 COMMAND:delcamera(playerid, params[])
 {
 	// Setup local variables
-	new file[100], Msg[128];
+	new file[100], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/delcamera", params);
@@ -2793,8 +2793,8 @@ COMMAND:delcamera(playerid, params[])
                         ACameras[CamID][CamObj2] = 0;
 
 						// Let the player know he deleted a camera
-						format(Msg, sizeof(Msg), "You've deleted speed-camera %i", CamID);
-						SendClientMessage(playerid, COLOR_GREEN, Msg);
+						format(Message, sizeof(Message), "You've deleted speed-camera %i", CamID);
+						SendClientMessage(playerid, COLOR_GREEN, Message);
 
 						// Exit the function
 						return 1;
@@ -2821,7 +2821,7 @@ COMMAND:delcamera(playerid, params[])
 COMMAND:get(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Float:x, Float:y, Float:z, PortMsg[128], IntID, WorldID, Name[24];
+	new OtherPlayer, Float:x, Float:y, Float:z, Message[128], IntID, WorldID, Name[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/get", params);
@@ -2849,8 +2849,8 @@ COMMAND:get(playerid, params[])
 					SetPlayerInterior(OtherPlayer, IntID);
 					SetPlayerPos(OtherPlayer, x, y, z + 3.0);
 					// Let the player know about it
-					format(PortMsg, sizeof(PortMsg), "{00FF00}You have ported {FFFF00}%s{00FF00} to your location", Name);
-					SendClientMessage(playerid, COLOR_WHITE, PortMsg);
+					format(Message, sizeof(Message), "{00FF00}You have ported {FFFF00}%s{00FF00} to your location", Name);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -2870,7 +2870,7 @@ COMMAND:get(playerid, params[])
 COMMAND:cleanupallvehicles(playerid, params[])
 {
 	// Setup local variables
-	new CarsDeleted, Msg[128];
+	new CarsDeleted, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/cleanupallvehicles", params);
@@ -2916,8 +2916,8 @@ COMMAND:cleanupallvehicles(playerid, params[])
 		    }
 
 			// Let the player know how many vehicles have been cleaned up
-			format(Msg, sizeof(Msg), "{00FF00}Total number of vehicles cleaned up: {FFFF00}%i", CarsDeleted);
-			SendClientMessage(playerid, COLOR_WHITE, Msg);
+			format(Message, sizeof(Message), "{00FF00}Total number of vehicles cleaned up: {FFFF00}%i", CarsDeleted);
+			SendClientMessage(playerid, COLOR_WHITE, Message);
 		}
 		else
 		    return 0;
@@ -2933,7 +2933,7 @@ COMMAND:cleanupallvehicles(playerid, params[])
 COMMAND:cleanupvehicle(playerid, params[])
 {
     // Setup local variables
-	new vID, Msg[128];
+	new vID, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/cleanupvehicle", params);
@@ -2972,8 +2972,8 @@ COMMAND:cleanupvehicle(playerid, params[])
 							AVehicleData[vID][SpawnRot] = 0.0;
 							AVehicleData[vID][BelongsToHouse] = 0;
 							// Inform the player about it
-							format(Msg, sizeof(Msg), "You deleted vehicle-id %i", vID);
-							SendClientMessage(playerid, COLOR_GREEN, Msg);
+							format(Message, sizeof(Message), "You deleted vehicle-id %i", vID);
+							SendClientMessage(playerid, COLOR_GREEN, Message);
 						}
 						else
 							SendClientMessage(playerid, COLOR_RED, "That vehicle belongs to a player, you can use /clamp");
@@ -3098,7 +3098,7 @@ COMMAND:nos(playerid, params[])
 COMMAND:spec(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Name[24], Msg[128], Float:x, Float:y, Float:z, Float:angle;
+	new OtherPlayer, Name[24], Message[128], Float:x, Float:y, Float:z, Float:angle;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/spec", params);
@@ -3113,8 +3113,8 @@ COMMAND:spec(playerid, params[])
 			else
 			{
 				if (OtherPlayer == playerid) {
-					format(Msg, sizeof(Msg), TXT_PlayerSelfSpectate, Name);
-					return SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), TXT_PlayerSelfSpectate, Name);
+					return SendClientMessage(playerid, COLOR_WHITE, Message);
 				}
 				
 				// Check if that other player is online
@@ -3128,14 +3128,14 @@ COMMAND:spec(playerid, params[])
 					GetPlayerFacingAngle(playerid, angle);
 
 					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_SPECTATING) {
-						format(Msg, sizeof(Msg), TXT_PlayerSpectating, Name);
-						return SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), TXT_PlayerSpectating, Name);
+						return SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 
 					if (GetPlayerState(OtherPlayer) == PLAYER_STATE_WASTED || GetPlayerState(OtherPlayer) == PLAYER_STATE_NONE)
 					{
-						format(Msg, sizeof(Msg), TXT_PlayerNotSpawned);
-						return SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), TXT_PlayerNotSpawned);
+						return SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 
 					// Only save the current positon at the first time
@@ -3168,8 +3168,8 @@ COMMAND:spec(playerid, params[])
 						APlayerData[playerid][SpectateType] = ADMIN_SPEC_TYPE_VEHICLE;
 					}
 
-					format(Msg, sizeof(Msg), "{00FF00}You're spectating {FFFF00}%s", Name);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You're spectating {FFFF00}%s", Name);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -3264,7 +3264,7 @@ COMMAND:createbusiness(playerid, params[])
 COMMAND:delbusiness(playerid, params[])
 {
 	// Setup local variables
-	new file[100], Msg[128];
+	new file[100], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/delbusiness", params);
@@ -3313,8 +3313,8 @@ COMMAND:delbusiness(playerid, params[])
 									fremove(file); // Delete the file
 
 								// Also let the player know he deleted the business
-								format(Msg, sizeof(Msg), "{00FF00}You have deleted the business with ID: {FFFF00}%i", BusID);
-								SendClientMessage(playerid, COLOR_WHITE, Msg);
+								format(Message, sizeof(Message), "{00FF00}You have deleted the business with ID: {FFFF00}%i", BusID);
+								SendClientMessage(playerid, COLOR_WHITE, Message);
 
 								// Exit the function
 								return 1;
@@ -3343,7 +3343,7 @@ COMMAND:delbusiness(playerid, params[])
 COMMAND:buybus(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], BusType;
+	new Message[128], BusType;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/buybus", params);
@@ -3377,8 +3377,8 @@ COMMAND:buybus(playerid, params[])
 					    else
 					    {
 					        // Let the player know that this business is already owned by a player
-							format(Msg, sizeof(Msg), "{FF0000}This business is already owned by {00FF00}%s{FFFFFF}", ABusinessData[i][Owner]);
-							SendClientMessage(playerid, COLOR_WHITE, Msg);
+							format(Message, sizeof(Message), "{FF0000}This business is already owned by {00FF00}%s{FFFFFF}", ABusinessData[i][Owner]);
+							SendClientMessage(playerid, COLOR_WHITE, Message);
 					    }
 
 						// The player was in range of a business-pickup, so stop searching for the other business pickups
@@ -3496,7 +3496,7 @@ COMMAND:gobus(playerid, params[])
 COMMAND:mute(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], Reason[128], OtherPlayer, TimeToMute;
+	new Message[128], Name[24], AdminName[24], Reason[128], OtherPlayer, TimeToMute;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/mute", params);
@@ -3529,14 +3529,14 @@ COMMAND:mute(playerid, params[])
 					// Mute the other player
 					APlayerData[OtherPlayer][Muted] = (TimeToMute * 60) + gettime();
 					// Let the other player know that he has been muted
-					format(Msg, sizeof(Msg), "{FF0000}You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{FF0000}You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 
 					ShowRemainingMutedTime(OtherPlayer); // Show the remaining muted time to the player
 
 					// Let the admin know who he has muted
-					format(Msg, sizeof(Msg), "{00FF00}You have muted {FFFF00}%s", Name);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You have muted {FFFF00}%s", Name);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 
 					ShowRemainingMutedTime(playerid); // Show the remaining muted time to the admin
 
@@ -3561,7 +3561,7 @@ COMMAND:mute(playerid, params[])
 COMMAND:unmute(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], OtherPlayer;
+	new Message[128], Name[24], AdminName[24], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unmute", params);
@@ -3590,11 +3590,11 @@ COMMAND:unmute(playerid, params[])
 					// Un-mute the other player
 					APlayerData[OtherPlayer][Muted] = 0;
 					// Let the other player know that he has been un-muted
-					format(Msg, sizeof(Msg), "You have been un-muted by {FFFF00}%s", AdminName);
-					SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+					format(Message, sizeof(Message), "You have been un-muted by {FFFF00}%s", AdminName);
+					SendClientMessage(OtherPlayer, COLOR_GREEN, Message);
 					// Let the admin know who he has un-muted
-					format(Msg, sizeof(Msg), "You have un-muted {FFFF00}%s", Name);
-					SendClientMessage(playerid, COLOR_GREEN, Msg);
+					format(Message, sizeof(Message), "You have un-muted {FFFF00}%s", Name);
+					SendClientMessage(playerid, COLOR_GREEN, Message);
 					// Save the player-stats
 					PlayerFile_Save(OtherPlayer);
 				}
@@ -3663,7 +3663,7 @@ COMMAND:muted(playerid, params[])
 COMMAND:freeze(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], Reason[128], OtherPlayer, Duration;
+	new Message[128], Name[24], AdminName[24], Reason[128], OtherPlayer, Duration;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/freeze", params);
@@ -3688,11 +3688,11 @@ COMMAND:freeze(playerid, params[])
 					TogglePlayerControllable(OtherPlayer, 0);
 					FreezeTimer[OtherPlayer] = SetTimerEx("Player_FreezeTimer", 1000, true, "i", OtherPlayer);
 					// Let the other player know that he has been muted
-					format(Msg, sizeof(Msg), "{FF0000}You have been frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{FF0000}You have been frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 					// Let the admin know who he has muted
-					format(Msg, sizeof(Msg), "{00FF00}You have frozen {FFFF00}%s", Name);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You have frozen {FFFF00}%s", Name);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 					// Save the player-stats
 					PlayerFile_Save(OtherPlayer);
 				}
@@ -3714,7 +3714,7 @@ COMMAND:freeze(playerid, params[])
 COMMAND:unfreeze(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], AdminName[24], OtherPlayer;
+	new Message[128], Name[24], AdminName[24], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unfreeze", params);
@@ -3741,11 +3741,11 @@ COMMAND:unfreeze(playerid, params[])
 						GetPlayerName(playerid, AdminName, sizeof(AdminName));
 						GetPlayerName(OtherPlayer, Name, sizeof(Name));
 						// Let the other player know that he has been un-frozen
-						format(Msg, sizeof(Msg), "{FF0000}You have been un-frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{FF0000}You have been un-frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 						// Let the admin know who he has un-frozen
-						format(Msg, sizeof(Msg), "{00FF00}You have un-frozen {FFFF00}%s", Name);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{00FF00}You have un-frozen {FFFF00}%s", Name);
+						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 					else
 						SendClientMessage(playerid, COLOR_RED, "That player has not been frozen");
@@ -3768,7 +3768,7 @@ COMMAND:unfreeze(playerid, params[])
 COMMAND:givecash(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], OtherName[24], OtherPlayer, Money;
+	new Message[128], Name[24], OtherName[24], OtherPlayer, Money;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/givecash", params);
@@ -3799,11 +3799,11 @@ COMMAND:givecash(playerid, params[])
 						RewardPlayer(playerid, -Money, 0);
 						RewardPlayer(OtherPlayer, Money, 0);
 						// Let the other player know that he has received money
-						format(Msg, sizeof(Msg), "{00FF00}You have received {FFFF00}$%i{00FF00} from {FFFF00}%s", Money, Name);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{00FF00}You have received {FFFF00}$%i{00FF00} from {FFFF00}%s", Money, Name);
+						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 						// Let the player know he gave money to somebody else
-						format(Msg, sizeof(Msg), "{00FF00}You gave {FFFF00}$%i{00FF00} to {FFFF00}%s", Money, OtherName);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{00FF00}You gave {FFFF00}$%i{00FF00} to {FFFF00}%s", Money, OtherName);
+						SendClientMessage(playerid, COLOR_WHITE, Message);
 						// Save the player-stats
 						PlayerFile_Save(playerid);
 						PlayerFile_Save(OtherPlayer);
@@ -3829,7 +3829,7 @@ COMMAND:givecash(playerid, params[])
 COMMAND:respawnvehicle(playerid, params[])
 {
 	// Setup local variables
-	new vid, Msg[128];
+	new vid, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/respawnvehicle", params);
@@ -3852,8 +3852,8 @@ COMMAND:respawnvehicle(playerid, params[])
 					    // Force the vehicle to respawn
 						SetVehicleToRespawn(vid);
 						// Let the player know he respawned the vehicle
-						format(Msg, sizeof(Msg), "{00FF00}You've respawned vehicle {FFFF00}%i", vid);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{00FF00}You've respawned vehicle {FFFF00}%i", vid);
+						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 				}
 				else
@@ -3905,7 +3905,7 @@ COMMAND:createspike(playerid, params[])
 COMMAND:eject(playerid, params[])
 {
 	// Setup local variables
-	new DriverName[24], Msg[128], OtherPlayer, OtherPlayerName[24];
+	new DriverName[24], Message[128], OtherPlayer, OtherPlayerName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/eject", params);
@@ -3932,11 +3932,11 @@ COMMAND:eject(playerid, params[])
 							// Eject the player from the vehicle
 							RemovePlayerFromVehicle(OtherPlayer);
 							// Let the player know he's been ejected from his vehicle
-							format(Msg, sizeof(Msg), "{FF0000}You've been ejected from the vehicle by {FFFF00}%s", DriverName);
-							SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+							format(Message, sizeof(Message), "{FF0000}You've been ejected from the vehicle by {FFFF00}%s", DriverName);
+							SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 							// Inform the driver that he ejected the player
-							format(Msg, sizeof(Msg), "{00FF00}You've ejected {FFFF00}%s{00FF00} from your vehicle", OtherPlayerName);
-							SendClientMessage(playerid, COLOR_WHITE, Msg);
+							format(Message, sizeof(Message), "{00FF00}You've ejected {FFFF00}%s{00FF00} from your vehicle", OtherPlayerName);
+							SendClientMessage(playerid, COLOR_WHITE, Message);
 						}
 						else
 							SendClientMessage(playerid, COLOR_RED, "That player is not in your vehicle");
@@ -3962,7 +3962,7 @@ COMMAND:eject(playerid, params[])
 COMMAND:radio(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], Msg[128], Message[128], ClassName[24];
+	new Name[24], RadioMessage[128], Message[128], ClassName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/radio", params);
@@ -3994,7 +3994,7 @@ COMMAND:radio(playerid, params[])
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/radio <Message>\"");
+		if (sscanf(params, "s[128]", RadioMessage)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/radio <Message>\"");
 		else
 		{
 			// Loop through all players
@@ -4006,8 +4006,8 @@ COMMAND:radio(playerid, params[])
 				    // Check if the other player has the same class
 				    if (APlayerData[i][PlayerClass] == APlayerData[playerid][PlayerClass])
 				    {
-						format(Msg, sizeof(Msg), "{A0A0A0}(%s Chat) {D0D0D0}%s: {FFFFFF}%s", ClassName, Name, Message);
-						SendClientMessage(i, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{A0A0A0}(%s Chat) {D0D0D0}%s: {FFFFFF}%s", ClassName, Name, RadioMessage);
+						SendClientMessage(i, COLOR_WHITE, Message);
 				    }
 				}
 			}
@@ -4024,7 +4024,7 @@ COMMAND:radio(playerid, params[])
 COMMAND:achat(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], Msg[128], Message[128];
+	new Name[24], AdminMessage[128], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/achat", params);
@@ -4038,7 +4038,7 @@ COMMAND:achat(playerid, params[])
 		// Check if the player is an admin
 		if (APlayerData[playerid][PlayerLevel] > 0)
 		{
-			if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/achat <Message>\"");
+			if (sscanf(params, "s[128]", AdminMessage)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/achat <Message>\"");
 			else
 			{
 				// Loop through all players
@@ -4050,8 +4050,8 @@ COMMAND:achat(playerid, params[])
 					    // Check if the other player is also an admin
 					    if (APlayerData[i][PlayerLevel] > 0)
 					    {
-							format(Msg, sizeof(Msg), "{A0A0A0}(Admin Chat) {D0D0D0}%s: {FFFFFF}%s", Name, Message);
-							SendClientMessage(i, COLOR_WHITE, Msg);
+							format(Message, sizeof(Message), "{A0A0A0}(Admin Chat) {D0D0D0}%s: {FFFFFF}%s", Name, AdminMessage);
+							SendClientMessage(i, COLOR_WHITE, Message);
 					    }
 					}
 				}
@@ -4071,7 +4071,7 @@ COMMAND:achat(playerid, params[])
 COMMAND:clamp(playerid, params[])
 {
 	// Setup local variables
-	new vid, Reason[128], HouseID, HouseOwner, Name[24], AdminName[24], Msg[128];
+	new vid, Reason[128], HouseID, HouseOwner, Name[24], AdminName[24], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/clamp", params);
@@ -4131,15 +4131,15 @@ COMMAND:clamp(playerid, params[])
 					GetPlayerName(HouseOwner, Name, sizeof(Name));
 
 					// Let the admin know who's vehicle he deleted
-					format(Msg, sizeof(Msg), "{00FF00}You've clamped a vehicle that was owned by {FFFF00}%s", Name);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You've clamped a vehicle that was owned by {FFFF00}%s", Name);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 					// Let the player know who deleted his vehicle
-					format(Msg, sizeof(Msg), "{FF0000}A vehicle you owned was clamped by admin {FFFF00}%s", AdminName);
-					SendClientMessage(HouseOwner, COLOR_WHITE, Msg);
-					format(Msg, sizeof(Msg), "{FF0000}It belongs to house: {FFFF00}%s", AHouseData[HouseID][HouseName]);
-					SendClientMessage(HouseOwner, COLOR_WHITE, Msg);
-					format(Msg, sizeof(Msg), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(HouseOwner, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{FF0000}A vehicle you owned was clamped by admin {FFFF00}%s", AdminName);
+					SendClientMessage(HouseOwner, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "{FF0000}It belongs to house: {FFFF00}%s", AHouseData[HouseID][HouseName]);
+					SendClientMessage(HouseOwner, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
+					SendClientMessage(HouseOwner, COLOR_WHITE, Message);
 					// Save the player's datafile (and his houses/businesses/vehicles)
 					PlayerFile_Save(HouseOwner);
 				}
@@ -4161,7 +4161,7 @@ COMMAND:clamp(playerid, params[])
 COMMAND:unclamp(playerid, params[])
 {
 	// Setup local variables
-	new HouseID, vid, ClampedVehicles, UnclampPrice, Msg[128];
+	new HouseID, vid, ClampedVehicles, UnclampPrice, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unclamp", params);
@@ -4202,9 +4202,9 @@ COMMAND:unclamp(playerid, params[])
 			UnclampPrice = ClampedVehicles * UnclampPricePerVehicle;
 
 			// Construct the message to inform the player how many vehicles have been clamped and how much it costs to un-clamp them
-			format(Msg, sizeof(Msg), "You have %i clamped vehicles, it will cost you $%i to unclamp them", ClampedVehicles, UnclampPrice);
+			format(Message, sizeof(Message), "You have %i clamped vehicles, it will cost you $%i to unclamp them", ClampedVehicles, UnclampPrice);
 		    // Show a dialog that informs the player how many vehicles have been clamped and how much it costs to un-clamp them
-			ShowPlayerDialog(playerid, DialogUnclampVehicles, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Msg, "Unclamp", TXT_DialogButtonCancel);
+			ShowPlayerDialog(playerid, DialogUnclampVehicles, DIALOG_STYLE_MSGBOX, TXT_AreYouSure, Message, "Unclamp", TXT_DialogButtonCancel);
 		}
 		else
 		    SendClientMessage(playerid, COLOR_RED, "You don't have any clamped vehicles");
@@ -4220,7 +4220,7 @@ COMMAND:unclamp(playerid, params[])
 COMMAND:rules(playerid, params[])
 {
 	// Setup local variables
-	new Msg[2000];
+	new Message[2000];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/rules", params);
@@ -4229,14 +4229,14 @@ COMMAND:rules(playerid, params[])
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
 		// Construct the rules
-		format(Msg, sizeof(Msg), "%s1. Always drive on the right side of the road\n", Msg);
-		format(Msg, sizeof(Msg), "%s2. No flaming or disrespecting other players\n", Msg);
-		format(Msg, sizeof(Msg), "%s3. Main language is english\n", Msg);
-		format(Msg, sizeof(Msg), "%s4. Don't use any hacks, you'll be banned\n", Msg);
-		format(Msg, sizeof(Msg), "%s5. No spamming on the chat\n", Msg);
-		format(Msg, sizeof(Msg), "%s6. No car-jacking allowed\n", Msg);
+		format(Message, sizeof(Message), "%s1. Always drive on the right side of the road\n", Message);
+		format(Message, sizeof(Message), "%s2. No flaming or disrespecting other players\n", Message);
+		format(Message, sizeof(Message), "%s3. Main language is english\n", Message);
+		format(Message, sizeof(Message), "%s4. Don't use any hacks, you'll be banned\n", Message);
+		format(Message, sizeof(Message), "%s5. No spamming on the chat\n", Message);
+		format(Message, sizeof(Message), "%s6. No car-jacking allowed\n", Message);
 	    // Show a dialog that shows the rules
-		ShowPlayerDialog(playerid, DialogRules, DIALOG_STYLE_MSGBOX, "Rules of the server:", Msg, "Accept", TXT_DialogButtonCancel);
+		ShowPlayerDialog(playerid, DialogRules, DIALOG_STYLE_MSGBOX, "Rules of the server:", Message, "Accept", TXT_DialogButtonCancel);
 	}
 	else
 	    return 0;
@@ -4249,7 +4249,7 @@ COMMAND:rules(playerid, params[])
 COMMAND:report(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Name[24], Reason[128], Msg[128];
+	new OtherPlayer, Name[24], Reason[128], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/report", params);
@@ -4272,8 +4272,8 @@ COMMAND:report(playerid, params[])
 				// Get the name of the offender
 				GetPlayerName(OtherPlayer, Name, sizeof(Name));
 				// Let the player know he reported the other player
-				format(Msg, sizeof(Msg), "{00FF00}You've reported {FFFF00}%s", Name);
-				SendClientMessage(playerid, COLOR_WHITE, Msg);
+				format(Message, sizeof(Message), "{00FF00}You've reported {FFFF00}%s", Name);
+				SendClientMessage(playerid, COLOR_WHITE, Message);
 			}
 			else
 			    SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
@@ -4332,7 +4332,7 @@ COMMAND:reports(playerid, params[])
 COMMAND:overload(playerid, params[])
 {
 	// Setup local variables
-	new vModel, bool:ValidOverLoad = false, Float:x, Float:y, Float:z, Name[24], Msg[128];
+	new vModel, bool:ValidOverLoad = false, Float:x, Float:y, Float:z, Name[24], Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/overload", params);
@@ -4387,8 +4387,8 @@ COMMAND:overload(playerid, params[])
 							    SendClientMessage(playerid, COLOR_YELLOW, "You have overloaded your truck, watch out for the police");
 								// Inform the police this trucker is overloaded
 								GetPlayerName(playerid, Name, sizeof(Name));
-								format(Msg, sizeof(Msg), "{00FF00}Trucker {FFFF00}%s{00FF00} is overloaded, pursue and fine him", Name);
-								Police_SendMessage(Msg);
+								format(Message, sizeof(Message), "{00FF00}Trucker {FFFF00}%s{00FF00} is overloaded, pursue and fine him", Name);
+								Police_SendMessage(Message);
 							}
 							else
 							    SendClientMessage(playerid, COLOR_RED, "Your vehicle cannot be overloaded");
@@ -4419,7 +4419,7 @@ COMMAND:overload(playerid, params[])
 COMMAND:resetplayer(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], AdminName[24], Reason[128], Msg[128], OtherPlayer, ClearMoney, ClearScore, ClearStats;
+	new Name[24], AdminName[24], Reason[128], Message[128], OtherPlayer, ClearMoney, ClearScore, ClearStats;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/resetplayer", params);
@@ -4448,20 +4448,20 @@ COMMAND:resetplayer(playerid, params[])
 					if (ClearMoney == 1)
 					{
 						APlayerData[OtherPlayer][PlayerMoney] = 0;
-						format(Msg, sizeof(Msg), "{FF0000}Your money has been reset by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-						format(Msg, sizeof(Msg), "{00FF00}You've reset the money of player {FFFF00}%s", Name);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{FF0000}Your money has been reset by {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+						format(Message, sizeof(Message), "{00FF00}You've reset the money of player {FFFF00}%s", Name);
+						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 
 					// Reset the other player's score to 0
 					if (ClearScore == 1)
 					{
 						APlayerData[OtherPlayer][PlayerScore] = 0;
-						format(Msg, sizeof(Msg), "{FF0000}Your score has been reset by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-						format(Msg, sizeof(Msg), "{00FF00}You've reset the score of player {FFFF00}%s", Name);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{FF0000}Your score has been reset by {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+						format(Message, sizeof(Message), "{00FF00}You've reset the score of player {FFFF00}%s", Name);
+						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 
 					// Reset the other player's stats to 0
@@ -4479,15 +4479,15 @@ COMMAND:resetplayer(playerid, params[])
 						APlayerData[OtherPlayer][StatsAssistance] = 0;
 						APlayerData[OtherPlayer][StatsRoadworkerJobs] = 0;
 						APlayerData[OtherPlayer][StatsMetersDriven] = 0.0;
-						format(Msg, sizeof(Msg), "{FF0000}Your stats have been reset by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
-						format(Msg, sizeof(Msg), "{00FF00}You've reset the stats of player {FFFF00}%s", Name);
-						SendClientMessage(playerid, COLOR_WHITE, Msg);
+						format(Message, sizeof(Message), "{FF0000}Your stats have been reset by {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+						format(Message, sizeof(Message), "{00FF00}You've reset the stats of player {FFFF00}%s", Name);
+						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 
 					// Let the other player know the reason too
-					format(Msg, sizeof(Msg), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 
 					// Save the other player's account
 					PlayerFile_Save(OtherPlayer);
@@ -4510,7 +4510,7 @@ COMMAND:resetplayer(playerid, params[])
 COMMAND:fixplayer(playerid, params[])
 {
 	// Setup local variables
-	new Name[24], AdminName[24], Msg[128], OtherPlayer;
+	new Name[24], AdminName[24], Message[128], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/fixplayer", params);
@@ -4565,8 +4565,8 @@ COMMAND:fixplayer(playerid, params[])
 							}
 
 					// Let the other player know his property has been restored
-					format(Msg, sizeof(Msg), "{00FF00}Your property has been restored by: {FFFF00}%s", AdminName);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}Your property has been restored by: {FFFF00}%s", AdminName);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 
 					// Save the other player's account
 					PlayerFile_Save(OtherPlayer);
@@ -4589,7 +4589,7 @@ COMMAND:fixplayer(playerid, params[])
 COMMAND:setskin(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], AdminName[24], OtherName[24], OtherPlayer, Skin;
+	new Message[128], AdminName[24], OtherName[24], OtherPlayer, Skin;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setskin", params);
@@ -4617,12 +4617,12 @@ COMMAND:setskin(playerid, params[])
 						GetPlayerName(OtherPlayer, OtherName, sizeof(OtherName));
 
 						// Let the admin know who he changed the skin for
-						format(Msg, sizeof(Msg), "You've changed the skin for {FFFF00}%s {00FF00}to {FFFF00}%i", OtherName, Skin);
-						SendClientMessage(playerid, COLOR_GREEN, Msg);
+						format(Message, sizeof(Message), "You've changed the skin for {FFFF00}%s {00FF00}to {FFFF00}%i", OtherName, Skin);
+						SendClientMessage(playerid, COLOR_GREEN, Message);
 
 						// Let the other player know about his new outfit
-						format(Msg, sizeof(Msg), "Your skin has been changed by admin {FFFF00}%s {00FF00}to {FFFF00}%i", AdminName, Skin);
-						SendClientMessage(OtherPlayer, COLOR_GREEN, Msg);
+						format(Message, sizeof(Message), "Your skin has been changed by admin {FFFF00}%s {00FF00}to {FFFF00}%i", AdminName, Skin);
+						SendClientMessage(OtherPlayer, COLOR_GREEN, Message);
 					}
 					else
 						SendClientMessage(playerid, COLOR_RED, "Invalid skin-id, you can only use skins 0-299");
@@ -4645,7 +4645,7 @@ COMMAND:setskin(playerid, params[])
 COMMAND:ipban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, Reason[128], Msg[128], Name[24], AdminName[24];
+	new PlayerToBan, Reason[128], Message[128], Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/ipban", params);
@@ -4667,17 +4667,17 @@ COMMAND:ipban(playerid, params[])
 					GetPlayerName(PlayerToBan, Name, sizeof(Name));
 
 					// Inform the player about his ban
-					format(Msg, sizeof(Msg), "{FF0000}You have been ip-banned permanently by {FFFF00}%s", AdminName);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Msg);
-					format(Msg, sizeof(Msg), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{FF0000}You have been ip-banned permanently by {FFFF00}%s", AdminName);
+					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
+					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
 
 					// Ban the player with a reason
 					SetTimerEx("TimedBanEx", (750 + GetPlayerPing(PlayerToBan)), false, "is", PlayerToBan, Reason);
 
 					// Inform everybody else which player was ip-banned
-					format(Msg, sizeof(Msg), "{808080}%s %s has ip-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
-					SendClientMessageToAll(COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{808080}%s %s has ip-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
+					SendClientMessageToAll(COLOR_WHITE, Message);
 				}
 				else
 					SendClientMessage(playerid, COLOR_RED, "That player isn't connected");
@@ -4696,7 +4696,7 @@ COMMAND:ipban(playerid, params[])
 COMMAND:rangeban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, PlayerIP[16], FirstPartsOfIP[16], BanCmd[24], Reason[128], Msg[128], Name[24], AdminName[24];
+	new PlayerToBan, PlayerIP[16], FirstPartsOfIP[16], BanCmd[24], Reason[128], Message[128], Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/rangeban", params);
@@ -4721,10 +4721,10 @@ COMMAND:rangeban(playerid, params[])
 					GetPlayerIp(PlayerToBan, PlayerIP, 16);
 
 					// Inform the player about his ban
-					format(Msg, sizeof(Msg), "{FF0000}You have been ip-range-banned permanently by {FFFF00}%s", AdminName);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Msg);
-					format(Msg, sizeof(Msg), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{FF0000}You have been ip-range-banned permanently by {FFFF00}%s", AdminName);
+					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
+					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
 
 					// Get the first three digits from the player's ip, so the fourth part can be added from 0 to 255
 					FirstPartsOfIP = GetFirstThreeDigitsFromIP(PlayerIP);
@@ -4738,8 +4738,8 @@ COMMAND:rangeban(playerid, params[])
 					SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToBan)), false, "i", PlayerToBan);
 
 					// Inform everybody else which player was ip-range-banned
-					format(Msg, sizeof(Msg), "%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
-					SendClientMessageToAll(COLOR_GRAY, Msg);
+					format(Message, sizeof(Message), "%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
+					SendClientMessageToAll(COLOR_GRAY, Message);
 				}
 				else
 					SendClientMessage(playerid, COLOR_RED, "That player isn't online");
@@ -4758,7 +4758,7 @@ COMMAND:rangeban(playerid, params[])
 COMMAND:setscore(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], OtherName[24], OtherPlayer, pScore;
+	new Message[128], Name[24], OtherName[24], OtherPlayer, pScore;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setscore", params);
@@ -4782,11 +4782,11 @@ COMMAND:setscore(playerid, params[])
 					// Set the other player's score
 					APlayerData[OtherPlayer][PlayerScore] = pScore;
 					// Let the other player know that his score has been changed
-					format(Msg, sizeof(Msg), "{00FF00}Your score has been set to {FFFF00}%i{00FF00} by {FFFF00}%s", pScore, Name);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}Your score has been set to {FFFF00}%i{00FF00} by {FFFF00}%s", pScore, Name);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 					// Let the player know he has set the score of the other player
-					format(Msg, sizeof(Msg), "{00FF00}You've set the score of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pScore);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You've set the score of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pScore);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 					// Save the other player's account
 					PlayerFile_Save(OtherPlayer);
 				}
@@ -4808,7 +4808,7 @@ COMMAND:setscore(playerid, params[])
 COMMAND:setcash(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[24], OtherName[24], OtherPlayer, pMoney;
+	new Message[128], Name[24], OtherName[24], OtherPlayer, pMoney;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setcash", params);
@@ -4832,11 +4832,11 @@ COMMAND:setcash(playerid, params[])
 					// Set the other player's money
 					APlayerData[OtherPlayer][PlayerMoney] = pMoney;
 					// Let the other player know that his money has been changed
-					format(Msg, sizeof(Msg), "{00FF00}Your cash has been set to {FFFF00}%i{00FF00} by {FFFF00}%s", pMoney, Name);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}Your cash has been set to {FFFF00}%i{00FF00} by {FFFF00}%s", pMoney, Name);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 					// Let the player know he has set the money of the other player
-					format(Msg, sizeof(Msg), "{00FF00}You've set the cash of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pMoney);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You've set the cash of {FFFF00}%s{00FF00} to {FFFF00}%i", OtherName, pMoney);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 					// Save the other player's account
 					PlayerFile_Save(OtherPlayer);
 				}
@@ -5001,7 +5001,7 @@ COMMAND:bonus(playerid, params[])
 COMMAND:givelicense(playerid,params[])
 {
 	// Setup local variables
-	new OtherPlayer, Msg[128], Name[24], OtherName[24];
+	new OtherPlayer, Message[128], Name[24], OtherName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/givelicense", params);
@@ -5032,11 +5032,11 @@ COMMAND:givelicense(playerid,params[])
 					PlayerFile_Save(OtherPlayer);
 
 					// Inform the admin that you've given a player a truckers license
-					format(Msg, sizeof(Msg), "{00FF00}You've given {FFFF00}%s{00FF00} a trucker's license", OtherName);
-					SendClientMessage(playerid, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You've given {FFFF00}%s{00FF00} a trucker's license", OtherName);
+					SendClientMessage(playerid, COLOR_WHITE, Message);
 					// Inform the player that he received a free truckers license from an admin
-					format(Msg, sizeof(Msg), "{00FF00}You've been given a free trucker's license by {FFFF00}%s", Name);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Msg);
+					format(Message, sizeof(Message), "{00FF00}You've been given a free trucker's license by {FFFF00}%s", Name);
+					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
 				}
 				else
 				    SendClientMessage(playerid, COLOR_RED, "That player isn't logged in");
