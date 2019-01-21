@@ -119,6 +119,9 @@ public GlobalTimer()
 // This function is called by the global vehicletimer to fail a job
 FailJob(playerid)
 {
+	// Setup local variables
+	new Message[128];
+
 	// Check the class of the player
 	switch (APlayerData[playerid][PlayerClass])
 	{
@@ -151,10 +154,11 @@ FailJob(playerid)
 		}
 	}
 
+	format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
 	// Inform the player that he failed the mission
-	GameTextForPlayer(playerid, TXT_FailedMission, 5000, 4);
-	// Reduce the player's cash by 1000
-	RewardPlayer(playerid, -1000, 0);
+	GameTextForPlayer(playerid, Message, 5000, 4);
+	// Reduce the player's cash
+	RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 }
 
 // This function is used by the global vehicletimer and informs the player that he left his vehicle and must re-enter it

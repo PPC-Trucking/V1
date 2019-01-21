@@ -34,7 +34,7 @@ Courier_StartJob(playerid)
 	// Abort the mission if there are less than 2 houses in range and inform the player
 	if (HouseCounter < 2)
 	{
-	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Not enough owned houses in range to deliver packages, try some other spot");
+	    SendClientMessage(playerid, COLOR_RED, "Not enough owned houses in range to deliver packages, try some other spot");
 		return 0;
 	}
 
@@ -101,7 +101,7 @@ Courier_BeginJob(playerid)
 	// Set the job-fail-time for the global vehicle-timer
 	APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 	// Send the player a message to inform him that the mission has started
-	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Deliver packages to player's houses");
+	SendClientMessage(playerid, COLOR_GREEN, "Deliver packages to player's houses");
 
 	return 1;
 }

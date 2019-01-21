@@ -91,14 +91,9 @@ PlayerFile_Load(playerid)
 			    APlayerData[playerid][TruckerLicense] = strval(ParameterValue); // Store the TruckerLicense
 			if (strcmp(ParameterName, "BusLicense", false) == 0) // If the parametername is correct ("BusLicense")
 			    APlayerData[playerid][BusLicense] = strval(ParameterValue); // Store the BusLicense
-
 			if (strcmp(ParameterName, "Muted", false) == 0) // If the parametername is correct ("Muted")
-			{
-			    if (strcmp(ParameterValue, "Yes", false) == 0) // If the value "Yes" was read
-					APlayerData[playerid][Muted] = true; // Player is muted
-				else
-					APlayerData[playerid][Muted] = false; // Player is not muted
-			}
+			    APlayerData[playerid][Muted] = strval(ParameterValue); // Store the muted time
+
 			if (strcmp(ParameterName, "RulesRead", false) == 0) // If the parametername is correct ("RulesRead")
 			{
 			    if (strcmp(ParameterValue, "Yes", false) == 0) // If the value "Yes" was read
@@ -189,10 +184,7 @@ PlayerFile_Save(playerid)
 	format(LineForFile, sizeof(LineForFile), "BusLicense %i\r\n", APlayerData[playerid][BusLicense]); // Construct the line: "BusLicense <playerbuslicense>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
-	if (APlayerData[playerid][Muted] == true) // Check if the player is muted
-		format(LineForFile, sizeof(LineForFile), "Muted Yes\r\n"); // Construct the line: "Muted <Yes>"
-	else
-		format(LineForFile, sizeof(LineForFile), "Muted No\r\n"); // Construct the line: "Muted <No>"
+	format(LineForFile, sizeof(LineForFile), "Muted %i\r\n", APlayerData[playerid][Muted]); // Construct the line: "Muted <Time>"
 	fwrite(PFile, LineForFile); // And save it to the file
 
 	if (APlayerData[playerid][RulesRead] == true) // Check if the player has accepted the rules
@@ -888,7 +880,7 @@ BankFile_Load(playerid)
 	if (fexist(file))
 	{
 		// Send a message to the player to inform him that he has a bank account
-	    SendClientMessage(playerid, COLOR_WHITE, "{00BBFF}You have a bank-account. Use {FFBB00}/bank{00BBFF} to login");
+	    SendClientMessage(playerid, COLOR_DODGERBLUE, "You have a bank-account. Use {FFBB00}/bank{00BBFF} to login");
 
 		BFile = fopen(file, io_read); // Open the bankfile for reading
 
@@ -981,7 +973,7 @@ BankFile_Load(playerid)
 	else
 	{
 		// Send a message if the player doesn't have a bank account
-	    SendClientMessage(playerid, COLOR_WHITE, "{00BBFF}You don't have a bank-account. Use {FFBB00}/bank{00BBFF} to set it up");
+	    SendClientMessage(playerid, COLOR_DODGERBLUE, "You don't have a bank-account. Use {FFBB00}/bank{00BBFF} to set it up");
 
 	    return 0; // Return 0 if the file couldn't be read (doesn't exist)
 	}

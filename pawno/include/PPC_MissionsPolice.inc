@@ -196,6 +196,9 @@ Police_PayFine(playerid, PlayerToFine)
 // This function ports the player inside the jail and sets a timer to get him back out
 Police_JailPlayer(playerid, JailTime)
 {
+	// Setup local variables
+	new Message[128];
+
 	// First remove the player from his vehicle
 	RemovePlayerFromVehicle(playerid);
 	// Set the player in the virtual world of the jail (so other players cannot see the jailed players on their radar)
@@ -226,10 +229,11 @@ Police_JailPlayer(playerid, JailTime)
 			case ClassAssistance: Assistance_EndJob(playerid);
 		}
 
+		format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
 		// Inform the player that he failed the mission
-		GameTextForPlayer(playerid, TXT_FailedMission, 5000, 4);
-		// Reduce the player's cash by 1000
-		RewardPlayer(playerid, -1000, 0);
+		GameTextForPlayer(playerid, Message, 5000, 4);
+		// Reduce the player's cash
+		RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 	}
 
 	return 1;
@@ -238,19 +242,13 @@ Police_JailPlayer(playerid, JailTime)
 // This is the timer that runs for every player who's in jail
 public UnjailPlayer(playerid)
 {
+	// Setup local variables
 	new JailMsg[20];
 
 	// Check if the player is allowed to leave yet
 	if (APlayerData[playerid][PlayerJailed] == 0)
 	{
-		// Set the player in the normal world
-		SetPlayerVirtualWorld(playerid, 0);
-		// Set player interior to the outside
-		SetPlayerInterior(playerid, 0);
-		// Put the player outside the jail (he should spawn at the location where he spawned after login or after choosing a rescue-point)
-		SpawnPlayer(playerid);
-		// Also, kill the jailtimer
-		KillTimer(APlayerData[playerid][PlayerJailedTimer]);
+		ReleasePlayerFromJail(playerid);
 	}
 	else
 	{
@@ -359,10 +357,10 @@ SpikeStrip_Create(playerid)
 		// Create a timer that checks all players in range to see if they run over the spikestrip
 		ASpikeStrips[StripIndex][SpikeTimer] = SetTimerEx("CheckSpikeStrip", 100, true, "i", StripIndex);
 		// Let the player know he created a spikestrip
-		SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've placed a spikestrip");
+		SendClientMessage(playerid, COLOR_GREEN, "You've placed a spikestrip");
 	}
 	else
-	    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}The maximum number of spikestrips have been created, try again later");
+	    SendClientMessage(playerid, COLOR_RED, "The maximum number of spikestrips have been created, try again later");
 }
 
 // This timer checks the spikestrips that have been planted (they automatically disappear after one minute)
@@ -421,3 +419,16 @@ Police_SendMessage(PoliceMessage[])
 				SendClientMessage(PoliceID, COLOR_WHITE, PoliceMessage); // Send the message to the police player
 }
 
+// This function releases the player from jail and
+// spawns him immediately (used for Unjail timer and /unjail)
+ReleasePlayerFromJail(playerid)
+{
+	// Set the player in the normal world
+	SetPlayerVirtualWorld(playerid, 0);
+	// Set player interior to the outside
+	SetPlayerInterior(playerid, 0);
+	// Put the player outside the jail (he should spawn at the location where he spawned after login or after choosing a rescue-point)
+	SpawnPlayer(playerid);
+	// Also, kill the jailtimer
+	KillTimer(APlayerData[playerid][PlayerJailedTimer]);
+}

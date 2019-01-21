@@ -8,6 +8,8 @@
 
 // Define how many login attempts are possible before player gets kicked
 #define MAX_LOGIN_ATTEMPTS 3
+// Define how many times a player can get banned before it is permanent
+#define MAX_BANS 5
 
 // Bank system
 new bool:IntrestEnabled = true; // The intrest has been enabled (or disabled when false)
@@ -48,6 +50,15 @@ new RefuelMaxPrice = 1000;
 
 // Defines for the speedcameras
 #define MAX_CAMERAS					120
+
+// Define prices
+#define PRICE_PAINT_JOB				200
+#define PRICE_COLOR_CHANGE			150
+#define PRICE_RESPRAY				150
+#define PRICE_FAILED_JOB			1000
+#define PRICE_GOBASE				200
+#define PRICE_AUTO_ASSIST			2000
+
 
 // Defines for police
 new bool:PoliceGetsWeapons = true;

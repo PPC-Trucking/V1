@@ -130,17 +130,18 @@
 
 // Job related, for all classes
 #define TXT_RewardJob "{00FF00}You finished the mission and earned $%i"
-#define TXT_FailedMission "~w~You ~r~failed~w~ your mission. You lost ~y~$1000~w~ to cover expenses." // Define game-text when player fails a mission
+#define TXT_FailedMission "~w~You ~r~failed~w~ your mission. You lost ~y~$%i~w~ to cover expenses." // Define game-text when player fails a mission
+#define TXT_FailedMissionCM "You {FF0000}failed{FFFFFF} your mission. You lost {FFFF00}$%i{FFFFFF} to cover expenses." // Define game-text when player fails a mission (Chat Message)
 
 // Class related
-#define TXT_ClassTrucker "Truck driver" // Define the game-text that shows when the player is choosing classes (this one = trucker)
-#define TXT_ClassBusDriver "Bus driver" // Define the game-text that shows when the player is choosing classes (this one = bus-driver)
+#define TXT_ClassTrucker "Truck Driver" // Define the game-text that shows when the player is choosing classes (this one = trucker)
+#define TXT_ClassBusDriver "Bus Driver" // Define the game-text that shows when the player is choosing classes (this one = bus-driver)
 #define TXT_ClassPilot "Pilot" // Define the game-text that shows when the player is choosing classes (this one = pilot)
 #define TXT_ClassPolice "Police" // Define the game-text that shows when the player is choosing classes (this one = police)
 #define TXT_ClassMafia "Mafia" // Define the game-text that shows when the player is choosing classes (this one = mafia)
 #define TXT_ClassCourier "Courier" // Define the game-text that shows when the player is choosing classes (this one = courier)
 #define TXT_ClassAssistance "Assistance" // Define the game-text that shows when the player is choosing classes (this one = assistance)
-#define TXT_ClassRoadWorker "Road worker" // Define the game-text that shows when the player is choosing classes (this one = roadworker)
+#define TXT_ClassRoadWorker "Road Worker" // Define the game-text that shows when the player is choosing classes (this one = roadworker)
 
 // No-job texts for all classes
 #define Trucker_NoJobText "No job at the moment. Enter \"~y~/work~w~\" to start a job"
@@ -153,10 +154,88 @@
 #define RoadWorker_NoJobText "No job at the moment. Enter \"~y~/work~w~\" to start a job"
 
 // Command related
-#define TXT_PlayerRescued "{0000FF}You've been rescued. $200 has been deducted."
+#define TXT_PlayerRescued "You have been sent to your base for {FF0000}$%i"
 #define TXT_PlayerSelfSpectate "{FF0000}You can't spectate yourself."
 #define TXT_PlayerSpectating "{FF0000}%s is currently spectating a player. You can't teleport to him."
 #define TXT_PlayerNotSpawned "{FF0000}You can't spectate that player because he didn't spawn yet."
+#define TXT_CmdNotExists "That command is not valid, please see /commands"
+#define TXT_SscanfFailedUsuage "Usage: \"%s\""
+#define TXT_NeedToLogin "You need to login to use that command."
+#define TXT_StillMuted "You are still muted."
+#define TXT_PlayerMuted "~w~You have been~n~~r~muted"
+#define TXT_PlayerUnMuted "~w~You have been~n~~g~unmuted"
+#define TXT_MutedDuration "Remaining: Minutes: %i, Seconds: %i"
+#define TXT_MessageTooLong "Your message is too long. Please shorten it."
+#define TXT_MessageTooLongWithLimit "Your message is too long. Please shorten it to %i characters."
+#define TXT_NoPrivMessageToU "You can not send a private message to yourself."
+#define TXT_PrivMessageTo "[PM To] %s (%i): %s"
+#define TXT_PrivMessageFrom "[PM From] %s (%i): %s"
+#define TXT_PlayerNotOnline "That player is not online."
+#define TXT_PlayerNotLoggedIn "That player has not logged in yet."
+#define TXT_MustBeOnFoot "You must be on foot to use this command."
+#define TXT_HouseMaxLevelNotInRange "You have to use a max-level from %i to %i."
+#define TXT_HouseMaxReached "The maximum amount of houses (%i) has been reached."
+#define TXT_HouseCreated "You have succesfully created house {FF00FF}%i{00FF00}."
+#define TXT_HouseIDNotFound "This house could not be found."
+#define TXT_HouseNotInRange "You are not in range of this house."
+#define TXT_HouseIsOwned "This house is owned."
+#define TXT_HouseDeleted "You have deleted the house."
+#define TXT_HouseBelongsToPlayer "This house already belongs to you. Use /enter to get inside."
+#define TXT_CantAffordHouse "You do not have enough money to buy this house."
+#define TXT_NoBuyableHouseInRange "You are not in range of a buyable house."
+#define TXT_HouseIsNotOpened "The owner of this house locked his house to the public. You can not /enter it."
+#define TXT_UseHousemenu "Use {FFFF00}/housemenu{00FF00} to change options for your house."
+#define TXT_UseBusmenu "Use {FFFF00}/busmenu{00FF00} to change options for your business."
+#define TXT_NoHouseOrBusinessToEnter "You are not in range of a house or business that you can /enter."
+#define TXT_NoHouseOrBusToExit "You are not inside a house or business."
+#define TXT_ExitToLeaveProperty "You can use {FFFF00}/exit{00FF00} to leave the property."
+#define TXT_CmdNotAllowedInsideBuilding "You can not use this command when you are inside a building."
+#define TXT_CmdOnlyAllowedInsideBuilding "You can only use this command inside a building."
+#define TXT_CmdOnlyAvailableAsDriver "You can only use this command when you are driving a vehicle."
+#define TXT_CmdOnlyAvailableInVehicle "You can only use this command inside a vehicle."
+#define TXT_OwnVehicleCanBeParkedOnly "You must driving a vehicle that you own to /park it."
+#define TXT_NotInRangeOfHouse "You need to be within %.0fm of your house to park your vehicle."
+#define TXT_VehicleParked "You have parked your vehicle."
+#define TXT_CarDealerNotInRange "You are not close to a car dealer."
+#define TXT_MustBeInnocent "You must be innocent (no wanted level) to use this command."
+#define TXT_CmdOnlyIfNotDoingAJob "You can not use this command while doing a job."
+#define TXT_CmdOnlyIfNotJailed "You can not use this command when you are in jail."
+#define TXT_NoTrailerAttached "There is no trailer attached to this vehicle."
+#define TXT_TrailerDetached "You have detached the trailer."
+#define TXT_VehicleFlipped "You have flipped the vehicle."
+#define TXT_VehicleRepaired "Your vehicle has been repaired."
+#define TXT_AdminRepairedAllVehicles "%s %s has repaired all vehicles."
+#define TXT_AdminHealedAllPlayers "%s %s has healed all players."
+#define TXT_AlreadyDoingAJob "You are already doing a job."
+#define TXT_NotDoingAJob "You are not doing any job."
+#define TXT_NotTheLeaderOfConvoy "You are not the leader of the convoy, you can not start a job."
+#define TXT_NotInsideATruckDriverVehicle "You need to be the driver of a trucking vehicle to start a job."
+#define TXT_NotInsideABusDriverVehicle "You need to be the driver of a bus to start a job."
+#define TXT_NotInsideAPilotVehicle "You need to be the driver of an aircraft vehicle to start a job."
+#define TXT_NotInsideAMafiaVehicle "You need to be the driver of a mafia vehicle to start a job."
+#define TXT_NotInsideACourierVehicle "You need to be the driver of a courier vehicle to start a job."
+#define TXT_NotInsideARoadWorkerVehicle "You need to be the driver of a roadworker vehicle to start a job."
+#define TXT_InvalidWantedLevel "You have entered an invalid wanted level. Only 0-6 are possible."
+#define TXT_PlayerAlreadyJailed "That player has been jailed already."
+#define TXT_PlayerNotJailed "That player is not in jail."
+#define TXT_JailedByAdmin "You have been jailed by %s %s for %i seconds."
+#define TXT_UnJailedByAdmin "You have been un-jailed by %s %s."
+#define TXT_GivenReason "Reason: %s"
+#define TXT_JailedByAdminConfirmation "You have jailed {FFFF00}%s{00FF00} for {FFFF00}%i{00FF00} seconds."
+#define TXT_UnJailedByAdminConfirmation "You have un-jailed {FFFF00}%s."
+#define TXT_WarnedBy "You have been warned by %s %s."
+#define TXT_KickedBy "You have been kicked by %s %s."
+#define TXT_BannedBy "You have been banned by %s for %i day."
+#define TXT_BannedPermanentlyBy "This was the %ith and last ban. You have been banned permanently by %s %s."
+#define TXT_GTWarningShow "~w~Warning %i/%i: ~r~%s"
+#define TXT_WarnedAdminConfirmation "You have warned %s (warnings: %i/%i)."
+#define TXT_KickAdminConfirmation "You have kicked %s for %s."
+#define TXT_AutoKickedByWarnings "This was the %ith and last warning. You have been kicked."
+#define TXT_MinimumSecondsMustBeOne "You must enter atleast one second."
+#define TXT_MinimumMinutesMustBeOne "You must enter atleast one minute."
+#define TXT_MinimumHoursMustBeOne "You must enter atleast one hour."
+#define TXT_MinimumDaysMustBeOne "You must enter atleast one day."
+#define TXT_PlayerAccountNotFound "There is no account with that playername."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
@@ -177,8 +256,8 @@
 #define TXT_DeliverCargoTo "{00FF00}Deliver the %s to %s"
 
 // Cardealer related
-#define TXT_PickupCarDealer "Use \"/rentcar\"\nto rent a car"
-#define TXT_BuyRentCarEmptyList "{FF0000}This is an empty list, the administrator may have disabled all vehicles of this class"
+#define TXT_PickupCarDealer "Use \"/rentvehicle\"\nto rent a car"
+#define TXT_BuyRentVehicleEmptyList "{FF0000}This is an empty list, the administrator may have disabled all vehicles of this class"
 #define TXT_RentBike "Rent a bike:"
 #define TXT_RentBoat "Rent a boat:"
 #define TXT_RentConvertible "Rent a convertible:"
@@ -259,7 +338,7 @@
 #define TXT_TimedRefuel "{808080}You want to refuel your vehicle? Park on a refuel-pickup and honk the horn"
 #define TXT_TimedConvoy "{808080}You want to start a convoy? Enter \"/convoy\" to start or join one"
 #define TXT_TimedGohome "{808080}You want to teleport to a house you own? Use \"/gohome\" to go home"
-#define TXT_TimedRentCar "{808080}You want to rent a vehicle? Go visit Wang Cars in Doherty, San Fierro"
+#define TXT_TimedRentVehicle "{808080}You want to rent a vehicle? Go visit Wang Cars in Doherty, San Fierro"
 #define TXT_TimedLicense "{808080}You're tired of random trucker/busdriver missions? Visit the driving school in Doherty and buy a license"
 #define TXT_TimedSpeedTraps "{808080}Beware of speedtraps (60kph in the city, 90kph on roads, 120kph on highways)"
 #define TXT_TimedGoBusiness "{808080}You want to teleport to a business you own? Use \"/gobus\" to go to your business"
@@ -270,15 +349,16 @@
 #define TXT_PlayerOwnsMaxHouses "{FF0000}You already own the maximum amount of allowed houses per player"
 #define TXT_ExitHouseReloadEnv "Waiting for the environment to load"
 #define TXT_PickupHouseOwned "%s\nOwned by: %s\nHouse-level: %i\n/enter"
-#define TXT_PickupHouseForSale "House available for\n$%i\nMax-level: %i\n/buyhouse"
+#define TXT_PickupHouseForSale "House (%i) available for\n$%i\nMax-level: %i\n/buyhouse"
 #define TXT_DialogOldHouseName "Old house-name: %s"
 #define TXT_DialogEnterNewHouseName "Give a new name to your house"
 #define TXT_DialogSelectHouseUpgrade "Select upgrade:"
 #define TXT_HouseReachedMaxLevel "{FF0000}Your house has reached the maximum level, you cannot upgrade it further"
 #define TXT_DialogBuyCarSelectClass "Select vehicle class:"
 #define TXT_HouseHasMaxVehicles "{FF0000}This house has the maximum amount of house-cars already"
-#define TXT_AlreadyBoughtRecentVehicle "{FF0000}You already bought a vehicle recently, use \"/getcar\" and \"/park\" to park it before buying a new one"
-#define TXT_EmptyCarSlot "%s{FFFFFF}Empty car-slot{FFFFFF}\n"
+#define TXT_AlreadyBoughtRecentVehicle "{FF0000}You already bought a vehicle recently, use \"/getvehicle\" and \"/park\" to park it before buying a new one"
+#define TXT_EmptyCarSlot "%s{FFFFFF}Empty vehicle-slot{FFFFFF}\n"
+#define TXT_EmptyHouseSlot "Empty house-slot"
 #define TXT_SelectVehicleToSell "Select vehicle to sell:"
 #define TXT_SelectVehicleToGet "Select vehicle to port to your location:"
 #define TXT_NoHouseVehicles "{FF0000}This house has no vehicles assigned to it"
@@ -290,7 +370,7 @@
 #define TXT_NoHouseInSlot "{FF0000}You don't have a house in this house-slot"
 #define TXT_ChangedHouseName "{00FF00}You've changed the name of your house"
 #define TXT_PlayerBoughtVehicle "{00FF00}You have bought a {FFFF00}%s{00FF00} for ${FFFF00}%i{00FF00}"
-#define TXT_PlayerMustUseGetcarAndPark "{00FF00}Now get outside and use \"{FFFF00}/getcar{00FF00}\" to spawn it, then use \"{FFFF00}/park{00FF00}\" to park it near your house"
+#define TXT_PlayerMustUseGetVehicleAndPark "{00FF00}Now get outside and use \"{FFFF00}/getvehicle{00FF00}\" to spawn it, then use \"{FFFF00}/park{00FF00}\" to park it near your house"
 #define TXT_PlayerMustUsePark "{00FF00}You've spawned your vehicle, now use \"{FFFF00}/park{00FF00}\" to park it near your house"
 #define TXT_CannotAffordVehicle "{FF0000}You can't afford to buy this vehicle"
 #define TXT_PlayerSoldHouse "{00FF00}You've sold your house"
@@ -301,6 +381,21 @@
 #define TXT_HouseAlreadyHasInsurance "{FF0000}This house already has an insurance for it's vehicles"
 #define TXT_PlayerBoughtInsurance "{00FF00}You've bought a vehicle-insurance for all vehicles in this house for $%i"
 #define TXT_CannotAffordInsurance "{FF0000}You cannot afford the vehicle-insurance"
+#define TXT_NotInsideAHouse "You must be inside your house to use this command."
+#define TXT_HouseMenuTitle "Please select an option for"
+#define TXT_HouseMenuChangeHouseName "Change house name"
+#define TXT_HouseMenuUpgradeHouse "Upgrade house"
+#define TXT_HouseMenuBuyHouseVehicle "Buy house-vehicle"
+#define TXT_HouseMenuBuyHouseVehicleInsurance "Buy house-vehicle insurance"
+#define TXT_HouseMenuSellHouseVehicle "Sell house-vehicle"
+#define TXT_HouseMenuOpenHouse "Open house (Currently: {FF0000}Closed{FFFFFF})"
+#define TXT_HouseMenuCloseHouse "Close house (Currently: {00FF00}Opened{FFFFFF})"
+#define TXT_HouseOpenedForEveryone "You have opened the house to the public. {00FF00}Everyone can /enter it."
+#define TXT_HouseClosedForEveryone "You have closed the house to the public. {FF0000}Only you can /enter it."
+#define TXT_HouseMenuSellHouse "Sell house"
+#define TXT_GetVehicleTitle "Choose the house to get a car from:"
+#define TXT_GoHomeTitle "Choose the house to go to:"
+#define TXT_NoHouseFound "You do not have any house."
 
 // Business related
 #define TXT_PickupBusinessOwned "%s\nOwned by: %s\nBusiness-level: %i\n/enter"
@@ -315,3 +410,8 @@
 #define TXT_BusinessReachedMaxLevel "{FF0000}Your business has reached the maximum level, you cannot upgrade it further"
 #define TXT_SureSellBusiness "Are you sure you want to sell your business for $%i?"
 #define TXT_PlayerSoldBusiness "{00FF00}You've sold your business"
+
+// Prices related
+#define TXT_VehColorChangePaid "You have changed the color of your vehicle for {FFFF00}$%i"
+#define TXT_VehPaintJobPaid "You have repainted your vehicle for {FFFF00}$%i"
+#define TXT_AutoAssistPaid "Your vehicle has been auto-repaired and refuelled for {FFFF00}$%i {00FF00}as there is no assistance player online."

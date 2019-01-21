@@ -64,7 +64,7 @@ Roadworker_StartRandomJob(playerid)
 						// Check if there are no speedcamera's
 						if (CamID == -1)
 						{
-							SendClientMessage(playerid, COLOR_WHITE, "{FF0000}Unable to start a job, there are no speedcamera's created");
+							SendClientMessage(playerid, COLOR_RED, "Unable to start a job, there are no speedcamera's created");
 							return 1;
 						}
 
@@ -92,13 +92,13 @@ Roadworker_StartRandomJob(playerid)
 						// Start a timer that ticks every second to see if the player is still inside his vehicle
 						APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 						// Inform the player what he must do
-						SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Repair the indicated speedcamera or go back to base to end the mission");
+						SendClientMessage(playerid, COLOR_GREEN, "Repair the indicated speedcamera or go back to base to end the mission");
 					}
 					else
-					    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need a utility trailer attached to your utility van");
+					    SendClientMessage(playerid, COLOR_RED, "You need a utility trailer attached to your utility van");
 				}
 				else
-				    SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need a utility trailer attached to your utility van");
+				    SendClientMessage(playerid, COLOR_RED, "You need a utility trailer attached to your utility van");
 			}
 			case VehicleTowTruck: // With a towtruck, you're gonna do "tow broken vehicle to shredder" job-type
 			{
@@ -132,7 +132,7 @@ Roadworker_StartRandomJob(playerid)
 				// Set the job-fail-time for the global vehicle-timer
 				APlayerData[playerid][VehicleTimerTime] = Job_TimeToFailMission;
 				// Inform the player what he must do
-				SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Tow the broken vehicle to the shredder");
+				SendClientMessage(playerid, COLOR_GREEN, "Tow the broken vehicle to the shredder");
 			}
 		}
 	}
@@ -174,7 +174,7 @@ Roadworker_EnterCheckpoint(playerid)
 					APlayerData[playerid][TrailerID] = APlayerData[playerid][LoadID];
 
 					// Inform the player what he must do
-					SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Tow the broken vehicle to the shredder");
+					SendClientMessage(playerid, COLOR_GREEN, "Tow the broken vehicle to the shredder");
 			    }
 			    case 2: // Going to deliver the broken vehicle to the shredder
 			    {
@@ -189,7 +189,7 @@ Roadworker_EnterCheckpoint(playerid)
 					// Pay the player for delivering the broken vehicle to the shredder
 					RewardPlayer(playerid, 3500, 1);
 					// Let the player know he earned money for delivering the broken vehicle to the shredder
-					SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've earned {FFFF00}$3500{00FF00} for delivering the broken vehicle to the shredder");
+					SendClientMessage(playerid, COLOR_GREEN, "You've earned {FFFF00}$3500{00FF00} for delivering the broken vehicle to the shredder");
 					// Also increase the stats
 					APlayerData[playerid][StatsRoadworkerJobs]++;
 					// Save the player's account
@@ -198,7 +198,7 @@ Roadworker_EnterCheckpoint(playerid)
 			}
 		}
 		else
-			SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You need to be in your towtruck to proceed");
+			SendClientMessage(playerid, COLOR_RED, "You need to be in your towtruck to proceed");
 	}
 
 	return 1;
@@ -237,7 +237,7 @@ public Roadworker_RepairCamera(playerid)
 	// Pay the player for fixing this camera
 	RewardPlayer(playerid, 2500, 1);
 	// Let the player know he earned money for fixing this camera
-	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}You've earned {FFFF00}$2500{00FF00} for fixing a speedcamera");
+	SendClientMessage(playerid, COLOR_GREEN, "You've earned {FFFF00}$2500{00FF00} for fixing a speedcamera");
 	// Also increase the stats
 	APlayerData[playerid][StatsRoadworkerJobs]++;
 	// Save the player's account
@@ -261,7 +261,7 @@ public Roadworker_RepairCamera(playerid)
 	SetPlayerRaceCheckpoint(playerid, 1, x, y, z, 0.0, 0.0, 0.0, 2.5);
 
 	// Inform the player what he must do
-	SendClientMessage(playerid, COLOR_WHITE, "{00FF00}Repair the next indicated speedcamera or go back to base to end the mission");
+	SendClientMessage(playerid, COLOR_GREEN, "Repair the next indicated speedcamera or go back to base to end the mission");
 	// Enable the player's actions (he can move again)
 	TogglePlayerControllable(playerid, 1);
 }

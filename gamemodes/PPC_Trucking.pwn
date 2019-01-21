@@ -6,12 +6,6 @@
 
 
 // ********************************************************************************************************************
-// Set default gamemode name
-// ********************************************************************************************************************
-
-#define GameModeName				"PowerPC603's Trucking Server"
-
-// ********************************************************************************************************************
 // Limit the amount of cops with a value greater than 0
 // Setting this to "3" would mean:
 // - having 3 normal players (non-cop players) before the first cop can join the server
@@ -77,7 +71,7 @@ main()
 {
 	// Print some standard lines to the server's console
 	print("\n----------------------------------");
-	print(GameModeName);
+	print("Gamemode loading...");
 	print("----------------------------------\n");
 }
 
@@ -86,12 +80,6 @@ main()
 // This callback gets called when the server initializes the gamemode
 public OnGameModeInit()
 {
-	new HostCommand[128];
-	// Change the hostname
-	format(HostCommand, sizeof(HostCommand), "hostname %s", GameModeName);
-	SendRconCommand(HostCommand);
-	SetGameModeText(GameModeName); // Set the Mode of the gamemode, which appears in the list of servers
-
 	GameModeInit_VehiclesPickups(); // Add all static vehicles and pickups when the server starts that are required (also load the houses)
 	GameModeInit_Classes(); // Add character models to the class-selection (without weapons)
 
@@ -246,6 +234,31 @@ ShowRemainingBanTime(playerid)
 
 
 
+// This function shows the player how long his muted time is
+ShowRemainingMutedTime(playerid)
+{
+	// Setup local variables
+	new TotalMutedTime, Minutes, Seconds, Msg[128];
+
+	// Get the total muted time
+	TotalMutedTime = APlayerData[playerid][Muted] - gettime();
+
+	// Calculate minutes
+	if (TotalMutedTime >= 60)
+	{
+		Minutes = TotalMutedTime / 60;
+		TotalMutedTime = TotalMutedTime - (Minutes * 60);
+	}
+	// Calculate seconds
+	Seconds = TotalMutedTime;
+
+	// Display the remaining muted time for this player
+	format(Msg, sizeof(Msg), TXT_MutedDuration, Minutes, Seconds);
+	SendClientMessage(playerid, COLOR_SILVERCHALICE, Msg);
+}
+
+
+
 // This callback gets called when a player disconnects from the server
 public OnPlayerDisconnect(playerid, reason)
 {
@@ -274,6 +287,9 @@ public OnPlayerDisconnect(playerid, reason)
 	// Send a message to all players to let them know somebody left the server
 	format(Msg, sizeof(Msg), TXT_PlayerLeftServer, Name, playerid);
 	SendClientMessageToAll(COLOR_WHITE, Msg);
+
+	// Reset muted time so the player gets unmuted automatically
+	APlayerData[playerid][Muted] = 0;
 
 	// If the player entered a proper password (the player has an account)
 	if (strlen(APlayerData[playerid][PlayerPassword]) != 0)
@@ -324,7 +340,6 @@ public OnPlayerDisconnect(playerid, reason)
 	APlayerData[playerid][PlayerFrozen] = 0; // Clearing this variable automatically kills the frozentimer
 	APlayerData[playerid][Bans] = 0;
 	APlayerData[playerid][BanTime] = 0;
-	APlayerData[playerid][Muted] = false;
 	APlayerData[playerid][RulesRead] = false;
 	APlayerData[playerid][AutoReportTime] = 0;
 	APlayerData[playerid][TruckerLicense] = 0;
@@ -409,18 +424,70 @@ public OnPlayerDisconnect(playerid, reason)
 // This callback gets called whenever a player uses the chat-box
 public OnPlayerText(playerid, text[])
 {
-	// Block the player's text if he has been muted
-    if (APlayerData[playerid][Muted] == true || APlayerData[playerid][LoggedIn] == false)
+	// Check if the player is not logged in
+	if (APlayerData[playerid][LoggedIn] != true)
 	{
-		// Let the player know he's still muted
-		SendClientMessage(playerid, COLOR_RED, "You are still muted");
+		// Let the player know that he must login first
+		SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
 
-		// Don't allow his text to be sent to the chatbox
+		// Do not send the text to the chatbox
+		return 0;
+	}
+
+	// Block the player's text if he has been muted
+    if ((APlayerData[playerid][Muted] > gettime()))
+	{
+		// Let the player know that he is still muted
+		SendClientMessage(playerid, COLOR_ORANGE, TXT_StillMuted);
+
+		// Show the remaining muted time to the player
+		ShowRemainingMutedTime(playerid);
+
+		// Do not send the text to the chatbox
 		return 0;
 	}
 
     return 1;
 }
+
+
+
+public OnPlayerCommandReceived(playerid, cmdtext[]) {
+	// Check if the player is not logged in
+	if (APlayerData[playerid][LoggedIn] != true)
+		// Let the player know that he must login first
+		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+
+	// Check if the player is using the commands /me or /pm
+	if (strfind(cmdtext, "/me ", true) != -1 || strfind(cmdtext, "/pm ", true) != -1)
+	{
+		// Check if the player is muted
+		if (APlayerData[playerid][Muted] > gettime())
+		{
+			// Let the player know that he is still muted
+			SendClientMessage(playerid, COLOR_ORANGE, TXT_StillMuted);
+			
+			// Show the remaining muted time to the player
+			ShowRemainingMutedTime(playerid);
+
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
+
+
+public OnPlayerCommandPerformed( playerid, cmdtext[ ], success )
+ {
+	// Check if the command is not valid
+	if (!success)
+		SendClientMessage(playerid, COLOR_GRAY, TXT_CmdNotExists);
+
+	return 1;
+}
+
 
 
 // This callback gets called when a player interacts with a dialog
@@ -460,8 +527,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case DialogBoat: Dialog_Boat(playerid, response, listitem); // The boat-dialog
 		case DialogNeon: Dialog_Neon(playerid, response, listitem); // The neon-dialog
 
-		case DialogRentCarClass: Dialog_RentProcessClass(playerid, response, listitem); // The player chose a vehicleclass from where he can rent a vehicle
-		case DialogRentCar: Dialog_RentCar(playerid, response, listitem); // The player chose a vehicle from the list of vehicles from the vehicleclass he chose before
+		case DialogRentVehicleClass: Dialog_RentProcessClass(playerid, response, listitem); // The player chose a vehicleclass from where he can rent a vehicle
+		case DialogRentVehicle: Dialog_RentVehicle(playerid, response, listitem); // The player chose a vehicle from the list of vehicles from the vehicleclass he chose before
 
 		case DialogPlayerCommands: Dialog_PlayerCommands(playerid, response, listitem); // Displays all commands in a split-dialog structure
 		case DialogPrimaryCarColor: Dialog_PrimaryCarColor(playerid, response, listitem);
@@ -474,15 +541,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 		case DialogHouseMenu: Dialog_HouseMenu(playerid, response, listitem); // Process the main housemenu
 		case DialogUpgradeHouse: Dialog_UpgradeHouse(playerid, response, listitem); // Process the house-upgrade menu
-		case DialogGoHome: Dialog_GoHome(playerid, response, listitem); // Port to one of your houses
+		case DialogGoHome: Dialog_GoHome(playerid, response, inputtext); // Port to one of your houses
 		case DialogHouseNameChange: Dialog_ChangeHouseName(playerid, response, inputtext); // Change the name of your house
 		case DialogSellHouse: Dialog_SellHouse(playerid, response); // Sell the house
 		case DialogBuyCarClass: Dialog_BuyCarClass(playerid, response, listitem); // The player chose a vehicleclass from where he can buy a vehicle
 		case DialogBuyCar: Dialog_BuyCar(playerid, response, listitem); // The player chose a vehicle from the list of vehicles from the vehicleclass he chose before
 		case DialogSellCar: Dialog_SellCar(playerid, response, listitem);
 		case DialogBuyInsurance: Dialog_BuyInsurance(playerid, response);
-		case DialogGetCarSelectHouse: Dialog_GetCarSelectHouse(playerid, response, listitem);
-		case DialogGetCarSelectCar: Dialog_GetCarSelectCar(playerid, response, listitem);
+		case DialogGetVehiclesSelectHouse: Dialog_GetVehiclesSelectHouse(playerid, response, inputtext);
+		case DialogGetVehiclesSelectVehicle: Dialog_GetVehiclesSelectVehicle(playerid, response, listitem);
 		case DialogUnclampVehicles: Dialog_UnclampVehicles(playerid, response);
 
 		case DialogCreateBusSelType: Dialog_CreateBusSelType(playerid, response, listitem);
@@ -1101,11 +1168,15 @@ public OnVehicleSpawn(vehicleid)
 // This callback is called when the vehicle leaves a mod shop
 public OnVehicleRespray(playerid, vehicleid, color1, color2)
 {
-	// Let the player pay $150 for changing the color (if they have been changed)
+	// Setup local variables
+	new Message[128];
+
+	// Let the player pay for changing the color (if they have been changed)
 	if ((AVehicleData[vehicleid][Color1] != color1) || (AVehicleData[vehicleid][Color2] != color2))
 	{
-		RewardPlayer(playerid, -150, 0);
-		SendClientMessage(playerid, COLOR_GREEN, "You've changed the color of your vehicle for $150");
+		RewardPlayer(playerid, -PRICE_RESPRAY, 0);
+		format(Message, sizeof(Message), TXT_VehColorChangePaid, PRICE_RESPRAY);
+		return SendClientMessage(playerid, COLOR_GREEN, Message);
 	}
 
 	// Save the colors
@@ -1181,7 +1252,7 @@ public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 public OnPlayerExitVehicle(playerid, vehicleid)
 {
 	// Setup local variables
-	new engine, lights, alarm, doors, bonnet, boot, objective;
+	new engine, lights, alarm, doors, bonnet, boot, objective, Message[128];
 
 	// Check if the player is the driver of the vehicle
 	if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
@@ -1199,10 +1270,11 @@ public OnPlayerExitVehicle(playerid, vehicleid)
 		{
 		    // End the job (clear data)
 			Pilot_EndJob(playerid);
+			format(Message, sizeof(Message), TXT_FailedMission, PRICE_FAILED_JOB);
 			// Inform the player that he failed the mission
-			GameTextForPlayer(playerid, TXT_FailedMission, 5000, 4);
-			// Reduce the player's cash by 1000
-			RewardPlayer(playerid, -1000, 0);
+			GameTextForPlayer(playerid, Message, 5000, 4);
+			// Reduce the player's cash
+			RewardPlayer(playerid, -PRICE_FAILED_JOB, 0);
 		}
 	}
 

@@ -120,7 +120,7 @@ Business_CreateEntrance(BusID)
 	// Setup local variables
 	new Msg[128], Float:x, Float:y, Float:z, BusType, Icon;
 
-	// Get the coordinates of the house's pickup (usually near the door)
+	// Get the coordinates of the business pickup (usually near the door)
 	x = ABusinessData[BusID][BusinessX];
 	y = ABusinessData[BusID][BusinessY];
 	z = ABusinessData[BusID][BusinessZ];
@@ -191,5 +191,20 @@ Business_PayEarnings(playerid, BusID)
 	// Inform the player that he has earned money from his business
 	format(Msg, sizeof(Msg), "{00FF00}Your business has earned {FFFF00}$%i{00FF00} since your last withdrawl", Earnings);
 	SendClientMessage(playerid, COLOR_WHITE, Msg);
+}
+
+// This function returns "1" if the given player is the owner of the given business
+Business_PlayerIsOwner(playerid, BusID)
+{
+	// Loop through all businesses
+	for (new i; i < MAX_BUSINESSPERPLAYER; i++)
+	{
+		// Check if the player owns the business in any of his business-slots
+		if (APlayerData[playerid][Business][i] == BusID)
+		    return 1;
+	}
+
+	// If the player doesn't own the business, return 0
+	return 0;
 }
 

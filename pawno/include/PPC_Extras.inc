@@ -14,7 +14,7 @@ COMMAND:porthouse(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /porthouse when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_RED, "You cannot use /porthouse when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128], HouseID;
@@ -53,7 +53,7 @@ COMMAND:portbus(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /portbus when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_RED, "You cannot use /portbus when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128], BusID;
@@ -94,7 +94,7 @@ COMMAND:properties(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /properties when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_RED, "You cannot use /properties when you're inside a vehicle");
 
 	// Setup local variables
 	new Name[24], DialogTitle[128];
@@ -148,7 +148,7 @@ COMMAND:properties(playerid, params[])
 	}
 
 	// Check if a name has been found
-	if (Name[0] == 0) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No owned house or business found in range");
+	if (Name[0] == 0) return SendClientMessage(playerid, COLOR_RED, "No owned house or business found in range");
 
 	// Clear the array
 	for (new i; i < sizeof(PropertyList); i++)
@@ -214,7 +214,7 @@ COMMAND:propertyid(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /propertyid when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_RED, "You cannot use /propertyid when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -260,7 +260,7 @@ COMMAND:propertyid(playerid, params[])
 	}
 
 	// There was no house or business in range, so let the player know about it
-	SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No house or business in range to ID");
+	SendClientMessage(playerid, COLOR_RED, "No house or business in range to ID");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -279,7 +279,7 @@ COMMAND:delproperty(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /delproperty when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_RED, "You cannot use /delproperty when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -331,7 +331,7 @@ COMMAND:delproperty(playerid, params[])
 	}
 
 	// There was no house or business in range, so let the player know about it
-	SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No house or business in range to delete");
+	SendClientMessage(playerid, COLOR_RED, "No house or business in range to delete");
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -348,7 +348,7 @@ COMMAND:evict(playerid, params[])
 	// Exit the command if the player has an admin-level lower than 5
 	if (APlayerData[playerid][PlayerLevel] < 5) return 0;
 	// Exit the command if the player is inside a vehicle
-	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You cannot use /evict when you're inside a vehicle");
+	if (GetPlayerState(playerid) != PLAYER_STATE_ONFOOT) return SendClientMessage(playerid, COLOR_RED, "You cannot use /evict when you're inside a vehicle");
 
 	// Setup local variables
 	new Msg[128];
@@ -376,7 +376,7 @@ COMMAND:evict(playerid, params[])
 					return 1;
 				}
 				else
-					return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}This house has no owner and cannot be evicted");
+					return SendClientMessage(playerid, COLOR_RED, "This house has no owner and cannot be evicted");
 			}
 		}
 	}
@@ -406,13 +406,13 @@ COMMAND:evict(playerid, params[])
 					return 1;
 				}
 				else
-					return SendClientMessage(playerid, COLOR_WHITE, "{FF0000}This business has no owner and cannot be evicted");
+					return SendClientMessage(playerid, COLOR_RED, "This business has no owner and cannot be evicted");
 			}
 		}
 	}
 
 	// There was no house or business in range, so let the player know about it
-	SendClientMessage(playerid, COLOR_WHITE, "{FF0000}No house or business in range to evict");
+	SendClientMessage(playerid, COLOR_RED, "No house or business in range to evict");
 
 	// Let the server know that this was a valid command
 	return 1;

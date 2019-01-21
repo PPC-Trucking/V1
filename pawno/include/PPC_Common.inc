@@ -129,7 +129,7 @@ Player_PortOutAdminZone(playerid, Float:x1, Float:y1, Float:z1, Float:x2, Float:
 		    if ((y1 < y) && (y < y2))
 		        if ((z1 < z) && (z < z2))
 				{
-					SendClientMessage(playerid, COLOR_WHITE, "{FF0000}You're not allowed inside an admin-area");
+					SendClientMessage(playerid, COLOR_RED, "You're not allowed inside an admin-area");
 					SetPlayerPos(playerid, x3, y3, z3); // Port the player out of the area
 				}
 }
@@ -606,3 +606,32 @@ RemoveAllPlayersFromVehicle(vid)
 	}
 }
 
+// This function returns true or false whether the
+// playerid is dead or in class-selection
+stock IsPlayerDeadOrInClassSelection(playerid)
+{
+	if (GetPlayerState(playerid) == PLAYER_STATE_WASTED)
+		return true;
+	else
+		return false;
+}
+
+// This function returns true or false whether the
+// playerid is spectating
+stock IsPlayerSpectating(playerid)
+{
+	if (GetPlayerState(playerid) == PLAYER_STATE_SPECTATING)
+		return true;
+	else
+		return false;
+}
+
+// This function returns true or false whether the
+// playerid is inside a building
+stock IsPlayerInsideABuilding(playerid)
+{
+	if (GetPlayerInterior(playerid) != 0)
+		return true;
+	else
+		return false;
+}

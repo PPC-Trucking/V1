@@ -154,7 +154,7 @@ House_CreateEntrance(HouseID)
         // Create a green house-pickup (house is free)
 		AHouseData[HouseID][PickupID] = CreateDynamicPickup(1273, 1, x, y, z, 0);
 		// Create the 3DText that appears above the house-pickup (displays the price of the house)
-		format(Msg, sizeof(Msg), TXT_PickupHouseForSale, AHouseData[HouseID][HousePrice], AHouseData[HouseID][HouseMaxLevel]);
+		format(Msg, sizeof(Msg), TXT_PickupHouseForSale, HouseID, AHouseData[HouseID][HousePrice], AHouseData[HouseID][HouseMaxLevel]);
 		AHouseData[HouseID][DoorText] = CreateDynamic3DTextLabel(Msg, COLOR_TEAL, x, y, z + 1.0, 50.0);
 		// Add a streamed icon to the map (green house), type = 31, color = 0, world = 0, interior = 0, playerid = -1, drawdist = 150.0
 		AHouseData[HouseID][MapIconID] = CreateDynamicMapIcon(x, y, z, 31, 0, 0, 0, -1, 150.0);
@@ -193,7 +193,7 @@ House_UpdateEntrance(HouseID)
         // Create a green house-pickup (house is free)
 		AHouseData[HouseID][PickupID] = CreateDynamicPickup(1273, 1, x, y, z, 0);
 		// Update the 3DText that appears above the house-pickup (displays the price of the house)
-		format(Msg, sizeof(Msg), TXT_PickupHouseForSale, AHouseData[HouseID][HousePrice], AHouseData[HouseID][HouseMaxLevel]);
+		format(Msg, sizeof(Msg), TXT_PickupHouseForSale, HouseID, AHouseData[HouseID][HousePrice], AHouseData[HouseID][HouseMaxLevel]);
 		UpdateDynamic3DTextLabelText(AHouseData[HouseID][DoorText], COLOR_TEAL, Msg);
 		// Add a streamed icon to the map (green house), type = 31, color = 0, world = 0, interior = 0, playerid = -1, drawdist = 150.0
 		AHouseData[HouseID][MapIconID] = CreateDynamicMapIcon(x, y, z, 31, 0, 0, 0, -1, 150.0);
@@ -385,10 +385,10 @@ House_CalcSellPrice(HouseID)
 	return SellPrice;
 }
 
-// his function returns "1" if the given player is the owner of the given house
+// This function returns "1" if the given player is the owner of the given house
 House_PlayerIsOwner(playerid, HouseID)
 {
-	// Loop through all houses owner by this player
+	// Loop through all houses
 	for (new i; i < MAX_HOUSESPERPLAYER; i++)
 	{
 		// Check if the player owns the house in any of his house-slots

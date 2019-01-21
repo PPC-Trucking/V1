@@ -1,4 +1,4 @@
-// This file holds an array of defined buyable vehicles, used in the /buycar and /rentcar dialogs
+// This file holds an array of defined buyable vehicles, used in the /buycar and /rentvehicle dialogs
 
 
 #define VClassBike          1
@@ -22,7 +22,7 @@ enum TBuyableVehicle
 	CarName[50], // Holds the name of the vehicle
 	VehicleClass, // Holds the ID of the vehicleclass
 	CarModel, // Holds the model-ID of the vehicle
-	Price // Holds the price for the vehicle (renting it will be 10% of this price)
+	VehiclePrice // Holds the price for the vehicle (renting it will be 10% of this price)
 }
 
 new ABuyableVehicles[][TBuyableVehicle] =

@@ -151,8 +151,8 @@
 #define DialogCar                   102
 #define DialogPlane                 103
 #define DialogTrailer               104
-#define DialogRentCarClass       	105
-#define DialogRentCar	        	106
+#define DialogRentVehicleClass       	105
+#define DialogRentVehicle	        	106
 #define DialogBoat                  107
 #define DialogNeon                  108
 
@@ -175,8 +175,8 @@
 #define DialogBuyCar                607
 #define DialogSellCar               608
 #define DialogBuyInsurance          609
-#define DialogGetCarSelectHouse     610
-#define DialogGetCarSelectCar       611
+#define DialogGetVehiclesSelectHouse     610
+#define DialogGetVehiclesSelectVehicle       611
 #define DialogUnclampVehicles       612
 
 #define DialogCreateBusSelType      701
@@ -216,6 +216,7 @@
 
 
 // Define messagecolors
+// see http://chir.ag/projects/name-that-color/
 #define COLOR_RED 0xFF0000FF
 #define COLOR_YELLOW 0xFFFF00FF
 #define COLOR_WHITE 0xFFFFFFFF
@@ -224,6 +225,11 @@
 #define COLOR_GRAY 0x808080FF
 #define COLOR_SILVERCHALICE 0xA0A0A0FF
 #define COLOR_TEAL 0x008080FF
+#define COLOR_DODGERBLUE 0x00BBFFFF
+#define COLOR_SCARLET 0xFF3300FF
+#define COLOR_ORANGE 0xFF681FFF
+#define COLOR_PALECANARY 0xFFFF99FF
+#define COLOR_BIRDFLOWER 0xD4CD16FF
 
 // Define Virtual Worlds
 #define WORLD_JAIL 10254
@@ -267,7 +273,7 @@ new ATimedMessages[][128] =
 	{TXT_TimedRefuel},
 	{TXT_TimedConvoy},
 	{TXT_TimedGohome},
-	{TXT_TimedRentCar},
+	{TXT_TimedRentVehicle},
 	{TXT_TimedLicense},
 	{TXT_TimedSpeedTraps},
 	{TXT_TimedGoBusiness}
@@ -299,10 +305,10 @@ new AdminLevelName[6][24] =
 {
 	{"Player"}, // Admin-level 0
 	{"Moderator"}, // Admin-level 1
-	{"Helper-admin"}, // Admin-level 2
-	{"Admin"}, // Admin-level 3
-	{"Head-admin"}, // Admin-level 4
-	{"Owner-admin"} // Admin-level 5
+	{"Junior Admin"}, // Admin-level 2
+	{"Senior Admin"}, // Admin-level 3
+	{"Head Admin"}, // Admin-level 4
+	{"Owner"} // Admin-level 5
 };
 
 
@@ -440,7 +446,7 @@ enum TBusinessData
 	bool:Owned, // Holds true if the Business is owned by somebody
 	Owner[24] // Holds the name of the owner of the Business
 }
-// Holds the data for all houses
+// Holds the data for all businesses
 new ABusinessData[MAX_BUSINESS][TBusinessData];
 // This variable holds the business-time (this value is increased every hour and is used to calculate the amount of money a business
 // has generated after the last transaction of the business)
@@ -581,7 +587,7 @@ enum TPlayerData
 	Bans, // Holds the number of bans for this player
 	BanTime, // Holds the time where the player is unbanned automatically (when the ban is over)
 	bool:LoggedIn, // Holds true if the player has properly logged in
-	bool:Muted, // Holds "true" if the player is muted
+	Muted, // Holds the time where the player is unmuted automatically
 	bool:RulesRead, // Holds "true" if the player accepted the rules
 	AutoReportTime, // Used to prevent the anti-hack system reporting the player every half a second when the player uses hacks
 
@@ -667,11 +673,11 @@ enum TPlayerData
 	DialogTrailerFirstTrailer, // Holds the first array-index where the trailerlist should start when the player asks to choose a trailer to spawn ("/trailer")
 
 	DialogRentVClass, // Holds the ID of the chosen vehicle class to process when renting a vehicle
-	DialogRentCarIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to rent
+	DialogRentVehicleIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to rent
 	DialogBuyVClass, // Holds the ID of the chose vehicle class to process when buying a vehicle
 	DialogBuyCarIndex, // Holds the index in the ABuyableVehicles array which vehicle the player chose to buy
 
-	DialogGetCarHouseID, // Holds the HouseID from which to get a vehicle when using /getcar
+	DialogGetVehiclesHouseID, // Holds the HouseID from which to get a vehicle when using /getvehicle
 
 	DialogOtherPlayer, // Holds the id of the other player when viewing that other player's stats
 	DialogOtherPlayerHouse, // Holds the HouseID of the other player when viewing the stats for that house
@@ -981,7 +987,7 @@ new ACommands[][TCommands] =
 	{0, "/engine",                                 						"Toggle engine-status on or off"},
 	{0, "/enter",                                   					"Enter your business or house"},
 	{0, "/flip",                                   						"Flips your vehicle back onto it's wheels"},
-	{0, "/getcar",                                   					"Teleports a house-car to your location"},
+	{0, "/getvehicle",                                   					"Teleports a house-car to your location"},
 	{0, "/givecash <Player> <Amount>",                              "Give money to another player"},
 	{0, "/gobase",                                   					"Teleports you to a location where your class starts"},
 	{0, "/gobus",                                   					"Teleport to a business you own"},
@@ -1007,13 +1013,13 @@ new ACommands[][TCommands] =
 	{1, "/boat",                                   						"Spawns a boat of your choice"},
 	{1, "/car",                                   						"Spawns a car of your choice"},
 	{1, "/endspec",                                   					"Stop spectating a player"},
-	{1, "/freeze <Player> <Duration (in Seconds)> <Reason>",                    "Freeze a player for a certain time in seconds"},
+	{1, "/freeze <Player> <Duration (in seconds)> <Reason>",                    "Freeze a player for a certain time in seconds"},
 	{1, "/unfreeze <Player>",                    "Unfreeze a player"},
 	{1, "/fuel",                                   						"Refuels your vehicle for free"},
 	{1, "/get <Player>",                                   		"Teleports another player to your location"},
-	{1, "/jail <Player> <Duration (in Seconds)> <Reason>",                     "Jails another player for a certain time in seconds"},
+	{1, "/jail <Player> <Duration (in seconds)> <Reason>",                     "Jails another player for a certain time in seconds"},
 	{1, "/kick <Player> <Reason>",                                "Kick a player"},
-	{1, "/mute <Player> <Reason>",                                 "Mute a player"},
+	{1, "/mute <Player> <Duration (in minutes)> <Reason>",                                 "Mute a player for x minutes"},
 	{1, "/muted",                                   					"Display muted players"},
 	{1, "/nos",                                   						"Adds nitro to your vehicle"},
 	{1, "/plane",                                   					"Spawns a plane of your choice"},
@@ -1022,15 +1028,15 @@ new ACommands[][TCommands] =
 	{1, "/portvehicle <Vehicle ID>",                                   		"Teleport yourself to a vehicle"},
 	{1, "/rep",                                   						"Show the last 50 reports in a dialog"},
 	{1, "/repair",                                   					"Repairs your vehicle for free"},
-	{1, "/respawnvehicle <Vehicle-id>",                                   		"Forces a vehicle to respawn"},
+	{1, "/respawnvehicle <Vehicle ID>",                                   		"Forces a vehicle to respawn"},
 	{1, "/spec <Player>",                                   		"Spectate a player"},
 	{1, "/tele <Player 1> <Player 2>",                          "Teleport a player to another player"},
 	{1, "/trailer",                                   					"Spawns a trailer of your choice"},
 	{1, "/unmute <Player>",                                   		"Un-mutes a player"},
-	{1, "/warn <PlayerToWarn> <Reason>",                                "Warn a player, up to three times"},
-	{2, "/announce <Style (0-6)> <Time in Seconds 1-5> <Message>",		"Shows a message on player's screen (GameText)"},
+	{1, "/warn <Player> <Reason>",                                "Warn a player, up to three times"},
+	{2, "/announce <Style (0-6)> <Duration (in seconds 1-5)> <Message>",		"Shows a message on player's screen (GameText)"},
 	{2, "/setwanted <Player> <Stars (0-6)>",                                   "Set a player's wanted level"},
-	{3, "/ban <Player> <Days> <Hours> <Reason>",                   "Ban a player for a certain time"},
+	{3, "/ban <Player> <Days> <Reason>",                   "Ban a player for a certain time"},
 	{3, "/caroption",                                   				"Changes some options for your vehicle"},
 	{3, "/cleanupallvehicles",                                   				"Removes all spawned vehicles from the map"},
 	{3, "/cleanupvehicle <Vehicle ID>",                                   	"Deletes a vehicle spawned by an admin"},
@@ -1044,7 +1050,7 @@ new ACommands[][TCommands] =
 	{3, "/repairall",                                   				"Repair all vehicles for free"},
 	{3, "/setscore <Player> <Amount>",                              "Sets another player's score to the given value"},
 	{3, "/setcash <Player> <Amount>",                              "Sets another player's money to the given value"},
-	{3, "/unban <PlayerToUnban>",                                   	"Unban a player"},
+	{3, "/unban <Player>",                                   	"Unban a player"},
 	{4, "/setskin <Player> <Skin ID (0-299)>",                     "Changes a player's skin-id"},
 	{4, "/weather",                                   					"Changes the weather"},
 	{5, "/clamp <Vehicle ID> <Reason>",                                  "Delete a player-owned vehicle"},
@@ -1172,7 +1178,7 @@ new AHelpText[][THelpItem] =
 	{HelpIDPoliceClass, " "},
 	{HelpIDPoliceClass, "Any player with a wanted level appears as a red dot on your radar."},
 	{HelpIDPoliceClass, "You need to pursue the player and try to stop him, so you can fine him."},
-	{HelpIDPoliceClass, "If you want to stop a player in his vehicle you can use /createspike on foot to stop them."},
+	{HelpIDPoliceClass, "If you want to stop a player in his vehicle you can use /createspike to place spikes on the road."},
 	{HelpIDPoliceClass, "When you get close to the wanted player, you can use the LCTRL button on your keyboard to warn them."},
 	{HelpIDPoliceClass, "The wanted player will be informed that he's being chased by cops and that he needs to pull over."},
 	{HelpIDPoliceClass, " "},
@@ -1286,7 +1292,7 @@ new AHelpText[][THelpItem] =
 	{HelpIDBuyingVehicles, "Players can buy vehicles once they have earned enough money to buy a house first."},
 	{HelpIDBuyingVehicles, "Entering your house and using the \"/housemenu\" command will allow you to buy vehicles."},
 	{HelpIDBuyingVehicles, "The vehicles are connected to the house from which you've bought them."},
-	{HelpIDBuyingVehicles, "Once you've bought a vehicle, you can exit your house and use the \"/getcar\" command to spawn it."},
+	{HelpIDBuyingVehicles, "Once you've bought a vehicle, you can exit your house and use the \"/getvehicle\" command to spawn it."},
 	{HelpIDBuyingVehicles, "Now you can drive your vehicle to a desired spot where you can park it permanently using the \"/park\" command."},
 	{HelpIDBuyingVehicles, " "},
 	{HelpIDBuyingVehicles, "Bought vehicles can also be modded (tuned) with spoilers, nitro, other wheels, and much more."},
