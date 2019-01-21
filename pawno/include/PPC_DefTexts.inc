@@ -225,6 +225,8 @@
 #define TXT_UnJailedByAdminConfirmation "You have un-jailed {FFFF00}%s."
 #define TXT_WarnedBy "You have been warned by %s %s."
 #define TXT_KickedBy "You have been kicked by %s %s."
+#define TXT_BannedBy "You have been banned by %s for %i day."
+#define TXT_BannedPermanentlyBy "This was the %ith and last ban. You have been banned permanently by %s %s."
 #define TXT_GTWarningShow "~w~Warning %i/%i: ~r~%s"
 #define TXT_WarnedAdminConfirmation "You have warned %s (warnings: %i/%i)."
 #define TXT_KickAdminConfirmation "You have kicked %s for %s."

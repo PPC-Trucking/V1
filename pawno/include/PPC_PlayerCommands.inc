@@ -1520,77 +1520,75 @@ COMMAND:kick(playerid, params[])
 
 
 
-// Bans a player for (days, hours, minutes, seconds)
+// Bans a player for x days
 COMMAND:ban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, Days, Hours, Reason[128], TotalBanTime, Message[128], Name[24], AdminName[24];
+	new PlayerToBan, Days, Reason[128], TotalBanTime, Message[128], Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/ban", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 3)
+		return 0;
+
+	if (sscanf(params, "uis[128]", PlayerToBan, Days, Reason))
 	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			if (sscanf(params, "uiis[128]", PlayerToBan, Days, Hours, Reason))
-				SendClientMessage(playerid, COLOR_RED, "Usage: \"/ban <Player> <Days> <Hours> <Reason>\"");
-			else
-			{
-				if (IsPlayerConnected(PlayerToBan))
-				{
-					// Get the names of the player and the admin who executed the ban
-					GetPlayerName(playerid, AdminName, sizeof(AdminName));
-					GetPlayerName(PlayerToBan, Name, sizeof(Name));
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/ban <Player> <Days> <Reason>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
 
-					// Increase the number of bans
-					APlayerData[PlayerToBan][Bans]++;
-					// Calculate the total bantime (when the player can login again)
-					TotalBanTime = (Days * 86400) + (Hours * 3600) + gettime();
-					// Check if this is the player's maximum ban
-					if (APlayerData[PlayerToBan][Bans] == MAX_BANS)
-						APlayerData[PlayerToBan][BanTime] = 2147483640; // Make the ban permanent (as high as it can go)
-					else
-						APlayerData[PlayerToBan][BanTime] = TotalBanTime; // Store this value for the player
+	// Check if given player is not online
+	if (!IsPlayerConnected(PlayerToBan))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
 
-					// Inform the player about his ban
-					// Check if this is the player's maximum ban
-					if (APlayerData[PlayerToBan][Bans] == MAX_BANS)
-					{
-						format(Message, sizeof(Message), "You have been banned permanently by %s, this was your %ith ban", AdminName, MAX_BANS);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
-					}
-					else
-					{
-						format(Message, sizeof(Message), "You have been banned by %s for %i days and %i hours", AdminName, Days, Hours);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
-						format(Message, sizeof(Message), "Reason: %s", Reason);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
-						format(Message, sizeof(Message), "You've been banned %i times now, %ith time is permanent", APlayerData[PlayerToBan][Bans], MAX_BANS);
-						SendClientMessage(PlayerToBan, COLOR_GRAY, Message);
-					}
+	// Check if duration of days is atleast 1
+	if (Days < 1)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MinimumDaysMustBeOne);
 
-					// Kick the player (his data will be saved)
-					SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToBan)), false, "i", PlayerToBan);
+	// Get the names of the player and the admin who executed the ban
+	GetPlayerName(playerid, AdminName, sizeof(AdminName));
+	GetPlayerName(PlayerToBan, Name, sizeof(Name));
 
-					// Inform everybody else which player was banned and for how long
-					format(Message, sizeof(Message), "%s %s has banned %s for %i days and %i hours", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days, Hours);
-					SendClientMessageToAll(COLOR_GRAY, Message);
-				}
-				else
-					SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
-			}
-		}
-		else
-		    return 0;
+	// Increase the number of bans
+	APlayerData[PlayerToBan][Bans]++;
+
+	// Calculate the total bantime (when the player can login again)
+	TotalBanTime = (Days * 86400) + gettime();
+
+	// Check if this is the player's maximum ban
+	if (APlayerData[PlayerToBan][Bans] >= MAX_BANS) {
+		// Make the ban permanent
+		APlayerData[PlayerToBan][BanTime] = 2147483640;
+
+		// Inform the player about his permanent ban
+		format(Message, sizeof(Message), TXT_BannedPermanentlyBy, MAX_BANS, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+		SendClientMessage(PlayerToBan, COLOR_RED, Message);
 	}
 	else
-	    return 0;
+	{
+		// Store this value for the player
+		APlayerData[PlayerToBan][BanTime] = TotalBanTime;
+
+		// Inform the player about his ban
+		format(Message, sizeof(Message), TXT_BannedBy, AdminName, Days);
+		SendClientMessage(PlayerToBan, COLOR_RED, Message);
+		format(Message, sizeof(Message), TXT_GivenReason, Reason);
+		SendClientMessage(PlayerToBan, COLOR_RED, Message);
+	}
+
+	// Kick the player (his data will be saved)
+	SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToBan)), false, "i", PlayerToBan);
+
+	// Inform everybody else which player was banned and for how long
+	format(Message, sizeof(Message), "%s %s has banned %s for %i days", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days);
+	SendClientMessageToAll(COLOR_GRAY, Message);
 
 	return 1;
 }
+
+
 
 // Unbans a player (cleares the ban-time)
 COMMAND:unban(playerid, params[])
