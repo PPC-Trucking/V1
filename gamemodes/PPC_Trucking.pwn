@@ -3,7 +3,11 @@
 
 #pragma unused ret_memcpy
 
-
+#if __Pawn >= 0x0400
+	#error This script does not support PAWN V4.0 or higher
+#elseif __Pawn < 0x0300
+	#error This script does not support PAWN V2.0 or lower
+#endif
 
 // ********************************************************************************************************************
 // Limit the amount of cops with a value greater than 0
@@ -85,7 +89,7 @@ public OnGameModeInit()
 
 	Convoys_Init(); // Setup textdraws and default data for convoys
 
-	ShowPlayerMarkers(1); // Show players on the entire map (and on the radar)
+	ShowPlayerMarkers(PLAYER_MARKERS_MODE_GLOBAL); // Show players on the entire map (and on the radar)
 	ShowNameTags(1); // Show player names (and health) above their head
 	ManualVehicleEngineAndLights(); // Let the server control the vehicle's engine and lights
 	EnableStuntBonusForAll(0); // Disable stunt bonus for all players
@@ -267,7 +271,7 @@ public OnPlayerDisconnect(playerid, reason)
 		return 1;
 
 	// Setup local variables
-	new Name[24], Msg[128], HouseID;
+	new Name[MAX_PLAYER_NAME], Msg[128], HouseID;
 
 	// Get the playername
 	GetPlayerName(playerid, Name, sizeof(Name));
@@ -585,7 +589,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 	if (APlayerData[playerid][PlayerLevel] >= 1)
 	{
 		// Setup local variables
-		new Name[24], DialogTitle[128], PlayerStatList[3000], PlayerIP[16], NumHouses, NumBusinesses;
+		new Name[MAX_PLAYER_NAME], DialogTitle[128], PlayerStatList[3000], PlayerIP[16], NumHouses, NumBusinesses;
 
 		// Construct the dialog-title
 		GetPlayerName(clickedplayerid, Name, sizeof(Name));
@@ -853,7 +857,7 @@ public OnPlayerEnterRaceCheckpoint(playerid)
 public OnPlayerDeath(playerid, killerid, reason)
 {
 	// Setup local variables
-	new VictimName[24], KillerName[24], Msg[128];
+	new VictimName[MAX_PLAYER_NAME], KillerName[MAX_PLAYER_NAME], Msg[128];
 
 	// Clear the missiontext
 	TextDrawSetString(APlayerData[playerid][MissionText], " ");
@@ -975,7 +979,7 @@ public OnPlayerRequestClass(playerid, classid)
 // This callback is called when the player attempts to spawn via class-selection
 public OnPlayerRequestSpawn(playerid)
 {
-	new Index, Float:x, Float:y, Float:z, Float:Angle, Name[24], Msg[128];
+	new Index, Float:x, Float:y, Float:z, Float:Angle, Name[MAX_PLAYER_NAME], Msg[128];
 
 	// Get the player's name
 	GetPlayerName(playerid, Name, sizeof(Name));
@@ -1312,7 +1316,7 @@ public OnVehicleDeath(vehicleid)
 public OnPlayerStateChange(playerid,newstate,oldstate)
 {
 	// Setup local variables
-	new vid, Name[24], Msg[128], engine, lights, alarm, doors, bonnet, boot, objective;
+	new vid, Name[MAX_PLAYER_NAME], Msg[128], engine, lights, alarm, doors, bonnet, boot, objective;
 
 	switch (newstate)
 	{
