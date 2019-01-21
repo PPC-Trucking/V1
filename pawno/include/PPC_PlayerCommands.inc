@@ -1,5 +1,5 @@
 // This is just a joke command
-COMMAND:me(playerid,params[])
+COMMAND:me(playerid, params[])
 {
 	// Setup local variables
 	new Msg[128], Message[MAX_STRING_INPUT_TEXT], Name[MAX_PLAYER_NAME];
@@ -79,7 +79,6 @@ COMMAND:pm(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
 
 // Lets the player add new houses
 COMMAND:createhouse(playerid, params[])
@@ -560,8 +559,6 @@ COMMAND:park(playerid, params[])
 	return 1;
 }
 
-
-
 // Lets the player rent a vehicle
 COMMAND:rentcar(playerid, params[])
 {
@@ -622,8 +619,6 @@ COMMAND:rentcar(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
-
 
 // This command teleports you to your selected house
 COMMAND:gohome(playerid, params[])
@@ -1178,8 +1173,6 @@ COMMAND:setwanted(playerid, params[])
 	return 1;
 }
 
-
-
 // Lets the player choose a motorcycle to spawn
 COMMAND:bike(playerid, params[])
 {
@@ -1272,8 +1265,6 @@ COMMAND:plane(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
-
 
 // Lets the player choose a trailer to spawn (in a split list which shows only 10 trailers at a time)
 COMMAND:trailer(playerid, params[])
@@ -4955,7 +4946,7 @@ COMMAND:bonus(playerid, params[])
 }
 
 // This command gives a truckers license to a player
-COMMAND:givelicense(playerid,params[])
+COMMAND:givelicense(playerid, params[])
 {
 	// Setup local variables
 	new OtherPlayer, Msg[128], Name[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME];
@@ -5008,6 +4999,7 @@ COMMAND:givelicense(playerid,params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
 //This command let the admins to send an announce message
 COMMAND:announce(playerid, params[])
 {
