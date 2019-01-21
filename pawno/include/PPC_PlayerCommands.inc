@@ -1,6 +1,6 @@
 // This command can be used to send messages like
 // "/me is now afk" which becomes "* Player is now afk"
-COMMAND:me(playerid, params[])
+COMMAND:me(playerid,params[])
 {
 	// Setup local variables
 	// 144 i/o message size limit - 24 name - 19 extra characters (see format) = 101
@@ -29,6 +29,8 @@ COMMAND:me(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command allows players to send each other a private message
 COMMAND:pm(playerid, params[])
@@ -86,6 +88,8 @@ COMMAND:pm(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Lets the player add new houses
 COMMAND:createhouse(playerid, params[])
@@ -156,6 +160,8 @@ COMMAND:createhouse(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command lets the player delete a house
 COMMAND:delhouse(playerid, params[])
@@ -230,6 +236,8 @@ COMMAND:delhouse(playerid, params[])
 	return 1;
 }
 
+
+
 // This command lets the player buy a house when he is standing in
 // range of a house that is not owned yet
 COMMAND:buyhouse(playerid, params[])
@@ -274,6 +282,8 @@ COMMAND:buyhouse(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command lets the player enter a property (house / business)
 COMMAND:enter(playerid, params[])
@@ -371,6 +381,8 @@ COMMAND:enter(playerid, params[])
 	return 1;
 }
 
+
+
 // This command lets the player exit from a property (house / business)
 COMMAND:exit(playerid, params[])
 {
@@ -405,6 +417,8 @@ COMMAND:exit(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command opens a menu when you're inside your house to allow to access the options of your house
 COMMAND:housemenu(playerid, params[])
@@ -443,6 +457,8 @@ COMMAND:housemenu(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command allows a player to port a vehicle from his house to his location
 COMMAND:getvehicle(playerid, params[])
@@ -485,6 +501,8 @@ COMMAND:getvehicle(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command allowes a player to park his vehicle near his house
 COMMAND:park(playerid, params[])
@@ -568,6 +586,8 @@ COMMAND:park(playerid, params[])
 	return 1;
 }
 
+
+
 // Lets the player rent a vehicle
 COMMAND:rentvehicle(playerid, params[])
 {
@@ -623,6 +643,8 @@ COMMAND:rentvehicle(playerid, params[])
 	return 1;
 }
 
+
+
 // This command teleports a player to his selected house
 COMMAND:gohome(playerid, params[])
 {
@@ -669,6 +691,8 @@ COMMAND:gohome(playerid, params[])
 	return 1;
 }
 
+
+
 // Detaches the trailer from the vehicle
 COMMAND:detach(playerid, params[])
 {
@@ -702,6 +726,8 @@ COMMAND:detach(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Puts the player's vehicle back onto his wheels
 COMMAND:flip(playerid, params[])
@@ -742,6 +768,8 @@ COMMAND:flip(playerid, params[])
 	return 1;
 }
 
+
+
 // Repairs the player's vehicle
 COMMAND:repair(playerid, params[])
 {
@@ -776,6 +804,8 @@ COMMAND:repair(playerid, params[])
 	return 1;
 }
 
+
+
 // Repairs all vehicles
 COMMAND:repairall(playerid, params[])
 {
@@ -805,6 +835,8 @@ COMMAND:repairall(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Heals all players
 COMMAND:healall(playerid, params[])
@@ -836,6 +868,8 @@ COMMAND:healall(playerid, params[])
 	return 1;
 }
 
+
+
 // Lets the player choose another class
 COMMAND:reclass(playerid, params[])
 {
@@ -863,6 +897,8 @@ COMMAND:reclass(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Starts a job
 COMMAND:work(playerid, params[])
@@ -1008,6 +1044,8 @@ COMMAND:work(playerid, params[])
 	return 1;
 }
 
+
+
 // Stops the current job
 COMMAND:stopwork(playerid, params[])
 {
@@ -1052,6 +1090,8 @@ COMMAND:stopwork(playerid, params[])
 	return 1;
 }
 
+
+
 // Displays the player's coordinates on the map
 COMMAND:loc(playerid, params[])
 {
@@ -1084,6 +1124,8 @@ COMMAND:loc(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Lets the player choose where he wants to respawn (costs $200)
 COMMAND:gobase(playerid, params[])
@@ -1129,6 +1171,8 @@ COMMAND:gobase(playerid, params[])
 	return 1;
 }
 
+
+
 // Sets the player's wanted level
 COMMAND:setwanted(playerid, params[])
 {
@@ -1165,6 +1209,8 @@ COMMAND:setwanted(playerid, params[])
 	return 1;
 }
 
+
+
 // Lets the player choose a motorcycle to spawn
 COMMAND:bike(playerid, params[])
 {
@@ -1186,6 +1232,8 @@ COMMAND:bike(playerid, params[])
 	return 1;
 }
 
+
+
 // Lets the player choose a car to spawn (in a split list which shows only 10 cars at a time)
 COMMAND:car(playerid, params[])
 {
@@ -1205,6 +1253,8 @@ COMMAND:car(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Lets the player choose a plane to spawn (in a split list which shows only 10 planes at a time)
 COMMAND:plane(playerid, params[])
@@ -1226,6 +1276,8 @@ COMMAND:plane(playerid, params[])
 	return 1;
 }
 
+
+
 // Lets the player choose a trailer to spawn (in a split list which shows only 10 trailers at a time)
 COMMAND:trailer(playerid, params[])
 {
@@ -1246,6 +1298,8 @@ COMMAND:trailer(playerid, params[])
 	return 1;
 }
 
+
+
 // Lets the player choose a boat to spawn
 COMMAND:boat(playerid, params[])
 {
@@ -1265,6 +1319,8 @@ COMMAND:boat(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Jail a player
 COMMAND:jail(playerid, params[])
@@ -1320,6 +1376,8 @@ COMMAND:jail(playerid, params[])
 	return 1;
 }
 
+
+
 // Unjail a player
 COMMAND:unjail(playerid, params[])
 {
@@ -1368,6 +1426,8 @@ COMMAND:unjail(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Warn a player
 COMMAND:warn(playerid, params[])
@@ -1429,6 +1489,8 @@ COMMAND:warn(playerid, params[])
 	return 1;
 }
 
+
+
 // Kicks a player with a reason
 COMMAND:kick(playerid, params[])
 {
@@ -1474,6 +1536,8 @@ COMMAND:kick(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Bans a player for x days
 COMMAND:ban(playerid, params[])
@@ -1547,6 +1611,8 @@ COMMAND:ban(playerid, params[])
 	return 1;
 }
 
+
+
 // Unbans a player (cleares the ban-time)
 COMMAND:unban(playerid, params[])
 {
@@ -1592,6 +1658,8 @@ COMMAND:unban(playerid, params[])
 
 	return 1;
 }
+
+
 
 // Spawns the object at the location given by the player
 COMMAND:createobject(playerid, params[])
@@ -2281,6 +2349,8 @@ COMMAND:weather(playerid, params[])
 	return 1;
 }
 
+
+
 // This command lists all online admins
 COMMAND:admins(playerid, params[])
 {
@@ -2768,6 +2838,8 @@ COMMAND:delcamera(playerid, params[])
 	return 1;
 }
 
+
+
 // This command ports a player to the player who executed the command
 COMMAND:get(playerid, params[])
 {
@@ -3168,6 +3240,8 @@ COMMAND:endspec(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Lets the player add new businesses
 COMMAND:createbusiness(playerid, params[])
@@ -4235,6 +4309,7 @@ COMMAND:report(playerid, params[])
 	return 1;
 }
 
+
 // Lets the admins see the list of reports
 COMMAND:reports(playerid, params[])
 {
@@ -4946,7 +5021,7 @@ COMMAND:bonus(playerid, params[])
 }
 
 // This command gives a truckers license to a player
-COMMAND:givelicense(playerid, params[])
+COMMAND:givelicense(playerid,params[])
 {
 	// Setup local variables
 	new OtherPlayer, Message[128], Name[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME];
@@ -4999,7 +5074,6 @@ COMMAND:givelicense(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-
 //This command let the admins to send an announce message
 COMMAND:announce(playerid, params[])
 {
