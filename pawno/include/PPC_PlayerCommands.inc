@@ -1600,48 +1600,43 @@ COMMAND:unban(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/unban", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 3)
+		return 0;
+
+	if (sscanf(params, "u", PlayerToUnban))
 	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			if (sscanf(params, "s[128]", PlayerToUnban))
-				SendClientMessage(playerid, COLOR_RED, "Usage: \"/unban <PlayerToUnban>\"");
-			else
-			{
-			    // Get the name of the admin
-				GetPlayerName(playerid, Name, sizeof(Name));
-
-				// Construct the complete filename for this player's account
-				format(file, sizeof(file), PlayerFile, PlayerToUnban);
-
-				// Check if the file exists
-				if (fexist(file))
-				{
-					PFile = fopen(file, io_append); // Open the playerfile for appending (this command only appends a new line to overwrite the bantime)
-
-					format(LineForFile, sizeof(LineForFile), "BanTime 0\r\n"); // Construct the line: "BanTime <0>"
-					fwrite(PFile, LineForFile); // And save it to the file
-
-					fclose(PFile); // Close the file
-
-					// Inform everybody else which player was unbanned
-					format(Message, sizeof(Message), "%s %s has un-banned %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name, PlayerToUnban);
-					SendClientMessageToAll(COLOR_GRAY, Message);
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "There is no account with that playername");
-			}
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/unban <Player>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Get the name of the admin
+	GetPlayerName(playerid, Name, sizeof(Name));
+
+	// Construct the complete filename for this player's account
+	format(file, sizeof(file), PlayerFile, PlayerToUnban);
+
+	// Check if the file does not exist
+	if (!fexist(file))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerAccountNotFound);
+
+	// Open the playerfile for appending (this command only appends a new line to overwrite the bantime)
+	PFile = fopen(file, io_append);
+	// Construct the line: "BanTime <0>"
+	format(LineForFile, sizeof(LineForFile), "BanTime 0\r\n");
+	// And save it to the file
+	fwrite(PFile, LineForFile);
+	// Close the file
+	fclose(PFile);
+
+	// Inform everybody else which player was unbanned
+	format(Message, sizeof(Message), "%s %s has un-banned %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name, PlayerToUnban);
+	SendClientMessageToAll(COLOR_GRAY, Message);
 
 	return 1;
 }
+
+
 
 // Spawns the object at the location given by the player
 COMMAND:createobject(playerid, params[])

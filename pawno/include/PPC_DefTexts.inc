@@ -235,6 +235,7 @@
 #define TXT_MinimumMinutesMustBeOne "You must enter atleast one minute."
 #define TXT_MinimumHoursMustBeOne "You must enter atleast one hour."
 #define TXT_MinimumDaysMustBeOne "You must enter atleast one day."
+#define TXT_PlayerAccountNotFound "There is no account with that playername."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
