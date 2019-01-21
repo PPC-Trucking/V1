@@ -239,6 +239,9 @@
 #define ADMIN_SPEC_TYPE_PLAYER 1
 #define ADMIN_SPEC_TYPE_VEHICLE 2
 
+// Define I/O string limits
+#define MAX_STRING_INPUT_TEXT 128
+#define MAX_STRING_OUTPUT_TEXT 144
 
 
 // Create some global variables that are used to display large dialogs
