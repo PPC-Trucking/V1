@@ -1573,7 +1573,7 @@ COMMAND:unban(playerid, params[])
 		// Check if the player's admin-level is at least 3
 		if (APlayerData[playerid][PlayerLevel] >= 3)
 		{
-			if (sscanf(params, "s[128]", PlayerToUnban))
+			if (sscanf(params, "s[24]", PlayerToUnban))
 				SendClientMessage(playerid, COLOR_RED, "Usage: \"/unban <PlayerToUnban>\"");
 			else
 			{
