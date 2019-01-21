@@ -1627,7 +1627,7 @@ COMMAND:unban(playerid, params[])
 	if (APlayerData[playerid][PlayerLevel] < 3)
 		return 0;
 
-	if (sscanf(params, "u", PlayerToUnban))
+	if (sscanf(params, "s[24]", PlayerToUnban))
 	{
 		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/unban <Player>");
 		return SendClientMessage(playerid, COLOR_RED, Message);
