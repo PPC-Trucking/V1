@@ -1,6 +1,6 @@
 // This command can be used to send messages like
 // "/me is now afk" which becomes "* Player is now afk"
-COMMAND:me(playerid,params[])
+COMMAND:me(playerid, params[])
 {
 	// Setup local variables
 	// 144 i/o message size limit - 24 name - 19 extra characters (see format) = 101
@@ -5021,7 +5021,7 @@ COMMAND:bonus(playerid, params[])
 }
 
 // This command gives a truckers license to a player
-COMMAND:givelicense(playerid,params[])
+COMMAND:givelicense(playerid, params[])
 {
 	// Setup local variables
 	new OtherPlayer, Message[128], Name[MAX_PLAYER_NAME], OtherName[MAX_PLAYER_NAME];
