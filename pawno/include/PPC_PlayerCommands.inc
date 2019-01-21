@@ -1321,7 +1321,7 @@ COMMAND:boat(playerid, params[])
 // Jail a player
 COMMAND:jail(playerid, params[])
 {
-	new PlayerToJail, JailTime, Reason[128], Message[128], Name[24], AdminName[24];
+	new PlayerToJail, Seconds, Reason[128], Message[128], Name[24], AdminName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/jail", params);
@@ -1330,9 +1330,9 @@ COMMAND:jail(playerid, params[])
 	if (APlayerData[playerid][PlayerLevel] < 1)
 		return 0;
 
-	if (sscanf(params, "uis[128]", PlayerToJail, JailTime, Reason))
+	if (sscanf(params, "uis[128]", PlayerToJail, Seconds, Reason))
 	{
-		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/jail <Player> <Duration (in seconds)> <Reason>");
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/jail <Player> <Seconds> <Reason>");
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
@@ -1344,20 +1344,24 @@ COMMAND:jail(playerid, params[])
 	if (APlayerData[PlayerToJail][PlayerJailed] != 0)
 		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerAlreadyJailed);
 
+	// Check if duration of seconds is atleast 1
+	if (Seconds < 1)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MinimumSecondsMustBeOne);
+
 	// Jail the player
-	Police_JailPlayer(PlayerToJail, JailTime);
+	Police_JailPlayer(PlayerToJail, Seconds);
 	// Get the name of the player who jailed the player
 	GetPlayerName(playerid, AdminName, sizeof(AdminName));
 	// Get the name of the player who's being sent to jail
 	GetPlayerName(PlayerToJail, Name, sizeof(Name));
 	// Send the jailed player a message who jailed him, why he's been jailed and how long
-	format(Message, sizeof(Message), TXT_JailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, JailTime);
+	format(Message, sizeof(Message), TXT_JailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Seconds);
 	SendClientMessage(PlayerToJail, COLOR_RED, Message);
 	format(Message, sizeof(Message), TXT_GivenReason, Reason);
 	SendClientMessage(PlayerToJail, COLOR_RED, Message);
 
 	// Send confirmation about jailed player to Admin
-	format(Message, sizeof(Message), TXT_JailedByAdminConfirmation, Name, JailTime);
+	format(Message, sizeof(Message), TXT_JailedByAdminConfirmation, Name, Seconds);
 	SendClientMessage(playerid, COLOR_WHITE, Message);
 
 	// Let the server know that this was a valid command
