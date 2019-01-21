@@ -2,7 +2,7 @@
 COMMAND:me(playerid,params[])
 {
 	// Setup local variables
-	new Msg[128], Message[128], Name[MAX_PLAYER_NAME];
+	new Msg[128], Message[MAX_STRING_INPUT_TEXT], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/me", params);
@@ -35,7 +35,7 @@ COMMAND:me(playerid,params[])
 COMMAND:pm(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Message[128], Msg1[128], Msg2[128], YourName[MAX_PLAYER_NAME], OtherPlayerName[MAX_PLAYER_NAME];
+	new OtherPlayer, Message[MAX_STRING_INPUT_TEXT], Msg1[128], Msg2[128], YourName[MAX_PLAYER_NAME], OtherPlayerName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/pm", params);
@@ -1341,7 +1341,7 @@ COMMAND:boat(playerid, params[])
 // Jail a player
 COMMAND:jail(playerid, params[])
 {
-	new PlayerToJail, JailTime, Reason[128], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
+	new PlayerToJail, JailTime, Reason[MAX_STRING_INPUT_TEXT], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/jail", params);
@@ -1386,7 +1386,7 @@ COMMAND:jail(playerid, params[])
 // Warn a player
 COMMAND:warn(playerid, params[])
 {
-	new PlayerToWarn, Reason[128], ReasonMsg[128], Name[MAX_PLAYER_NAME];
+	new PlayerToWarn, Reason[MAX_STRING_INPUT_TEXT], ReasonMsg[128], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/warn", params);
@@ -1447,7 +1447,7 @@ COMMAND:warn(playerid, params[])
 // Kicks a player with a reason
 COMMAND:kick(playerid, params[])
 {
-	new PlayerToKick, Reason[128], ReasonMsg[128], Name[MAX_PLAYER_NAME];
+	new PlayerToKick, Reason[MAX_STRING_INPUT_TEXT], ReasonMsg[128], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/kick", params);
@@ -1489,7 +1489,7 @@ COMMAND:kick(playerid, params[])
 COMMAND:ban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, Days, Hours, Reason[128], TotalBanTime, Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
+	new PlayerToBan, Days, Hours, Reason[MAX_STRING_INPUT_TEXT], TotalBanTime, Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/ban", params);
@@ -3467,7 +3467,7 @@ COMMAND:gobus(playerid, params[])
 COMMAND:mute(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[128], OtherPlayer;
+	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[MAX_STRING_INPUT_TEXT], OtherPlayer;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/mute", params);
@@ -3624,7 +3624,7 @@ COMMAND:muted(playerid, params[])
 COMMAND:freeze(playerid, params[])
 {
 	// Setup local variables
-	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[128], OtherPlayer, Duration;
+	new Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[MAX_STRING_INPUT_TEXT], OtherPlayer, Duration;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/freeze", params);
@@ -3923,7 +3923,7 @@ COMMAND:eject(playerid, params[])
 COMMAND:radio(playerid, params[])
 {
 	// Setup local variables
-	new Name[MAX_PLAYER_NAME], Msg[128], Message[128], ClassName[24];
+	new Name[MAX_PLAYER_NAME], Msg[128], Message[MAX_STRING_INPUT_TEXT], ClassName[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/radio", params);
@@ -3981,7 +3981,7 @@ COMMAND:radio(playerid, params[])
 COMMAND:achat(playerid, params[])
 {
 	// Setup local variables
-	new Name[MAX_PLAYER_NAME], Msg[128], Message[128];
+	new Name[MAX_PLAYER_NAME], Msg[128], Message[MAX_STRING_INPUT_TEXT];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/achat", params);
@@ -4028,7 +4028,7 @@ COMMAND:achat(playerid, params[])
 COMMAND:clamp(playerid, params[])
 {
 	// Setup local variables
-	new vid, Reason[128], HouseID, HouseOwner, Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Msg[128];
+	new vid, Reason[MAX_STRING_INPUT_TEXT], HouseID, HouseOwner, Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Msg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/clamp", params);
@@ -4206,7 +4206,7 @@ COMMAND:rules(playerid, params[])
 COMMAND:report(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Name[MAX_PLAYER_NAME], Reason[128], Msg[128];
+	new OtherPlayer, Name[MAX_PLAYER_NAME], Reason[MAX_STRING_INPUT_TEXT], Msg[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/report", params);
@@ -4376,7 +4376,7 @@ COMMAND:overload(playerid, params[])
 COMMAND:resetplayer(playerid, params[])
 {
 	// Setup local variables
-	new Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[128], Msg[128], OtherPlayer, ClearMoney, ClearScore, ClearStats;
+	new Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME], Reason[MAX_STRING_INPUT_TEXT], Msg[128], OtherPlayer, ClearMoney, ClearScore, ClearStats;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/resetplayer", params);
@@ -4602,7 +4602,7 @@ COMMAND:setskin(playerid, params[])
 COMMAND:ipban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, Reason[128], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
+	new PlayerToBan, Reason[MAX_STRING_INPUT_TEXT], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/ipban", params);
@@ -4653,7 +4653,7 @@ COMMAND:ipban(playerid, params[])
 COMMAND:rangeban(playerid, params[])
 {
 	// Setup local variables
-	new PlayerToBan, PlayerIP[16], FirstPartsOfIP[16], BanCmd[24], Reason[128], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
+	new PlayerToBan, PlayerIP[16], FirstPartsOfIP[16], BanCmd[24], Reason[MAX_STRING_INPUT_TEXT], Msg[128], Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/rangeban", params);
