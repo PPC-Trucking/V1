@@ -6,6 +6,12 @@
 // Forces the compiler to use semicolons(;) to close lines
 #pragma semicolon 1
 
+#if __Pawn >= 0x0400
+   #error This script does not support PAWN V4.0 or higher
+#elseif __Pawn < 0x0300
+   #error This script does not support PAWN V2.0 or lower
+#endif
+
 // ********************************************************************************************************************
 // Set default gamemode name
 // ********************************************************************************************************************
