@@ -220,9 +220,13 @@
 #define TXT_PlayerNotJailed "That player is not in jail."
 #define TXT_JailedByAdmin "You have been jailed by %s %s for %i seconds."
 #define TXT_UnJailedByAdmin "You have been un-jailed by %s %s."
-#define TXT_JailedByAdminReason "Reason: %s"
+#define TXT_GivenReason "Reason: %s"
 #define TXT_JailedByAdminConfirmation "You have jailed {FFFF00}%s{00FF00} for {FFFF00}%i{00FF00} seconds."
 #define TXT_UnJailedByAdminConfirmation "You have un-jailed {FFFF00}%s."
+#define TXT_WarnedBy "You have been warned by %s %s."
+#define TXT_GTWarningShow "~w~Warning %i/%i: ~r~%s"
+#define TXT_WarnedAdminConfirmation "You have warned %s (warnings: %i/%i)."
+#define TXT_AutoKickedByWarnings "This was the %ith and last warning. You have been kicked."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

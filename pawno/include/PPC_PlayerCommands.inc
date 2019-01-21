@@ -1353,7 +1353,7 @@ COMMAND:jail(playerid, params[])
 	// Send the jailed player a message who jailed him, why he's been jailed and how long
 	format(Msg, sizeof(Msg), TXT_JailedByAdmin, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, JailTime);
 	SendClientMessage(PlayerToJail, COLOR_RED, Msg);
-	format(Msg, sizeof(Msg), TXT_JailedByAdminReason, Reason);
+	format(Msg, sizeof(Msg), TXT_GivenReason, Reason);
 	SendClientMessage(PlayerToJail, COLOR_RED, Msg);
 
 	// Send confirmation about jailed player to Admin
@@ -1416,63 +1416,61 @@ COMMAND:unjail(playerid, params[])
 // Warn a player
 COMMAND:warn(playerid, params[])
 {
-	new PlayerToWarn, Reason[128], ReasonMsg[128], Name[24];
+	new PlayerToWarn, Reason[128], Message[128], Name[24];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/warn", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	if (sscanf(params, "us[128]", PlayerToWarn, Reason))
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			if (sscanf(params, "us[128]", PlayerToWarn, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/warn <PlayerToWarn> <Reason>\"");
-			else
-				if (IsPlayerConnected(PlayerToWarn)) // If the player is a valid playerid (he's connected)
-				{
-					// Increase the number of warnings
-					APlayerData[PlayerToWarn][Warnings]++;
-
-					// Get the name of the player who warned the player
-					GetPlayerName(playerid, Name, sizeof(Name));
-					// Send the warned player a message who warned him and why he's been warned
-					format(ReasonMsg, sizeof(ReasonMsg), "You have been warned by %s %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
-					SendClientMessage(PlayerToWarn, COLOR_RED, ReasonMsg);
-					format(ReasonMsg, sizeof(ReasonMsg), "Reason: %s", Reason);
-					SendClientMessage(PlayerToWarn, COLOR_RED, ReasonMsg);
-					format(ReasonMsg, sizeof(ReasonMsg), "~w~Warning %i/%i: ~r~%s~w~", APlayerData[PlayerToWarn][Warnings], AutoKickWarnings, Reason);
-					GameTextForPlayer(PlayerToWarn, ReasonMsg, 5000, 4);
-
-					// Get the name of the warned player
-					GetPlayerName(PlayerToWarn, Name, sizeof(Name));
-					// Let the admin know who has been warned and why
-					format(ReasonMsg, sizeof(ReasonMsg), "You have warned %s (warnings: %i/%i)", Name, APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
-					SendClientMessage(playerid, COLOR_GREEN, ReasonMsg);
-					format(ReasonMsg, sizeof(ReasonMsg), "Reason: %s", Reason);
-					SendClientMessage(playerid, COLOR_RED, ReasonMsg);
-
-					// Automatically kick the player if he got 3 warnings (if autokick is enabled) and inform the player about that
-					if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
-					{
-						format(ReasonMsg, sizeof(ReasonMsg), "You have been kicked. (warnings: %i/%i)", APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
-						SendClientMessage(PlayerToWarn, COLOR_RED, ReasonMsg);
-
-						SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToWarn)), false, "i", PlayerToWarn);
-					}
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/warn <Player> <Reason>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if given player is not online
+	if (!IsPlayerConnected(PlayerToWarn))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
+
+
+	// Increase the number of warnings
+	APlayerData[PlayerToWarn][Warnings]++;
+
+	// Get the name of the player who warned the player
+	GetPlayerName(playerid, Name, sizeof(Name));
+	// Send the warned player a message who warned him and why he's been warned
+	format(Message, sizeof(Message), TXT_WarnedBy, AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
+	SendClientMessage(PlayerToWarn, COLOR_RED, Message);
+	format(Message, sizeof(Message), TXT_GivenReason, Reason);
+	SendClientMessage(PlayerToWarn, COLOR_RED, Message);
+	format(Message, sizeof(Message), TXT_GTWarningShow, APlayerData[PlayerToWarn][Warnings], AutoKickWarnings, Reason);
+	GameTextForPlayer(PlayerToWarn, Message, 5000, 4);
+
+	// Get the name of the warned player
+	GetPlayerName(PlayerToWarn, Name, sizeof(Name));
+	// Let the admin know who has been warned and why
+	format(Message, sizeof(Message), TXT_WarnedAdminConfirmation, Name, APlayerData[PlayerToWarn][Warnings], AutoKickWarnings);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
+	format(Message, sizeof(Message), TXT_GivenReason, Reason);
+	SendClientMessage(playerid, COLOR_RED, Message);
+
+	// Automatically kick the player if he got 3 warnings (if autokick is enabled) and inform the player about that
+	if ((APlayerData[PlayerToWarn][Warnings] == AutoKickWarnings) && (AutoKickAfterWarn == 1))
+	{
+		format(Message, sizeof(Message), TXT_AutoKickedByWarnings, AutoKickWarnings);
+		SendClientMessage(PlayerToWarn, COLOR_RED, Message);
+
+		SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToWarn)), false, "i", PlayerToWarn);
+	}
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Kicks a player with a reason
 COMMAND:kick(playerid, params[])
