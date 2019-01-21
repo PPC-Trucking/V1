@@ -1378,7 +1378,7 @@ COMMAND:unjail(playerid, params[])
 	if (APlayerData[playerid][PlayerLevel] < 1)
 		return 0;
 
-	if (sscanf(params, "ui", PlayerToUnjail))
+	if (sscanf(params, "u", PlayerToUnjail))
 	{
 		format(Msg, sizeof(Msg), TXT_SscanfFailedUsuage, "/unjail <Player>");
 		return SendClientMessage(playerid, COLOR_RED, Msg);
