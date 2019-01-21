@@ -224,8 +224,10 @@
 #define TXT_JailedByAdminConfirmation "You have jailed {FFFF00}%s{00FF00} for {FFFF00}%i{00FF00} seconds."
 #define TXT_UnJailedByAdminConfirmation "You have un-jailed {FFFF00}%s."
 #define TXT_WarnedBy "You have been warned by %s %s."
+#define TXT_KickedBy "You have been kicked by %s %s."
 #define TXT_GTWarningShow "~w~Warning %i/%i: ~r~%s"
 #define TXT_WarnedAdminConfirmation "You have warned %s (warnings: %i/%i)."
+#define TXT_KickAdminConfirmation "You have kicked %s for %s."
 #define TXT_AutoKickedByWarnings "This was the %ith and last warning. You have been kicked."
 
 // Fuel related

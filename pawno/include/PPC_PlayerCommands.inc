@@ -1480,38 +1480,41 @@ COMMAND:kick(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/kick", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	if (sscanf(params, "us[128]", PlayerToKick, Reason))
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			if (sscanf(params, "us[128]", PlayerToKick, Reason)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/kick <Player> <Reason>\"");
-			else
-				if (IsPlayerConnected(PlayerToKick)) // If the player is a valid playerid (he's connected)
-				{
-					// Get the name of the player who warned the player
-					GetPlayerName(playerid, Name, sizeof(Name));
-					// Send the warned player a message who kicked him and why he's been kicked
-					format(Message, sizeof(Message), "You have been kicked by %s %s", AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
-					SendClientMessage(PlayerToKick, COLOR_RED, Message);
-					format(Message, sizeof(Message), "Reason: %s", Reason);
-					SendClientMessage(PlayerToKick, COLOR_RED, Message);
-					// Kick the player
-					SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToKick)), false, "i", PlayerToKick);
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/kick <Player> <Reason>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if given player is not online
+	if (!IsPlayerConnected(PlayerToKick))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
+
+	// Get the name of the player who warned the player
+	GetPlayerName(playerid, Name, sizeof(Name));
+	
+	// Send the warned player a message who kicked him and why he's been kicked
+	format(Message, sizeof(Message), TXT_KickedBy, AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
+	SendClientMessage(PlayerToKick, COLOR_RED, Message);
+	format(Message, sizeof(Message), TXT_GivenReason, Reason);
+	SendClientMessage(PlayerToKick, COLOR_RED, Message);
+
+	// Send a confirmation about the kick to the corresponding admin
+	format(Message, sizeof(Message), TXT_KickAdminConfirmation, Name, Reason);
+	SendClientMessage(PlayerToKick, COLOR_RED, Message);
+	
+	// Kick the player
+	SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToKick)), false, "i", PlayerToKick);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Bans a player for (days, hours, minutes, seconds)
 COMMAND:ban(playerid, params[])
