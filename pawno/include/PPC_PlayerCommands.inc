@@ -1,22 +1,21 @@
 // This is just a joke command
 COMMAND:me(playerid, params[])
 {
+	// Setup local variables
+	new Msg[128], Message[MAX_STRING_INPUT_TEXT], Name[MAX_PLAYER_NAME];
+	
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/me", params);
 
 	// Check if the player has logged in
 	if (APlayerData[playerid][LoggedIn] == true)
 	{
-		// Setup local variables
-		new Message[MAX_STRING_INPUT_TEXT];
-		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: /me <Action>");
+		if (sscanf(params, "s[128]", Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/me <Action>\"");
 		else
 		{
 		    // Check if the player isn't muted
 		    if (APlayerData[playerid][Muted] == false)
 		    {
-				// Setup local variables
-				new Msg[128], Name[MAX_PLAYER_NAME];
 				GetPlayerName(playerid, Name, sizeof(Name));
 				format(Msg, sizeof(Msg), "* %s %s", Name, Message);
 				SendClientMessageToAll(COLOR_YELLOW, Msg);
