@@ -4,7 +4,7 @@ COMMAND:me(playerid,params[])
 {
 	// Setup local variables
 	// 144 i/o message size limit - 24 name - 19 extra characters (see format) = 101
-	new Action[101], Message[144], Name[MAX_PLAYER_NAME];
+	new Action[101], Message[MAX_STRING_OUTPUT_TEXT], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/me", params);
@@ -37,7 +37,7 @@ COMMAND:pm(playerid, params[])
 {
 	// Setup local variables
 	// 144 i/o message size limit - 24 name - 18 extra characters + id (see format) = 102
-	new OtherPlayer, Message[144], Name[MAX_PLAYER_NAME], Text[102];
+	new OtherPlayer, Message[MAX_STRING_OUTPUT_TEXT], Name[MAX_PLAYER_NAME], Text[102];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/pm", params);
