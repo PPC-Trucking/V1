@@ -2690,8 +2690,8 @@ COMMAND:createcamera(playerid, params[])
 				}
 
 				// In case all camera-slots are occupied (100 camera's have been created already), let the player know about it
-				format(Message, sizeof(Message), "{FF0000}You cannot create more than %i speedcamera's", MAX_CAMERAS);
-				SendClientMessage(playerid, COLOR_WHITE, Message);
+				format(Message, sizeof(Message), "You cannot create more than %i speedcamera's", MAX_CAMERAS);
+				SendClientMessage(playerid, COLOR_RED, Message);
 			}
 		}
 		else
@@ -3326,8 +3326,8 @@ COMMAND:buybus(playerid, params[])
 					    else
 					    {
 					        // Let the player know that this business is already owned by a player
-							format(Message, sizeof(Message), "{FF0000}This business is already owned by {00FF00}%s{FFFFFF}", ABusinessData[i][Owner]);
-							SendClientMessage(playerid, COLOR_WHITE, Message);
+							format(Message, sizeof(Message), "This business is already owned by {00FF00}%s{FFFFFF}", ABusinessData[i][Owner]);
+							SendClientMessage(playerid, COLOR_RED, Message);
 					    }
 
 						// The player was in range of a business-pickup, so stop searching for the other business pickups
@@ -3478,8 +3478,8 @@ COMMAND:mute(playerid, params[])
 					// Mute the other player
 					APlayerData[OtherPlayer][Muted] = (TimeToMute * 60) + gettime();
 					// Let the other player know that he has been muted
-					format(Message, sizeof(Message), "{FF0000}You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "You have been muted by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
+					SendClientMessage(OtherPlayer, COLOR_RED, Message);
 
 					ShowRemainingMutedTime(OtherPlayer); // Show the remaining muted time to the player
 
@@ -3637,8 +3637,8 @@ COMMAND:freeze(playerid, params[])
 					TogglePlayerControllable(OtherPlayer, 0);
 					FreezeTimer[OtherPlayer] = SetTimerEx("Player_FreezeTimer", 1000, true, "i", OtherPlayer);
 					// Let the other player know that he has been muted
-					format(Message, sizeof(Message), "{FF0000}You have been frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "You have been frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName, Reason);
+					SendClientMessage(OtherPlayer, COLOR_RED, Message);
 					// Let the admin know who he has muted
 					format(Message, sizeof(Message), "{00FF00}You have frozen {FFFF00}%s", Name);
 					SendClientMessage(playerid, COLOR_WHITE, Message);
@@ -3690,8 +3690,8 @@ COMMAND:unfreeze(playerid, params[])
 						GetPlayerName(playerid, AdminName, sizeof(AdminName));
 						GetPlayerName(OtherPlayer, Name, sizeof(Name));
 						// Let the other player know that he has been un-frozen
-						format(Message, sizeof(Message), "{FF0000}You have been un-frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+						format(Message, sizeof(Message), "You have been un-frozen by {FFFF00}%s {FF0000}for {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_RED, Message);
 						// Let the admin know who he has un-frozen
 						format(Message, sizeof(Message), "{00FF00}You have un-frozen {FFFF00}%s", Name);
 						SendClientMessage(playerid, COLOR_WHITE, Message);
@@ -3881,8 +3881,8 @@ COMMAND:eject(playerid, params[])
 							// Eject the player from the vehicle
 							RemovePlayerFromVehicle(OtherPlayer);
 							// Let the player know he's been ejected from his vehicle
-							format(Message, sizeof(Message), "{FF0000}You've been ejected from the vehicle by {FFFF00}%s", DriverName);
-							SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+							format(Message, sizeof(Message), "You've been ejected from the vehicle by {FFFF00}%s", DriverName);
+							SendClientMessage(OtherPlayer, COLOR_RED, Message);
 							// Inform the driver that he ejected the player
 							format(Message, sizeof(Message), "{00FF00}You've ejected {FFFF00}%s{00FF00} from your vehicle", OtherPlayerName);
 							SendClientMessage(playerid, COLOR_WHITE, Message);
@@ -4083,12 +4083,12 @@ COMMAND:clamp(playerid, params[])
 					format(Message, sizeof(Message), "{00FF00}You've clamped a vehicle that was owned by {FFFF00}%s", Name);
 					SendClientMessage(playerid, COLOR_WHITE, Message);
 					// Let the player know who deleted his vehicle
-					format(Message, sizeof(Message), "{FF0000}A vehicle you owned was clamped by admin {FFFF00}%s", AdminName);
-					SendClientMessage(HouseOwner, COLOR_WHITE, Message);
-					format(Message, sizeof(Message), "{FF0000}It belongs to house: {FFFF00}%s", AHouseData[HouseID][HouseName]);
-					SendClientMessage(HouseOwner, COLOR_WHITE, Message);
-					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(HouseOwner, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "A vehicle you owned was clamped by admin {FFFF00}%s", AdminName);
+					SendClientMessage(HouseOwner, COLOR_RED, Message);
+					format(Message, sizeof(Message), "It belongs to house: {FFFF00}%s", AHouseData[HouseID][HouseName]);
+					SendClientMessage(HouseOwner, COLOR_RED, Message);
+					format(Message, sizeof(Message), "Reason: {FFFF00}%s", Reason);
+					SendClientMessage(HouseOwner, COLOR_RED, Message);
 					// Save the player's datafile (and his houses/businesses/vehicles)
 					PlayerFile_Save(HouseOwner);
 				}
@@ -4396,8 +4396,8 @@ COMMAND:resetplayer(playerid, params[])
 					if (ClearMoney == 1)
 					{
 						APlayerData[OtherPlayer][PlayerMoney] = 0;
-						format(Message, sizeof(Message), "{FF0000}Your money has been reset by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+						format(Message, sizeof(Message), "Your money has been reset by {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_RED, Message);
 						format(Message, sizeof(Message), "{00FF00}You've reset the money of player {FFFF00}%s", Name);
 						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
@@ -4406,8 +4406,8 @@ COMMAND:resetplayer(playerid, params[])
 					if (ClearScore == 1)
 					{
 						APlayerData[OtherPlayer][PlayerScore] = 0;
-						format(Message, sizeof(Message), "{FF0000}Your score has been reset by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+						format(Message, sizeof(Message), "Your score has been reset by {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_RED, Message);
 						format(Message, sizeof(Message), "{00FF00}You've reset the score of player {FFFF00}%s", Name);
 						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
@@ -4427,15 +4427,15 @@ COMMAND:resetplayer(playerid, params[])
 						APlayerData[OtherPlayer][StatsAssistance] = 0;
 						APlayerData[OtherPlayer][StatsRoadworkerJobs] = 0;
 						APlayerData[OtherPlayer][StatsMetersDriven] = 0.0;
-						format(Message, sizeof(Message), "{FF0000}Your stats have been reset by {FFFF00}%s", AdminName);
-						SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+						format(Message, sizeof(Message), "Your stats have been reset by {FFFF00}%s", AdminName);
+						SendClientMessage(OtherPlayer, COLOR_RED, Message);
 						format(Message, sizeof(Message), "{00FF00}You've reset the stats of player {FFFF00}%s", Name);
 						SendClientMessage(playerid, COLOR_WHITE, Message);
 					}
 
 					// Let the other player know the reason too
-					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(OtherPlayer, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "Reason: {FFFF00}%s", Reason);
+					SendClientMessage(OtherPlayer, COLOR_RED, Message);
 
 					// Save the other player's account
 					PlayerFile_Save(OtherPlayer);
@@ -4615,10 +4615,10 @@ COMMAND:ipban(playerid, params[])
 					GetPlayerName(PlayerToBan, Name, sizeof(Name));
 
 					// Inform the player about his ban
-					format(Message, sizeof(Message), "{FF0000}You have been ip-banned permanently by {FFFF00}%s", AdminName);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
-					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "You have been ip-banned permanently by {FFFF00}%s", AdminName);
+					SendClientMessage(PlayerToBan, COLOR_RED, Message);
+					format(Message, sizeof(Message), "Reason: {FFFF00}%s", Reason);
+					SendClientMessage(PlayerToBan, COLOR_RED, Message);
 
 					// Ban the player with a reason
 					SetTimerEx("TimedBanEx", (750 + GetPlayerPing(PlayerToBan)), false, "is", PlayerToBan, Reason);
@@ -4669,10 +4669,10 @@ COMMAND:rangeban(playerid, params[])
 					GetPlayerIp(PlayerToBan, PlayerIP, 16);
 
 					// Inform the player about his ban
-					format(Message, sizeof(Message), "{FF0000}You have been ip-range-banned permanently by {FFFF00}%s", AdminName);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
-					format(Message, sizeof(Message), "{FF0000}Reason: {FFFF00}%s", Reason);
-					SendClientMessage(PlayerToBan, COLOR_WHITE, Message);
+					format(Message, sizeof(Message), "You have been ip-range-banned permanently by {FFFF00}%s", AdminName);
+					SendClientMessage(PlayerToBan, COLOR_RED, Message);
+					format(Message, sizeof(Message), "Reason: {FFFF00}%s", Reason);
+					SendClientMessage(PlayerToBan, COLOR_RED, Message);
 
 					// Get the first three digits from the player's ip, so the fourth part can be added from 0 to 255
 					FirstPartsOfIP = GetFirstThreeDigitsFromIP(PlayerIP);
