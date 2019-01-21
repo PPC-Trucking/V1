@@ -53,10 +53,6 @@ COMMAND:pm(playerid, params[])
 	if (OtherPlayer == playerid)
 		return SendClientMessage(playerid, COLOR_RED, TXT_NoPrivMessageToU);
 
-	// Check if that other player is not online
-	if (!IsPlayerConnected(OtherPlayer))
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
-
 	// Check if the player is not logged in
 	if (APlayerData[OtherPlayer][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
@@ -1191,10 +1187,6 @@ COMMAND:setwanted(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
-	// Check if given player is not online
-	if (!IsPlayerConnected(OtherPlayer))
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
-
 	// Check if the player is not logged in
 	if (APlayerData[OtherPlayer][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
@@ -1340,12 +1332,8 @@ COMMAND:jail(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
-	// Check if given player is not online
-	if (!IsPlayerConnected(PlayerToJail))
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
-
 	// Check if the player is not logged in
-	if (APlayerData[OtherPlayer][LoggedIn] != true)
+	if (APlayerData[PlayerToJail][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
 	// Check if given player is not jailed
@@ -1396,12 +1384,8 @@ COMMAND:unjail(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
-	// Check if given player is not online
-	if (!IsPlayerConnected(PlayerToUnjail))
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
-
 	// Check if the player is not logged in
-	if (APlayerData[OtherPlayer][LoggedIn] != true)
+	if (APlayerData[PlayerToUnjail][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
 	// Check if given player is jailed
@@ -1447,12 +1431,8 @@ COMMAND:warn(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
-	// Check if given player is not online
-	if (!IsPlayerConnected(PlayerToWarn))
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
-
 	// Check if the player is not logged in
-	if (APlayerData[OtherPlayer][LoggedIn] != true)
+	if (APlayerData[PlayerToWarn][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
 	// Increase the number of warnings
@@ -1509,12 +1489,8 @@ COMMAND:kick(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
-	// Check if given player is not online
-	if (!IsPlayerConnected(PlayerToKick))
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
-
 	// Check if the player is not logged in
-	if (APlayerData[OtherPlayer][LoggedIn] != true)
+	if (APlayerData[PlayerToKick][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
 	// Get the name of the player who warned the player
@@ -1558,12 +1534,8 @@ COMMAND:ban(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
-	// Check if given player is not online
-	if (!IsPlayerConnected(PlayerToBan))
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerNotOnline);
-
 	// Check if the player is not logged in
-	if (APlayerData[OtherPlayer][LoggedIn] != true)
+	if (APlayerData[PlayerToBan][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
 	// Check if duration of days is atleast 1
