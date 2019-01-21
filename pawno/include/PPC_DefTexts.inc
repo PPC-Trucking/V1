@@ -229,6 +229,10 @@
 #define TXT_WarnedAdminConfirmation "You have warned %s (warnings: %i/%i)."
 #define TXT_KickAdminConfirmation "You have kicked %s for %s."
 #define TXT_AutoKickedByWarnings "This was the %ith and last warning. You have been kicked."
+#define TXT_MinimumSecondsMustBeOne "You must enter atleast one second."
+#define TXT_MinimumMinutesMustBeOne "You must enter atleast one minute."
+#define TXT_MinimumHoursMustBeOne "You must enter atleast one hour."
+#define TXT_MinimumDaysMustBeOne "You must enter atleast one day."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
