@@ -1668,37 +1668,34 @@ COMMAND:createobject(playerid, params[])
 // Spawns the pickup at the location given by the player
 COMMAND:createpickup(playerid, params[])
 {
-    // Setup local variables
+	// Setup local variables
 	new PickupModel, PickID, Message[128], Float:x, Float:y, Float:z, PickupType;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/createpickup", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 5)
+		return 0;
+
+	if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType))
 	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "ifffi", PickupModel, x, y, z, PickupType)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createpickup <Pickup Model ID> <x> <y> <z> <Type>\"");
-			else
-			{
-				// Spawn the pickup
-				PickID = CreatePickup(PickupModel, PickupType, x, y, z, -1);
-				// Inform the player about it
-				format(Message, sizeof(Message), "You spawned pickup-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", PickID, PickupModel, x, y, z);
-				SendClientMessage(playerid, COLOR_GREEN, Message);
-			}
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/createpickup <Pickup Model ID> <x> <y> <z> <Type>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Spawn the pickup
+	PickID = CreatePickup(PickupModel, PickupType, x, y, z, -1);
+
+	// Inform the player about it
+	format(Message, sizeof(Message), TXT_PickupCreated, PickID, PickupModel, x, y, z);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
