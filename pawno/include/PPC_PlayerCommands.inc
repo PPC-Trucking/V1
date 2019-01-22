@@ -1636,37 +1636,34 @@ COMMAND:unban(playerid, params[])
 // Spawns the object at the location given by the player
 COMMAND:createobject(playerid, params[])
 {
-    // Setup local variables
+	// Setup local variables
 	new ObjectModel, ObjID, Message[128], Float:x, Float:y, Float:z, Float:Angle;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/createobject", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 5)
+		return 0;
+
+	if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle))
 	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "iffff", ObjectModel, x, y, z, Angle)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/createobject <Object Model ID> <x> <y> <z> <Angle>\"");
-			else
-			{
-				// Spawn the object 5 units north of the player
-				ObjID = CreateObject(ObjectModel, x, y, z, 0.0, 0.0, Angle, 250.0);
-				// Inform the player about it
-				format(Message, sizeof(Message), "You spawned object-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f", ObjID, ObjectModel, x, y, z);
-				SendClientMessage(playerid, COLOR_GREEN, Message);
-			}
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/createobject <Object Model ID> <x> <y> <z> <Angle>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Spawn the object 5 units north of the player
+	ObjID = CreateObject(ObjectModel, x, y, z, 0.0, 0.0, Angle, 250.0);
+	
+	// Inform the player about it
+	format(Message, sizeof(Message), TXT_ObjectCreated, ObjID, ObjectModel, x, y, z);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Spawns the pickup at the location given by the player
 COMMAND:createpickup(playerid, params[])
