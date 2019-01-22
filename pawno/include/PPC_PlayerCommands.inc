@@ -1700,37 +1700,38 @@ COMMAND:createpickup(playerid, params[])
 // Deletes the given vehicle from the game
 COMMAND:delobject(playerid, params[])
 {
-    // Setup local variables
+	// Setup local variables
 	new oID, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/delobject", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 5)
+		return 0;
+
+	if (sscanf(params, "i", oID))
 	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "i", oID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/delobject <ObjectID>\"");
-			else
-			{
-				// Destroy the given vehicle
-				DestroyObject(oID);
-				// Inform the player about it
-				format(Message, sizeof(Message), "You deleted object-id %i", oID);
-				SendClientMessage(playerid, COLOR_GREEN, Message);
-			}
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/delobject <Object ID>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if object id exists
+	if (!IsValidObject(oID))
+		return SendClientMessage(playerid, COLOR_RED, TXT_ObjectNotExist);
+
+	// Destroy the given vehicle
+	DestroyObject(oID);
+
+	// Inform the player about it
+	format(Message, sizeof(Message), TXT_ObjectDeleted, oID);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Ports the player to the given coordinates
 COMMAND:portloc(playerid, params[])
