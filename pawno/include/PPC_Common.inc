@@ -635,3 +635,25 @@ stock IsPlayerInsideABuilding(playerid)
 	else
 		return false;
 }
+
+// Make numbers human readable
+stock FormatNumber(iNum, const szChar[] = ",")
+{
+	new szStr[16], bool:negative = false;
+
+	if (0 > iNum)
+		negative = true;
+
+	if (negative)
+		iNum = -iNum;
+
+	format(szStr, sizeof(szStr), "%i", iNum);
+
+	for(new iLen = strlen(szStr) - 3; iLen > 0; iLen -= 3)
+		strins(szStr, szChar, iLen);
+
+	if (negative)
+		strins(szStr, "-", 0, sizeof(szStr));
+
+	return szStr;
+}
