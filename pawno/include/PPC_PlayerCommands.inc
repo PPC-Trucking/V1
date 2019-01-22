@@ -1720,7 +1720,7 @@ COMMAND:delobject(playerid, params[])
 	if (!IsValidObject(oID))
 		return SendClientMessage(playerid, COLOR_RED, TXT_ObjectNotExist);
 
-	// Destroy the given vehicle
+	// Destroy the given object
 	DestroyObject(oID);
 
 	// Inform the player about it
