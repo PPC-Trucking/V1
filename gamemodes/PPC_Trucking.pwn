@@ -430,13 +430,8 @@ public OnPlayerText(playerid, text[])
 {
 	// Check if the player is not logged in
 	if (APlayerData[playerid][LoggedIn] != true)
-	{
 		// Let the player know that he must login first
-		SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
-
-		// Do not send the text to the chatbox
-		return 0;
-	}
+		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
 
 	// Block the player's text if he has been muted
     if ((APlayerData[playerid][Muted] > gettime()))
@@ -474,9 +469,12 @@ public OnPlayerCommandReceived(playerid, cmdtext[]) {
 			// Show the remaining muted time to the player
 			ShowRemainingMutedTime(playerid);
 
+			// Do not send the text to the chatbox
 			return 0;
 		}
-	}
+	} else
+		if (GetPlayerState(playerid) == PLAYER_STATE_WASTED)
+			return SendClientMessage(playerid, COLOR_RED, TXT_MustBeSpawned);
 
 	return 1;
 }

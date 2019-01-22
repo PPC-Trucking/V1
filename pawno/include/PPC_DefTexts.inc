@@ -173,6 +173,7 @@
 #define TXT_PlayerNotOnline "That player is not online."
 #define TXT_PlayerNotLoggedIn "That player has not logged in yet."
 #define TXT_MustBeOnFoot "You must be on foot to use this command."
+#define TXT_MustBeSpawned "You must be spawned to use this command."
 #define TXT_HouseMaxLevelNotInRange "You have to use a max-level from %i to %i."
 #define TXT_HouseMaxReached "The maximum amount of houses (%i) has been reached."
 #define TXT_HouseCreated "You have succesfully created house {FF00FF}%i{00FF00}."
