@@ -1733,6 +1733,42 @@ COMMAND:createpickup(playerid, params[])
 
 
 
+// Deletes the given pickup from the game
+COMMAND:delpickup(playerid, params[])
+{
+	// Setup local variables
+	new pID, Message[128];
+
+	// Send the command to all admins so they can see it
+	SendAdminText(playerid, "/delpickup", params);
+
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 5)
+		return 0;
+
+	if (sscanf(params, "i", pID))
+	{
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/delpickup <Pickup ID>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+	// Check if pickup id exists
+	if (!IsValidObject(pID))
+		return SendClientMessage(playerid, COLOR_RED, TXT_PickupNotExist);
+
+	// Destroy the given pickup
+	DestroyPickup(pID);
+
+	// Inform the player about it
+	format(Message, sizeof(Message), TXT_PickupDeleted, pID);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
+
+	// Let the server know that this was a valid command
+	return 1;
+}
+
+
+
 // Ports the player to the given coordinates
 COMMAND:portloc(playerid, params[])
 {

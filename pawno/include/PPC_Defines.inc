@@ -1063,6 +1063,7 @@ new ACommands[][TCommands] =
 	{5, "/createhouse <Price> <Max Level (1-10)>",               		"Create a new house"},
 	{5, "/createobject <Object Model ID> <x> <y> <z> <Angle>",                    "Create an object"},
 	{5, "/createpickup <Pickup Model ID> <x> <y> <z> <Type>",               "Create a pickup"},
+	{5, "/delpickup <Pickup ID>",               "Delete a pickup"},
 	{5, "/delbusiness",                                   				"Delete a business"},
 	{5, "/delcamera",                                   				"Delete a speedcamera"},
 	{5, "/delhouse",                                   					"Delete a house"},

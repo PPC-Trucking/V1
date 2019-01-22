@@ -238,9 +238,11 @@
 #define TXT_MinimumDaysMustBeOne "You must enter atleast one day."
 #define TXT_PlayerAccountNotFound "There is no account with that playername."
 #define TXT_ObjectCreated "You spawned object-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f"
-#define TXT_PickupCreated "You spawned pickup-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f"
 #define TXT_ObjectDeleted "You deleted object-id %i"
 #define TXT_ObjectNotExist "That object-id does not exist."
+#define TXT_PickupCreated "You spawned pickup-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f"
+#define TXT_PickupDeleted "You deleted pickup-id %i"
+#define TXT_PickupNotExist "That pickup-id does not exist."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
