@@ -243,6 +243,7 @@
 #define TXT_PickupCreated "You spawned pickup-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f"
 #define TXT_PickupDeleted "You deleted pickup-id %i"
 #define TXT_PickupNotExist "That pickup-id does not exist."
+#define TXT_AdminTeleportToLoc "You have been ported to location: %4.2f, %4.2f, %4.2f"
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

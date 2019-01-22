@@ -1778,43 +1778,32 @@ COMMAND:portloc(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/portloc", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	// Check if the player is in jail
+	if (APlayerData[playerid][PlayerJailed] != 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyIfNotJailed);
+
+	if (sscanf(params, "fff", x, y, z))
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			// Check if the player has a wanted level of less than 3
-			if (GetPlayerWantedLevel(playerid) < 3)
-			{
-				// Check if the player is not jailed
-				if (APlayerData[playerid][PlayerJailed] == 0)
-				{
-					if (sscanf(params, "fff", x, y, z)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/portloc <x> <y> <z>\"");
-					else
-					{
-						// Port the player to the given location
-						SetPlayerPos(playerid, x, y, z);
-						// Let the player know about it
-						format(Message, sizeof(Message), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z);
-						SendClientMessage(playerid, COLOR_GREEN, Message);
-					}
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "You cannot use /portloc when you're in jail");
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /portloc when you're wanted");
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/portloc <x> <y> <z>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Port the player to the given location
+	SetPlayerPos(playerid, x, y, z);
+	
+	// Let the player know about it
+	format(Message, sizeof(Message), TXT_AdminTeleportToLoc, x, y, z);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Ports the player to the given player
 COMMAND:port(playerid, params[])
