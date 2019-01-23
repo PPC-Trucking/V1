@@ -1860,61 +1860,79 @@ COMMAND:port(playerid, params[])
 COMMAND:tele(playerid, params[])
 {
 	// Setup local variables
-	new Player1, Player2, Float:x, Float:y, Float:z, Message[128], IntID, WorldID, Name[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
+	new Player, OtherPlayer, Float:x, Float:y, Float:z, Message[128], IntID, WorldID, PlayerName[MAX_PLAYER_NAME], OtherPlayerName[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/tele", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	if (sscanf(params, "uu", Player, OtherPlayer))
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			if (sscanf(params, "uu", Player1, Player2)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/tele <Player 1> <Player 2>\"");
-			else
-			{
-				if (Player1 != Player2) {
-					// Check if player1 is online
-					if (APlayerData[Player1][LoggedIn] == true)
-					{
-						// Check if player2 is online
-						if (APlayerData[Player2][LoggedIn] == true)
-						{
-						    // Get the name of the admin and the second player
-						    GetPlayerName(playerid, AdminName, sizeof(AdminName));
-						    GetPlayerName(Player2, Name, sizeof(Name));
-							// Get the location of the second player
-							GetPlayerPos(Player2, x, y, z);
-							IntID = GetPlayerInterior(Player2);
-							WorldID = GetPlayerVirtualWorld(Player2);
-							// Port the first player to player2's location
-							SetPlayerVirtualWorld(Player1, WorldID);
-							SetPlayerInterior(Player1, IntID);
-							SetPlayerPos(Player1, x, y, z + 3.0);
-							// Let the first player know he's been ported
-							format(Message, sizeof(Message), "{00FF00}You have been ported to player {FFFF00}%s{00FF00} by {FFFF00}%s", Name, AdminName);
-							SendClientMessage(Player1, COLOR_WHITE, Message);
-						}
-						else
-						    SendClientMessage(playerid, COLOR_RED, "Player 2 isn't online");
-					}
-					else
-					    SendClientMessage(playerid, COLOR_RED, "Player 1 isn't online");
-				}
-				else
-					SendClientMessage(playerid, COLOR_RED, "Players must be different");
-			}
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/tele <Player 1> <Player 2>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if Player is not logged in
+	if (APlayerData[Player][LoggedIn] != true)
+	{
+		format(Message, sizeof(Message), TXT_PlayerNotLoggedInWithName, "Player1");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+	// Check if Player and OtherPlayer are equal
+	if (Player == OtherPlayer)
+		return SendClientMessage(playerid, COLOR_RED, Message);
+
+	// Check if OtherPlayer is not logged in
+	if (APlayerData[OtherPlayer][LoggedIn] != true)
+	{
+		format(Message, sizeof(Message), TXT_PlayerNotLoggedInWithName, "Player2");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+	// Check if Player is jailed
+	if (APlayerData[Player][PlayerJailed] == 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerIsJailedWithName, "Player1");
+
+	// Check if OtherPlayer is jailed
+	if (APlayerData[OtherPlayer][PlayerJailed] == 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerIsJailedWithName, "Player2");
+
+	// Get the names of the players and the admin
+	GetPlayerName(playerid, AdminName, sizeof(AdminName));
+	GetPlayerName(Player, PlayerName, sizeof(PlayerName));
+	GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
+
+	// Get the location of the second player
+	GetPlayerPos(OtherPlayer, x, y, z);
+	IntID = GetPlayerInterior(OtherPlayer);
+	WorldID = GetPlayerVirtualWorld(OtherPlayer);
+
+	// Port Player to OtherPlayer's location
+	SetPlayerVirtualWorld(Player, WorldID);
+	SetPlayerInterior(Player, IntID);
+	SetPlayerPos(Player, x, y, z + 3.0);
+
+	// Let Player know he has been ported
+	format(Message, sizeof(Message), TXT_PortedToOtherPlayerLoc, OtherPlayer, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	SendClientMessage(Player, COLOR_WHITE, Message);
+
+	// Let OtherPlayer know Player has been ported to him
+	format(Message, sizeof(Message), TXT_PlayerPortedToYou, PlayerName, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	SendClientMessage(Player, COLOR_WHITE, Message);
+
+	// Let admin know Player has been ported to OtherPlayer
+	format(Message, sizeof(Message), TXT_AdminPlayerTeleportedToOtherPlayer, PlayerName, OtherPlayerName, x, y, z);
+	SendClientMessage(Player, COLOR_WHITE, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Ports the player to the given vehicle
 COMMAND:portvehicle(playerid, params[])

@@ -172,6 +172,7 @@
 #define TXT_PrivMessageFrom "[PM From] %s (%i): %s"
 #define TXT_PlayerNotOnline "That player is not online."
 #define TXT_PlayerNotLoggedIn "That player has not logged in yet."
+#define TXT_PlayerNotLoggedInWithName "%s has not logged in yet."
 #define TXT_MustBeOnFoot "You must be on foot to use this command."
 #define TXT_MustBeSpawned "You must be spawned to use this command."
 #define TXT_HouseMaxLevelNotInRange "You have to use a max-level from %i to %i."
@@ -219,6 +220,7 @@
 #define TXT_InvalidWantedLevel "You have entered an invalid wanted level. Only 0-6 are possible."
 #define TXT_PlayerAlreadyJailed "That player has been jailed already."
 #define TXT_PlayerIsJailed "That player is in jail."
+#define TXT_PlayerIsJailedWithName "%s is in jail."
 #define TXT_PlayerNotJailed "That player is not in jail."
 #define TXT_JailedByAdmin "You have been jailed by %s %s for %i seconds."
 #define TXT_UnJailedByAdmin "You have been un-jailed by %s %s."
@@ -246,6 +248,9 @@
 #define TXT_PickupNotExist "That pickup-id does not exist."
 #define TXT_AdminTeleportToLoc "You have been ported to location: %4.2f, %4.2f, %4.2f"
 #define TXT_AdminTeleportToPlayer "You have been ported to %s's location (%4.2f, %4.2f, %4.2f)."
+#define TXT_PortedToOtherPlayerLoc "You have been ported to %s's location by %s %s."
+#define TXT_PlayerPortedToYou "%s has been been ported to your location by %s %s."
+#define TXT_AdminPlayerTeleportedToOtherPlayer "You have ported %s to %'s location (%4.2f, %4.2f, %4.2f)."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
