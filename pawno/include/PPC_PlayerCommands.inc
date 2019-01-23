@@ -1848,7 +1848,7 @@ COMMAND:port(playerid, params[])
 
 	// Let the player know about it
 	format(Message, sizeof(Message), TXT_AdminTeleportToPlayer, Name, x, y, z + 3.0);
-	SendClientMessage(PlayerToKick, COLOR_RED, Message);
+	SendClientMessage(playerid, COLOR_RED, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -1860,7 +1860,7 @@ COMMAND:port(playerid, params[])
 COMMAND:tele(playerid, params[])
 {
 	// Setup local variables
-	new Player, OtherPlayer, Float:x, Float:y, Float:z, Message[128], IntID, WorldID, PlayerName[MAX_PLAYER_NAME], OtherPlayerName[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
+	new Player, OtherPlayer, Float:x, Float:y, Float:z, Message[128], IntID, WorldID, NamePlayer[MAX_PLAYER_NAME], OtherPlayerName[MAX_PLAYER_NAME], AdminName[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/tele", params);
@@ -1894,16 +1894,20 @@ COMMAND:tele(playerid, params[])
 	}
 
 	// Check if Player is jailed
-	if (APlayerData[Player][PlayerJailed] == 0)
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerIsJailedWithName, "Player1");
+	if (APlayerData[Player][PlayerJailed] == 0) {
+		format(Message, sizeof(Message), TXT_PlayerIsJailedWithName, "Player1");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
 
 	// Check if OtherPlayer is jailed
-	if (APlayerData[OtherPlayer][PlayerJailed] == 0)
-		return SendClientMessage(playerid, COLOR_RED, TXT_PlayerIsJailedWithName, "Player2");
+	if (APlayerData[OtherPlayer][PlayerJailed] == 0) {
+		format(Message, sizeof(Message), TXT_PlayerIsJailedWithName, "Player2");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
 
 	// Get the names of the players and the admin
 	GetPlayerName(playerid, AdminName, sizeof(AdminName));
-	GetPlayerName(Player, PlayerName, sizeof(PlayerName));
+	GetPlayerName(Player, NamePlayer, sizeof(NamePlayer));
 	GetPlayerName(OtherPlayer, OtherPlayerName, sizeof(OtherPlayerName));
 
 	// Get the location of the second player
@@ -1921,11 +1925,11 @@ COMMAND:tele(playerid, params[])
 	SendClientMessage(Player, COLOR_WHITE, Message);
 
 	// Let OtherPlayer know Player has been ported to him
-	format(Message, sizeof(Message), TXT_PlayerPortedToYou, PlayerName, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	format(Message, sizeof(Message), TXT_PlayerPortedToYou, NamePlayer, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
 	SendClientMessage(Player, COLOR_WHITE, Message);
 
 	// Let admin know Player has been ported to OtherPlayer
-	format(Message, sizeof(Message), TXT_AdminPlayerTeleportedToOtherPlayer, PlayerName, OtherPlayerName, x, y, z);
+	format(Message, sizeof(Message), TXT_AdminPlayerTeleportedToOtherPlayer, NamePlayer, OtherPlayerName, x, y, z);
 	SendClientMessage(Player, COLOR_WHITE, Message);
 
 	// Let the server know that this was a valid command
