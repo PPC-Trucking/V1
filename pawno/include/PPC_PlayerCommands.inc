@@ -1809,59 +1809,52 @@ COMMAND:portloc(playerid, params[])
 COMMAND:port(playerid, params[])
 {
 	// Setup local variables
-	new OtherPlayer, Float:x, Float:y, Float:z, Message[128], IntID, WorldID;
+	new OtherPlayer, Name[MAX_PLAYER_NAME], Float:x, Float:y, Float:z, Message[128], IntID, WorldID;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/port", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	if (sscanf(params, "u", OtherPlayer))
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			// Check if the player has a wanted level of less than 3
-			if (GetPlayerWantedLevel(playerid) < 3)
-			{
-				// Check if the player is not jailed
-				if (APlayerData[playerid][PlayerJailed] == 0)
-				{
-					if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/port <Player>\"");
-					else
-					{
-						// Check if that other player is online
-						if (IsPlayerConnected(OtherPlayer))
-						{
-							// Get the location of the other player
-							GetPlayerPos(OtherPlayer, x, y, z);
-							IntID = GetPlayerInterior(OtherPlayer);
-							WorldID = GetPlayerVirtualWorld(OtherPlayer);
-							// Port the player to the given location
-							SetPlayerVirtualWorld(playerid, WorldID);
-							SetPlayerInterior(playerid, IntID);
-							SetPlayerPos(playerid, x, y, z + 3.0);
-							// Let the player know about it
-							format(Message, sizeof(Message), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
-						}
-						else
-						    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
-					}
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "You cannot use /port when you're in jail");
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /port when you're wanted");
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/port <Player>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if the player is not logged in
+	if (APlayerData[PlayerToBan][LoggedIn] != true)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
+
+	// Check if admin is in jail
+	if (APlayerData[playerid][PlayerJailed] == 0)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_CmdOnlyIfNotJailed);
+
+	// Check if the player is jailed
+	if (APlayerData[OtherPlayer][PlayerJailed] == 0)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerIsJailed);
+
+	// Get the location of the other player
+	GetPlayerPos(OtherPlayer, x, y, z);
+	IntID = GetPlayerInterior(OtherPlayer);
+	WorldID = GetPlayerVirtualWorld(OtherPlayer);
+
+	// Port the player to the given location
+	SetPlayerPos(playerid, x, y, z + 3.0);
+	SetPlayerInterior(playerid, IntID);
+	SetPlayerVirtualWorld(playerid, WorldID);	
+
+	// Let the player know about it
+	format(Message, sizeof(Message), TXT_AdminTeleportToPlayer, Name, x, y, z + 3.0);
+	SendClientMessage(PlayerToKick, COLOR_RED, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Ports one player to another player
 COMMAND:tele(playerid, params[])

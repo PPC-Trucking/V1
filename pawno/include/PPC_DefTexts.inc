@@ -218,6 +218,7 @@
 #define TXT_NotInsideARoadWorkerVehicle "You need to be the driver of a roadworker vehicle to start a job."
 #define TXT_InvalidWantedLevel "You have entered an invalid wanted level. Only 0-6 are possible."
 #define TXT_PlayerAlreadyJailed "That player has been jailed already."
+#define TXT_PlayerIsJailed "That player is in jail."
 #define TXT_PlayerNotJailed "That player is not in jail."
 #define TXT_JailedByAdmin "You have been jailed by %s %s for %i seconds."
 #define TXT_UnJailedByAdmin "You have been un-jailed by %s %s."
@@ -244,6 +245,7 @@
 #define TXT_PickupDeleted "You deleted pickup-id %i"
 #define TXT_PickupNotExist "That pickup-id does not exist."
 #define TXT_AdminTeleportToLoc "You have been ported to location: %4.2f, %4.2f, %4.2f"
+#define TXT_AdminTeleportToPlayer "You have been ported to %s's location (%4.2f, %4.2f, %4.2f)."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
