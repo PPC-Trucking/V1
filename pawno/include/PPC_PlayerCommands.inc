@@ -1825,7 +1825,7 @@ COMMAND:port(playerid, params[])
 	}
 
 	// Check if the player is not logged in
-	if (APlayerData[PlayerToBan][LoggedIn] != true)
+	if (APlayerData[OtherPlayer][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
 	// Check if admin is in jail
