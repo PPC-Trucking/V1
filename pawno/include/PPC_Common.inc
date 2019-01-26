@@ -241,20 +241,23 @@ CommandList_Create(playerid)
 }
 
 // This function returns "1" if the given vehicle-id is a plane or helicopter
-IsVehicleAirModel(vid)
+IsVehicleAirVehicle(vid)
 {
 	switch (GetVehicleModel(vid))
 	{
-		case 592, 577, 511, 512, 593, 520, 553, 476, 519, 460, 513, 548, 425, 417, 487, 488, 497, 563, 447, 469: return 1;
+		case 417,425,447,460,469,476,487,488,497,511,512,513,519,520,548,553,563,577,592,593: return 1;
 	}
+
 	return 0;
 }
-IsVehicleBoatModel(vid) 
+
+IsVehicleSeaVehicle(vid) 
 {
 	switch(GetVehicleModel(vid)) 
 	{
-		case 430,446,452,453,454,472,73,484,493,595: return 1;
+		case 430,446,452,453,454,472,473,484,493,595: return 1;
 	}
+
 	return 0;
 }
 
