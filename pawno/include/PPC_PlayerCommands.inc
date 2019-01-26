@@ -1942,56 +1942,45 @@ COMMAND:tele(playerid, params[])
 COMMAND:portvehicle(playerid, params[])
 {
 	// Setup local variables
-	new Car, Float:x, Float:y, Float:z, Message[128];
+	new Vehicle, Float:x, Float:y, Float:z, Message[128];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/portvehicle", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	// Check for invalid command syntax
+	if (sscanf(params, "i", Vehicle))
 	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			// Check if the player has a wanted level of less than 3
-			if (GetPlayerWantedLevel(playerid) < 3)
-			{
-				// Check if the player is not jailed
-				if (APlayerData[playerid][PlayerJailed] == 0)
-				{
-					if (sscanf(params, "i", Car)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/portvehicle <Vehicle ID>\"");
-					else
-					{
-						//check if the car exists
-						if(AVehicleData[Car][Model] != 0)
-						{
-							// Get the location of the car
-							GetVehiclePos(Car, x, y, z);
-							// Port the player to the given location
-							SetPlayerPos(playerid, x, y, z + 3.0);
-							// Let the player know about it
-							format(Message, sizeof(Message), "You have been ported to location: %4.2f, %4.2f, %4.2f", x, y, z + 3.0);
-							SendClientMessage(playerid, COLOR_GREEN, Message);
-						}
-						else
-							SendClientMessage(playerid, COLOR_RED, "The vehicle id its not valid");
-					}
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "You cannot use /portvehicle when you're in jail");
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You cannot use /portvehicle when you're wanted");
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/portvehicle <Vehicle ID>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if the vehicle does not exist
+	if (AVehicleData[Vehicle][Model] == 0)
+		return SendClientMessage(playerid, COLOR_RED, TXT_VehicleDoesNotExist);
+
+	// Check if the vehicle has been clamped
+	if (AVehicleData[Vehicle][Clamped] == true)
+		return SendClientMessage(playerid, COLOR_RED, TXT_VehicleClamped);
+
+	// Get the location of the vehicle
+	GetVehiclePos(Vehicle, x, y, z);
+
+	// Port the player to the given location
+	SetPlayerPos(playerid, x, y, z + 3.0);
+
+	// Let the player know about it
+	format(Message, sizeof(Message), TXT_AdminTeleportToLoc, x, y, z + 3.0);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Sets the admin-level of another player
 COMMAND:setlevel(playerid, params[])

@@ -251,6 +251,8 @@
 #define TXT_PortedToOtherPlayerLoc "You have been ported to %s's location by %s %s."
 #define TXT_PlayerPortedToYou "%s has been been ported to your location by %s %s."
 #define TXT_AdminPlayerTeleportedToOtherPlayer "You have ported %s to %'s location (%4.2f, %4.2f, %4.2f)."
+#define TXT_VehicleDoesNotExist "That car does not exist."
+#define TXT_VehicleClamped "That car has been clamped."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
