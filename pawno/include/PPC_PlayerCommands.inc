@@ -2002,6 +2002,10 @@ COMMAND:setlevel(playerid, params[])
 		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
 
+	// Check if OtherPlayer equals playerid
+	if (OtherPlayer == playerid)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_CantPerformActionOnYourself);
+
 	// Check if the player is not logged in
 	if (APlayerData[OtherPlayer][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
