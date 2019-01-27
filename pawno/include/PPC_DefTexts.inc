@@ -253,6 +253,10 @@
 #define TXT_AdminPlayerTeleportedToOtherPlayer "You have ported %s to %'s location (%4.2f, %4.2f, %4.2f)."
 #define TXT_VehicleDoesNotExist "That car does not exist."
 #define TXT_VehicleClamped "That car has been clamped."
+#define TXT_InvalidAdminLevel "The given admin level is invalid. Must be between 1-5."
+#define TXT_AdminLevelNotChanged "The admin level has not been changed."
+#define TXT_PlayerPromoted "Player %s has been promoted to \"%s\" by %s %s."
+#define TXT_PlayerDemoted "Player %s has been promoted to \"%s\" by %s %s."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

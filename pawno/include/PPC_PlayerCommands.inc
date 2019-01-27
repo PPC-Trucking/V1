@@ -1991,55 +1991,53 @@ COMMAND:setlevel(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/setlevel", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 5)
+		return 0;
+
+	// Check for invalid command syntax
+	if (sscanf(params, "ui", OtherPlayer, Level))
 	{
-		// Check if the player's admin-level is at least 5
-		if (APlayerData[playerid][PlayerLevel] >= 5)
-		{
-			if (sscanf(params, "ui", OtherPlayer, Level)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/setlevel <Player> <AdminLevel>\"");
-			else
-			{
-				// Check if that other player is online
-				if (IsPlayerConnected(OtherPlayer))
-				{
-					// Check if the level is in the range
-					if(Level < 0 || Level > 5)
-						return SendClientMessage(playerid, COLOR_RED, "The level its out of range (0-5)");
-				    // Get the old level of the other player
-				    OldLevel = APlayerData[OtherPlayer][PlayerLevel];
-					// Get the playername of the admin
-					GetPlayerName(playerid, AdminName, sizeof(AdminName));
-					// Also get the name of the player that has been promoted
-					GetPlayerName(OtherPlayer, Name, sizeof(Name));
-					// Store the level of the player
-					APlayerData[OtherPlayer][PlayerLevel] = Level;
-					// Let all players know about it
-					if (OldLevel != Level)
-					{
-						// Check if the player has been promoted or demoted
-						if (OldLevel < Level)
-							format(Message, sizeof(Message), "Player %s has been promoted to %s by %s", Name, AdminLevelName[Level], AdminName);
-						if (OldLevel > Level)
-							format(Message, sizeof(Message), "Player %s has been demoted to %s by %s", Name, AdminLevelName[Level], AdminName);
-						SendClientMessageToAll(COLOR_GREEN, Message);
-					}
-					else
-						SendClientMessage(playerid, COLOR_RED, "Other player's level hasn't been changed");
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "That player isn't online");
-			}
-		}
-		else
-		    return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/setlevel <Player> <AdminLevel>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if the player is not logged in
+	if (APlayerData[OtherPlayer][LoggedIn] != true)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
+
+	if ((0 > Level) || (5 < Level))
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_InvalidAdminLevel);
+
+	// Get the old level of the other player
+	OldLevel = APlayerData[OtherPlayer][PlayerLevel];
+
+	if (APlayerData[OtherPlayer][PlayerLevel] == Level)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_AdminLevelNotChanged);
+
+	// Get the playername of the admin
+	GetPlayerName(playerid, AdminName, sizeof(AdminName));
+
+	// Also get the name of the player that has been promoted
+	GetPlayerName(OtherPlayer, Name, sizeof(Name));
+
+	// Store the level of the player
+	APlayerData[OtherPlayer][PlayerLevel] = Level;
+
+	// Determine whether the player has been promoted or demoted
+	if (OldLevel < Level)
+		format(Message, sizeof(Message), TXT_PlayerPromoted, Name, AdminLevelName[Level], AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+	if (OldLevel > Level)
+		format(Message, sizeof(Message), TXT_PlayerDemoted, Name, AdminLevelName[Level], AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
+
+	// Let all players know about it
+	SendClientMessageToAll(COLOR_GREEN, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Refuel the player's vehicle
 COMMAND:fuel(playerid, params[])
