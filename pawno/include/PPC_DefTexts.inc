@@ -258,6 +258,7 @@
 #define TXT_PlayerPromoted "Player %s has been promoted to \"%s\" by %s %s."
 #define TXT_PlayerDemoted "Player %s has been promoted to \"%s\" by %s %s."
 #define TXT_CantPerformActionOnYourself "You can not perform that command on yourself."
+#define TXT_VehicleRefuelled "Your vehicle has been refuelled"
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

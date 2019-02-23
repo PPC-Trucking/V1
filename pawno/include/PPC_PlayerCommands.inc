@@ -2052,34 +2052,32 @@ COMMAND:fuel(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/fuel", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 1
-		if (APlayerData[playerid][PlayerLevel] >= 1)
-		{
-			// Check if the player is inside a vehicle
-			if (IsPlayerInAnyVehicle(playerid))
-			{
-			    // Get the vehicleid
-			    vID = GetPlayerVehicleID(playerid);
-			    // Refuel the vehicle
-			    AVehicleData[vID][Fuel] = MaxFuel;
-				// Let the player know about it
-				SendClientMessage(playerid, COLOR_GREEN, "Your vehicle is refuelled");
-			}
-			else
-				SendClientMessage(playerid, COLOR_RED, "You're not driving a vehicle");
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 1)
+		return 0;
+
+	// Check if the player is inside a building
+	if (IsPlayerInsideABuilding(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdNotAllowedInsideBuilding);
+
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (!IsPlayerInAnyVehicle(playerid))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableInVehicle);
+
+	// Get the vehicleid
+	vID = GetPlayerVehicleID(playerid);
+
+	// Refuel the vehicle
+	AVehicleData[vID][Fuel] = MaxFuel;
+
+	// Let the player know about it
+	SendClientMessage(playerid, COLOR_GREEN, TXT_VehicleRefuelled);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Let the player use a jetpack
 COMMAND:jetpack(playerid, params[])
