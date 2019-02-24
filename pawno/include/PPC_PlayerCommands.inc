@@ -2085,87 +2085,80 @@ COMMAND:jetpack(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/jetpack", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			// Equip the player with a jetpack
-			SetPlayerSpecialAction(playerid, 2);
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 3)
+		return 0;
+
+	// Equip the player with a jetpack
+	SetPlayerSpecialAction(playerid, 2);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Paints a car with a paintjob
 COMMAND:paint(playerid, params[])
 {
-    // Setup local variables
-	new PaintjobID, vid, Message[128];
+	// Setup local variables
+	new PaintjobID, vid, Message[128], Name[MAX_PLAYER_NAME];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/paint", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	if (sscanf(params, "i", PaintjobID))
 	{
-		// Check if the player is the driver of the vehicle
-		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-		{
-			if (sscanf(params, "i", PaintjobID)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/paint <Paintjob ID (0-2)>\"");
-			else
-			{
-			    // Check if the player entered a correct paintjob id
-			    if ((PaintjobID >= 0) && (PaintjobID <= 2))
-				{
-					// Get the vehicle-id
-					vid = GetPlayerVehicleID(playerid);
-					// Check if the player is the owner of the vehicle
-					if (AVehicleData[vid][Owned] == true)
-					{
-						// Change the paintjob of the player's vehicle
-						ChangeVehiclePaintjob(vid, PaintjobID);
-						// Also save the paintjob for the vehicle
-						AVehicleData[vid][PaintJob] = PaintjobID + 1;
-
-						// Also set the vehiclecolor to 1 (white), so the paintjob has it's full color
-						ChangeVehicleColor(vid, 1, 1);
-						// Also save the colors for the vehicle
-						AVehicleData[vid][Color1] = 1;
-						AVehicleData[vid][Color2] = 1;
-
-						// Let the player pay for the paintjob
-						RewardPlayer(playerid, -PRICE_PAINT_JOB, 0);
-						// Inform the player about it
-						format(Message, sizeof(Message), TXT_VehPaintJobPaid, PRICE_PAINT_JOB);
-						SendClientMessage(playerid, COLOR_GREEN, Message);
-
-						// Save the player-file (along with the houses and businesses)
-						PlayerFile_Save(playerid);
-					}
-					else
-					    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
-				}
-				else
-				    SendClientMessage(playerid, COLOR_RED, "You need to enter a paintjob id from 0 to 2");
-			}
-		}
-		else
-			SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle you own to apply a paintjob");
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/paint <Paintjob ID (0-2)>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-	    return 0;
+
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
+
+	if ((PaintjobID < 0) || (PaintjobID > 2))
+		return SendClientMessage(playerid, COLOR_RED, TXT_InvalidPaintJobID);
+
+	// Get players name
+	GetPlayerName(playerid, Name, sizeof(Name));
+
+	// Get the vehicle-id
+	vid = GetPlayerVehicleID(playerid);
+
+	// Check if the player is not the owner of the vehicle
+	// and if the player is not an admin
+	if ((strcmp(Name, AVehicleData[vid][Owner]) != 0 || isnull(AVehicleData[vid][Owner])) && (APlayerData[playerid][PlayerLevel] == 0))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyOnOwnVehicles);
+
+	// Change the paintjob of the player's vehicle
+	ChangeVehiclePaintjob(vid, PaintjobID);
+
+	// Also save the paintjob for the vehicle
+	AVehicleData[vid][PaintJob] = PaintjobID + 1;
+
+	// Also set the vehiclecolor to 1 (white), so the paintjob has it's full color
+	ChangeVehicleColor(vid, 1, 1);
+
+	// Also save the colors for the vehicle
+	AVehicleData[vid][Color1] = 1;
+	AVehicleData[vid][Color2] = 1;
+
+	// Let the player pay for the paintjob
+	RewardPlayer(playerid, -PRICE_PAINT_JOB, 0);
+
+	// Inform the player about it
+	format(Message, sizeof(Message), TXT_VehPaintJobPaid, PRICE_PAINT_JOB);
+	SendClientMessage(playerid, COLOR_GREEN, Message);
+
+	// Save the player-file (along with the houses and businesses)
+	PlayerFile_Save(playerid);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Re-colors the given vehicle (lets you choose the first color)
 COMMAND:color1(playerid, params[])

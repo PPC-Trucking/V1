@@ -409,7 +409,7 @@ enum TVehicleData
 	BelongsToHouse, // Holds the HouseID to which this vehicle belongs
 	bool:StaticVehicle, // Holds true if this is a static vehicle
 	bool:Owned, // Holds true if the vehicle is owned by somebody
-	Owner[24], // Holds the name of the owned of the vehicle
+	Owner[24], // Holds the name of the owner of the vehicle
 	Model, // Holds the vehicle-model of this vehicle
 	PaintJob, // Holds the ID of the paintjob applied to the vehicle
 	Components[14], // Holds all Component-ID's for all components on the vehicle

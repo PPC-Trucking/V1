@@ -259,6 +259,8 @@
 #define TXT_PlayerDemoted "Player %s has been promoted to \"%s\" by %s %s."
 #define TXT_CantPerformActionOnYourself "You can not perform that command on yourself."
 #define TXT_VehicleRefuelled "Your vehicle has been refuelled"
+#define TXT_InvalidPaintJobID "You have entered an invalid paint job id. Only 0-2 are possible."
+#define TXT_CmdOnlyOnOwnVehicles "You can only perform that command on vehicles which you own."
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
