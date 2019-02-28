@@ -534,7 +534,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
 		case DialogPlayerCommands: Dialog_PlayerCommands(playerid, response, listitem); // Displays all commands in a split-dialog structure
 		case DialogPrimaryCarColor: Dialog_PrimaryCarColor(playerid, response, listitem);
-		case DialogSedundaryCarColor: Dialog_SedundaryCarColor(playerid, response, listitem);
+		case DialogSecondaryCarColor: Dialog_SecondaryCarColor(playerid, response, listitem);
 
 		case DialogWeather: Dialog_Weather(playerid, response, listitem); // The weather dialog
 		case DialogCarOption: Dialog_CarOption(playerid, response, listitem); // The caroption dialog

@@ -164,7 +164,7 @@
 
 #define DialogPlayerCommands        501
 #define DialogPrimaryCarColor       502
-#define DialogSedundaryCarColor     503
+#define DialogSecondaryCarColor     503
 
 #define DialogHouseMenu             601
 #define DialogUpgradeHouse          602
@@ -977,7 +977,7 @@ new ACommands[][TCommands] =
 	{0, "/changepassword",                                   			"Allows the player to change his login password"},
 	{0, "/cmds",                                   						"Displays all the commands"},
 	{0, "/color1",														"Changes the primary color of your vehicle"},
-	{0, "/color2",														"Changes the secundary color of your vehicle"},
+	{0, "/color2",														"Changes the secondary color of your vehicle"},
 	{0, "/convoy",                                   					"Lets you start or join a convoy"},
 	{0, "/convoycancel",                                   				"Cancels the convoy you're in"},
 	{0, "/convoykick <Player>",									"Kicks a member from the convoy"},

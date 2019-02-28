@@ -2164,83 +2164,81 @@ COMMAND:paint(playerid, params[])
 COMMAND:color1(playerid, params[])
 {
 	// Setup local variables
-	new ColorList[1000];
+	new ColorList[1000], Name[MAX_PLAYER_NAME], vid;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/color1", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player is the driver of the vehicle
-		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-		{
-			// Check if the player is the owner of the vehicle
-			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
-			{
-				// Construct the colorlist
-				format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, "Black (removes paintjob)"); // Color 0
-				format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, "White"); // Color 1
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
 
-				for (new i = 2; i < sizeof(AVehicleColors); i++)
-					format(ColorList, sizeof(ColorList), "%s%s%s\n", ColorList, AVehicleColors[i], "CarColor");
+	// Get players name
+	GetPlayerName(playerid, Name, sizeof(Name));
 
-				// Show the dialog with all the colors
-				ShowPlayerDialog(playerid, DialogPrimaryCarColor, DIALOG_STYLE_LIST, "Choose a primary color:", ColorList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
-		}
-		else
-			SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to apply a color");
-	}
-	else
-	    return 0;
+	// Get the vehicle-id
+	vid = GetPlayerVehicleID(playerid);
+
+	// Check if the player is not the owner of the vehicle
+	// and if the player is not an admin
+	if ((strcmp(Name, AVehicleData[vid][Owner]) != 0 || isnull(AVehicleData[vid][Owner])) && (APlayerData[playerid][PlayerLevel] == 0))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyOnOwnVehicles);
+
+	// Construct the colorlist
+	format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, TXT_DialogColorListSelectionBlack); // Color 0
+	format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, TXT_DialogColorListSelectionWhite); // Color 1
+
+	for (new i = 2; i < sizeof(AVehicleColors); i++)
+		format(ColorList, sizeof(ColorList), "%s%s%s\n", ColorList, AVehicleColors[i], "CarColor");
+
+	// Show the dialog with all the colors
+	ShowPlayerDialog(playerid, DialogPrimaryCarColor, DIALOG_STYLE_LIST, TXT_DialogTitleChangeColor1, ColorList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
 
-// Re-colors the given vehicle (lets you choose the first color)
+
+
+// Re-colors the given vehicle (lets you choose the second color)
 COMMAND:color2(playerid, params[])
 {
 	// Setup local variables
-	new ColorList[1000];
+	new ColorList[1000], Name[MAX_PLAYER_NAME], vid;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/color2", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player is the driver of the vehicle
-		if (GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-		{
-			// Check if the player is the owner of the vehicle
-			if (AVehicleData[GetPlayerVehicleID(playerid)][Owned] == true || AVehicleData[GetPlayerVehicleID(playerid)][Owned] == false && APlayerData[playerid][PlayerLevel] >= 1)
-			{
-				// Construct the colorlist
-				format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, "Black"); // Color 0
-				format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, "White"); // Color 1
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
 
-				for (new i = 2; i < sizeof(AVehicleColors); i++)
-					format(ColorList, sizeof(ColorList), "%s%s%s\n", ColorList, AVehicleColors[i], "CarColor");
+	// Get players name
+	GetPlayerName(playerid, Name, sizeof(Name));
 
-				// Show the dialog with all the colors
-				ShowPlayerDialog(playerid, DialogSedundaryCarColor, DIALOG_STYLE_LIST, "Choose a secundary color:", ColorList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You're not the owner of the vehicle");
-		}
-		else
-			SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to apply a color");
-	}
-	else
-	    return 0;
+	// Get the vehicle-id
+	vid = GetPlayerVehicleID(playerid);
+
+	// Check if the player is not the owner of the vehicle
+	// and if the player is not an admin
+	if ((strcmp(Name, AVehicleData[vid][Owner]) != 0 || isnull(AVehicleData[vid][Owner])) && (APlayerData[playerid][PlayerLevel] == 0))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyOnOwnVehicles);
+
+	// Construct the colorlist
+	format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, TXT_DialogColorListSelectionBlack); // Color 0
+	format(ColorList, sizeof(ColorList), "%s{FFFFFF}%s\n", ColorList, TXT_DialogColorListSelectionWhite); // Color 1
+
+	for (new i = 2; i < sizeof(AVehicleColors); i++)
+		format(ColorList, sizeof(ColorList), "%s%s%s\n", ColorList, AVehicleColors[i], "CarColor");
+
+	// Show the dialog with all the colors
+	ShowPlayerDialog(playerid, DialogSecondaryCarColor, DIALOG_STYLE_LIST, TXT_DialogTitleChangeColor2, ColorList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Starts or stops the engine of your vehicle
 COMMAND:engine(playerid, params[])

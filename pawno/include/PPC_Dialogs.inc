@@ -2073,7 +2073,7 @@ Dialog_PrimaryCarColor(playerid, response, listitem)
 
 	// Save the primary car-color and apply the colors
 	AVehicleData[vid][Color1] = listitem;
-	ChangeVehicleColor(GetPlayerVehicleID(playerid), AVehicleData[vid][Color1], AVehicleData[vid][Color2]);
+	ChangeVehicleColor(vid, AVehicleData[vid][Color1], AVehicleData[vid][Color2]);
 	// If the primary color is black, remove the paintjob
 	if (listitem == 0)
 		AVehicleData[vid][PaintJob] = 0;
@@ -2087,7 +2087,7 @@ Dialog_PrimaryCarColor(playerid, response, listitem)
 }
 
 // Process the secundary car color dialog
-Dialog_SedundaryCarColor(playerid, response, listitem)
+Dialog_SecondaryCarColor(playerid, response, listitem)
 {
 	// Setup local variables
 	new Message[128];
@@ -2100,7 +2100,7 @@ Dialog_SedundaryCarColor(playerid, response, listitem)
 
 	// Save the primary car-color and apply the colors
 	AVehicleData[vid][Color2] = listitem;
-	ChangeVehicleColor(GetPlayerVehicleID(playerid), AVehicleData[vid][Color1], AVehicleData[vid][Color2]);
+	ChangeVehicleColor(vid, AVehicleData[vid][Color1], AVehicleData[vid][Color2]);
 
 	// Let the player pay for changing the color
 	RewardPlayer(playerid, -PRICE_COLOR_CHANGE, 0);

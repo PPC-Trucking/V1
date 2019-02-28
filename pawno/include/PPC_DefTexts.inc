@@ -261,6 +261,10 @@
 #define TXT_VehicleRefuelled "Your vehicle has been refuelled"
 #define TXT_InvalidPaintJobID "You have entered an invalid paint job id. Only 0-2 are possible."
 #define TXT_CmdOnlyOnOwnVehicles "You can only perform that command on vehicles which you own."
+#define TXT_DialogTitleChangeColor1 "Choose a primary color:"
+#define TXT_DialogTitleChangeColor2 "Choose a secondary color:"
+#define TXT_DialogColorListSelectionBlack "Black (removes color)"
+#define TXT_DialogColorListSelectionWhite "White"
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
