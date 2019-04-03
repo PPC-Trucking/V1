@@ -20,6 +20,7 @@
 
 // Dialog buttons
 #define TXT_DialogButtonOk "OK" // Define the text on the "OK"-button for dialogs
+#define TXT_DialogButtonToggle "Toggle" // Define the text on the "Toggle"-button for dialogs
 #define TXT_DialogButtonCancel "Cancel" // Define the text on the "Cancel"-button for dialogs
 #define TXT_DialogButtonBuy "Buy" // Define the text on the "Buy"-button for dialogs
 #define TXT_DialogButtonSpawn "Spawn"
@@ -265,6 +266,7 @@
 #define TXT_DialogTitleChangeColor2 "Choose a secondary color:"
 #define TXT_DialogColorListSelectionBlack "Black (removes color)"
 #define TXT_DialogColorListSelectionWhite "White"
+#define TXT_CaroptionDialogTitle "Select option for your vehicle:"
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

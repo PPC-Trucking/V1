@@ -2288,24 +2288,18 @@ COMMAND:caroption(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/caroption", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 3
-		if (APlayerData[playerid][PlayerLevel] >= 3)
-		{
-			// Let the player select a weather-type
-			ShowPlayerDialog(playerid, DialogCarOption, DIALOG_STYLE_LIST, "Select option for your vehicle:", "Engine\nLights\nAlarm\nDoors\nBonnet\nBoot\nObjective", "Toggle", TXT_DialogButtonCancel);
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 3)
+		return 0;
+
+	// Let the player select a weather-type
+	ShowPlayerDialog(playerid, DialogCarOption, DIALOG_STYLE_LIST, TXT_CaroptionDialogTitle, "Engine\nLights\nAlarm\nDoors\nBonnet\nBoot\nObjective", TXT_DialogButtonToggle, TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Sets the global weather
 COMMAND:weather(playerid, params[])
