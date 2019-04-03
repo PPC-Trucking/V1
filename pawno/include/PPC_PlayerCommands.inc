@@ -2329,48 +2329,44 @@ COMMAND:admins(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/admins", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Scan through all players
+	for (new i; i < MAX_PLAYERS; i++)
 	{
-		// Scan through all players
-		for (new i; i < MAX_PLAYERS; i++)
+		// Check if this player is connected
+		if (IsPlayerConnected(i))
 		{
-			// Check if this player is connected
-			if (IsPlayerConnected(i))
+			// Get the name of the player
+			GetPlayerName(i, Name, sizeof(Name));
+
+			// Check if this player is an RCON admin
+			if (IsPlayerAdmin(i))
 			{
-				// Get the name of the player
-				GetPlayerName(i, Name, sizeof(Name));
+				// Add all admin players to the list
+				format(AdminList, sizeof(AdminList), "%s%s: %s (id: %i), admin-level: %i (RCON admin)\n", AdminList, AdminLevelName[APlayerData[i][PlayerLevel]], Name, i, APlayerData[i][PlayerLevel]); // Add the name of the admin-player to the list
+				// Re-start the for loop (skipping the remaining code for this iteration)
+				continue;
+			}
 
-				// Check if this player is an RCON admin
-				if (IsPlayerAdmin(i))
-				{
-					// Add all admin players to the list
-					format(AdminList, sizeof(AdminList), "%s%s: %s (id: %i), admin-level: %i (RCON admin)\n", AdminList, AdminLevelName[APlayerData[i][PlayerLevel]], Name, i, APlayerData[i][PlayerLevel]); // Add the name of the admin-player to the list
-					// Re-start the for loop (skipping the remaining code for this iteration)
-					continue;
-				}
-
-				//Check if that player is an admin (using the PlayerLevel)
-				if (APlayerData[i][PlayerLevel] > 0)
-				{
-					// Add all admin players to the list
-					format(AdminList, sizeof(AdminList), "%s%s: %s (id: %i), admin-level: %i\n", AdminList, AdminLevelName[APlayerData[i][PlayerLevel]], Name, i, APlayerData[i][PlayerLevel]); // Add the name of the admin-player to the list
-				}
+			//Check if that player is an admin (using the PlayerLevel)
+			if (APlayerData[i][PlayerLevel] > 0)
+			{
+				// Add all admin players to the list
+				format(AdminList, sizeof(AdminList), "%s%s: %s (id: %i), admin-level: %i\n", AdminList, AdminLevelName[APlayerData[i][PlayerLevel]], Name, i, APlayerData[i][PlayerLevel]); // Add the name of the admin-player to the list
 			}
 		}
-
-		// Check if there were admin-names added to the list
-		if (strlen(AdminList) > 0)
-		    ShowPlayerDialog(playerid, DialogNoResponse, DIALOG_STYLE_LIST, "Online admins:", AdminList, TXT_DialogButtonOk, TXT_DialogButtonCancel);
-		else
-			SendClientMessage(playerid, COLOR_RED, "No admin online"); // No admins are online
 	}
+
+	// Check if there were admin-names added to the list
+	if (strlen(AdminList) > 0)
+		ShowPlayerDialog(playerid, DialogNoResponse, DIALOG_STYLE_LIST, TXT_AdminDialogTitle, AdminList, TXT_DialogButtonOk, TXT_DialogButtonCancel);
 	else
-	    return 0;
+		SendClientMessage(playerid, COLOR_RED, TXT_NoAdminsOnline); // No admins are online
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // This command lists all commands for normal players (admin-level 0)
 COMMAND:cmds(playerid, params[])

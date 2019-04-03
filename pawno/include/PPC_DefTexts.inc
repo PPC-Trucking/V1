@@ -270,6 +270,8 @@
 #define TXT_CmdEngineOff "You have turned off the engine"
 #define TXT_CaroptionDialogTitle "Select option for your vehicle:"
 #define TXT_WeatherDialogTitle "Select weather type:"
+#define TXT_AdminDialogTitle "Online admins:"
+#define TXT_NoAdminsOnline "No admins online"
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
