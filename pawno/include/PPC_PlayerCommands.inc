@@ -2243,48 +2243,44 @@ COMMAND:color2(playerid, params[])
 // Starts or stops the engine of your vehicle
 COMMAND:engine(playerid, params[])
 {
-    // Setup local variables
-	new vehicleid, engine,lights,alarm,doors,bonnet,boot,objective;
+	// Setup local variables
+	new Name[MAX_PLAYER_NAME], vehicleid, engine, lights, alarm, doors, bonnet, boot, objective;
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/engine", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		//check if the player is the driver of the car, don't let the passenger to control the engine
-		if(GetPlayerState(playerid) == PLAYER_STATE_DRIVER)
-		{
-			// Get the player's vehicle
-			vehicleid = GetPlayerVehicleID(playerid);
+	// Check if the player is inside a vehicle (he must be the driver)
+	if (GetPlayerState(playerid) != PLAYER_STATE_DRIVER)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableAsDriver);
 
-			// Check if the player is inside a vehicle
-			if (vehicleid != 0)
-			{
-				// Get the current status of the vehicle
-				GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	// Get players name
+	GetPlayerName(playerid, Name, sizeof(Name));
 
-				SetVehicleParamsEx(vehicleid, (1 - engine), lights, alarm, doors, bonnet, boot, objective);
+	// Get the vehicle-id
+	vehicleid = GetPlayerVehicleID(playerid);
 
-				//Check if the engine is running or not
-				if(engine)
-					//Inform player about that
-					SendClientMessage(playerid, COLOR_GREEN, "You have turned off the engine");
-				else
-					//Inform player about that
-					SendClientMessage(playerid, COLOR_GREEN, "You have turned on the engine");
-				
-			}
-			else
-				SendClientMessage(playerid, COLOR_RED, "You must be inside a vehicle to toggle your engine");
-		}
-	}
+	// Check if the player is not the owner of the vehicle
+	// and if the player is not an admin
+	if ((strcmp(Name, AVehicleData[vehicleid][Owner]) != 0 || isnull(AVehicleData[vehicleid][Owner])) && (APlayerData[playerid][PlayerLevel] == 0))
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyOnOwnVehicles);
+
+	// Get the current status of the vehicle
+	GetVehicleParamsEx(vehicleid, engine, lights, alarm, doors, bonnet, boot, objective);
+	SetVehicleParamsEx(vehicleid, (1 - engine), lights, alarm, doors, bonnet, boot, objective);
+
+	//Check if the engine is running or not
+	if(engine)
+		//Inform player about that
+		SendClientMessage(playerid, COLOR_GREEN, "You have turned off the engine");
 	else
-	    return 0;
+		//Inform player about that
+		SendClientMessage(playerid, COLOR_GREEN, "You have turned on the engine");
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Asks which vehicle parameter you wanna toggle
 COMMAND:caroption(playerid, params[])
