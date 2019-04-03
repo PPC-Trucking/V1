@@ -2374,17 +2374,14 @@ COMMAND:cmds(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/cmds", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		CommandList_Create(playerid); // Create a list of commands (only the first 4 commands) and show the dialog
-	}
-	else
-	    return 0;
+	// Create a list of commands (only the first 4 commands) and show the dialog
+	CommandList_Create(playerid);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 COMMAND:convoy(playerid, params[])
 {
