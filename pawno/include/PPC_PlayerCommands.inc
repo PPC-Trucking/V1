@@ -2307,20 +2307,12 @@ COMMAND:weather(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/weather", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if the player's admin-level is at least 4
-		if (APlayerData[playerid][PlayerLevel] >= 4)
-		{
-			// Let the player select a weather-type
-			ShowPlayerDialog(playerid, DialogWeather, DIALOG_STYLE_LIST, "Select weather type:", "Normal\nStormy\nFoggy\nScorching Hot\nDull, cloudy, rainy\nSandstorm\nGreen Fog\nDark, cloudy, brown\nExtremely bright\nDark toxic clouds\nBlack & white sky", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
-		}
-		else
-		    return 0;
-	}
-	else
-	    return 0;
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 4)
+		return 0;
+
+	// Let the player select a weather-type
+	ShowPlayerDialog(playerid, DialogWeather, DIALOG_STYLE_LIST, TXT_WeatherDialogTitle, "Normal\nStormy\nFoggy\nScorching Hot\nDull, cloudy, rainy\nSandstorm\nGreen Fog\nDark, cloudy, brown\nExtremely bright\nDark toxic clouds\nBlack & white sky", TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
