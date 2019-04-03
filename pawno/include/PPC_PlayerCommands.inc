@@ -2391,48 +2391,44 @@ COMMAND:convoy(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoy", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Create the list of convoys with all their data
+	for (new i; i < MAX_CONVOYS; i++)
 	{
-		// Create the list of convoys with all their data
-		for (new i; i < MAX_CONVOYS; i++)
+		// Check if this is an empty convoy (not created yet by a player)
+		if (AConvoys[i][Status] == CONVOY_EMPTY)
 		{
-		    // Check if this is an empty convoy (not created yet by a player)
-			if (AConvoys[i][Status] == CONVOY_EMPTY)
+			// Setup data for an empty convoy (one which hasn't been chosen yet)
+			NumMembers = 0;
+			format(Name, sizeof(Name), "None");
+			format(ConvoyStatus, sizeof(ConvoyStatus), "Empty");
+		}
+		else
+		{
+			// Get the name of the convoy-leader
+			GetPlayerName(AConvoys[i][Members][0], Name, sizeof(Name));
+			// Calculate the members in the convoy
+			NumMembers = Convoy_CountMembers(i);
+			// Set the status of the convoy
+			switch (AConvoys[i][Status])
 			{
-				// Setup data for an empty convoy (one which hasn't been chosen yet)
-				NumMembers = 0;
-				format(Name, sizeof(Name), "None");
-				format(ConvoyStatus, sizeof(ConvoyStatus), "Empty");
+				case CONVOY_OPEN: format(ConvoyStatus, sizeof(ConvoyStatus), "Open");
+				case CONVOY_FULL: format(ConvoyStatus, sizeof(ConvoyStatus), "Full");
+				case CONVOY_CLOSED: format(ConvoyStatus, sizeof(ConvoyStatus), "Closed");
 			}
-			else
-			{
-				// Get the name of the convoy-leader
-				GetPlayerName(AConvoys[i][Members][0], Name, sizeof(Name));
-				// Calculate the members in the convoy
-				NumMembers = Convoy_CountMembers(i);
-				// Set the status of the convoy
-				switch (AConvoys[i][Status])
-				{
-					case CONVOY_OPEN: format(ConvoyStatus, sizeof(ConvoyStatus), "Open");
-					case CONVOY_FULL: format(ConvoyStatus, sizeof(ConvoyStatus), "Full");
-					case CONVOY_CLOSED: format(ConvoyStatus, sizeof(ConvoyStatus), "Closed");
-				}
-			}
-
-			// Put all data together to form the content of the entire dialog
-			format(ConvoyList, sizeof(ConvoyList), "%sLeader: {00FF00}%s{FFFFFF}, members: {FF0000}%i{FFFFFF}, Status: {00FF00}%s{FFFFFF}\n", ConvoyList, Name, NumMembers, ConvoyStatus);
 		}
 
-		// Show the dialog
-		ShowPlayerDialog(playerid, DialogSelectConvoy, DIALOG_STYLE_LIST, "Select convoy:", ConvoyList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
+		// Put all data together to form the content of the entire dialog
+		format(ConvoyList, sizeof(ConvoyList), "%sLeader: {00FF00}%s{FFFFFF}, members: {FF0000}%i{FFFFFF}, Status: {00FF00}%s{FFFFFF}\n", ConvoyList, Name, NumMembers, ConvoyStatus);
 	}
-	else
-	    return 0;
+
+	// Show the dialog
+	ShowPlayerDialog(playerid, DialogSelectConvoy, DIALOG_STYLE_LIST, "Select convoy:", ConvoyList, TXT_DialogButtonSelect, TXT_DialogButtonCancel);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Allows the leader to kick a member from the convoy
 COMMAND:convoykick(playerid, params[])
