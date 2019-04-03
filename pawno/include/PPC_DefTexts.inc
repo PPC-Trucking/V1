@@ -369,6 +369,11 @@
 #define TXT_CannotJoinJobStarted "{FF0000}You already started a job, you cannot create or join a convoy"
 #define TXT_ConvoyAllreadyJoined "{FF0000}You already joined a convoy"
 #define TXT_ConvoyNeedsTruckerClass "{FF0000}You need to be a trucker to create or join a convoy"
+#define TXT_CmdOnlyAvailableForLeader "You must be the leader of a convoy to use this command."
+#define TXT_CantKickYourselfFromConvoy "You can not kick yourself from convoy. Use /convoyleave instead."
+#define TXT_PlayerNotInYourConvoy "That player is not in your convoy."
+#define TXT_KickedPlayerFromConvoy "You have kicked {0000FF}%s{00FF00} from the convoy."
+#define TXT_KickedFromConvoyByLeader "Leader {0000FF}%s{00FF00} kicked you from the convoy."
 
 // Timed messages
 #define TXT_TimedRefuel "{808080}You want to refuel your vehicle? Park on a refuel-pickup and honk the horn"

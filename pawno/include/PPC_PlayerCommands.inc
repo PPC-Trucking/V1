@@ -2439,61 +2439,53 @@ COMMAND:convoykick(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoykick", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		Convoy = APlayerData[playerid][ConvoyID]; // Get the convoy of the player
-		LeaderID = AConvoys[Convoy][Members][0]; // Get the leader of his convoy
+	// Get the convoy of the player
+	Convoy = APlayerData[playerid][ConvoyID];
+	// Get the leader of his convoy
+	LeaderID = AConvoys[Convoy][Members][0];
 
-		// Check if this player is part of a convoy
-		if (APlayerData[playerid][InConvoy] == true)
-		{
-			// Check if this player is the leader of the convoy
-			if (LeaderID == playerid)
-			{
-				if (sscanf(params, "u", OtherPlayer)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/convoykick <Player>\"");
-				else
-				{
-					if (playerid != OtherPlayer) {
-						// Check if that other player is online
-						if (IsPlayerConnected(OtherPlayer)) {
-							// Check if that other player is part of the convoy
-							if ((APlayerData[OtherPlayer][InConvoy] == true) && (APlayerData[OtherPlayer][ConvoyID] == Convoy))
-							{
-							    // Kick the other player from the convoy
-								Convoy_Leave(OtherPlayer);
-								// Get the names of the leader and member
-								GetPlayerName(playerid, LeaderName, sizeof(LeaderName));
-								GetPlayerName(OtherPlayer, MemberName, sizeof(MemberName));
-								// Inform the leader that he has kicked the other player
-								format(Message, sizeof(Message), "You've kicked {0000FF}%s{00FF00} from the convoy", MemberName);
-								SendClientMessage(playerid, COLOR_GREEN, Message);
-								// Inform the leader that he has kicked the other player
-								format(Message, sizeof(Message), "Leader {0000FF}%s{00FF00} kicked you from the convoy", LeaderName);
-								SendClientMessage(OtherPlayer, COLOR_GREEN, Message);
-							}
-							else
-							    SendClientMessage(playerid, COLOR_RED, "You cannot kick a player that's not part of your convoy");
-						}
-						else
-							SendClientMessage(playerid, COLOR_RED, "Player isn't connected");
-					}
-					else
-						SendClientMessage(playerid, COLOR_RED, "You can not kick yourself from convoy. Use /convoyleave instead.");
-				}
-			}
-			else
-			    SendClientMessage(playerid, COLOR_RED, "You need to be the leader of a convoy to kick another convoy-member");
-		}
-		else
-		    SendClientMessage(playerid, COLOR_RED, "You need to be the leader of a convoy to kick another convoy-member");
+	// Check if this player is not part of any convoy
+	if (APlayerData[playerid][InConvoy] != true)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableForLeader);
+
+	// Check if this player is not the leader of his convoy
+	if (LeaderID == playerid)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CmdOnlyAvailableForLeader);
+
+	if (sscanf(params, "u", OtherPlayer))
+	{
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/convoykick <Player>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
-	else
-		return 0;
+
+	// Check if leader tries to kick himself
+	if (playerid == OtherPlayer)
+		return SendClientMessage(playerid, COLOR_RED, TXT_CantKickYourselfFromConvoy);
+
+	// Check if the player is not logged in
+	if (APlayerData[OtherPlayer][LoggedIn] != true)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
+
+	if ((APlayerData[OtherPlayer][InConvoy] != true) || (APlayerData[OtherPlayer][ConvoyID] != Convoy))
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotInYourConvoy);
+
+	// Kick the other player from the convoy
+	Convoy_Leave(OtherPlayer);
+	// Get the names of the leader and member
+	GetPlayerName(playerid, LeaderName, sizeof(LeaderName));
+	GetPlayerName(OtherPlayer, MemberName, sizeof(MemberName));
+	// Inform the leader that he has kicked the other player
+	format(Message, sizeof(Message), TXT_KickedPlayerFromConvoy, MemberName);
+	SendClientMessage(playerid, COLOR_ORANGE, Message);
+	// Inform the leader that he has kicked the other player
+	format(Message, sizeof(Message), TXT_KickedFromConvoyByLeader, LeaderName);
+	SendClientMessage(OtherPlayer, COLOR_ORANGE, Message);
 
 	// Let the server know that this was a valid command
 	return 1;
 }
+
+
 
 // Allows a convoy-member to leave the convoy
 COMMAND:convoyleave(playerid, params[])
