@@ -2271,10 +2271,10 @@ COMMAND:engine(playerid, params[])
 	//Check if the engine is running or not
 	if(engine)
 		//Inform player about that
-		SendClientMessage(playerid, COLOR_GREEN, "You have turned off the engine");
+		SendClientMessage(playerid, COLOR_GREEN, TXT_CmdEngineOff);
 	else
 		//Inform player about that
-		SendClientMessage(playerid, COLOR_GREEN, "You have turned on the engine");
+		SendClientMessage(playerid, COLOR_GREEN, TXT_CmdEngineOn);
 
 	// Let the server know that this was a valid command
 	return 1;

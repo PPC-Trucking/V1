@@ -266,6 +266,8 @@
 #define TXT_DialogTitleChangeColor2 "Choose a secondary color:"
 #define TXT_DialogColorListSelectionBlack "Black (removes color)"
 #define TXT_DialogColorListSelectionWhite "White"
+#define TXT_CmdEngineOn "You have turned on the engine"
+#define TXT_CmdEngineOff "You have turned off the engine"
 #define TXT_CaroptionDialogTitle "Select option for your vehicle:"
 
 // Fuel related
