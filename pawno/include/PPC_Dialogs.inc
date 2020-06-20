@@ -1425,15 +1425,17 @@ Dialog_UpgradeHouse(playerid, response, listitem)
 
 
 // Check which house the player chose, and port him to it
-Dialog_GoHome(playerid, response, inputtext[])
+Dialog_GoHome(playerid, response, listitem)
 {
 	// Setup local variables
-	new HouseID, ListItemString[100];
+	new HouseIndex, HouseID;
 
 	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
-	sscanf(inputtext, "s[100]i", ListItemString, HouseID);
+	// The listitem directly indicates the house-index
+	HouseIndex = listitem;
+	HouseID = APlayerData[playerid][Houses][HouseIndex];
 
 	// Check if this is a valid house (HouseID != 0)
 	if (HouseID != 0)
@@ -1710,12 +1712,15 @@ Dialog_SellCar(playerid, response, listitem)
 Dialog_GetVehiclesSelectHouse(playerid, response, inputtext[])
 {
 	// Setup local variables
-	new HouseID, ListItemString[100];
+	new SelectedSlotID, SelectedSlotName[100];
 
 	// Just close the dialog if the player clicked "Cancel"
 	if(!response) return 1;
 
-	sscanf(inputtext, "s[100]i", ListItemString, HouseID);
+	sscanf(inputtext, "s[100]i", SelectedSlotName, SelectedSlotID);
+
+	// Get the houseid based on the chosen selected slot
+	new HouseID = APlayerData[playerid][Houses][SelectedSlotID];
 
 	// Check if it was a valid house
 	if (HouseID != 0)
