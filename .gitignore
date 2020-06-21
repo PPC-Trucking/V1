@@ -1,3 +1,12 @@
-# exclude pawno executables
+# Compiled bytecode
+*.amx
+
+# Pawno executables
 pawno/*
-!pawno/include/PPC_*.inc
+
+# Pawno includes
+pawno/include/*
+
+# Exclude includes that are related to PPC
+!pawno/include
+!pawno/include/PPC_*
