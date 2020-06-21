@@ -164,7 +164,7 @@
 
 #define DialogPlayerCommands        501
 #define DialogPrimaryCarColor       502
-#define DialogSedundaryCarColor     503
+#define DialogSecondaryCarColor     503
 
 #define DialogHouseMenu             601
 #define DialogUpgradeHouse          602
@@ -409,7 +409,7 @@ enum TVehicleData
 	BelongsToHouse, // Holds the HouseID to which this vehicle belongs
 	bool:StaticVehicle, // Holds true if this is a static vehicle
 	bool:Owned, // Holds true if the vehicle is owned by somebody
-	Owner[24], // Holds the name of the owned of the vehicle
+	Owner[24], // Holds the name of the owner of the vehicle
 	Model, // Holds the vehicle-model of this vehicle
 	PaintJob, // Holds the ID of the paintjob applied to the vehicle
 	Components[14], // Holds all Component-ID's for all components on the vehicle
@@ -977,7 +977,7 @@ new ACommands[][TCommands] =
 	{0, "/changepassword",                                   			"Allows the player to change his login password"},
 	{0, "/cmds",                                   						"Displays all the commands"},
 	{0, "/color1",														"Changes the primary color of your vehicle"},
-	{0, "/color2",														"Changes the secundary color of your vehicle"},
+	{0, "/color2",														"Changes the secondary color of your vehicle"},
 	{0, "/convoy",                                   					"Lets you start or join a convoy"},
 	{0, "/convoycancel",                                   				"Cancels the convoy you're in"},
 	{0, "/convoykick <Player>",									"Kicks a member from the convoy"},

@@ -20,6 +20,7 @@
 
 // Dialog buttons
 #define TXT_DialogButtonOk "OK" // Define the text on the "OK"-button for dialogs
+#define TXT_DialogButtonToggle "Toggle" // Define the text on the "Toggle"-button for dialogs
 #define TXT_DialogButtonCancel "Cancel" // Define the text on the "Cancel"-button for dialogs
 #define TXT_DialogButtonBuy "Buy" // Define the text on the "Buy"-button for dialogs
 #define TXT_DialogButtonSpawn "Spawn"
@@ -172,6 +173,7 @@
 #define TXT_PrivMessageFrom "[PM From] %s (%i): %s"
 #define TXT_PlayerNotOnline "That player is not online."
 #define TXT_PlayerNotLoggedIn "That player has not logged in yet."
+#define TXT_PlayerNotLoggedInWithName "%s has not logged in yet."
 #define TXT_MustBeOnFoot "You must be on foot to use this command."
 #define TXT_MustBeSpawned "You must be spawned to use this command."
 #define TXT_HouseMaxLevelNotInRange "You have to use a max-level from %i to %i."
@@ -218,6 +220,8 @@
 #define TXT_NotInsideARoadWorkerVehicle "You need to be the driver of a roadworker vehicle to start a job."
 #define TXT_InvalidWantedLevel "You have entered an invalid wanted level. Only 0-6 are possible."
 #define TXT_PlayerAlreadyJailed "That player has been jailed already."
+#define TXT_PlayerIsJailed "That player is in jail."
+#define TXT_PlayerIsJailedWithName "%s is in jail."
 #define TXT_PlayerNotJailed "That player is not in jail."
 #define TXT_JailedByAdmin "You have been jailed by %s %s for %i seconds."
 #define TXT_UnJailedByAdmin "You have been un-jailed by %s %s."
@@ -243,6 +247,31 @@
 #define TXT_PickupCreated "You spawned pickup-id %i (model-id = %i) at coords: x=%4.2f, y=%4.2f, z=%4.2f"
 #define TXT_PickupDeleted "You deleted pickup-id %i"
 #define TXT_PickupNotExist "That pickup-id does not exist."
+#define TXT_AdminTeleportToLoc "You have been ported to location: %4.2f, %4.2f, %4.2f"
+#define TXT_AdminTeleportToPlayer "You have been ported to %s's location (%4.2f, %4.2f, %4.2f)."
+#define TXT_PortedToOtherPlayerLoc "You have been ported to %s's location by %s %s."
+#define TXT_PlayerPortedToYou "%s has been been ported to your location by %s %s."
+#define TXT_AdminPlayerTeleportedToOtherPlayer "You have ported %s to %'s location (%4.2f, %4.2f, %4.2f)."
+#define TXT_VehicleDoesNotExist "That car does not exist."
+#define TXT_VehicleClamped "That car has been clamped."
+#define TXT_InvalidAdminLevel "The given admin level is invalid. Must be between 1-5."
+#define TXT_AdminLevelNotChanged "The admin level has not been changed."
+#define TXT_PlayerPromoted "Player %s has been promoted to \"%s\" by %s %s."
+#define TXT_PlayerDemoted "Player %s has been promoted to \"%s\" by %s %s."
+#define TXT_CantPerformActionOnYourself "You can not perform that command on yourself."
+#define TXT_VehicleRefuelled "Your vehicle has been refuelled"
+#define TXT_InvalidPaintJobID "You have entered an invalid paint job id. Only 0-2 are possible."
+#define TXT_CmdOnlyOnOwnVehicles "You can only perform that command on vehicles which you own."
+#define TXT_DialogTitleChangeColor1 "Choose a primary color:"
+#define TXT_DialogTitleChangeColor2 "Choose a secondary color:"
+#define TXT_DialogColorListSelectionBlack "Black (removes color)"
+#define TXT_DialogColorListSelectionWhite "White"
+#define TXT_CmdEngineOn "You have turned on the engine"
+#define TXT_CmdEngineOff "You have turned off the engine"
+#define TXT_CaroptionDialogTitle "Select option for your vehicle:"
+#define TXT_WeatherDialogTitle "Select weather type:"
+#define TXT_AdminDialogTitle "Online admins:"
+#define TXT_NoAdminsOnline "No admins online"
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
@@ -340,6 +369,11 @@
 #define TXT_CannotJoinJobStarted "{FF0000}You already started a job, you cannot create or join a convoy"
 #define TXT_ConvoyAllreadyJoined "{FF0000}You already joined a convoy"
 #define TXT_ConvoyNeedsTruckerClass "{FF0000}You need to be a trucker to create or join a convoy"
+#define TXT_CmdOnlyAvailableForLeader "You must be the leader of a convoy to use this command."
+#define TXT_CantKickYourselfFromConvoy "You can not kick yourself from convoy. Use /convoyleave instead."
+#define TXT_PlayerNotInYourConvoy "That player is not in your convoy."
+#define TXT_KickedPlayerFromConvoy "You have kicked {0000FF}%s{00FF00} from the convoy."
+#define TXT_KickedFromConvoyByLeader "Leader {0000FF}%s{00FF00} kicked you from the convoy."
 
 // Timed messages
 #define TXT_TimedRefuel "{808080}You want to refuel your vehicle? Park on a refuel-pickup and honk the horn"
