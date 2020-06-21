@@ -1,0 +1,3 @@
+# exclude pawno executables
+pawno/*
+!pawno/include/PPC_*.inc
