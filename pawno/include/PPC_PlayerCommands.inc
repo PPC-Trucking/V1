@@ -5024,40 +5024,46 @@ COMMAND:givelicense(playerid, params[])
 	// Let the server know that this was a valid command
 	return 1;
 }
-//This command let the admins to send an announce message
+
+// This command lets admins make an announcement
 COMMAND:announce(playerid, params[])
 {
 	// Setup local variabiles
-	new Message[64], Style, DisplayTime;
+	new Message[128], Style, DisplayTime, Text[64];
 
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/announce", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
+	// Check if the player's admin level is not high enough
+	if (APlayerData[playerid][PlayerLevel] < 2)
+		return 0;
+
+	if (sscanf(params, "iis[64]", Style, DisplayTime, Text))
 	{
-		// Check if the player's admin-level is at least 2
-		if(APlayerData[playerid][PlayerLevel] >= 2)
-		{
-			if(sscanf(params, "iis[64]", Style, DisplayTime, Message)) SendClientMessage(playerid, COLOR_RED, "Usage: \"/announce <Style (0-6)> <Time in seconds 1-5> <Message>\"");
-			else
-			{
-				if ((Style >= 1) && (Style <= 6) && (Style != 2))
-				{
-					if ((DisplayTime >= 1) && (DisplayTime <= 5))
-					{
-						GameTextForAll(Message, (DisplayTime * 1000), Style);
-					}
-					else
-						SendClientMessage(playerid, COLOR_RED, "Invalid time, you can only use 1-5 seconds.");
-				}
-				else
-    				SendClientMessage(playerid, COLOR_RED, "Invalid style, you can only use styles 1-6 except 2.");
-			}
-		}
-		else
-			return 0;
+		format(Message, sizeof(Message), TXT_SscanfFailedUsuage, "/announce <Style (3, 4 or 6)> <Time in seconds 1-5> <Text>");
+		return SendClientMessage(playerid, COLOR_RED, Message);
 	}
+
+	// Check if style id is not in range
+	if ((Style != 3) && (Style != 4) && (Style != 6)) {
+		format(Message, sizeof(Message), TXT_ValueMustBe, "Style", "3, 4, 6");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+	// Check if display time is not in range
+	if ((DisplayTime < 1) || (DisplayTime > 5)) {
+		format(Message, sizeof(Message), TXT_ValueMustBeBetween, "DisplayTime", 1, 5);
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+	if (strfind(Text, "~", true) >= 0) {
+		format(Message, sizeof(Message), TXT_ContainsForbiddenCharacters, "Text", "~");
+		return SendClientMessage(playerid, COLOR_RED, Message);
+	}
+
+	format(Message, sizeof(Message), "~w~%s", Text);
+	GameTextForAll(Message, (DisplayTime * 1000), Style);
+
 	return 1;
 }
 

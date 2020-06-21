@@ -272,6 +272,9 @@
 #define TXT_WeatherDialogTitle "Select weather type:"
 #define TXT_AdminDialogTitle "Online admins:"
 #define TXT_NoAdminsOnline "No admins online"
+#define TXT_ValueMustBe "%s must be one of the following: %s"
+#define TXT_ValueMustBeBetween "%s must be between %i and %i."
+#define TXT_ContainsForbiddenCharacters "%s contains one or more of the following forbidden characters: %s"
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
