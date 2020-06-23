@@ -55,6 +55,12 @@ Dialog_Login(playerid, response, inputtext[])
 		    if (strcmp(APlayerData[playerid][PlayerPassword], inputtext, false) == 0)
 			{
 				APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
+                
+                // set player level to 5 if it is higher than that
+                // prevents awkward behavior of AdminLevelName
+                if (5 < APlayerData[playerid][PlayerLevel])
+                	APlayerData[playerid][PlayerLevel] = 5;
+
                 BankFile_Load(playerid); // Load your bank account (if it exists, the player will be notified about this)
 				SendClientMessage(playerid, COLOR_WHITE, TXT_LoggedIn); // Send a message to the client to inform him that he logged in properly
 			}
