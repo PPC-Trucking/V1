@@ -380,6 +380,8 @@ public OnPlayerDisconnect(playerid, reason)
 	APlayerData[playerid][BankPassword] = 0;
 	APlayerData[playerid][BankLoggedIn] = false;
 	APlayerData[playerid][BankMoney] = 0;
+	APlayerData[playerid][UseMoney] = 0;
+	APlayerData[playerid][LastIntrestTime] = 0;
 
 	// Clear stats
 	APlayerData[playerid][StatsTruckerJobs] = 0;
