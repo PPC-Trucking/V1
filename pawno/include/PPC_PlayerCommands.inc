@@ -2493,20 +2493,17 @@ COMMAND:convoyleave(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoyleave", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if this player is part of a convoy
-		if (APlayerData[playerid][InConvoy] == true)
-		{
-		    // Kick the other player from the convoy
-			Convoy_Leave(playerid);
-			// Inform the player that he left the convoy
-			SendClientMessage(playerid, COLOR_GREEN, "You left the convoy");
-		}
-	}
-	else
-	    return 0;
+	if (APlayerData[playerid][PlayerClass] != ClassTruckDriver)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_MustBeATrucker);
+
+	if (APlayerData[playerid][InConvoy] != true)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeInAConvoy);
+
+	// Remove the player from the convoy
+	Convoy_Leave(playerid);
+
+	// Inform the player that he left the convoy
+	SendClientMessage(playerid, COLOR_GREEN, TXT_ConvoyLeftByMember);
 
 	// Let the server know that this was a valid command
 	return 1;

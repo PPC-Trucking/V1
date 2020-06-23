@@ -85,6 +85,7 @@
 #define TXT_NeedVehicleToProceed "{FF0000}You need to be in your vehicle to proceed"
 #define TXT_NeedTrailerToProceed "{FF0000}You need to have your trailer attached to proceed"
 #define TXT_NeedOnFootToProceed "{FF0000}You need to be on foot to proceed"
+#define TXT_MustBeATrucker "You must be a trucker to use this command."
 
 // Busdriver related
 #define TXT_PlayerCompletedBusLine "{FFFFFF}BusDriver {FF00FF}%s{FFFFFF} succesfully completed bus-line {0000FF}%i{FFFFFF}"
@@ -377,6 +378,8 @@
 #define TXT_PlayerNotInYourConvoy "That player is not in your convoy."
 #define TXT_KickedPlayerFromConvoy "You have kicked {0000FF}%s{00FF00} from the convoy."
 #define TXT_KickedFromConvoyByLeader "Leader {0000FF}%s{00FF00} kicked you from the convoy."
+#define TXT_ConvoyLeftByMember "You have left the convoy."
+#define TXT_MustBeInAConvoy "You must be in a convoy to use this command."
 
 // Timed messages
 #define TXT_TimedRefuel "{808080}You want to refuel your vehicle? Park on a refuel-pickup and honk the horn"
