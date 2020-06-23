@@ -578,7 +578,7 @@ HelpList_Create(playerid)
 	return 1;
 }
 
-// Timed Kick/Ban to make sure the player gets messages
+// Set a delay before kick so the reason can be seen by the affected player
 forward TimedKick(playerid);
 public TimedKick(playerid)
 {
@@ -586,6 +586,7 @@ public TimedKick(playerid)
     return 1;
 }
 
+// Set a delay before ban so the reason can be seen by the affected player
 forward TimedBanEx(playerid, reason[]);
 public TimedBanEx(playerid, reason[])
 {
