@@ -162,7 +162,7 @@
 #define TXT_PlayerNotSpawned "{FF0000}You can't spectate that player because he didn't spawn yet."
 #define TXT_CmdNotExists "That command is not valid, please see /commands"
 #define TXT_SscanfFailedUsuage "Usage: \"%s\""
-#define TXT_NeedToLogin "You need to login to use that command."
+#define TXT_NeedToLogin "You need to login to do that."
 #define TXT_StillMuted "You are still muted."
 #define TXT_PlayerMuted "~w~You have been~n~~r~muted"
 #define TXT_PlayerUnMuted "~w~You have been~n~~g~unmuted"

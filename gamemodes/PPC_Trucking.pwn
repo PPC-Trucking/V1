@@ -441,9 +441,11 @@ public OnPlayerDisconnect(playerid, reason)
 public OnPlayerText(playerid, text[])
 {
 	// Check if the player is not logged in
-	if (APlayerData[playerid][LoggedIn] != true)
+	if (APlayerData[playerid][LoggedIn] != true) {
 		// Let the player know that he must login first
-		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		return 0;
+	}
 
 	// Block the player's text if he has been muted
     if ((APlayerData[playerid][Muted] > gettime()))
@@ -465,9 +467,11 @@ public OnPlayerText(playerid, text[])
 
 public OnPlayerCommandReceived(playerid, cmdtext[]) {
 	// Check if the player is not logged in
-	if (APlayerData[playerid][LoggedIn] != true)
+	if (APlayerData[playerid][LoggedIn] != true) {
 		// Let the player know that he must login first
-		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		return 0;
+	}
 
 	// Check if the player is using the commands /me or /pm
 	if (strfind(cmdtext, "/me ", true) != -1 || strfind(cmdtext, "/pm ", true) != -1)
