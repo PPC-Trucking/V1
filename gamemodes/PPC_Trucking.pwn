@@ -125,6 +125,9 @@ public OnPlayerConnect(playerid)
 	if (IsPlayerNPC(playerid))
 		return 1;
 
+	// start timer to check for login
+	SetTimerEx("CheckPlayerLoggedIn", (TIMESPAN_LOGIN * 1000), false, "i", playerid);
+
 	// Setup local variables
 	new Name[MAX_PLAYER_NAME], NewPlayerMsg[128], HouseID;
 

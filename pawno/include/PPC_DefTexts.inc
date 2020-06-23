@@ -47,7 +47,7 @@
 #define TXT_WrongPassword "{FF0000}You've entered the wrong password. %i attempts left before you get kicked."
 #define TXT_LoginEnterValidPassword "Please login by entering your password:"
 #define TXT_PlayerMustLogin "You must login before you can play!"
-#define TXT_FailedLoginProperly "{FF0000}You failed to login properly, you're kicked"
+#define TXT_FailedLoginProperly "You have been kicked because you failed to login properly."
 
 // The license dialog
 #define TXT_DialogLicenseTitle "Select license:" // Define the title-message on top of the licenses-dialog

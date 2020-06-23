@@ -8,6 +8,8 @@
 
 // Define how many login attempts are possible before player gets kicked
 #define MAX_LOGIN_ATTEMPTS 3
+// Define time span within the player needs to login (in seconds)
+#define TIMESPAN_LOGIN 60
 // Define how many times a player can get banned before it is permanent
 #define MAX_BANS 5
 

@@ -70,7 +70,7 @@ Dialog_Login(playerid, response, inputtext[])
 				SetPVarInt(playerid, "LoginAttempt", GetPVarInt(playerid, "LoginAttempt") + 1);
 
 				if (GetPVarInt(playerid, "LoginAttempt") == MAX_LOGIN_ATTEMPTS) {
-					SendClientMessage(playerid, COLOR_WHITE, TXT_FailedLoginProperly);
+					SendClientMessage(playerid, COLOR_RED, TXT_FailedLoginProperly);
 					SetTimerEx("TimedKick", 1000, false, "i", playerid);
 				} else {
 					format(Msg, sizeof(Msg), TXT_WrongPassword, (MAX_LOGIN_ATTEMPTS-GetPVarInt(playerid, "LoginAttempt")));

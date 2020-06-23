@@ -623,6 +623,17 @@ public ShowLoginDialog(playerid)
 	return 1;
 }
 
+forward CheckPlayerLoggedIn(playerid);
+public CheckPlayerLoggedIn(playerid)
+{
+	if (APlayerData[playerid][LoggedIn] != true) {
+		SendClientMessage(playerid, COLOR_RED, TXT_FailedLoginProperly);
+		SetTimerEx("TimedKick", 1000, false, "i", playerid);
+	}
+
+	return 1;
+}
+
 // This function ejects all player from a specific vehicle
 RemoveAllPlayersFromVehicle(vid)
 {
