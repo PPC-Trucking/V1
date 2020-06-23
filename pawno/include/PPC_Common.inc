@@ -252,6 +252,18 @@ IsVehicleAirVehicle(vid)
 	return 0;
 }
 
+// This function returns "1" if the given vehicle-id is a watercraft (e.g. boat)
+IsVehicleWaterVehicle(vid)
+{
+	switch (GetVehicleModel(vid))
+	{
+		case 430, 446, 452, 453, 454, 472, 473, 484, 493, 595: return 1;
+		default: return 0;
+	}
+
+	return 0;
+}
+
 // This function creates a speedcamera (store data and create the objects)
 SetupSpeedCamera(CamID, Float:x, Float:y, Float:z, Float:rot, MaxSpeed)
 {
