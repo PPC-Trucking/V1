@@ -1493,10 +1493,10 @@ COMMAND:kick(playerid, params[])
 	if (APlayerData[PlayerToKick][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
-	// Get the name of the player who warned the player
+	// Get the name of the admin who kicked the player
 	GetPlayerName(playerid, Name, sizeof(Name));
 	
-	// Send the warned player a message who kicked him and why he's been kicked
+	// Send the kicked player a message who kicked him and why he's been kicked
 	format(Message, sizeof(Message), TXT_KickedBy, AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
 	SendClientMessage(PlayerToKick, COLOR_RED, Message);
 	format(Message, sizeof(Message), TXT_GivenReason, Reason);
@@ -1504,7 +1504,7 @@ COMMAND:kick(playerid, params[])
 
 	// Send a confirmation about the kick to the corresponding admin
 	format(Message, sizeof(Message), TXT_KickAdminConfirmation, Name, Reason);
-	SendClientMessage(PlayerToKick, COLOR_RED, Message);
+	SendClientMessage(playerid, COLOR_RED, Message);
 	
 	// Kick the player
 	SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToKick)), false, "i", PlayerToKick);
