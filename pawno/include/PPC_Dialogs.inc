@@ -28,8 +28,9 @@ Dialog_Register(playerid, response, inputtext[])
 		{
 			// Show a message that the player must be registered to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustRegister);
-		    // Kick the player
-			SetTimerEx("TimedKick", 1000, false, "i", playerid);
+
+			// Show register dialog again
+		    ShowPlayerDialog(playerid, DialogRegister, DIALOG_STYLE_PASSWORD, TXT_DialogRegisterTitle, TXT_DialogRegisterMsg, TXT_DialogRegisterButton1, TXT_DialogButtonCancel);
 		}
 	}
 
@@ -83,8 +84,9 @@ Dialog_Login(playerid, response, inputtext[])
 		{
 			// Show a message that the player must be logged in to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustLogin);
-		    // Kick the player
-			SetTimerEx("TimedKick", 1000, false, "i", playerid);
+		    
+		    // Show login dialog again
+		    ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
 		}
 	}
 

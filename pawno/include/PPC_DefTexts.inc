@@ -37,7 +37,7 @@
 #define TXT_DialogRegisterButton1 "Register" // Define the text on the "register" button for the register-dialog
 #define TXT_AccountRegistered "{00FF00}You succesfully registered your account"
 #define TXT_RegisterEnterValidPassword "Please enter a valid password to register:"
-#define TXT_PlayerMustRegister "{FF0000}You must register in order to play, you've been kicked out!"
+#define TXT_PlayerMustRegister "You must register before you can play!"
 
 // The login dialog
 #define TXT_DialogLoginTitle "Welcome" // Define the title-message on top of the login-dialog
@@ -46,7 +46,7 @@
 #define TXT_LoggedIn "{00FF00}You logged in, welcome back"
 #define TXT_WrongPassword "{FF0000}You've entered the wrong password. %i attempts left before you get kicked."
 #define TXT_LoginEnterValidPassword "Please login by entering your password:"
-#define TXT_PlayerMustLogin "{FF0000}You must login in order to play, you've been kicked out!"
+#define TXT_PlayerMustLogin "You must login before you can play!"
 #define TXT_FailedLoginProperly "{FF0000}You failed to login properly, you're kicked"
 
 // The license dialog
