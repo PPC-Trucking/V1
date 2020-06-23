@@ -276,6 +276,8 @@
 #define TXT_ValueMustBe "%s must be one of the following: %s"
 #define TXT_ValueMustBeBetween "%s must be between %i and %i."
 #define TXT_ContainsForbiddenCharacters "%s contains one or more of the following forbidden characters: %s"
+#define TXT_BannedPermanently "You have been banned permanently."
+
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle

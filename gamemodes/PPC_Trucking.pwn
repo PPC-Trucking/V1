@@ -144,6 +144,12 @@ public OnPlayerConnect(playerid)
 	// Try to load the player's datafile ("PlayerFile_Load" returns "1" is the file has been read, "0" when the file cannot be read)
 	if (PlayerFile_Load(playerid) == 1)
 	{
+		// check if the player is permanently banned
+		if (APlayerData[playerid][BanTime] == -1) {
+			SendClientMessage(playerid, COLOR_WHITE, TXT_BannedPermanently);
+			SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid); // Kick the player
+		}
+
 		// Check if the player is still banned
 		if (APlayerData[playerid][BanTime] < gettime()) // Player ban-time is passed
 			ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);

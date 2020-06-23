@@ -1555,7 +1555,7 @@ COMMAND:ban(playerid, params[])
 	// Check if this is the player's maximum ban
 	if (APlayerData[PlayerToBan][Bans] >= MAX_BANS) {
 		// Make the ban permanent
-		APlayerData[PlayerToBan][BanTime] = 2147483640;
+		APlayerData[PlayerToBan][BanTime] = -1;
 
 		// Inform the player about his permanent ban
 		format(Message, sizeof(Message), TXT_BannedPermanentlyBy, MAX_BANS, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
