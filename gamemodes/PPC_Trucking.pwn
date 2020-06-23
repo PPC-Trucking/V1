@@ -149,14 +149,15 @@ public OnPlayerConnect(playerid)
 			SendClientMessage(playerid, COLOR_WHITE, TXT_BannedPermanently);
 			SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player
 		}
-
 		// Check if the player is still banned
-		if (APlayerData[playerid][BanTime] < gettime()) // Player ban-time is passed
-			ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
-		else // Player is still banned
+		else if (APlayerData[playerid][BanTime] > gettime()) // Player is still banned
 		{
 			ShowRemainingBanTime(playerid); // Show the remaining ban-time to the player is days, hours, minutes, seconds
-			SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player
+			SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player			
+		}
+		else // Player ban-time is passed
+		{
+			ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
 		}
 	}
 	else
@@ -908,6 +909,11 @@ public OnPlayerDeath(playerid, killerid, reason)
 // This callback gets called when the player is selecting a class (but hasn't clicked "Spawn" yet)
 public OnPlayerRequestClass(playerid, classid)
 {
+	if (APlayerData[playerid][BanTime] != 0) {
+		TogglePlayerSpectating(playerid, 1);
+		return 1;
+	}
+ 
  	SetPlayerInterior(playerid,14);
 	SetPlayerPos(playerid,258.4893,-41.4008,1002.0234);
 	SetPlayerFacingAngle(playerid, 270.0);
