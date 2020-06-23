@@ -607,6 +607,22 @@ public TimedDestroyVehicle(vid)
     return 1;
 }
 
+forward ShowRegisterDialog(playerid);
+public ShowRegisterDialog(playerid)
+{
+	ShowPlayerDialog(playerid, DialogRegister, DIALOG_STYLE_PASSWORD, TXT_DialogRegisterTitle, TXT_DialogRegisterMsg, TXT_DialogRegisterButton1, TXT_DialogButtonCancel);
+
+	return 1;
+}
+
+forward ShowLoginDialog(playerid);
+public ShowLoginDialog(playerid)
+{
+	ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
+
+	return 1;
+}
+
 // This function ejects all player from a specific vehicle
 RemoveAllPlayersFromVehicle(vid)
 {

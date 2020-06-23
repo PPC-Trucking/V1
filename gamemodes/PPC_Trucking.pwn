@@ -989,6 +989,10 @@ public OnPlayerRequestClass(playerid, classid)
 // This callback is called when the player attempts to spawn via class-selection
 public OnPlayerRequestSpawn(playerid)
 {
+	if (APlayerData[playerid][LoggedIn] != true) {
+		return 0;
+	}
+
 	new Index, Float:x, Float:y, Float:z, Float:Angle, Name[MAX_PLAYER_NAME], Msg[128];
 
 	// Get the player's name

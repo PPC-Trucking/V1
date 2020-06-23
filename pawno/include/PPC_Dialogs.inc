@@ -30,7 +30,7 @@ Dialog_Register(playerid, response, inputtext[])
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustRegister);
 
 			// Show register dialog again
-		    ShowPlayerDialog(playerid, DialogRegister, DIALOG_STYLE_PASSWORD, TXT_DialogRegisterTitle, TXT_DialogRegisterMsg, TXT_DialogRegisterButton1, TXT_DialogButtonCancel);
+			SetTimerEx("ShowRegisterDialog", 3000, false, "i", playerid);
 		}
 	}
 
@@ -86,7 +86,7 @@ Dialog_Login(playerid, response, inputtext[])
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustLogin);
 		    
 		    // Show login dialog again
-		    ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
+		    SetTimerEx("ShowLoginDialog", 3000, false, "i", playerid);
 		}
 	}
 
