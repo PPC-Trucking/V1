@@ -749,8 +749,8 @@ public OnPlayerSpawn(playerid)
 			// Check if the police player can get weapons
 			if (PoliceGetsWeapons == true)
 			{
-			    // Give up to 12 weapons to the player
-				for (new i; i < 12; i++)
+			    // Give weapons to the police player
+				for (new i; i < sizeof(APoliceWeapons); i++)
 				    GivePlayerWeapon(playerid, APoliceWeapons[i], PoliceWeaponsAmmo);
 			}
 		}
