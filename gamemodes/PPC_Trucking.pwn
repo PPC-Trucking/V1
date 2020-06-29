@@ -76,6 +76,8 @@ main()
 	// Print some standard lines to the server's console
 	print("\n----------------------------------");
 	print("Gamemode loading...");
+	print("Version 1.2");
+	print("https://github.com/PPC-Trucking/V1");
 	print("----------------------------------\n");
 }
 
