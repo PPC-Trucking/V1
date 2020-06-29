@@ -1,16 +1,18 @@
-# Please do not use files from this branch!
+# PPC Trucking V1
+
+This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](http://forum.sa-mp.com/member.php?u=109984) for Grand Theft Auto [San Andreas Multiplayer](http://www.sa-mp.com) (SA:MP). You can find the original post on SA:MP forums here: http://forum.sa-mp.com/showthread.php?t=196493.
+
+---
+
+## Please do not use files from this branch!
 Instead download the [latest release](https://github.com/PPC-Trucking/V1/releases/latest) or use the ["stable" branch](https://github.com/PPC-Trucking/V1/tree/stable) whose changes have been tested.
 
 ---
 
-# TEST THIS GAMEMODE!
+## TEST THIS GAMEMODE!
 Feel free to join our test server at 92.42.45.80:7790 to see this gamemode in action. Please note, that we WILL reset the server from time to time.
 
 ---
-
-# PPC Trucking V1
-
-This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](http://forum.sa-mp.com/member.php?u=109984) for Grand Theft Auto [San Andreas Multiplayer](http://www.sa-mp.com) (SA:MP). You can find the original post on SA:MP forums here: http://forum.sa-mp.com/showthread.php?t=196493.
 
 ## Included
 *	Complete gamemode as editable .pwn file
