@@ -245,7 +245,19 @@ IsVehicleAirVehicle(vid)
 {
 	switch (GetVehicleModel(vid))
 	{
-		case 592, 577, 511, 512, 593, 520, 553, 476, 519, 460, 513, 548, 425, 417, 487, 488, 497, 563, 447, 469: return 1;
+		case 417, 425, 447, 460, 469, 476, 487, 488, 497, 511, 512, 513, 519, 520, 548, 553, 563, 577, 592, 593: return 1;
+		default: return 0;
+	}
+
+	return 0;
+}
+
+// This function returns "1" if the given vehicle-id is a watercraft (e.g. boat)
+IsVehicleWaterVehicle(vid)
+{
+	switch (GetVehicleModel(vid))
+	{
+		case 430, 446, 452, 453, 454, 472, 473, 484, 493, 595: return 1;
 		default: return 0;
 	}
 
@@ -566,7 +578,7 @@ HelpList_Create(playerid)
 	return 1;
 }
 
-// Timed Kick/Ban to make sure the player gets messages
+// Set a delay before kick so the reason can be seen by the affected player
 forward TimedKick(playerid);
 public TimedKick(playerid)
 {
@@ -574,6 +586,7 @@ public TimedKick(playerid)
     return 1;
 }
 
+// Set a delay before ban so the reason can be seen by the affected player
 forward TimedBanEx(playerid, reason[]);
 public TimedBanEx(playerid, reason[])
 {
@@ -592,6 +605,33 @@ public TimedDestroyVehicle(vid)
 	}
     DestroyVehicle(vid);
     return 1;
+}
+
+forward ShowRegisterDialog(playerid);
+public ShowRegisterDialog(playerid)
+{
+	ShowPlayerDialog(playerid, DialogRegister, DIALOG_STYLE_PASSWORD, TXT_DialogRegisterTitle, TXT_DialogRegisterMsg, TXT_DialogRegisterButton1, TXT_DialogButtonCancel);
+
+	return 1;
+}
+
+forward ShowLoginDialog(playerid);
+public ShowLoginDialog(playerid)
+{
+	ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
+
+	return 1;
+}
+
+forward CheckPlayerLoggedIn(playerid);
+public CheckPlayerLoggedIn(playerid)
+{
+	if (APlayerData[playerid][LoggedIn] != true) {
+		SendClientMessage(playerid, COLOR_RED, TXT_FailedLoginProperly);
+		SetTimerEx("TimedKick", 1000, false, "i", playerid);
+	}
+
+	return 1;
 }
 
 // This function ejects all player from a specific vehicle

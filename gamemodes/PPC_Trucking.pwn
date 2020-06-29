@@ -125,6 +125,9 @@ public OnPlayerConnect(playerid)
 	if (IsPlayerNPC(playerid))
 		return 1;
 
+	// start timer to check for login
+	SetTimerEx("CheckPlayerLoggedIn", (TIMESPAN_LOGIN * 1000), false, "i", playerid);
+
 	// Setup local variables
 	new Name[MAX_PLAYER_NAME], NewPlayerMsg[128], HouseID;
 
@@ -144,13 +147,20 @@ public OnPlayerConnect(playerid)
 	// Try to load the player's datafile ("PlayerFile_Load" returns "1" is the file has been read, "0" when the file cannot be read)
 	if (PlayerFile_Load(playerid) == 1)
 	{
+		// check if the player is permanently banned
+		if (APlayerData[playerid][BanTime] == -1) {
+			SendClientMessage(playerid, COLOR_WHITE, TXT_BannedPermanently);
+			SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player
+		}
 		// Check if the player is still banned
-		if (APlayerData[playerid][BanTime] < gettime()) // Player ban-time is passed
-			ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
-		else // Player is still banned
+		else if (APlayerData[playerid][BanTime] > gettime()) // Player is still banned
 		{
 			ShowRemainingBanTime(playerid); // Show the remaining ban-time to the player is days, hours, minutes, seconds
-			SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid); // Kick the player
+			SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player			
+		}
+		else // Player ban-time is passed
+		{
+			ShowPlayerDialog(playerid, DialogLogin, DIALOG_STYLE_PASSWORD, TXT_DialogLoginTitle, TXT_DialogLoginMsg, TXT_DialogLoginButton1, TXT_DialogButtonCancel);
 		}
 	}
 	else
@@ -370,6 +380,8 @@ public OnPlayerDisconnect(playerid, reason)
 	APlayerData[playerid][BankPassword] = 0;
 	APlayerData[playerid][BankLoggedIn] = false;
 	APlayerData[playerid][BankMoney] = 0;
+	APlayerData[playerid][UseMoney] = 0;
+	APlayerData[playerid][LastIntrestTime] = 0;
 
 	// Clear stats
 	APlayerData[playerid][StatsTruckerJobs] = 0;
@@ -429,9 +441,11 @@ public OnPlayerDisconnect(playerid, reason)
 public OnPlayerText(playerid, text[])
 {
 	// Check if the player is not logged in
-	if (APlayerData[playerid][LoggedIn] != true)
+	if (APlayerData[playerid][LoggedIn] != true) {
 		// Let the player know that he must login first
-		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		return 0;
+	}
 
 	// Block the player's text if he has been muted
     if ((APlayerData[playerid][Muted] > gettime()))
@@ -453,9 +467,11 @@ public OnPlayerText(playerid, text[])
 
 public OnPlayerCommandReceived(playerid, cmdtext[]) {
 	// Check if the player is not logged in
-	if (APlayerData[playerid][LoggedIn] != true)
+	if (APlayerData[playerid][LoggedIn] != true) {
 		// Let the player know that he must login first
-		return SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		SendClientMessage(playerid, COLOR_RED, TXT_NeedToLogin);
+		return 0;
+	}
 
 	// Check if the player is using the commands /me or /pm
 	if (strfind(cmdtext, "/me ", true) != -1 || strfind(cmdtext, "/pm ", true) != -1)
@@ -686,7 +702,7 @@ public OnPlayerSpawn(playerid)
 	if (APlayerData[playerid][LoggedIn] == false)
 	{
 		SendClientMessage(playerid, COLOR_WHITE, TXT_FailedLoginProperly);
-	    SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid); // Kick the player if he didn't log in properly
+	    SetTimerEx("TimedKick", 1000, false, "i", playerid); // Kick the player if he didn't log in properly
 	}
 
 	// Setup local variables
@@ -733,8 +749,8 @@ public OnPlayerSpawn(playerid)
 			// Check if the police player can get weapons
 			if (PoliceGetsWeapons == true)
 			{
-			    // Give up to 12 weapons to the player
-				for (new i; i < 12; i++)
+			    // Give weapons to the police player
+				for (new i; i < sizeof(APoliceWeapons); i++)
 				    GivePlayerWeapon(playerid, APoliceWeapons[i], PoliceWeaponsAmmo);
 			}
 		}
@@ -902,6 +918,11 @@ public OnPlayerDeath(playerid, killerid, reason)
 // This callback gets called when the player is selecting a class (but hasn't clicked "Spawn" yet)
 public OnPlayerRequestClass(playerid, classid)
 {
+	if (APlayerData[playerid][BanTime] != 0) {
+		TogglePlayerSpectating(playerid, 1);
+		return 1;
+	}
+ 
  	SetPlayerInterior(playerid,14);
 	SetPlayerPos(playerid,258.4893,-41.4008,1002.0234);
 	SetPlayerFacingAngle(playerid, 270.0);
@@ -977,6 +998,10 @@ public OnPlayerRequestClass(playerid, classid)
 // This callback is called when the player attempts to spawn via class-selection
 public OnPlayerRequestSpawn(playerid)
 {
+	if (APlayerData[playerid][LoggedIn] != true) {
+		return 0;
+	}
+
 	new Index, Float:x, Float:y, Float:z, Float:Angle, Name[MAX_PLAYER_NAME], Msg[128];
 
 	// Get the player's name

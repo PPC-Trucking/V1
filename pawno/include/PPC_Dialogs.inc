@@ -28,8 +28,9 @@ Dialog_Register(playerid, response, inputtext[])
 		{
 			// Show a message that the player must be registered to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustRegister);
-		    // Kick the player
-			SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid);
+
+			// Show register dialog again
+			SetTimerEx("ShowRegisterDialog", 3000, false, "i", playerid);
 		}
 	}
 
@@ -55,6 +56,12 @@ Dialog_Login(playerid, response, inputtext[])
 		    if (strcmp(APlayerData[playerid][PlayerPassword], inputtext, false) == 0)
 			{
 				APlayerData[playerid][LoggedIn] = true; // The player has logged in properly
+                
+                // set player level to 5 if it is higher than that
+                // prevents awkward behavior of AdminLevelName
+                if (5 < APlayerData[playerid][PlayerLevel])
+                	APlayerData[playerid][PlayerLevel] = 5;
+
                 BankFile_Load(playerid); // Load your bank account (if it exists, the player will be notified about this)
 				SendClientMessage(playerid, COLOR_WHITE, TXT_LoggedIn); // Send a message to the client to inform him that he logged in properly
 			}
@@ -63,8 +70,8 @@ Dialog_Login(playerid, response, inputtext[])
 				SetPVarInt(playerid, "LoginAttempt", GetPVarInt(playerid, "LoginAttempt") + 1);
 
 				if (GetPVarInt(playerid, "LoginAttempt") == MAX_LOGIN_ATTEMPTS) {
-					SendClientMessage(playerid, COLOR_WHITE, TXT_FailedLoginProperly);
-					SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid);
+					SendClientMessage(playerid, COLOR_RED, TXT_FailedLoginProperly);
+					SetTimerEx("TimedKick", 1000, false, "i", playerid);
 				} else {
 					format(Msg, sizeof(Msg), TXT_WrongPassword, (MAX_LOGIN_ATTEMPTS-GetPVarInt(playerid, "LoginAttempt")));
 					SendClientMessage(playerid, COLOR_WHITE, Msg);
@@ -77,8 +84,9 @@ Dialog_Login(playerid, response, inputtext[])
 		{
 			// Show a message that the player must be logged in to play on this server
 			SendClientMessage(playerid, COLOR_WHITE, TXT_PlayerMustLogin);
-		    // Kick the player
-			SetTimerEx("TimedKick", (750 + GetPlayerPing(playerid)), false, "i", playerid);
+		    
+		    // Show login dialog again
+		    SetTimerEx("ShowLoginDialog", 3000, false, "i", playerid);
 		}
 	}
 

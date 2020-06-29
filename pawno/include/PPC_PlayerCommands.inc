@@ -1462,7 +1462,7 @@ COMMAND:warn(playerid, params[])
 		format(Message, sizeof(Message), TXT_AutoKickedByWarnings, AutoKickWarnings);
 		SendClientMessage(PlayerToWarn, COLOR_RED, Message);
 
-		SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToWarn)), false, "i", PlayerToWarn);
+		SetTimerEx("TimedKick", 1000, false, "i", PlayerToWarn);
 	}
 
 	// Let the server know that this was a valid command
@@ -1493,10 +1493,10 @@ COMMAND:kick(playerid, params[])
 	if (APlayerData[PlayerToKick][LoggedIn] != true)
 		return SendClientMessage(playerid, COLOR_ORANGE, TXT_PlayerNotLoggedIn);
 
-	// Get the name of the player who warned the player
+	// Get the name of the admin who kicked the player
 	GetPlayerName(playerid, Name, sizeof(Name));
 	
-	// Send the warned player a message who kicked him and why he's been kicked
+	// Send the kicked player a message who kicked him and why he's been kicked
 	format(Message, sizeof(Message), TXT_KickedBy, AdminLevelName[APlayerData[playerid][PlayerLevel]], Name);
 	SendClientMessage(PlayerToKick, COLOR_RED, Message);
 	format(Message, sizeof(Message), TXT_GivenReason, Reason);
@@ -1504,10 +1504,10 @@ COMMAND:kick(playerid, params[])
 
 	// Send a confirmation about the kick to the corresponding admin
 	format(Message, sizeof(Message), TXT_KickAdminConfirmation, Name, Reason);
-	SendClientMessage(PlayerToKick, COLOR_RED, Message);
+	SendClientMessage(playerid, COLOR_RED, Message);
 	
 	// Kick the player
-	SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToKick)), false, "i", PlayerToKick);
+	SetTimerEx("TimedKick", 1000, false, "i", PlayerToKick);
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -1555,7 +1555,7 @@ COMMAND:ban(playerid, params[])
 	// Check if this is the player's maximum ban
 	if (APlayerData[PlayerToBan][Bans] >= MAX_BANS) {
 		// Make the ban permanent
-		APlayerData[PlayerToBan][BanTime] = 2147483640;
+		APlayerData[PlayerToBan][BanTime] = -1;
 
 		// Inform the player about his permanent ban
 		format(Message, sizeof(Message), TXT_BannedPermanentlyBy, MAX_BANS, AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName);
@@ -1574,7 +1574,7 @@ COMMAND:ban(playerid, params[])
 	}
 
 	// Kick the player (his data will be saved)
-	SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToBan)), false, "i", PlayerToBan);
+	SetTimerEx("TimedKick", 1000, false, "i", PlayerToBan);
 
 	// Inform everybody else which player was banned and for how long
 	format(Message, sizeof(Message), "%s %s has banned %s for %i days", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name, Days);
@@ -2493,20 +2493,17 @@ COMMAND:convoyleave(playerid, params[])
 	// Send the command to all admins so they can see it
 	SendAdminText(playerid, "/convoyleave", params);
 
-	// Check if the player has logged in
-	if (APlayerData[playerid][LoggedIn] == true)
-	{
-		// Check if this player is part of a convoy
-		if (APlayerData[playerid][InConvoy] == true)
-		{
-		    // Kick the other player from the convoy
-			Convoy_Leave(playerid);
-			// Inform the player that he left the convoy
-			SendClientMessage(playerid, COLOR_GREEN, "You left the convoy");
-		}
-	}
-	else
-	    return 0;
+	if (APlayerData[playerid][PlayerClass] != ClassTruckDriver)
+		return SendClientMessage(playerid, COLOR_ORANGE, TXT_MustBeATrucker);
+
+	if (APlayerData[playerid][InConvoy] != true)
+		return SendClientMessage(playerid, COLOR_RED, TXT_MustBeInAConvoy);
+
+	// Remove the player from the convoy
+	Convoy_Leave(playerid);
+
+	// Inform the player that he left the convoy
+	SendClientMessage(playerid, COLOR_GREEN, TXT_ConvoyLeftByMember);
 
 	// Let the server know that this was a valid command
 	return 1;
@@ -4646,7 +4643,7 @@ COMMAND:ipban(playerid, params[])
 					SendClientMessage(PlayerToBan, COLOR_RED, Message);
 
 					// Ban the player with a reason
-					SetTimerEx("TimedBanEx", (750 + GetPlayerPing(PlayerToBan)), false, "is", PlayerToBan, Reason);
+					SetTimerEx("TimedBanEx", 1000, false, "is", PlayerToBan, Reason);
 
 					// Inform everybody else which player was ip-banned
 					format(Message, sizeof(Message), "{808080}%s %s has ip-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);
@@ -4708,7 +4705,7 @@ COMMAND:rangeban(playerid, params[])
                         SendRconCommand(BanCmd); // Execute the command
 					}
 					// Finally kick the player (the RCon command doesn't kick you out automatically)
-					SetTimerEx("TimedKick", (750 + GetPlayerPing(PlayerToBan)), false, "i", PlayerToBan);
+					SetTimerEx("TimedKick", 1000, false, "i", PlayerToBan);
 
 					// Inform everybody else which player was ip-range-banned
 					format(Message, sizeof(Message), "%s %s has ip-range-banned {FFFF00}%s", AdminLevelName[APlayerData[playerid][PlayerLevel]], AdminName, Name);

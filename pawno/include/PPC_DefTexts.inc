@@ -37,7 +37,7 @@
 #define TXT_DialogRegisterButton1 "Register" // Define the text on the "register" button for the register-dialog
 #define TXT_AccountRegistered "{00FF00}You succesfully registered your account"
 #define TXT_RegisterEnterValidPassword "Please enter a valid password to register:"
-#define TXT_PlayerMustRegister "{FF0000}You must register in order to play, you've been kicked out!"
+#define TXT_PlayerMustRegister "You must register before you can play!"
 
 // The login dialog
 #define TXT_DialogLoginTitle "Welcome" // Define the title-message on top of the login-dialog
@@ -46,8 +46,8 @@
 #define TXT_LoggedIn "{00FF00}You logged in, welcome back"
 #define TXT_WrongPassword "{FF0000}You've entered the wrong password. %i attempts left before you get kicked."
 #define TXT_LoginEnterValidPassword "Please login by entering your password:"
-#define TXT_PlayerMustLogin "{FF0000}You must login in order to play, you've been kicked out!"
-#define TXT_FailedLoginProperly "{FF0000}You failed to login properly, you're kicked"
+#define TXT_PlayerMustLogin "You must login before you can play!"
+#define TXT_FailedLoginProperly "You have been kicked because you failed to login properly."
 
 // The license dialog
 #define TXT_DialogLicenseTitle "Select license:" // Define the title-message on top of the licenses-dialog
@@ -85,6 +85,7 @@
 #define TXT_NeedVehicleToProceed "{FF0000}You need to be in your vehicle to proceed"
 #define TXT_NeedTrailerToProceed "{FF0000}You need to have your trailer attached to proceed"
 #define TXT_NeedOnFootToProceed "{FF0000}You need to be on foot to proceed"
+#define TXT_MustBeATrucker "You must be a trucker to use this command."
 
 // Busdriver related
 #define TXT_PlayerCompletedBusLine "{FFFFFF}BusDriver {FF00FF}%s{FFFFFF} succesfully completed bus-line {0000FF}%i{FFFFFF}"
@@ -161,7 +162,7 @@
 #define TXT_PlayerNotSpawned "{FF0000}You can't spectate that player because he didn't spawn yet."
 #define TXT_CmdNotExists "That command is not valid, please see /commands"
 #define TXT_SscanfFailedUsuage "Usage: \"%s\""
-#define TXT_NeedToLogin "You need to login to use that command."
+#define TXT_NeedToLogin "You need to login to do that."
 #define TXT_StillMuted "You are still muted."
 #define TXT_PlayerMuted "~w~You have been~n~~r~muted"
 #define TXT_PlayerUnMuted "~w~You have been~n~~g~unmuted"
@@ -275,6 +276,8 @@
 #define TXT_ValueMustBe "%s must be one of the following: %s"
 #define TXT_ValueMustBeBetween "%s must be between %i and %i."
 #define TXT_ContainsForbiddenCharacters "%s contains one or more of the following forbidden characters: %s"
+#define TXT_BannedPermanently "You have been banned permanently."
+
 
 // Fuel related
 #define TXT_Refuelling "~g~Refuelling..." // Define the game-text that shows when you're refuelling your vehicle
@@ -377,6 +380,8 @@
 #define TXT_PlayerNotInYourConvoy "That player is not in your convoy."
 #define TXT_KickedPlayerFromConvoy "You have kicked {0000FF}%s{00FF00} from the convoy."
 #define TXT_KickedFromConvoyByLeader "Leader {0000FF}%s{00FF00} kicked you from the convoy."
+#define TXT_ConvoyLeftByMember "You have left the convoy."
+#define TXT_MustBeInAConvoy "You must be in a convoy to use this command."
 
 // Timed messages
 #define TXT_TimedRefuel "{808080}You want to refuel your vehicle? Park on a refuel-pickup and honk the horn"
