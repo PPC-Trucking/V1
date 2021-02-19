@@ -4,11 +4,6 @@ This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](ht
 
 ---
 
-## Please do not use files from this branch!
-Instead download the [latest release](https://github.com/PPC-Trucking/V1/releases/latest) or use the ["stable" branch](https://github.com/PPC-Trucking/V1/tree/stable) whose changes have been tested.
-
----
-
 ## TEST THIS GAMEMODE!
 Feel free to join our test server at 92.42.45.80:7790 to see this gamemode in action. Please note, that we WILL reset the server from time to time.
 
