@@ -1,3 +1,9 @@
+**Unfortunately work on SA:MP has officially dropped in late September of 2020. There won't be any updates for anymore. Also Wiki and Forum have been closed. As I was also rarely working on this gamemode, I'm archiving this repository for now. If you want to take it over and work on it, please let me know: b495472b(@)anon(.)leemail(.)me**
+
+**Special thanks to all [contributors](https://github.com/PPC-Trucking/V1/graphs/contributors) and those who helped with [issue tickets](https://github.com/PPC-Trucking/V1/issues?q=-author%3Acodealdente)!**
+
+---
+
 # PPC Trucking V1
 
 This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](http://forum.sa-mp.com/member.php?u=109984) for Grand Theft Auto [San Andreas Multiplayer](http://www.sa-mp.com) (SA:MP). You can find the original post on SA:MP forums here: http://forum.sa-mp.com/showthread.php?t=196493.
@@ -5,7 +11,7 @@ This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](ht
 ---
 
 ## TEST THIS GAMEMODE!
-Feel free to join our test server at 92.42.45.80:7790 to see this gamemode in action. Please note, that we WILL reset the server from time to time.
+Feel free to join our test server at 92.42.45.80:7790 to see this gamemode in action. Please note, that we WILL reset the server from time to time. **This gameserver will be online until 29th June, 2022.**
 
 ---
 
