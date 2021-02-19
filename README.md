@@ -25,12 +25,12 @@ Feel free to join our test server at 92.42.45.80:7790 to see this gamemode in ac
 *	Then [get the latest stable release](https://github.com/PPC-Trucking/V1/releases/latest) of this repository (choose .zip or .tar.gz)
 *	Unpack this archive into the directory where you have set up your server. Follow the structure of the folders. For example: Place files from the "gamemodes" folder **only** into the "gamemodes" folder. **Do not mix it up!**
 *	([__*__](#licensing)) Download the following plugins and place them into the "plugins" folder. If the folder does not exist in the root directory (where you can find your "gamemodes" folder), create it. **Only there!**
-	*	[sscanf](http://forum.sa-mp.com/showthread.php?t=570927)
-	*   [streamer](http://forum.sa-mp.com/showthread.php?t=102865)
+	*	[sscanf](https://github.com/maddinat0r/sscanf/releases)
+	*   [streamer](https://github.com/samp-incognito/samp-streamer-plugin/releases)
 *   ([__*__](#licensing)) Get these files as well and put them into the _~/pawno/include_ folder.
-	*   [sscanf2.inc](http://forum.sa-mp.com/showthread.php?t=570927)
-	*   [streamer.inc](http://forum.sa-mp.com/showthread.php?t=102865)
-	*   [zcmd.inc](http://forum.sa-mp.com/showthread.php?t=91354)
+	*   [sscanf2.inc](https://github.com/maddinat0r/sscanf/releases)
+	*   [streamer.inc](https://github.com/samp-incognito/samp-streamer-plugin/releases)
+	*   [zcmd.inc](https://github.com/Southclaws/zcmd/blob/master/zcmd.inc)
 	*   [dutils.inc](http://dracoblue.net/downloads/dutils/)
 *	Now open _~/pawno/pawno.exe_ and load the gamemode to re-compile it
 	* If everything worked, you should get a line saying ``Pawn compiler 3.2.3664 		Copyright (c) 1997-2006, ITB CompuPhase``
