@@ -45,10 +45,13 @@ Feel free to join our test server at 92.42.45.80:7790 to see this gamemode in ac
 ## Credits
 *	[PowerPC603](http://forum.sa-mp.com/member.php?u=109984) - awesome work (gamemode)
 *	[Y_Less](http://forum.sa-mp.com/member.php?u=29176) - very handy to handle parameters and more (sscanf)
+*	[maddinat0r](https://github.com/maddinat0r) - mirror for sscanf
 *	[Incognito](http://forum.sa-mp.com/member.php?u=925) - abbility to use more objects than usually possible (streamer)
+*	[samp-incognito](https://github.com/samp-incognito) - mirror for streamer
 *	Zeex - very efficient to create commands in seconds (zcmd)
+*	[Southclaws](https://github.com/Southclaws) - mirror for zcmd
 *	[DracoBlue](http://forum.sa-mp.com/member.php?u=389) - makes it easier to save information in files and to load them (dutils)
-	
+
 ### Thanks for reading!
 *	By the way, if you already have experience with [Notepad++](http://notepad-plus-plus.org), take a look at Slice's tutorial [how to use Notepad++ with PAWN](http://forum.sa-mp.com/showthread.php?t=174046). Notepad++ makes it more comfortable to maintain your SA:MP gamemodes and filterscripts than the interal default editor.
 
