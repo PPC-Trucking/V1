@@ -10,11 +10,6 @@ This is a modified version of the popular "Trucking Gamemode" by [PowerPC603](ht
 
 ---
 
-## TEST THIS GAMEMODE!
-Feel free to join our test server at 92.42.45.80:7790 to see this gamemode in action. Please note, that we WILL reset the server from time to time. **This gameserver will be online until 29th June, 2022.**
-
----
-
 ## Included
 *	Complete gamemode as editable .pwn file
 *	A ready-to-go server.cfg file (You only have to change the rcon_password!)
